@@ -131,6 +131,8 @@ class Carver:
         self.ours_str_align: dict[bytes, int] = {}
         self.ours_pools: dict[str, bytes] = {}
         self.warnings: list[str] = []
+        self.ours: OursObject | None = None
+        self.aliases: dict[str, list[str]] = {}         # primary function name -> all its names
 
     def _in_ranges(self, addr: int) -> bool:
         return any(lo <= addr < hi for _, lo, hi in self.ranges)
@@ -174,6 +176,7 @@ class Carver:
                           typ=E.STT_FUNC if kind == ".text" else E.STT_OBJECT, bind=bind)
         if kind == ".text":
             self.funcs.append((s0.name, s0.addr, size))
+            self.aliases[s0.name] = [s0.name] + [s.name for s in group if s is not s0]
         elif kind != ".bss":
             self.datas.append((s0.name, s0.addr, size))
 
@@ -220,19 +223,30 @@ class Carver:
         if name not in self._pools:
             sec = self.o.section(name, E.SHT_PROGBITS, E.SHF_ALLOC | flags, align=align, entsize=entsize)
             self._pools[name] = (sec, {})
-            if name in self.ours_pools and flags & SHF_STRINGS:
+            seeds = self.ours.sec_data if self.ours else self.ours_pools
+            if name in seeds and flags & SHF_STRINGS:
                 # lay the strings out in the order our object has them, so string offsets agree
-                seed = self.ours_pools[name]
+                seed = seeds[name]
                 seen = self._pools[name][1]
+                w = max(entsize, 1)
                 i = 0
-                while i < len(seed):
-                    j = seed.find(b"\0", i)
-                    if j < 0:
+                while i + w <= len(seed):
+                    j = i
+                    while j + w <= len(seed) and seed[j:j + w] != b"\0" * w:
+                        j += w
+                    if j + w > len(seed):
                         break
-                    seen.setdefault(seed[i:j + 1], i)
-                    i = j + 1
+                    seen.setdefault(seed[i:j + w], i)
+                    i = j + w
                     while i < len(seed) and i % align and seed[i] == 0:
                         i += 1
+                sec.data += seed
+            elif name in seeds and flags & SHF_MERGE and entsize:
+                # constants too, so their offsets agree with ours
+                seed = seeds[name]
+                seen = self._pools[name][1]
+                for i in range(0, len(seed) - entsize + 1, entsize):
+                    seen.setdefault(seed[i:i + entsize], i)
                 sec.data += seed
         sec, seen = self._pools[name]
         if data in seen:
@@ -271,6 +285,100 @@ class Carver:
         sec.data += self.img.bytes_at(addr, entsize * max(count, 1))
         self.anon[key] = (name, off)
         return name, off
+
+    # -- data guided by our compiled object -------------------------------
+    _ADD_TYPES = (R_ADD_ABS_LO12_NC,)
+    _LDST_TYPES = (R_LDST8_ABS_LO12_NC, R_LDST16_ABS_LO12_NC, R_LDST32_ABS_LO12_NC,
+                   R_LDST64_ABS_LO12_NC, R_LDST128_ABS_LO12_NC)
+
+    def _read_string(self, addr: int, width: int) -> bytes:
+        raw = self.img.bytes_at(addr, 0x2000)
+        i = 0
+        while i + width <= len(raw) and raw[i:i + width] != b"\0" * width:
+            i += width
+        return raw[:i + width]
+
+    def _copy_data(self, secname: str, src: int, size: int, align: int) -> int:
+        """Append target bytes [src, src+size) to a data section named like ours, with their
+        pointer relocations; returns the offset."""
+        if secname.startswith(".bss"):
+            sec = self.o.section(secname, E.SHT_NOBITS, E.SHF_ALLOC | E.SHF_WRITE, align=align)
+            off = (sec.nobits_size + align - 1) // align * align
+            sec.nobits_size = off + size
+            return off
+        flags = E.SHF_ALLOC | (E.SHF_WRITE if secname.startswith(".data") else 0)
+        sec = self.o.section(secname, E.SHT_PROGBITS, flags, align=align)
+        while len(sec.data) % align:
+            sec.data.append(0)
+        off = len(sec.data)
+        sec.data += self.img.bytes_at(src, size)
+        for a in range(src - src % 8, src + size, 8):
+            if a < src:
+                continue
+            ent = self.img.dyn_relocs.get(a)
+            if not ent:
+                continue
+            rtype, nm, add = ent
+            if rtype == R_ABS64 and nm:
+                tgt, tadd = nm, add
+            elif rtype in (R_ABS64, 1027):
+                cov = self.img.sym_covering(add)
+                tgt, tadd = (cov[0].name, cov[1]) if cov else (f"lbl_{add + BASE:X}", 0)
+            else:
+                continue
+            if tgt not in self.included:
+                self.undefs.add(tgt)
+            sec.reloc(off + a - src, tgt, R_ABS64, tadd)
+        return off
+
+    def _ref_guided(self, tgt: int, func: str, foff: int, how: str):
+        """Resolve an unnamed data reference the way our object does at the same instruction:
+        same kind of section (string pool of the right width, constant pool, .rodata table,
+        .data.rel.ro array, ...) or the same local symbol, filled with the target's bytes."""
+        if self.ours is None:
+            return None
+        r = self.ours.ref_at(self.aliases.get(func, [func]), foff)
+        if r is None:
+            return None
+        if r.type not in (self._ADD_TYPES if how == "add" else self._LDST_TYPES):
+            return None
+        key = ("guided", tgt)
+        if key in self.anon:
+            return self.anon[key]
+        out = None
+        m = re.fullmatch(r"\.rodata\.str(\d+)\.(\d+)", r.secname) if r.symtype == "STT_SECTION" else None
+        if m:
+            width, align = int(m.group(1)), int(m.group(2))
+            data = self._read_string(tgt, width)
+            out = self._pool(r.secname, data, align, width, SHF_MERGE | SHF_STRINGS)
+        elif r.symtype == "STT_SECTION" and re.fullmatch(r"\.rodata\.cst(\d+)", r.secname):
+            n = int(r.secname[len(".rodata.cst"):])
+            out = self._const(tgt, n)
+        elif r.symtype == "STT_SECTION" and r.secname:
+            size = self.ours.extent(r.secname, r.addend)
+            if size <= 0:
+                return None
+            al = max(self.ours.sec_align.get(r.secname, 8), 1)
+            out = (r.secname, self._copy_data(r.secname, tgt, size, al))
+        elif r.sym and not r.secname:
+            # our object references it by name from elsewhere
+            self.undefs.add(r.sym)
+            out = (r.sym, r.addend)
+        elif r.sym and r.symtype in ("STT_OBJECT", "STT_NOTYPE") and r.secname:
+            # a local static / vtable our object defines: carve the target's bytes under its name
+            start = tgt - r.addend
+            size = r.size or self.ours.extent(r.secname, r.value)
+            if size <= 0 or self.img.sym(r.sym) is not None:
+                return None
+            if r.sym not in self.included:
+                al = max(self.ours.sec_align.get(r.secname, 8), 1)
+                off = self._copy_data(r.secname, start, size, al)
+                self.o.define(r.sym, self.o._by_name[r.secname], off, size, typ=E.STT_OBJECT, bind=E.STB_LOCAL)
+                self.included.add(r.sym)
+            out = (r.sym, r.addend)
+        if out is not None:
+            self.anon[key] = out
+        return out
 
     # -- symbol resolution ---------------------------------------------------
     def _ref_sym(self, target_addr: int):
@@ -352,11 +460,15 @@ class Carver:
         return nm, 0
 
     def _ref_data(self, tgt: int, how: str, access: int, fp: bool, func: str,
-                  jt: tuple[int, int] | None):
+                  jt: tuple[int, int] | None, foff: int | None = None):
         """Resolve a data reference.  how: 'add' (address taken) | 'ldst'."""
         r = self._ref_sym(tgt)
         if r:
             return r
+        if foff is not None:
+            g = self._ref_guided(tgt, func, foff, how)
+            if g:
+                return g
         sec = self.img.section_of(tgt)
         if sec == ".rodata":
             if how == "ldst" and fp and access in (4, 8, 16):
@@ -424,7 +536,7 @@ class Carver:
                 if not self._local_same_section(ref[0], sec):
                     sec.reloc(rel_off, ref[0], R_JUMP26, ref[1])
             elif gid == ARM64_INS_ADRP:
-                self._recon_adrp(sec, name, insns, idx, addr - base_off)
+                self._recon_adrp(sec, name, insns, idx, addr - base_off, addr)
 
     def _stores_other_vtable(self, insns, idx) -> bool:
         """Right after calling a constructor at insns[idx], does the code load another class's
@@ -514,12 +626,35 @@ class Carver:
                     return ent, count, is_fp
         return None
 
-    def _recon_adrp(self, sec, func, insns, idx, fn_addr):
+    def _recon_adrp(self, sec, func, insns, idx, fn_addr, func_start=None):
         ins = insns[idx]
         page = ins.operands[1].imm
         reg = ins.operands[0].reg
         rel_off = ins.address - fn_addr
         cons = self._consumers(insns, idx, reg)
+        if not cons and self.ours is not None and func_start is not None:
+            # the consumer is beyond the straight-line window (e.g. a GOT load hoisted far
+            # ahead of its use): follow our object's pairing of this ADRP with its LO12 use
+            names = self.aliases.get(func, [func])
+            pr = self.ours.ref_at(names, ins.address - func_start)
+            if pr is not None and pr.type in (R_ADR_GOT_PAGE, R_ADR_PREL_PG_HI21):
+                want = R_LD64_GOT_LO12_NC if pr.type == R_ADR_GOT_PAGE else None
+                fn_refs = next((self.ours.funcs[n] for n in names if n in self.ours.funcs), {})
+                for o2, r2 in sorted(fn_refs.items()):
+                    if o2 <= ins.address - func_start or r2.sym != pr.sym:
+                        continue
+                    if want is not None and r2.type != want:
+                        continue
+                    j = (o2 + func_start - insns[0].address) // 4
+                    if not (0 <= j < len(insns)):
+                        continue
+                    c = insns[j]
+                    mem = [op for op in c.operands if op.type == ARM64_OP_MEM]
+                    if mem and mem[0].mem.base == reg and pr.type == R_ADR_GOT_PAGE:
+                        self.undefs.add(pr.sym)
+                        sec.reloc(rel_off, pr.sym, R_ADR_GOT_PAGE, pr.addend)
+                        sec.reloc(c.address - fn_addr, pr.sym, R_LD64_GOT_LO12_NC, pr.addend)
+                        return
         if not cons:
             ref = self._ref_sym(page)
             if ref:
@@ -527,8 +662,19 @@ class Carver:
             return
         how, first, lo12, acc = cons[0]
         tgt = page + lo12
-        if self.img.got_range[0] <= tgt < self.img.got_range[1]:
+        in_got = self.img.got_range[0] <= tgt < self.img.got_range[1]
+        if not in_got and how == "ldst" and acc == 8 and self.ours is not None and func_start is not None:
+            # a pointer slot outside the .got range that our object loads through the GOT
+            r = self.ours.ref_at(self.aliases.get(func, [func]), first.address - func_start)
+            in_got = r is not None and r.type == R_LD64_GOT_LO12_NC
+        if in_got:
             got = self.img.got_target(tgt)
+            if not got and self.ours is not None and func_start is not None:
+                # a GOT slot the binary only knows as a relative address (an unnamed local
+                # function or object): use the name our object loads through the GOT
+                r = self.ours.ref_at(self.aliases.get(func, [func]), first.address - func_start)
+                if r is not None and r.type == R_LD64_GOT_LO12_NC and r.sym:
+                    got = (r.sym, r.addend)
             if got:
                 self.undefs.add(got[0])
                 sec.reloc(rel_off, got[0], R_ADR_GOT_PAGE, got[1])
@@ -545,7 +691,8 @@ class Carver:
             if how == "add":
                 dst = cins.operands[0].reg
                 jt = self._jump_table_shape(insns, insns.index(cins), dst, 0)
-            ref = self._ref_data(t, how, acc, fp, func, jt)
+            ref = self._ref_data(t, how, acc, fp, func, jt,
+                                 None if func_start is None else cins.address - func_start)
             if not ref:
                 continue
             if page_ref is None:
@@ -663,6 +810,92 @@ def _object_string_aligns(path: str) -> dict[bytes, int]:
     return out
 
 
+class OursRef:
+    """One relocation in our compiled object, as seen from the function it sits in."""
+    __slots__ = ("type", "sym", "symtype", "secname", "value", "size", "addend")
+
+    def __init__(self, type_, sym, symtype, secname, value, size, addend):
+        self.type, self.sym, self.symtype, self.secname = type_, sym, symtype, secname
+        self.value, self.size, self.addend = value, size, addend
+
+
+class OursObject:
+    """Our compiled object for the unit: per-function relocations (keyed by offset from the
+    function start), section contents, and the extents of the data they point at.  Used to
+    rebuild references to data the binary's linker left unnamed the way clang emitted them."""
+
+    def __init__(self, path: str):
+        from elftools.elf.elffile import ELFFile
+        from elftools.elf.relocation import RelocationSection
+        self.funcs: dict[str, dict[int, OursRef]] = {}
+        self.sec_data: dict[str, bytes] = {}
+        self.sec_align: dict[str, int] = {}
+        self.sec_nobits: dict[str, int] = {}
+        self.local_objs: dict[str, list[tuple[int, int, str]]] = {}   # section -> (value, size, name)
+        self.sec_addends: dict[str, set[int]] = {}                    # section -> referenced offsets
+        with open(path, "rb") as fh:
+            elf = ELFFile(fh)
+            secs = list(elf.iter_sections())
+            for s in secs:
+                if s["sh_type"] == "SHT_NOBITS":
+                    self.sec_nobits[s.name] = s["sh_size"]
+                elif s["sh_flags"] & 2:   # SHF_ALLOC
+                    self.sec_data[s.name] = s.data()
+                self.sec_align[s.name] = s["sh_addralign"]
+            symtab = elf.get_section_by_name(".symtab")
+            if symtab is None:
+                return
+            syms = list(symtab.iter_symbols())
+            funcs: dict[int, list[tuple[int, int, str]]] = {}
+            for sym in syms:
+                shndx = sym["st_shndx"]
+                if not isinstance(shndx, int):
+                    continue
+                typ = sym["st_info"]["type"]
+                if typ == "STT_FUNC":
+                    funcs.setdefault(shndx, []).append((sym["st_value"], sym["st_size"], sym.name))
+                elif typ == "STT_OBJECT" and sym["st_info"]["bind"] == "STB_LOCAL":
+                    self.local_objs.setdefault(secs[shndx].name, []).append(
+                        (sym["st_value"], sym["st_size"], sym.name))
+            for sec in secs:
+                if not isinstance(sec, RelocationSection):
+                    continue
+                target = sec["sh_info"]
+                for r in sec.iter_relocations():
+                    sym = syms[r["r_info_sym"]]
+                    shndx = sym["st_shndx"]
+                    secname = secs[shndx].name if isinstance(shndx, int) and shndx else ""
+                    typ = sym["st_info"]["type"]
+                    add = r["r_addend"]
+                    if typ == "STT_SECTION" and secname:
+                        self.sec_addends.setdefault(secname, set()).add(add)
+                    ref = OursRef(r["r_info_type"], sym.name if typ != "STT_SECTION" else secname,
+                                  typ, secname, sym["st_value"], sym["st_size"], add)
+                    off = r["r_offset"]
+                    for lo, size, fn in funcs.get(target, []):
+                        if lo <= off < lo + max(size, 1):
+                            self.funcs.setdefault(fn, {})[off - lo] = ref
+
+    def ref_at(self, func_names, off: int) -> OursRef | None:
+        for fn in func_names:
+            r = self.funcs.get(fn, {}).get(off)
+            if r is not None:
+                return r
+        return None
+
+    def extent(self, secname: str, off: int) -> int:
+        """How many bytes the data referenced at secname+off spans in our object."""
+        for lo, size, _ in self.local_objs.get(secname, []):
+            if lo <= off < lo + size:
+                return lo + size - off
+        end = len(self.sec_data.get(secname, b"")) or self.sec_nobits.get(secname, 0)
+        nxt = [a for a in self.sec_addends.get(secname, ()) if a > off]
+        for lo, _, _ in self.local_objs.get(secname, []):
+            if lo > off:
+                nxt.append(lo)
+        return (min(nxt) if nxt else end) - off
+
+
 def _object_refs(path: str) -> dict[str, set[str]]:
     """function name -> names its relocations reference, for a compiled object"""
     from elftools.elf.elffile import ELFFile
@@ -715,6 +948,7 @@ def main(argv=None):
         c.ours_refs = _object_refs(a.ours)
         c.ours_str_align = _object_string_aligns(a.ours)
         c.ours_pools = _object_string_pools(a.ours)
+        c.ours = OursObject(a.ours)
     if a.range:
         c.include_ranges([_parse_range(t) for t in a.range])
     if a.symbols:
