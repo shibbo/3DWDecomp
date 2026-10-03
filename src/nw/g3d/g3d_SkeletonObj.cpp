@@ -1,6 +1,8 @@
 #include <nn/g3d/g3d_SkeletonObj.h>
+#include <nn/g3d/g3d_TransformImpl.h>
 #include <nn/gfx/gfx_MemoryPool.h>
 #include <nn/util/util_MatrixApi.h>
+#include <nn/util/util_VectorApi.h>
 #include <cstring>
 #include <new>
 
@@ -44,7 +46,44 @@ inline Matrix MultiplyInverseBind(const PackedMatrix& rInverseBind, Matrix world
 inline void StorePackedMatrix(PackedMatrix* pOutput, const Matrix& rMatrix) {
     util::MatrixStore(pOutput, rMatrix);
 }
+/**
+ * @brief Restore one bone's local flags, scale and rotation/translation matrix.
+ * @tparam euler Whether the resource stores Euler angles instead of a quaternion.
+ * @param pOutput Writable local transform belonging to this bone.
+ * @param rBone Resource bone supplying default transform components.
+ */
+template <bool euler>
+inline void RestoreLocalTransform(LocalMtx* pOutput, const ResBone& rBone) {
+    pOutput->flag = rBone.ToData().flag & (ResBone::Mask_Transform | ResBone::Mask_Billboard);
+    util::VectorLoad(&pOutput->scale, rBone.GetScale());
+    Matrix rotation;
+    if (euler) {
+        util::Vector3fType angles;
+        util::VectorLoad(&angles, rBone.GetRotateEuler());
+        rotation = detail::MakeEulerRotation(angles._v);
+    } else {
+        rotation = detail::MakeQuaternionRotation(vld1q_f32(rBone.GetRotateQuat().v));
+    }
+    util::Vector3fType translation;
+    util::VectorLoad(&translation, rBone.GetTranslate());
+    rotation._m.val[3] = translation._v;
+    pOutput->mtx = rotation;
+}
 } // namespace
+/** @brief Restore every local transform from the skeleton's resource bone defaults. */
+void SkeletonObj::ClearLocalMtx() {
+    LocalMtx* pLocal = m_pLocalMtxArray;
+    size_t count = m_Res->GetBoneCount();
+    if ((m_Flag & ResBone::Mask_Rot) != 0) {
+        for (size_t i = 0; i < count; ++i) {
+            RestoreLocalTransform<true>(&pLocal[i], m_Res->ToData().pBoneArray.Get()[i]);
+        }
+    } else {
+        for (size_t i = 0; i < count; ++i) {
+            RestoreLocalTransform<false>(&pLocal[i], m_Res->ToData().pBoneArray.Get()[i]);
+        }
+    }
+}
 /** @brief Calculate workspace offsets for world matrices, local matrices, scales and GPU buffers. */
 void SkeletonObj::InitializeArgument::CalculateMemorySize() {
     auto scaleMode = resource->GetScaleMode();
