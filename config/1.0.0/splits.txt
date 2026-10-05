@@ -2255,7 +2255,7 @@ src/Game/NPC/PlayerNpc.cpp:
     .text   start:0x003CF5E0 end:0x003CFDA8
 src/Game/NPC/Rabbit.cpp:
     .text   start:0x003CFDB0 end:0x003D352C
-src/Game/NPC/RabbitInitPlacePoint.cpp:
+src/Game/NPC/RabbitInitPlacePoint.cpp: done
     .text   start:0x003D3530 end:0x003D3618
 src/Game/NPC/RabbitNpc.cpp:
     .text   start:0x003D3620 end:0x003D3A7C
