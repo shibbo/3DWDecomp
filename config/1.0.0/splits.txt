@@ -2279,7 +2279,7 @@ src/Game/NPC/TestKinopioLeader.cpp:
     .text   start:0x003D6980 end:0x003D7188
 src/Game/NPC/Tico.cpp:
     .text   start:0x003D7190 end:0x003D7810
-src/Game/NPC/WaterFlowAccessor.cpp:
+src/Game/NPC/WaterFlowAccessor.cpp: done
     .text   start:0x003D7810 end:0x003D7A5C
 src/Game/Player/FurActor.cpp:
     .text   start:0x003D7A60 end:0x003D7CE0
