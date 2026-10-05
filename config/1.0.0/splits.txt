@@ -3197,7 +3197,7 @@ src/Game/Sequence/ProductAsyncResourceLoader.cpp:
     .text   start:0x004DFBF0 end:0x004DFFC0
 src/Game/Sequence/ProductSequence.cpp:
     .text   start:0x004DFFC0 end:0x004E1BA0
-src/Game/Sequence/ProductStageStartParam.cpp:
+src/Game/Sequence/ProductStageStartParam.cpp: done
     .text   start:0x004E1BA0 end:0x004E1C7C
 src/Game/Sequence/ProductStateAfterEndingEvent.cpp:
     .text   start:0x004E1C80 end:0x004E2420
