@@ -14760,8 +14760,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100247110			FALSE	_ZN10BgmPlayObj10exePlayingEv	BgmPlayObj::exePlaying()	
 0x7100247180			FALSE	_ZN10BgmPlayObjD1Ev	BgmPlayObj::~BgmPlayObj()	
 0x7100247190			FALSE	_ZN10BgmPlayObjD0Ev	BgmPlayObj::~BgmPlayObj()	
-0x71002471C0			FALSE	nullsub_152	nullsub_152	
-0x71002471D0			FALSE	sub_71002471D0	sub_71002471D0	
+0x71002471C0			FALSE	_ZNK12_GLOBAL__N_117BgmPlayObjNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BgmPlayObjNrvWait::execute(al::NerveKeeper*) const	
+0x71002471D0			FALSE	_ZNK12_GLOBAL__N_120BgmPlayObjNrvPlaying7executeEPN2al11NerveKeeperE	(anonymous namespace)::BgmPlayObjNrvPlaying::execute(al::NerveKeeper*) const	
 0x7100247250			FALSE	_ZNK2al10FunctorV0MIP10BgmPlayObjMS1_FvvEEclEv	al::FunctorV0M<BgmPlayObj*, void (BgmPlayObj::*)()>::operator()() const	
 0x7100247270			FALSE	_ZNK2al10FunctorV0MIP10BgmPlayObjMS1_FvvEE5cloneEv	al::FunctorV0M<BgmPlayObj*, void (BgmPlayObj::*)()>::clone() const	
 0x71002472C0		BgmRegionChanger.o	FALSE	_ZN16BgmRegionChangerC2EPKc	BgmRegionChanger::BgmRegionChanger(char const*)	
@@ -14771,7 +14771,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002474C0			FALSE	_ZN16BgmRegionChanger7exeWaitEv	BgmRegionChanger::exeWait()	
 0x7100247510			FALSE	_ZN16BgmRegionChangerD1Ev	BgmRegionChanger::~BgmRegionChanger()	
 0x7100247520			FALSE	_ZN16BgmRegionChangerD0Ev	BgmRegionChanger::~BgmRegionChanger()	
-0x7100247550			FALSE	sub_7100247550	sub_7100247550	
+0x7100247550			FALSE	_ZNK12_GLOBAL__N_123BgmRegionChangerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BgmRegionChangerNrvWait::execute(al::NerveKeeper*) const	
 0x71002475A0			FALSE	_ZNK2al10FunctorV0MIP16BgmRegionChangerMS1_FvvEEclEv	al::FunctorV0M<BgmRegionChanger*, void (BgmRegionChanger::*)()>::operator()() const	
 0x71002475C0			FALSE	_ZNK2al10FunctorV0MIP16BgmRegionChangerMS1_FvvEE5cloneEv	al::FunctorV0M<BgmRegionChanger*, void (BgmRegionChanger::*)()>::clone() const	
 0x7100247610		BgmRhythmAnimeController.o	FALSE	_ZN24BgmRhythmAnimeControllerC1EPN2al9LiveActorEb	BgmRhythmAnimeController::BgmRhythmAnimeController(al::LiveActor*, bool)	
@@ -17464,7 +17464,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002B0E00			FALSE	_ZN15FlipCircusDoorA7exeWaitEv	FlipCircusDoorA::exeWait()	
 0x71002B0E50			FALSE	_ZN15FlipCircusDoorAD1Ev	FlipCircusDoorA::~FlipCircusDoorA()	
 0x71002B0E60			FALSE	_ZN15FlipCircusDoorAD0Ev	FlipCircusDoorA::~FlipCircusDoorA()	
-0x71002B0E90			FALSE	sub_71002B0E90	sub_71002B0E90	
+0x71002B0E90			FALSE	_ZNK12_GLOBAL__N_122FlipCircusDoorANrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipCircusDoorANrvWait::execute(al::NerveKeeper*) const	
 0x71002B0EE0		FlipPanel.o	FALSE	_ZN9FlipPanel4initERKN2al13ActorInitInfoE	FlipPanel::init(al::ActorInitInfo const&)	
 0x71002B10C0			FALSE	_ZN9FlipPanel8exeWatchEv	FlipPanel::exeWatch()	
 0x71002B1230			FALSE	_ZNK14FlipPanelParts13isExclamationEv	FlipPanelParts::isExclamation() const	
@@ -21690,7 +21690,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710036AEA0			FALSE	_ZNK11SwitchBlock6isMoveEv	SwitchBlock::isMove() const	
 0x710036AEB0			FALSE	_ZN11SwitchBlockD1Ev	SwitchBlock::~SwitchBlock()	
 0x710036AEC0			FALSE	_ZN11SwitchBlockD0Ev	SwitchBlock::~SwitchBlock()	
-0x710036AEF0			FALSE	nullsub_221	nullsub_221	
+0x710036AEF0			FALSE	_ZNK12_GLOBAL__N_118SwitchBlockNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchBlockNrvWait::execute(al::NerveKeeper*) const	
 0x710036AF00			FALSE	_ZNK12_GLOBAL__N_118SwitchBlockNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchBlockNrvMove::execute(al::NerveKeeper*) const	
 0x710036AF10		SwitchBlockWatcher.o	FALSE	_ZN18SwitchBlockWatcherC2EPKc	SwitchBlockWatcher::SwitchBlockWatcher(char const*)	
 0x710036AFA0			FALSE	_ZN18SwitchBlockWatcherC1EPKc	SwitchBlockWatcher::SwitchBlockWatcher(char const*)	
@@ -21701,7 +21701,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710036B4A0			FALSE	_ZN18SwitchBlockWatcherD1Ev	SwitchBlockWatcher::~SwitchBlockWatcher()	
 0x710036B4B0			FALSE	_ZN18SwitchBlockWatcherD0Ev	SwitchBlockWatcher::~SwitchBlockWatcher()	
 0x710036B4E0			FALSE	_ZNK12_GLOBAL__N_125SwitchBlockWatcherNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchBlockWatcherNrvWait::execute(al::NerveKeeper*) const	
-0x710036B4F0			FALSE	sub_710036B4F0	sub_710036B4F0	
+0x710036B4F0			FALSE	_ZNK12_GLOBAL__N_125SwitchBlockWatcherNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchBlockWatcherNrvMove::execute(al::NerveKeeper*) const	
 0x710036B570		SwitchClippingDirector.o	FALSE	_ZN22SwitchClippingDirectorC2EPKc	SwitchClippingDirector::SwitchClippingDirector(char const*)	
 0x710036B5F0			FALSE	_ZN22SwitchClippingDirectorC1EPKc	SwitchClippingDirector::SwitchClippingDirector(char const*)	
 0x710036B680			FALSE	_ZN22SwitchClippingDirector4initERKN2al13ActorInitInfoE	SwitchClippingDirector::init(al::ActorInitInfo const&)	
@@ -21723,13 +21723,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710036BCB0			FALSE	_ZN17SwitchRotateParts9exeRotateEv	SwitchRotateParts::exeRotate()	
 0x710036BCC0			FALSE	_ZN17SwitchRotatePartsD1Ev	SwitchRotateParts::~SwitchRotateParts()	
 0x710036BCD0			FALSE	_ZN17SwitchRotatePartsD0Ev	SwitchRotateParts::~SwitchRotateParts()	
-0x710036BD00			FALSE	nullsub_222	nullsub_222	
-0x710036BD10			FALSE	sub_710036BD10	sub_710036BD10	
-0x710036BD20			FALSE	nullsub_223	nullsub_223	
-0x710036BD30			FALSE	sub_710036BD30	sub_710036BD30	
-0x710036BD40			FALSE	nullsub_224	nullsub_224	
-0x710036BD50			FALSE	sub_710036BD50	sub_710036BD50	
-0x710036BD60			FALSE	sub_710036BD60	sub_710036BD60	
+0x710036BD00			FALSE	_ZNK12_GLOBAL__N_124SwitchRotatePartsNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124SwitchRotatePartsNrvWait7executeEPN2al11NerveKeeperE	
+0x710036BD10			FALSE	_ZNK12_GLOBAL__N_124SwitchRotatePartsNrvWait13getActionNameEv	_ZNK12_GLOBAL__N_124SwitchRotatePartsNrvWait13getActionNameEv	
+0x710036BD20			FALSE	_ZNK12_GLOBAL__N_124SwitchRotatePartsNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124SwitchRotatePartsNrvStop7executeEPN2al11NerveKeeperE	
+0x710036BD30			FALSE	_ZNK12_GLOBAL__N_124SwitchRotatePartsNrvStop13getActionNameEv	_ZNK12_GLOBAL__N_124SwitchRotatePartsNrvStop13getActionNameEv	
+0x710036BD40			FALSE	_ZNK12_GLOBAL__N_126SwitchRotatePartsNrvRotate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126SwitchRotatePartsNrvRotate7executeEPN2al11NerveKeeperE	
+0x710036BD50			FALSE	_ZNK12_GLOBAL__N_126SwitchRotatePartsNrvRotate13getActionNameEv	_ZNK12_GLOBAL__N_126SwitchRotatePartsNrvRotate13getActionNameEv	
+0x710036BD60			FALSE	_GLOBAL__sub_I_SwitchRotateParts.cpp	_GLOBAL__sub_I_SwitchRotateParts.cpp	
 0x710036BDD0		SwitchRotateSwitch.o	FALSE	_ZN18SwitchRotateSwitchC2EPKc	SwitchRotateSwitch::SwitchRotateSwitch(char const*)	
 0x710036BE60			FALSE	_ZN18SwitchRotateSwitchC1EPKc	SwitchRotateSwitch::SwitchRotateSwitch(char const*)	
 0x710036BEF0			FALSE	_ZN18SwitchRotateSwitch4initERKN2al13ActorInitInfoE	SwitchRotateSwitch::init(al::ActorInitInfo const&)	
@@ -21744,10 +21744,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710036C230			FALSE	_ZN18SwitchRotateSwitch6exeOffEv	SwitchRotateSwitch::exeOff()	
 0x710036C290			FALSE	_ZN18SwitchRotateSwitchD1Ev	SwitchRotateSwitch::~SwitchRotateSwitch()	
 0x710036C2A0			FALSE	_ZN18SwitchRotateSwitchD0Ev	SwitchRotateSwitch::~SwitchRotateSwitch()	
-0x710036C2D0			FALSE	sub_710036C2D0	sub_710036C2D0	
-0x710036C310			FALSE	sub_710036C310	sub_710036C310	
-0x710036C370			FALSE	sub_710036C370	sub_710036C370	
-0x710036C3D0			FALSE	sub_710036C3D0	sub_710036C3D0	
+0x710036C2D0			FALSE	_ZNK12_GLOBAL__N_128SwitchRotateSwitchNrvOffWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchRotateSwitchNrvOffWait::execute(al::NerveKeeper*) const	
+0x710036C310			FALSE	_ZNK12_GLOBAL__N_123SwitchRotateSwitchNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchRotateSwitchNrvOn::execute(al::NerveKeeper*) const	
+0x710036C370			FALSE	_ZNK12_GLOBAL__N_127SwitchRotateSwitchNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchRotateSwitchNrvOnWait::execute(al::NerveKeeper*) const	
+0x710036C3D0			FALSE	_ZNK12_GLOBAL__N_124SwitchRotateSwitchNrvOff7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchRotateSwitchNrvOff::execute(al::NerveKeeper*) const	
 0x710036C440		SwitchRotateWatcher.o	FALSE	_ZN19SwitchRotateWatcherC2EPKc	SwitchRotateWatcher::SwitchRotateWatcher(char const*)	
 0x710036C510			FALSE	_ZN19SwitchRotateWatcherC1EPKc	SwitchRotateWatcher::SwitchRotateWatcher(char const*)	
 0x710036C5E0			FALSE	_ZN19SwitchRotateWatcher4initERKN2al13ActorInitInfoE	SwitchRotateWatcher::init(al::ActorInitInfo const&)	
@@ -21756,7 +21756,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710036CA30			FALSE	_ZN19SwitchRotateWatcher9exeRotateEv	SwitchRotateWatcher::exeRotate()	
 0x710036CBC0			FALSE	_ZN19SwitchRotateWatcherD1Ev	SwitchRotateWatcher::~SwitchRotateWatcher()	
 0x710036CBD0			FALSE	_ZN19SwitchRotateWatcherD0Ev	SwitchRotateWatcher::~SwitchRotateWatcher()	
-0x710036CC00			FALSE	sub_710036CC00	sub_710036CC00	
+0x710036CC00			FALSE	_ZNK12_GLOBAL__N_126SwitchRotateWatcherNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchRotateWatcherNrvWait::execute(al::NerveKeeper*) const	
 0x710036CC80			FALSE	_ZNK12_GLOBAL__N_128SwitchRotateWatcherNrvRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwitchRotateWatcherNrvRotate::execute(al::NerveKeeper*) const	
 0x710036CC90		TeresaConveyorBench.o	FALSE	_ZN19TeresaConveyorBenchC2EPKc	TeresaConveyorBench::TeresaConveyorBench(char const*)	
 0x710036CD30			FALSE	_ZN19TeresaConveyorBenchC1EPKc	TeresaConveyorBench::TeresaConveyorBench(char const*)	
@@ -22431,10 +22431,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003882A0			FALSE	_ZN19TimeLimitStepSwitch10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	TimeLimitStepSwitch::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x7100388360			FALSE	_ZN19TimeLimitStepSwitchD1Ev	TimeLimitStepSwitch::~TimeLimitStepSwitch()	
 0x7100388370			FALSE	_ZN19TimeLimitStepSwitchD0Ev	TimeLimitStepSwitch::~TimeLimitStepSwitch()	
-0x71003883A0			FALSE	sub_71003883A0	sub_71003883A0	
+0x71003883A0			FALSE	_ZNK12_GLOBAL__N_129TimeLimitStepSwitchNrvOffWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TimeLimitStepSwitchNrvOffWait::execute(al::NerveKeeper*) const	
 0x71003883F0			FALSE	_ZNK12_GLOBAL__N_128TimeLimitStepSwitchNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TimeLimitStepSwitchNrvOnWait::execute(al::NerveKeeper*) const	
-0x7100388400			FALSE	sub_7100388400	sub_7100388400	
-0x7100388460			FALSE	sub_7100388460	sub_7100388460	
+0x7100388400			FALSE	_ZNK12_GLOBAL__N_125TimeLimitStepSwitchNrvOff7executeEPN2al11NerveKeeperE	(anonymous namespace)::TimeLimitStepSwitchNrvOff::execute(al::NerveKeeper*) const	
+0x7100388460			FALSE	_ZNK12_GLOBAL__N_124TimeLimitStepSwitchNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::TimeLimitStepSwitchNrvOn::execute(al::NerveKeeper*) const	
 0x71003884C0		TimerClock.o	FALSE	_ZN10TimerClockC2EPKc	TimerClock::TimerClock(char const*)	
 0x7100388550			FALSE	_ZN10TimerClockC1EPKc	TimerClock::TimerClock(char const*)	
 0x71003885E0			FALSE	_ZN10TimerClock4initERKN2al13ActorInitInfoE	TimerClock::init(al::ActorInitInfo const&)	
@@ -22618,8 +22618,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710038E150			FALSE	_ZN21TouchPointTransparent12exeDisappearEv	TouchPointTransparent::exeDisappear()	
 0x710038E1E0			FALSE	_ZN21TouchPointTransparentD1Ev	TouchPointTransparent::~TouchPointTransparent()	
 0x710038E1F0			FALSE	_ZN21TouchPointTransparentD0Ev	TouchPointTransparent::~TouchPointTransparent()	
-0x710038E220			FALSE	sub_710038E220	sub_710038E220	
-0x710038E2B0			FALSE	sub_710038E2B0	sub_710038E2B0	
+0x710038E220			FALSE	_ZNK12_GLOBAL__N_133TouchPointTransparentNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::TouchPointTransparentNrvDisappear::execute(al::NerveKeeper*) const	
+0x710038E2B0			FALSE	_ZNK12_GLOBAL__N_135TouchPointTransparentNrvTransparent7executeEPN2al11NerveKeeperE	(anonymous namespace)::TouchPointTransparentNrvTransparent::execute(al::NerveKeeper*) const	
 0x710038E300		TouchTrackDrawer.o	FALSE	_ZN16TouchTrackDrawerC2EPN2al9LiveActorE	TouchTrackDrawer::TouchTrackDrawer(al::LiveActor*)	
 0x710038E320			FALSE	_ZN16TouchTrackDrawer4initERKN2al13ActorInitInfoEPKci	TouchTrackDrawer::init(al::ActorInitInfo const&, char const*, int)	
 0x710038E3D0			FALSE	_ZN16TouchTrackDrawer6updateEv	TouchTrackDrawer::update()	
@@ -22691,10 +22691,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100391180			FALSE	_ZN13TrampleSwitch14isTrigSwitchOnEv	TrampleSwitch::isTrigSwitchOn()	
 0x71003911D0			FALSE	_ZN13TrampleSwitch13isEarlyTrigOnEv	TrampleSwitch::isEarlyTrigOn()	
 0x71003911E0			FALSE	_ZN13TrampleSwitch10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	TrampleSwitch::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
-0x7100391380			FALSE	sub_7100391380	sub_7100391380	
+0x7100391380			FALSE	_ZNK12_GLOBAL__N_123TrampleSwitchNrvOffWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchNrvOffWait::execute(al::NerveKeeper*) const	
 0x71003913D0			FALSE	_ZNK12_GLOBAL__N_118TrampleSwitchNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchNrvOn::execute(al::NerveKeeper*) const	
 0x71003913E0			FALSE	_ZNK12_GLOBAL__N_122TrampleSwitchNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchNrvOnWait::execute(al::NerveKeeper*) const	
-0x71003913F0			FALSE	sub_71003913F0	sub_71003913F0	
+0x71003913F0			FALSE	_ZNK12_GLOBAL__N_119TrampleSwitchNrvOff7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchNrvOff::execute(al::NerveKeeper*) const	
 0x7100391450			FALSE	_ZNK2al10FunctorV0MIP13TrampleSwitchMS1_FvvEEclEv	al::FunctorV0M<TrampleSwitch*, void (TrampleSwitch::*)()>::operator()() const	
 0x7100391470			FALSE	_ZNK2al10FunctorV0MIP13TrampleSwitchMS1_FvvEE5cloneEv	al::FunctorV0M<TrampleSwitch*, void (TrampleSwitch::*)()>::clone() const	
 0x71003914C0		TrampleSwitchChara.o	FALSE	_ZN18TrampleSwitchCharaC2EPKc	TrampleSwitchChara::TrampleSwitchChara(char const*)	
@@ -22709,10 +22709,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003917E0			FALSE	_ZN18TrampleSwitchChara10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	TrampleSwitchChara::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x7100391940			FALSE	_ZN18TrampleSwitchCharaD1Ev	TrampleSwitchChara::~TrampleSwitchChara()	
 0x7100391950			FALSE	_ZN18TrampleSwitchCharaD0Ev	TrampleSwitchChara::~TrampleSwitchChara()	
-0x7100391980			FALSE	sub_7100391980	sub_7100391980	
-0x71003919E0			FALSE	sub_71003919E0	sub_71003919E0	
-0x7100391A40			FALSE	sub_7100391A40	sub_7100391A40	
-0x7100391AA0			FALSE	sub_7100391AA0	sub_7100391AA0	
+0x7100391980			FALSE	_ZNK12_GLOBAL__N_128TrampleSwitchCharaNrvOffWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchCharaNrvOffWait::execute(al::NerveKeeper*) const	
+0x71003919E0			FALSE	_ZNK12_GLOBAL__N_127TrampleSwitchCharaNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchCharaNrvOnWait::execute(al::NerveKeeper*) const	
+0x7100391A40			FALSE	_ZNK12_GLOBAL__N_123TrampleSwitchCharaNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchCharaNrvOn::execute(al::NerveKeeper*) const	
+0x7100391AA0			FALSE	_ZNK12_GLOBAL__N_129TrampleSwitchCharaNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchCharaNrvReaction::execute(al::NerveKeeper*) const	
 0x7100391B00		TrampleSwitchGoalItem.o	FALSE	_ZN21TrampleSwitchGoalItemC2EPKc	TrampleSwitchGoalItem::TrampleSwitchGoalItem(char const*)	
 0x7100391B80			FALSE	_ZN21TrampleSwitchGoalItemC1EPKc	TrampleSwitchGoalItem::TrampleSwitchGoalItem(char const*)	
 0x7100391C10			FALSE	_ZN21TrampleSwitchGoalItem4initERKN2al13ActorInitInfoE	TrampleSwitchGoalItem::init(al::ActorInitInfo const&)	
@@ -22727,9 +22727,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100392130			FALSE	_ZN21TrampleSwitchGoalItemD1Ev	TrampleSwitchGoalItem::~TrampleSwitchGoalItem()	
 0x7100392140			FALSE	_ZN21TrampleSwitchGoalItemD0Ev	TrampleSwitchGoalItem::~TrampleSwitchGoalItem()	
 0x7100392170			FALSE	_ZNK12_GLOBAL__N_131TrampleSwitchGoalItemNrvOffWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchGoalItemNrvOffWait::execute(al::NerveKeeper*) const	
-0x7100392180			FALSE	sub_7100392180	sub_7100392180	
-0x71003921E0			FALSE	sub_71003921E0	sub_71003921E0	
-0x7100392250			FALSE	sub_7100392250	sub_7100392250	
+0x7100392180			FALSE	_ZNK12_GLOBAL__N_130TrampleSwitchGoalItemNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchGoalItemNrvOnWait::execute(al::NerveKeeper*) const	
+0x71003921E0			FALSE	_ZNK12_GLOBAL__N_126TrampleSwitchGoalItemNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchGoalItemNrvOn::execute(al::NerveKeeper*) const	
+0x7100392250			FALSE	_ZNK12_GLOBAL__N_132TrampleSwitchGoalItemNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchGoalItemNrvReaction::execute(al::NerveKeeper*) const	
 0x71003922C0			FALSE	_ZNK2al10FunctorV0MIP21TrampleSwitchGoalItemMS1_FvvEEclEv	al::FunctorV0M<TrampleSwitchGoalItem*, void (TrampleSwitchGoalItem::*)()>::operator()() const	
 0x71003922E0			FALSE	_ZNK2al10FunctorV0MIP21TrampleSwitchGoalItemMS1_FvvEE5cloneEv	al::FunctorV0M<TrampleSwitchGoalItem*, void (TrampleSwitchGoalItem::*)()>::clone() const	
 0x7100392330		TrampleSwitchGold.o	FALSE	_ZN17TrampleSwitchGoldC2EPKc	TrampleSwitchGold::TrampleSwitchGold(char const*)	
@@ -22798,11 +22798,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100394A80			FALSE	_ZN21TrampleSwitchTogether7successEv	TrampleSwitchTogether::success()	
 0x7100394A90			FALSE	_ZN21TrampleSwitchTogetherD1Ev	TrampleSwitchTogether::~TrampleSwitchTogether()	
 0x7100394AA0			FALSE	_ZN21TrampleSwitchTogetherD0Ev	TrampleSwitchTogether::~TrampleSwitchTogether()	
-0x7100394AD0			FALSE	sub_7100394AD0	sub_7100394AD0	
-0x7100394B20			FALSE	sub_7100394B20	sub_7100394B20	
-0x7100394B90			FALSE	sub_7100394B90	sub_7100394B90	
-0x7100394BF0			FALSE	sub_7100394BF0	sub_7100394BF0	
-0x7100394C60			FALSE	sub_7100394C60	sub_7100394C60	
+0x7100394AD0			FALSE	_ZNK12_GLOBAL__N_131TrampleSwitchTogetherNrvOffWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchTogetherNrvOffWait::execute(al::NerveKeeper*) const	
+0x7100394B20			FALSE	_ZNK12_GLOBAL__N_126TrampleSwitchTogetherNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchTogetherNrvOn::execute(al::NerveKeeper*) const	
+0x7100394B90			FALSE	_ZNK12_GLOBAL__N_130TrampleSwitchTogetherNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchTogetherNrvOnWait::execute(al::NerveKeeper*) const	
+0x7100394BF0			FALSE	_ZNK12_GLOBAL__N_127TrampleSwitchTogetherNrvOff7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchTogetherNrvOff::execute(al::NerveKeeper*) const	
+0x7100394C60			FALSE	_ZNK12_GLOBAL__N_131TrampleSwitchTogetherNrvSuccess7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchTogetherNrvSuccess::execute(al::NerveKeeper*) const	
 0x7100394CC0		TrampleSwitchTogetherWatcher.o	FALSE	_ZN28TrampleSwitchTogetherWatcherC2EPKc	TrampleSwitchTogetherWatcher::TrampleSwitchTogetherWatcher(char const*)	
 0x7100394D40			FALSE	_ZN28TrampleSwitchTogetherWatcherC1EPKc	TrampleSwitchTogetherWatcher::TrampleSwitchTogetherWatcher(char const*)	
 0x7100394DD0			FALSE	_ZN28TrampleSwitchTogetherWatcher4initERKN2al13ActorInitInfoE	TrampleSwitchTogetherWatcher::init(al::ActorInitInfo const&)	
@@ -22811,7 +22811,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100395050			FALSE	_ZN28TrampleSwitchTogetherWatcherD1Ev	TrampleSwitchTogetherWatcher::~TrampleSwitchTogetherWatcher()	
 0x7100395060			FALSE	_ZN28TrampleSwitchTogetherWatcherD0Ev	TrampleSwitchTogetherWatcher::~TrampleSwitchTogetherWatcher()	
 0x7100395090			FALSE	_ZNK12_GLOBAL__N_136TrampleSwitchTogetherWatcherNrvWatch7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchTogetherWatcherNrvWatch::execute(al::NerveKeeper*) const	
-0x71003950A0			FALSE	nullsub_246	nullsub_246	
+0x71003950A0			FALSE	_ZNK12_GLOBAL__N_134TrampleSwitchTogetherWatcherNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampleSwitchTogetherWatcherNrvEnd::execute(al::NerveKeeper*) const	
 0x71003950B0		Trampoline.o	FALSE	_ZN10TrampolineC2EPKc	Trampoline::Trampoline(char const*)	
 0x71003951B0			FALSE	_ZN10TrampolineC1EPKc	Trampoline::Trampoline(char const*)	
 0x71003952B0			FALSE	_ZN10Trampoline4initERKN2al13ActorInitInfoE	Trampoline::init(al::ActorInitInfo const&)	
@@ -23032,10 +23032,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A03A0			FALSE	_ZN9TreeStump14exeReactionEndEv	TreeStump::exeReactionEnd()	
 0x71003A03F0			FALSE	_ZN9TreeStumpD1Ev	TreeStump::~TreeStump()	
 0x71003A0400			FALSE	_ZN9TreeStumpD0Ev	TreeStump::~TreeStump()	
-0x71003A0430			FALSE	nullsub_253	nullsub_253	
-0x71003A0440			FALSE	sub_71003A0440	sub_71003A0440	
-0x71003A0460			FALSE	sub_71003A0460	sub_71003A0460	
-0x71003A04D0			FALSE	sub_71003A04D0	sub_71003A04D0	
+0x71003A0430			FALSE	_ZNK12_GLOBAL__N_116TreeStumpNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TreeStumpNrvWait::execute(al::NerveKeeper*) const	
+0x71003A0440			FALSE	_ZNK12_GLOBAL__N_125TreeStumpNrvReactionStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::TreeStumpNrvReactionStart::execute(al::NerveKeeper*) const	
+0x71003A0460			FALSE	_ZNK12_GLOBAL__N_120TreeStumpNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::TreeStumpNrvReaction::execute(al::NerveKeeper*) const	
+0x71003A04D0			FALSE	_ZNK12_GLOBAL__N_123TreeStumpNrvReactionEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TreeStumpNrvReactionEnd::execute(al::NerveKeeper*) const	
 0x71003A0520		TreeStumpWatcher.o	FALSE	_ZN16TreeStumpWatcherC2EPKc	TreeStumpWatcher::TreeStumpWatcher(char const*)	
 0x71003A05B0			FALSE	_ZN16TreeStumpWatcherC1EPKc	TreeStumpWatcher::TreeStumpWatcher(char const*)	
 0x71003A0640			FALSE	_ZN16TreeStumpWatcher4initERKN2al13ActorInitInfoE	TreeStumpWatcher::init(al::ActorInitInfo const&)	
@@ -23048,7 +23048,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A08E0			FALSE	_ZN16TreeStumpWatcher10addStompedEv	TreeStumpWatcher::addStomped()	
 0x71003A08F0			FALSE	_ZN16TreeStumpWatcherD1Ev	TreeStumpWatcher::~TreeStumpWatcher()	
 0x71003A0900			FALSE	_ZN16TreeStumpWatcherD0Ev	TreeStumpWatcher::~TreeStumpWatcher()	
-0x71003A0930			FALSE	sub_71003A0930	sub_71003A0930	
+0x71003A0930			FALSE	_ZNK12_GLOBAL__N_124TreeStumpWatcherNrvWatch7executeEPN2al11NerveKeeperE	(anonymous namespace)::TreeStumpWatcherNrvWatch::execute(al::NerveKeeper*) const	
 0x71003A0990		WarpCube.o	FALSE	_ZN8WarpCubeC2EPKc	WarpCube::WarpCube(char const*)	
 0x71003A0A70			FALSE	_ZN8WarpCubeC1EPKc	WarpCube::WarpCube(char const*)	
 0x71003A0B50			FALSE	_ZN8WarpCube4initERKN2al13ActorInitInfoE	WarpCube::init(al::ActorInitInfo const&)	
@@ -23203,7 +23203,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A6680			FALSE	_ZN12WheelWatcher7exeWaitEv	WheelWatcher::exeWait()	
 0x71003A6690			FALSE	_ZN12WheelWatcherD1Ev	WheelWatcher::~WheelWatcher()	
 0x71003A66A0			FALSE	_ZN12WheelWatcherD0Ev	WheelWatcher::~WheelWatcher()	
-0x71003A66D0			FALSE	nullsub_257	nullsub_257	
+0x71003A66D0			FALSE	_ZNK12_GLOBAL__N_119WheelWatcherNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WheelWatcherNrvWait::execute(al::NerveKeeper*) const	
 0x71003A66E0			FALSE	_ZNK2al10FunctorV0MIP12WheelWatcherMS1_FvvEEclEv	al::FunctorV0M<WheelWatcher*, void (WheelWatcher::*)()>::operator()() const	
 0x71003A6700			FALSE	_ZNK2al10FunctorV0MIP12WheelWatcherMS1_FvvEE5cloneEv	al::FunctorV0M<WheelWatcher*, void (WheelWatcher::*)()>::clone() const	
 0x71003A6750		WhiteBell.o	FALSE	_ZN9WhiteBellC2EPKcP10ItemBubble	WhiteBell::WhiteBell(char const*, ItemBubble*)	

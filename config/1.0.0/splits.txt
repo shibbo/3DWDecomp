@@ -69,7 +69,7 @@ src/Game/AreaObj/FrameOutCtrlArea.cpp:
     .text   start:0x00000B90 end:0x00000CDC
 src/Game/AreaObj/InkArea.cpp:
     .text   start:0x00000CE0 end:0x00000E1C
-src/Game/AreaObj/IslandArea.cpp:
+src/Game/AreaObj/IslandArea.cpp: done
     .text   start:0x00000E20 end:0x00000F50
 src/Game/AreaObj/NeonAreaWatcher.cpp:
     .text   start:0x00000F50 end:0x00000F88
@@ -1375,11 +1375,11 @@ src/Game/MapObj/BallStateRolling.cpp:
     .text   start:0x00246840 end:0x00246AA8
 src/Game/MapObj/BallStateThrow.cpp:
     .text   start:0x00246AB0 end:0x00246E68
-src/Game/MapObj/BgmPlayObj.cpp:
+src/Game/MapObj/BgmPlayObj.cpp: done
     .text   start:0x00246E70 end:0x002472B4
-src/Game/MapObj/BgmRegionChanger.cpp:
+src/Game/MapObj/BgmRegionChanger.cpp: done
     .text   start:0x002472C0 end:0x00247604
-src/Game/MapObj/BgmRhythmAnimeController.cpp:
+src/Game/MapObj/BgmRhythmAnimeController.cpp: done
     .text   start:0x00247610 end:0x00247A38
 src/Game/MapObj/BgmStopObj.cpp: done
     .text   start:0x00247A40 end:0x00247DC4
@@ -1541,7 +1541,7 @@ src/Game/MapObj/CoinRedRing.cpp:
     .text   start:0x0027BCE0 end:0x0027C618
 src/Game/MapObj/CoinRing.cpp:
     .text   start:0x0027C620 end:0x0027D114
-src/Game/MapObj/CoinRotater.cpp:
+src/Game/MapObj/CoinRotater.cpp: done
     .text   start:0x0027D120 end:0x0027D2AC
 src/Game/MapObj/CoinStack.cpp:
     .text   start:0x0027D2B0 end:0x0027D858
@@ -1595,13 +1595,13 @@ src/Game/MapObj/DrcTouchPointer.cpp:
     .text   start:0x0029FF60 end:0x002A49F0
 src/Game/MapObj/EchoBlockDrawer.cpp:
     .text   start:0x002A49F0 end:0x002A4D48
-src/Game/MapObj/EchoBlockMapParts.cpp:
+src/Game/MapObj/EchoBlockMapParts.cpp: done
     .text   start:0x002A4D50 end:0x002A4EF0
 src/Game/MapObj/EchoEmitter.cpp:
     .text   start:0x002A4EF0 end:0x002A5464
 src/Game/MapObj/EchoEmitterHolder.cpp:
     .text   start:0x002A5470 end:0x002A691C
-src/Game/MapObj/EchoEmitTest.cpp:
+src/Game/MapObj/EchoEmitTest.cpp: done
     .text   start:0x002A6920 end:0x002A6AB0
 src/Game/MapObj/EffectObjBreathBubble.cpp:
     .text   start:0x002A6AB0 end:0x002A7098
@@ -1621,13 +1621,13 @@ src/Game/MapObj/FireworksController.cpp:
     .text   start:0x002A9ED0 end:0x002AA3C0
 src/Game/MapObj/FireworksEffectObj.cpp:
     .text   start:0x002AA3C0 end:0x002AAD14
-src/Game/MapObj/Fish.cpp:
+src/Game/MapObj/Fish.cpp: done
     .text   start:0x002AAD20 end:0x002AAEB0
 src/Game/MapObj/FishColony.cpp:
     .text   start:0x002AAEB0 end:0x002ABD08
 src/Game/MapObj/FlingPole.cpp:
     .text   start:0x002ABD10 end:0x002B0C88
-src/Game/MapObj/FlipCircusDoor.cpp:
+src/Game/MapObj/FlipCircusDoor.cpp: done
     .text   start:0x002B0C90 end:0x002B0ED8
 src/Game/MapObj/FlipPanel.cpp:
     .text   start:0x002B0EE0 end:0x002B1F14
@@ -1647,7 +1647,7 @@ src/Game/MapObj/GeneratorBox.cpp:
     .text   start:0x002B5420 end:0x002B7134
 src/Game/MapObj/GeneratorBoxChild.cpp:
     .text   start:0x002B7140 end:0x002B7A60
-src/Game/MapObj/GiantTouchBreakMapParts.cpp:
+src/Game/MapObj/GiantTouchBreakMapParts.cpp: done
     .text   start:0x002B7A60 end:0x002B7C70
 src/Game/MapObj/GigaBall.cpp:
     .text   start:0x002B7C70 end:0x002BA790
@@ -1709,7 +1709,7 @@ src/Game/MapObj/GreenStarKeeper.cpp:
     .text   start:0x002E1530 end:0x002E1808
 src/Game/MapObj/GreenStarStand.cpp:
     .text   start:0x002E1810 end:0x002E1C44
-src/Game/MapObj/GroupClippingDummyTarget.cpp:
+src/Game/MapObj/GroupClippingDummyTarget.cpp: done
     .text   start:0x002E1C50 end:0x002E1E20
 src/Game/MapObj/GustWind.cpp:
     .text   start:0x002E1E20 end:0x002E27EC
@@ -1723,7 +1723,7 @@ src/Game/MapObj/HoldColliderControl.cpp:
     .text   start:0x002E4290 end:0x002E4528
 src/Game/MapObj/IllustItem.cpp:
     .text   start:0x002E4530 end:0x002E50B4
-src/Game/MapObj/IllustItemKeeper.cpp:
+src/Game/MapObj/IllustItemKeeper.cpp: done
     .text   start:0x002E50C0 end:0x002E5238
 src/Game/MapObj/IslandAreaWatcher.cpp:
     .text   start:0x002E5240 end:0x002E5440
@@ -1741,7 +1741,7 @@ src/Game/MapObj/ItemBubbleSingleMode.cpp:
     .text   start:0x002E8F50 end:0x002E9360
 src/Game/MapObj/ItemHolder.cpp:
     .text   start:0x002E9360 end:0x002EB4C8
-src/Game/MapObj/ItemAssistRotate.cpp:
+src/Game/MapObj/ItemAssistRotate.cpp: done
     .text   start:0x002EB4D0 end:0x002EB51C
 src/Game/MapObj/ItemStateAssistRotate.cpp:
     .text   start:0x002EB520 end:0x002EB8F8
@@ -1757,7 +1757,7 @@ src/Game/MapObj/ItemStatePopUpAbove.cpp:
     .text   start:0x002ED810 end:0x002EDAC8
 src/Game/MapObj/ItemStatePopUpFront.cpp:
     .text   start:0x002EDAD0 end:0x002EF228
-src/Game/MapObj/IUseTimer.cpp:
+src/Game/MapObj/IUseTimer.cpp: done
     .text   start:0x002EF230 end:0x002EF32C
 src/Game/MapObj/JumpFlipPanel.cpp:
     .text   start:0x002EF330 end:0x002EFD74
@@ -1847,7 +1847,7 @@ src/Game/MapObj/MusicalItem.cpp:
     .text   start:0x0031DE30 end:0x0031E11C
 src/Game/MapObj/MysteryBox.cpp:
     .text   start:0x0031E120 end:0x003200B4
-src/Game/MapObj/MysteryBoxConnector.cpp:
+src/Game/MapObj/MysteryBoxConnector.cpp: done
     .text   start:0x003200C0 end:0x003201AC
 src/Game/MapObj/MysteryHouseChecker.cpp:
     .text   start:0x003201B0 end:0x00320A94
@@ -1983,7 +1983,7 @@ src/Game/MapObj/StepScrollParts.cpp:
     .text   start:0x00364D40 end:0x003650E0
 src/Game/MapObj/StepScrollWatcher.cpp:
     .text   start:0x003650E0 end:0x00365CB4
-src/Game/MapObj/StrongHipDropReactPoint.cpp:
+src/Game/MapObj/StrongHipDropReactPoint.cpp: done
     .text   start:0x00365CC0 end:0x00365F10
 src/Game/MapObj/SuperBell.cpp:
     .text   start:0x00365F10 end:0x00366B64
@@ -1997,19 +1997,19 @@ src/Game/MapObj/SuperSkateRail.cpp:
     .text   start:0x003694B0 end:0x00369B30
 src/Game/MapObj/SuperStar.cpp:
     .text   start:0x00369B30 end:0x0036A7D4
-src/Game/MapObj/SwitchAnd.cpp:
+src/Game/MapObj/SwitchAnd.cpp: done
     .text   start:0x0036A7E0 end:0x0036AB04
-src/Game/MapObj/SwitchBlock.cpp:
+src/Game/MapObj/SwitchBlock.cpp: done
     .text   start:0x0036AB10 end:0x0036AF08
-src/Game/MapObj/SwitchBlockWatcher.cpp:
+src/Game/MapObj/SwitchBlockWatcher.cpp: done
     .text   start:0x0036AF10 end:0x0036B568
-src/Game/MapObj/SwitchClippingDirector.cpp:
+src/Game/MapObj/SwitchClippingDirector.cpp: done
     .text   start:0x0036B570 end:0x0036B974
-src/Game/MapObj/SwitchRotateParts.cpp:
+src/Game/MapObj/SwitchRotateParts.cpp: done
     .text   start:0x0036B980 end:0x0036BDC8
-src/Game/MapObj/SwitchRotateSwitch.cpp:
+src/Game/MapObj/SwitchRotateSwitch.cpp: done
     .text   start:0x0036BDD0 end:0x0036C434
-src/Game/MapObj/SwitchRotateWatcher.cpp:
+src/Game/MapObj/SwitchRotateWatcher.cpp: done
     .text   start:0x0036C440 end:0x0036CC88
 src/Game/MapObj/TeresaConveyorBench.cpp:
     .text   start:0x0036CC90 end:0x0036D2C4
@@ -2097,7 +2097,7 @@ src/Game/MapObj/TestTrampleSwitchGold.cpp:
     .text   start:0x003868A0 end:0x00386A20
 src/Game/MapObj/ThrowMapParts.cpp:
     .text   start:0x00386A20 end:0x00387A9C
-src/Game/MapObj/TimeLimitStepSwitch.cpp:
+src/Game/MapObj/TimeLimitStepSwitch.cpp: done
     .text   start:0x00387AA0 end:0x003884BC
 src/Game/MapObj/TimerClock.cpp:
     .text   start:0x003884C0 end:0x00388974
@@ -2107,15 +2107,15 @@ src/Game/MapObj/TimerCoinHolder.cpp:
     .text   start:0x00389210 end:0x00389848
 src/Game/MapObj/TimerGate.cpp:
     .text   start:0x00389850 end:0x0038C0A4
-src/Game/MapObj/TimerManager.cpp:
+src/Game/MapObj/TimerManager.cpp: done
     .text   start:0x0038C0B0 end:0x0038C5A8
-src/Game/MapObj/TimerStageSwitch.cpp:
+src/Game/MapObj/TimerStageSwitch.cpp: done
     .text   start:0x0038C5B0 end:0x0038C8C4
 src/Game/MapObj/TouchCarryItemState.cpp:
     .text   start:0x0038C8D0 end:0x0038CF18
 src/Game/MapObj/TouchReactionMapParts.cpp:
     .text   start:0x0038CF20 end:0x0038DED4
-src/Game/MapObj/TouchPointTransparent.cpp:
+src/Game/MapObj/TouchPointTransparent.cpp: done
     .text   start:0x0038DEE0 end:0x0038E2F4
 src/Game/MapObj/TouchTrackDrawer.cpp:
     .text   start:0x0038E300 end:0x0038E820
@@ -2123,23 +2123,23 @@ src/Game/MapObj/TractorBubble.cpp:
     .text   start:0x0038E820 end:0x0039039C
 src/Game/MapObj/TractorBubblePuppeteer.cpp:
     .text   start:0x003903A0 end:0x00390C44
-src/Game/MapObj/TrampleSwitch.cpp:
+src/Game/MapObj/TrampleSwitch.cpp: done
     .text   start:0x00390C50 end:0x003914B4
-src/Game/MapObj/TrampleSwitchChara.cpp:
+src/Game/MapObj/TrampleSwitchChara.cpp: done
     .text   start:0x003914C0 end:0x00391B00
-src/Game/MapObj/TrampleSwitchGoalItem.cpp:
+src/Game/MapObj/TrampleSwitchGoalItem.cpp: done
     .text   start:0x00391B00 end:0x00392324
-src/Game/MapObj/TrampleSwitchGold.cpp:
+src/Game/MapObj/TrampleSwitchGold.cpp: done
     .text   start:0x00392330 end:0x00392470
 src/Game/MapObj/TrampleSwitchTimer.cpp:
     .text   start:0x00392470 end:0x00394644
-src/Game/MapObj/TrampleSwitchTogether.cpp:
+src/Game/MapObj/TrampleSwitchTogether.cpp: done
     .text   start:0x00394650 end:0x00394CB4
-src/Game/MapObj/TrampleSwitchTogetherWatcher.cpp:
+src/Game/MapObj/TrampleSwitchTogetherWatcher.cpp: done
     .text   start:0x00394CC0 end:0x003950A4
 src/Game/MapObj/Trampoline.cpp:
     .text   start:0x003950B0 end:0x00395F98
-src/Game/MapObj/TransparentWall.cpp:
+src/Game/MapObj/TransparentWall.cpp: done
     .text   start:0x00395FA0 end:0x00396300
 src/Game/MapObj/Trapeze.cpp:
     .text   start:0x00396300 end:0x00397AC8
@@ -2157,9 +2157,9 @@ src/Game/MapObj/TreeBindPuppeteer.cpp:
     .text   start:0x0039E0C0 end:0x0039F828
 src/Game/MapObj/TreeFarLodWatcher.cpp:
     .text   start:0x0039F830 end:0x003A0000
-src/Game/MapObj/TreeStump.cpp:
+src/Game/MapObj/TreeStump.cpp: done
     .text   start:0x003A0000 end:0x003A051C
-src/Game/MapObj/TreeStumpWatcher.cpp:
+src/Game/MapObj/TreeStumpWatcher.cpp: done
     .text   start:0x003A0520 end:0x003A0988
 src/Game/MapObj/WarpCube.cpp:
     .text   start:0x003A0990 end:0x003A2EB4
@@ -2173,7 +2173,7 @@ src/Game/MapObj/WarpObjUil.cpp:
     .text   start:0x003A5710 end:0x003A5890
 src/Game/MapObj/WaterAreaMoveModel.cpp:
     .text   start:0x003A5890 end:0x003A6344
-src/Game/MapObj/WheelWatcher.cpp:
+src/Game/MapObj/WheelWatcher.cpp: done
     .text   start:0x003A6350 end:0x003A6744
 src/Game/MapObj/WhiteBell.cpp:
     .text   start:0x003A6750 end:0x003A7284
@@ -2181,7 +2181,7 @@ src/Game/MapObj/WoodBox.cpp:
     .text   start:0x003A7290 end:0x003A7F80
 src/Game/MapObj/WoodLogBridge.cpp:
     .text   start:0x003A7F80 end:0x003A8A18
-src/Game/MapObj/ZigzagBuildingCover.cpp:
+src/Game/MapObj/ZigzagBuildingCover.cpp: done
     .text   start:0x003A8A20 end:0x003A8BB0
 src/Game/NPC/IslandHolder.cpp:
     .text   start:0x003A8BB0 end:0x003AB430
