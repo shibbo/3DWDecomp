@@ -353,7 +353,7 @@ src/Game/CourseSelect/CoinCourseSelect.cpp:
     .text   start:0x0008DDA0 end:0x0008E150
 src/Game/CourseSelect/CounterLock.cpp:
     .text   start:0x0008E150 end:0x0008F33C
-src/Game/CourseSelect/CourseSelectActorInfo.cpp:
+src/Game/CourseSelect/CourseSelectActorInfo.cpp: done
     .text   start:0x0008F340 end:0x0008F448
 src/Game/CourseSelect/CourseSelectBgmEventController.cpp:
     .text   start:0x0008F450 end:0x0008F7B8
