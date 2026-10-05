@@ -2231,7 +2231,7 @@ src/Game/NPC/NekoNormal.cpp:
     .text   start:0x003BD490 end:0x003C5F18
 src/Game/NPC/NekoParent.cpp:
     .text   start:0x003C5F20 end:0x003C947C
-src/Game/NPC/NekoStateWaitParam.cpp:
+src/Game/NPC/NekoStateWaitParam.cpp: done
     .text   start:0x003C9480 end:0x003C9490
 src/Game/NPC/NpcHeadController.cpp:
     .text   start:0x003C9490 end:0x003C9AD4
