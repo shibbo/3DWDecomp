@@ -37,6 +37,7 @@ public:
                       TargetFinder* pTargetFinder);
 
     void setWanderCenter(const sead::Vector3f& rCenter);
+    bool isWait();
 
 private:
     u8 _20[0x28];

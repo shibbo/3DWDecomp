@@ -10,6 +10,7 @@
 #include <nn/types.h>
 #include <nn/vfx/Heap.h>
 #include <nn/vfx/System.h>
+#include <nn/vfx/vfx_SuperStripe.h>
 
 namespace nn {
 namespace vfx {
@@ -55,14 +56,6 @@ public:
 };
 
 class StripeSystem {
-public:
-    static int GetExtendedEndTimeForOneTimeEmitter(Emitter* pEmitter);
-    static void InitializeSystem(Heap* pHeap, System* pSystem, BufferingMode bufferingMode,
-                                 int stripeNum);
-    static void FinalizeSystem(Heap* pHeap);
-};
-
-class SuperStripeSystem {
 public:
     static int GetExtendedEndTimeForOneTimeEmitter(Emitter* pEmitter);
     static void InitializeSystem(Heap* pHeap, System* pSystem, BufferingMode bufferingMode,

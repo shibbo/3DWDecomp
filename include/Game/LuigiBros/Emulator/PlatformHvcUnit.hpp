@@ -84,10 +84,21 @@ public:
         u8 mSpriteLimit;
         u8 mIsSprite0HitAlways;
         _SLineScroll mLineScroll[cLineScrollNum];
-        u8 _51e;
-        u8 _51f;
-        u8 _520;
-        u8 _521;
+        union {
+            struct {
+                u8 _51e;
+                u8 _51f;
+                u8 _520;
+                u8 _521;
+            };
+
+            /// Range of square periods that produce sound (inclusive).
+            struct {
+                s16 mSweepPeriodMin;
+                s16 mSweepPeriodMax;
+            };
+        };
+
         u8 _522;
         u8 _523[5];
         s64 mVolumeScale;
@@ -100,6 +111,8 @@ public:
         u8 _554[4];
     };
 
+    static_assert(__builtin_offsetof(_SCustomParameter, mSweepPeriodMax) == 0x520,
+                  "_SCustomParameter::mSweepPeriodMax");
     static_assert(sizeof(_SCustomParameter) == 0x558, "_SCustomParameter size");
 
     using _STitleRender = _SCustomParameter;
@@ -198,7 +211,12 @@ public:
         u64 _1280[3];
         u8 _1298[0x1648 - 0x1298];
         u64 mDmaCycles;
-        u8 _1650[0x1718 - 0x1650];
+        u8 _1650[8];
+        u64 mSampleClock;
+        u8 _1660[8];
+        u64 mHalfFrameEvents;
+        u64 mQuarterFrameEvents;
+        u8 _1678[0x1718 - 0x1678];
 
         union {
             _SOrderController mOrderController;
@@ -224,6 +242,9 @@ public:
     static_assert(__builtin_offsetof(_SEntity, mScanlineClock) == 0xc20, "_SEntity::mScanlineClock");
     static_assert(__builtin_offsetof(_SEntity, mTitleRender) == 0x1760, "_SEntity::mTitleRender");
     static_assert(__builtin_offsetof(_SEntity, mMemory) == 0x1728, "_SEntity::mMemory");
+    static_assert(__builtin_offsetof(_SEntity, mSampleClock) == 0x1658, "_SEntity::mSampleClock");
+    static_assert(__builtin_offsetof(_SEntity, mHalfFrameEvents) == 0x1668,
+                  "_SEntity::mHalfFrameEvents");
     static_assert(sizeof(_SEntity) == 0x1770, "_SEntity size");
 
     /**

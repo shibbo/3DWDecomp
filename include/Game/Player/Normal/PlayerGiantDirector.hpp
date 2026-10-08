@@ -23,6 +23,11 @@ public:
     /** @brief Tests whether only the timer still keeps the giant form. @return True if running out. */
     bool isRunningOut() const { return mTimer >= 1 && !mIsGiant; }
 
+    /** @brief Gets the remaining giant frames. @return Remaining frames. */
+    u32 getTimer() const { return mTimer; }
+
+    u32 getChangeFrame() const;
+
     /**
      * @brief Sets the action graph and the nodes the giant form shifts to.
      * @param pActionGraph The player's action graph.

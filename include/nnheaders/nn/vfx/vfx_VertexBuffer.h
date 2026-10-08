@@ -63,6 +63,9 @@ public:
     void Unmap();
     const nn::gfx::GpuAddress* GetGpuAddress(BufferSide side) const;
 
+    /** @return the size of one copy of the attribute */
+    size_t GetSize() const { return m_Size; }
+
 private:
     BufferCutter m_Cutter;
     nn::gfx::GpuAddress m_GpuAddress[BufferSide_Max];

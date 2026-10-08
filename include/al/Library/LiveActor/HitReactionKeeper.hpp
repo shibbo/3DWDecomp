@@ -53,6 +53,8 @@ public:
         mPadRumblePort = reinterpret_cast<const s32*>(pKeeper);
     }
 
+    const s32* getPadRumblePort() const { return mPadRumblePort; }
+
 private:
     LiveActor* mActor = nullptr;
     LayoutActor* mLayoutActor = nullptr;

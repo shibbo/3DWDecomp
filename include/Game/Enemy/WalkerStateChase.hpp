@@ -22,8 +22,15 @@ public:
      */
     f32 getRunAnimRate() const { return mRunAnimRate; }
 
+    /**
+     * @brief Gets the chase acceleration (first constructor value).
+     * @return Acceleration per step.
+     */
+    f32 getAccel() const { return mAccel; }
+
 private:
-    alignas(8) u8 _0[0xc];
+    alignas(8) f32 mAccel;  // 0x00
+    u8 _4[0x8];
     f32 mRunAnimRate;  // 0x0C
     u8 _10[0x80];
 };

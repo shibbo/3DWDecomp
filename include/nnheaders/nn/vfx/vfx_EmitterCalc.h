@@ -62,6 +62,9 @@ static_assert(sizeof(EmitterDynamicUniformBlock) == 0xc0);
 /** Warnings reported while the effects run. */
 enum RuntimeWarningId {
     RuntimeWarningId_ParticleUserDataInUse = 4,
+    RuntimeWarningId_NoAvailableStripeInstance = 0x2000,
+    RuntimeWarningId_StripeHistoryAllocationFailed = 0x4000,
+    RuntimeWarningId_TemporaryBufferAllocationFailed = 0x8000,
 };
 
 void Warning(void* pContext, RuntimeWarningId id);

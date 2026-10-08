@@ -28,6 +28,18 @@ class PhaseBossScene : public SingleModeScene {
         virtual size_t adjustStageResourceSize(size_t size);
         virtual void forceDestroySceneResourceHeap();
 
+        /**
+         * @brief Enable or disable the custom allocation.
+         * @param isDisabled True to disable the custom allocation.
+         */
+        void setDisabled(bool isDisabled) { mIsDisabled = isDisabled; }
+
+        /**
+         * @brief Set the game data holder used to find the next phase.
+         * @param pHolder The game data holder.
+         */
+        void setGameDataHolder(GameDataHolder* pHolder) { mGameDataHolder = pHolder; }
+
         s32 getNextPhase();
         bool tryLoadNextPhaseAssets();
 

@@ -66,6 +66,9 @@ public:
 
     const sead::Vector3f& getInitTrans() const { return mInitTrans; }
 
+    /** @brief Gets the core, which the chunks walk back to. */
+    BossBunretsuCore* getCore() const { return mCore; }
+
 private:
     al::ActorSensorControllerList* mSensorControllerList = nullptr;  // 0x148
     BossStateDemoStart* mStateDemoStart = nullptr;                    // 0x150

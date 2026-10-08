@@ -104,7 +104,9 @@ struct ResEmitter {
     u8 isInfinityLife;
     u8 _8a9[0x8ad - 0x8a9];
     bool isRotateDirRandom[3];
-    u8 _8b0[0x8b8 - 0x8b0];
+    u8 _8b0[0x8b2 - 0x8b0];
+    u8 rotType;
+    u8 _8b3[0x8b8 - 0x8b3];
     s32 particleLife;
     s32 particleLifeRandom;
     f32 momentumRandom;
@@ -164,6 +166,10 @@ struct ResAnim8KeyParamSet {
 struct ResAnimEmitterKeyParamSet {
     bool enable;
     bool loop;
+    u8 _2[0x4 - 0x2];
+    s32 keyNum;
+    u8 _8[0xc - 0x8];
+    ResAnimKey keys[8];
 };
 
 struct ParticleAttribute {
@@ -215,6 +221,8 @@ struct EmitterResource {
     u8 _334[0x338 - 0x334];
     void* m_pEmitterPluginData;
     detail::Shader* m_Shader[8];
+    u8 _380[0x3d0 - 0x380];
+    s32 m_CustomAttributeBufferSlot;
 };
 
 }  // namespace vfx

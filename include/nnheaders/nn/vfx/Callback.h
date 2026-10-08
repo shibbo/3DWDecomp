@@ -251,6 +251,9 @@ public:
     gfx::Shader* m_pGfxShader;
     u8 _10[0x14 - 0x10];
     s32 m_CustomTextureLocation[32][2];
+    u8 _114[0x144 - 0x114];
+    s32 m_VertexEmitterPluginConstantBufferLocation;
+    s32 m_PixelEmitterPluginConstantBufferLocation;
 };
 
 /** Compute shader of a GPU stream-out emitter. */

@@ -32,7 +32,9 @@ public:
     void Begin();
     void End();
     void Dispatch(int, int, int);
-    void Draw(PrimitiveTopology, int, int);
+    void Draw(PrimitiveTopology primitiveTopology, int vertexCount, int vertexOffset) {
+        return Impl::Draw(primitiveTopology, vertexCount, vertexOffset);
+    }
     void Draw(PrimitiveTopology, int, int, int, int);
     void DrawIndexed(PrimitiveTopology, IndexFormat, const GpuAddress&, int, int);
     void DrawIndexed(PrimitiveTopology primitiveTopology, IndexFormat indexFormat,

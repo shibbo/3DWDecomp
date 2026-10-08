@@ -36,7 +36,9 @@ struct EmitterStaticUniformBlock {
     ResAnim8KeyParam colorAnim[4];
     u8 _570[0x5b0 - 0x570];
     ResAnim8KeyParam scaleAnim;
-    u8 _630[0x6c0 - 0x630];
+    u8 _630[0x6b0 - 0x630];
+    util::Float3 rotateInit;
+    u8 _6bc[0x6c0 - 0x6bc];
     util::Float3 rotateInitRandom;
     u8 _6cc[0x6d0 - 0x6cc];
     util::Float3 rotateAdd;

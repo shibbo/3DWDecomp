@@ -13,6 +13,8 @@ struct PadRumbleParam {
         : near(near), far(far), volumeLeft(volumeLeft), volumeRight(volumeRight),
           pitchLeft(pitchLeft), pitchRight(pitchRight) {}
 
+    void setVolumeByBalance(f32 balance);
+
     f32 near;
     f32 far;
     f32 volumeLeft;

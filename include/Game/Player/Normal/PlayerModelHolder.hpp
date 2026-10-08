@@ -86,6 +86,9 @@ public:
     /** @brief Gets the model of the current figure. @return Model. */
     PlayerModel* getCurrentModel() const { return mModels[mCurrentIndex]; }
 
+    /** @brief Gets the index of the current figure. @return Figure index. */
+    s32 getCurrentIndex() const { return mCurrentIndex; }
+
     /** @brief Gets the model of a figure. @param index Figure index. @return Model. */
     PlayerModel* getModel(s32 index) const { return mModels[index]; }
 

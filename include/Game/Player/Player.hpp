@@ -202,6 +202,7 @@ public:
     const IUsePlayerCharaQuery* getCharaQuery() const { return mCharaQuery; }
     IUsePlayerDashChecker* getDashChecker() const { return mDashChecker; }
     PlayerGiantDirector* getGiantDirector() const { return mGiantDirector; }
+    IUsePlayerAnimator* getAnimator() const { return mAnimator; }
     PlayerGigaDirector* getGigaDirector() const { return mGigaDirector; }
 
 private:

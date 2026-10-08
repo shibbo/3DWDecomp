@@ -163,6 +163,11 @@ public:
     bool SwapBuffer(BufferSwapMode swapMode);
     void UpdateByEmit(f32* pInterval);
     bool IsManualEmitterReadyToExit() const;
+    bool InitializeCustomConstantBuffer(int index, size_t size);
+    bool InitializeCustomAttribute(int bufferCount, size_t size);
+
+    /** @return the heap the per-emitter allocations are made from */
+    Heap* GetDynamicHeap() { return reinterpret_cast<Heap*>(m_DynamicHeap); }
 
     /** @return the CPU state of the particles */
     detail::ParticleData* GetParticleData() const {
@@ -265,7 +270,7 @@ public:
     u8 _400[0x408 - 0x400];
     void* m_UserData;
     void* m_UserData2;
-    u8 _418[0x420 - 0x418];
+    void* m_pEmitterPluginUserData;
     util::Vector4fType m_Color0;
     util::Vector4fType m_Color1;
     Emitter* m_ChildEmitter[16];

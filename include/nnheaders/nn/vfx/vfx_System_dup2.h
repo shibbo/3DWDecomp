@@ -30,6 +30,17 @@ public:
     size_t GetAllocatedSize() const { return m_AllocatedSize; }
     s32 GetAllocatedCount() const { return m_AllocatedCount; }
 
+    /**
+     * Returns memory of a known size to the VFX dynamic heap and removes it from the statistics.
+     * @param ptr the memory to free
+     * @param size the size the memory was allocated with
+     */
+    void Free(void* ptr, size_t size) {
+        m_AllocatedCount--;
+        m_AllocatedSize -= (size + 0xFF) & ~static_cast<size_t>(0xFF);
+        detail::FreeFromDynamicHeap(ptr, true);
+    }
+
     size_t m_AllocatedSize;
     s32 m_AllocatedCount;
 };

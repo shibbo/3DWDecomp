@@ -27,6 +27,9 @@ struct GameSystemInfo {
     DrawSystemInfo* getDrawSystemInfo() const { return static_cast<DrawSystemInfo*>(_38); }
     FontHolder* getFontHolder() const { return static_cast<FontHolder*>(_40); }
     NfpDirector* getNfpDirector() const { return static_cast<NfpDirector*>(_48); }
+    ApplicationMessageReceiver* getApplicationMessageReceiver() const {
+        return static_cast<ApplicationMessageReceiver*>(_50);
+    }
     WaveVibrationHolder* getWaveVibrationHolder() const {
         return static_cast<WaveVibrationHolder*>(_58);
     }

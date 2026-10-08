@@ -1339,14 +1339,7 @@ private:
 };
 static_assert(sizeof(KarakuriCastleDoorWatcher) == 0x158);
 
-class KaronWing : public al::LiveActor {
-public:
-    explicit KaronWing(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x74];
-};
-static_assert(sizeof(KaronWing) == 0x1b8);
+#include "Enemy/KaronWing.hpp"
 
 
 static_assert(sizeof(KeyMoveLoopLiftGenerator) == 0x170);

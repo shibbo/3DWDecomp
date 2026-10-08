@@ -1,5 +1,6 @@
 #pragma once
 
+#include <attributes.h>
 #include <nn/types.h>
 
 namespace Common::Serialize {
@@ -25,6 +26,22 @@ public:
      */
     template <typename T>
     void Entry(T& rValue) {
+        entryBits(rValue);
+    }
+
+    /// Get the number of bytes read or written so far.
+    u64 GetOffset() const { return mOffset; }
+
+    /// Move to a position of the buffer (used to skip reserved space).
+    void SetOffset(u64 offset) { mOffset = offset; }
+
+private:
+    /**
+     * @brief Read or write the bytes of one integer value.
+     * @param rValue The value.
+     */
+    template <typename T>
+    ALWAYS_INLINE void entryBits(T& rValue) {
         u8* pBuffer = mBuffer;
         if (pBuffer == nullptr) {
             mOffset += sizeof(T);
@@ -41,13 +58,18 @@ public:
         }
     }
 
-    /// Get the number of bytes read or written so far.
-    u64 GetOffset() const { return mOffset; }
-
-private:
     u8* mBuffer;
     bool mIsImport;
     u64 mOffset;
 };
+
+/**
+ * @brief Read or write the bits of a floating point value.
+ * @param rValue The value.
+ */
+template <>
+inline void LittleEndian::Entry<f64>(f64& rValue) {
+    entryBits(reinterpret_cast<u64&>(rValue));
+}
 
 }  // namespace Common::Serialize

@@ -187,4 +187,17 @@ static_assert(__builtin_offsetof(CHvc, mCpu) == 0x3d51f0, "CHvc::mCpu");
 static_assert(__builtin_offsetof(CHvc, mMmc) == 0x3d8b40, "CHvc::mMmc");
 static_assert(__builtin_offsetof(CHvc, mDisk) == 0x3d9358, "CHvc::mDisk");
 
+/**
+ * @brief Get the running machine.
+ * @return The machine.
+ */
+CHvc* GetCHvc();
+
+/**
+ * @brief Map the character RAM or the cartridge name tables into PPU space (disk system).
+ * @param pEntity The machine state.
+ * @param isVertical Whether to select vertical mirroring.
+ */
+void BusMapSwitchVRAM(CPlatformHvcUnit::_SEntity* pEntity, int isVertical);
+
 }  // namespace Vessel::Emulator::Virtual::PlatformHvc

@@ -25,7 +25,11 @@ class OceanScenarioList;
 class IslandDataList;
 class CourseInfo;
 class ControlUserDataHolder;
-enum GameMode : int;
+/// Game whose data was played last.
+enum GameMode : int {
+    GameMode_3DWorld = 0,  ///< Super Mario 3D World.
+    GameMode_Single = 1,   ///< Bowser's Fury.
+};
 class GameDataHolder : public al::ISceneObj {
   public:
     explicit GameDataHolder(al::NetworkSystem* pNetworkSystem);
@@ -227,6 +231,14 @@ class GameDataHolder : public al::ISceneObj {
      * @return The play-report manager.
      */
     preport::PlayReportManager* getPlayReportManager() const { return mpPlayReportManager; }
+
+    /**
+     * @brief Set the play-report manager.
+     * @param pManager The play-report manager.
+     */
+    void setPlayReportManager(preport::PlayReportManager* pManager) {
+        mpPlayReportManager = pManager;
+    }
 
     bool isSaveDataRead() const { return mIsSaveDataRead; }
 
