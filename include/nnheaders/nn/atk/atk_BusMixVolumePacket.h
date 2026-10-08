@@ -18,6 +18,15 @@ public:
     // bus selects a flag and enabled supplies the new per-bus state.
     void SetEnabledForBus(int bus, bool enabled) { mEnabled[bus] = enabled; }
 
+    /** @brief Checks whether the packet's mixing values are active. @return True when used. */
+    bool IsUsed() const { return mUsed; }
+    /** @brief Gets the number of buses with an enable flag. @return Bus count. */
+    int GetBusCount() const { return mBusCount; }
+    /** @brief Checks the enable flag of a bus. @param bus Bus index. @return Flag state. */
+    bool IsEnabledForBus(int bus) const { return mEnabled[bus]; }
+    /** @brief Gets the per-channel bus volumes. @return Volume table. */
+    OutputBusMixVolume& GetVolume() { return mVolume; }
+
 private:
     friend class OutputAdditionalParam;
     OutputBusMixVolume mVolume;

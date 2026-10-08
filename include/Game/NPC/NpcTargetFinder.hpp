@@ -187,6 +187,14 @@ public:
     /** @return The current target, whatever its kind, or nullptr. */
     al::LiveActor* getTarget() const { return mTarget; }
 
+    al::LiveActor* getLastTarget() const { return mLastTarget; }
+
+    u32 getTargetType() const { return mTargetType; }
+
+    u32 getLastTargetType() const { return mLastTargetType; }
+
+    bool isTargetChanged() const { return mIsTargetChanged; }
+
     /** @return Whether the current target is in sight. */
     bool isTargetValid() const { return mIsTargetValid; }
 

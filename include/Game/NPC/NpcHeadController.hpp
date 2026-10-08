@@ -45,10 +45,15 @@ public:
      */
     void setLookAtTarget(const sead::Vector3f* pTarget) { mLookAtTarget = pTarget; }
 
+    /** @brief Make the head go back to its rest pose on the next update. */
+    void requestResetLook() { mIsRequestResetLook = true; }
+
 private:
     u8 _0[0x30];
     const sead::Vector3f* mLookAtTarget;  // 0x30
-    u8 _38[0x80 - 0x38];
+    u8 _38[0x78 - 0x38];
+    bool mIsRequestResetLook;  // 0x78
+    u8 _79[0x80 - 0x79];
 };
 
 static_assert(sizeof(NpcHeadController) == 0x80);

@@ -274,6 +274,30 @@ class HardwareManager : public Util::Singleton<HardwareManager> {
      * @return Mode currently selected for the device.
      */
     OutputMode GetOutputMode(OutputDevice device) const { return m_OutputMode[device]; }
+    /**
+     * @brief Read the output mode the end user selected for an audio device.
+     * @param device Valid output device index, less than OutputDevice_Count.
+     * @return Mode the final output is downmixed to.
+     */
+    OutputMode GetEndUserOutputMode(OutputDevice device) const {
+        return m_EndUserOutputMode[device];
+    }
+    /**
+     * @brief Look up the biquad filter callback registered for a filter type.
+     * @param type Filter type, less than BiquadFilterCallbackCount.
+     * @return Registered callback, or nullptr if none.
+     */
+    const BiquadFilterCallback* GetBiquadFilterCallback(int type) const {
+        return m_BiquadFilterCallbackTable[type];
+    }
+    /**
+     * @brief Read the output devices an output line is routed to.
+     * @param outputLineIndex Output line, less than OutputLineCount.
+     * @return Bit set of output devices.
+     */
+    u8 GetOutputDeviceFlag(int outputLineIndex) const { return m_OutputDeviceFlag[outputLineIndex]; }
+    /** @brief Checks whether pan curves are computed the legacy way. @return True when enabled. */
+    bool IsCompatiblePanCurveEnabled() const { return _a65; }
     /** @brief Checks whether sub mixes are in use. @return True when sub mixes are enabled. */
     bool IsSubMixEnabled() const { return m_IsSubMixEnabled; }
     /** @brief Access the final mix. @return Final mix owned by this manager. */

@@ -17,6 +17,8 @@ class MultiVoiceManager {
     void Finalize();
     MultiVoice* AllocVoice(int channelCount, int priority, MultiVoice::VoiceCallback callback,
                            void* pCallbackArg);
+    void FreeVoice(MultiVoice* pVoice);
+    void ChangeVoicePriority(MultiVoice* pVoice);
     /**
      * @brief Synchronously refresh parameters of all voices.
      * @param updateFlag Bit set selecting which parameters to recompute.

@@ -24,11 +24,17 @@ public:
     /** @return Maximum turn per step, in degrees. */
     f32 getTurnDegree() const { return mTurnDegree; }
 
+    /** @return Whether the NPC avoids running off cliffs. */
+    bool isEnableCliffCheck() const { return mIsEnableCliffCheck; }
+
 private:
     f32 mRunAccel;  // 0x0
     u8 _4[0x8];
     f32 mTurnDegree;  // 0xc
-    alignas(8) u8 _10[0x90 - 0x10];
+    u8 _10[0x15 - 0x10];
+    bool mIsEnableCliffCheck;  // 0x15
+    u8 _16[0x18 - 0x16];
+    alignas(8) u8 _18[0x90 - 0x18];
 };
 
 static_assert(sizeof(NpcStateChaseParam) == 0x90);

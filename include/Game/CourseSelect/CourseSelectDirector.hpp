@@ -45,6 +45,7 @@ public:
                       al::HomeButton* pHomeButton);
     void initAfterPlacement();
     void connectNodeLink();
+    void registerNode(CourseSelectNode* pNode);
     void registerObject(al::LiveActor* pActor, s32 worldId);
     void registerStage(CourseSelectMiniature* pMiniature);
     void setWorldId(s32 worldId);

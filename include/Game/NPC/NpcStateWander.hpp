@@ -43,6 +43,7 @@ public:
                    const NpcStateWanderParam* pWanderParam);
 
     sead::Vector3f getWanderCenter() const;
+    sead::Vector3f getTargetPos() const;
 
 private:
     u8 _20[0x48 - 0x20];

@@ -97,6 +97,10 @@ public:
 
     bool isHidden() const { return mIsHidden; }
 
+    al::TextureReplacer* getTextureReplacer() const { return mTextureReplacer; }
+
+    const sead::Vector2f& getCurrentTextureScale() const { return mTextureScale; }
+
     static nn::gfx::ResTextureFile* spTextureFile[100];
 
 private:

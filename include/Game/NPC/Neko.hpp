@@ -133,6 +133,8 @@ public:
 
     void setRideNeko(Neko* pNeko) { mRideNeko = pNeko; }
 
+    void setRequestHide(bool isRequest) { mIsRequestHide = isRequest; }
+
 private:
     /**
      * @brief Bits of mFlags.

@@ -46,6 +46,12 @@ public:
     void setCharacterSingleMode(s32 port);
     void setCharacterKinopioBrigade(s32 port);
 
+    /**
+     * @brief Checks whether the guide bar is shown (al::LayoutActor::isAlive in the game).
+     * @return True while the guide bar is alive.
+     */
+    bool isAlive() const { return mUnreconstructed0[0x120] != 0; }
+
 private:
     /// Layout actor base and state; the class derives from al::LayoutActor in the game.
     u8 mUnreconstructed0[0x138];

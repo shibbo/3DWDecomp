@@ -51,6 +51,7 @@ public:
     void replace(LiveActor* pActor, const char* pMaterialName, const char* pTextureName);
     void update();
     const TextureRefData* getTextureRef() const;
+    nn::gfx::ResTextureData* getResTexture() const { return mResTexture; }
 
 private:
 

@@ -715,14 +715,7 @@ private:
 };
 static_assert(sizeof(DarkBowser) == 0x5a8);
 
-class DarkBowserLaserIndicator : public al::LiveActor {
-public:
-    explicit DarkBowserLaserIndicator(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(DarkBowserLaserIndicator) == 0x168);
+#include "Boss/DarkBowserLaserIndicator.hpp"
 
 
 
@@ -2137,14 +2130,7 @@ static_assert(sizeof(KuriboGiga) == 0x218);
 
 
 
-class GigaRock : public al::LiveActor {
-public:
-    explicit GigaRock(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x9c];
-};
-static_assert(sizeof(GigaRock) == 0x1e0);
+#include "MapObj/GigaRock.hpp"
 
 
 

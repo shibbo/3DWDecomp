@@ -29,6 +29,7 @@ public:
     void resetDisableBubbleFrameOut(al::LiveActor* pActor);
     void addBubbleDelayTime(int frames);
     s32 calcAllActivePlayerNum() const;
+    s32 calcDoubleMarioNum() const;
     s32 isActivePlayerPort(s32 port) const;
     bool isEnableBubbleWithInput(PlayerAliveWatcherGroup* pGroup) const;
 

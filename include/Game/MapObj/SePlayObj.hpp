@@ -11,6 +11,18 @@ public:
     void exeWait();
     void exeAttached();
 
+    /**
+     * @brief Initialize the sound object so that it follows the actor it is attached to.
+     * @param rInfo Placement information.
+     * @param pAudioKeeperName Name of the audio keeper to use.
+     */
+    void initAttached(const al::ActorInitInfo& rInfo, const char* pAudioKeeperName) {
+        mIsAttached = true;
+        mUpdatePose = false;
+        mAudioKeeperName = pAudioKeeperName;
+        init(rInfo);
+    }
+
 private:
     const char* mSeName = nullptr;
     bool mIsValidClipping = false;

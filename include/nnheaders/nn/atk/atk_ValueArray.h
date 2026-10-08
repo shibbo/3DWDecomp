@@ -24,6 +24,25 @@ public:
         return *this;
     }
 
+    /** @brief Gets the number of entries. @return Entry count. */
+    int GetCount() const { return mCount; }
+    /**
+     * @brief Reads an entry if it exists.
+     * @param index Entry index.
+     * @return The entry, or a value-initialized T if index is out of range.
+     */
+    T TryGetValue(int index) const { return index < mCount ? mValues[index] : T(); }
+    /**
+     * @brief Writes an entry if it exists.
+     * @param index Entry index; out-of-range writes are ignored.
+     * @param value New value.
+     */
+    void TrySetValue(int index, T value) {
+        if (index < mCount) {
+            mValues[index] = value;
+        }
+    }
+
 private:
     friend class OutputAdditionalParam;
     T* mValues;

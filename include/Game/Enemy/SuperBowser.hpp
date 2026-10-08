@@ -25,7 +25,32 @@ class SuperBowser : public al::LiveActor {
         s32 mTier;  // 0x40
     };
 
+    /// Target and joint limits Fury Bowser's head and spine follow while aiming.
+    struct BowserJointState {
+        s32 _0;
+        f32 mRate;                 // 0x4
+        sead::Vector3f mTarget;    // 0x8
+        f32 mConstraintBeam;       // 0x14
+        f32 mConstraintFace;       // 0x18
+        f32 mConstraintNeck;       // 0x1c
+        f32 mConstraintSpine;      // 0x20
+        f32 mConstraintHip;        // 0x24
+        f32 mPitchBeam;            // 0x28
+        f32 mPitchFace;            // 0x2c
+        f32 mPitchNeck;            // 0x30
+        f32 mPitchSpine;           // 0x34
+        f32 mPitchHip;             // 0x38
+    };
+
     bool isLastPhase3Bowser();
+    const char* getActionName(const char* pBaseName);
+    void startJointAim(BowserJointState state, s32 frames, s32 jointNum, s32 blendFrames);
+    void updateJointAim(sead::Vector3f target);
+    void updateTurning(const char* pActionName, s32 step);
+    bool tryCancelNextLaser();
+    void setGuideBalloonVisible(bool isVisible);
+    s32 getBaseOffset() const;
+    bool isPlessieChaseLv4() const;
     void disappear(bool isInstant);
     void tryDamageDarkBowser();
     void setFacingDirection(sead::Vector3f& rDir);
@@ -116,6 +141,18 @@ class SuperBowser : public al::LiveActor {
      */
     bool isIgnoreBellOffsetY() const { return mIsIgnoreBellOffsetY; }
 
+    /**
+     * @brief Get the suffix appended to the attack init file names, if any.
+     * @return The suffix, or nullptr.
+     */
+    const char* getInitFileSuffix() const { return mInitFileSuffix; }
+
+    /**
+     * @brief Get the kind of Fury Bowser (selects his charge effects and sounds).
+     * @return The kind.
+     */
+    s32 getBowserType() const { return mBowserType; }
+
 private:
     u8 _144[0x150 - 0x144];
     bool mIsActive;  // 0x150
@@ -126,7 +163,11 @@ private:
     bool mIsFirstAppearDone;  // 0x1f1
     bool mIsLeaveRequested;  // 0x1f2
     bool mIsFireballEnable;  // 0x1f3
-    u8 _1f4[0x210 - 0x1f4];
+    u8 _1f4[0x1f8 - 0x1f4];
+    const char* mInitFileSuffix;  // 0x1f8
+    u8 _200[0x208 - 0x200];
+    s32 mBowserType;  // 0x208
+    u8 _20c[0x210 - 0x20c];
     PlessieChaseState* mPlessieChaseState;  // 0x210
     u8 _218[0x50f - 0x218];
     bool mIsIgnoreBellOffsetY;  // 0x50f

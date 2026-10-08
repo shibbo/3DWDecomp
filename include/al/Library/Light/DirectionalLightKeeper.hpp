@@ -100,6 +100,8 @@ public:
 
     const DirLightParam& getCurrentParam() const { return mInterp.getCurrentParam(); }
 
+    DirLightParam& getCurrentParam() { return mInterp.getCurrentParam(); }
+
 private:
     using NamedParamArray = sead::FixedPtrArray<NamedDirLightParam, 64>;
 

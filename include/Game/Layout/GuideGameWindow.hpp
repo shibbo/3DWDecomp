@@ -20,8 +20,12 @@ public:
     bool isWaitConfirm() const;
     void endHide(const void* pUser);
 
+    /** @brief Sets the lowest priority a guide message needs to be shown. */
+    void setPriorityLimit(GuideMessagePriority priority) { mPriorityLimit = priority; }
+
 private:
-    u8 _8[0x28 - 0x8];
+    u8 _8[0x24 - 0x8];
+    GuideMessagePriority mPriorityLimit;  // 0x24
 };
 
 static_assert(sizeof(GuideGameWindow) == 0x28);

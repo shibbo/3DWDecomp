@@ -1,4 +1,5 @@
 #pragma once
+#include <nn/atk/atk_Global.h>
 #include <nn/types.h>
 
 namespace nn::atk {
@@ -15,6 +16,30 @@ enum WaveArchiveLoadStatus {
     WaveArchiveLoadStatus_Noneed,
     WaveArchiveLoadStatus_NotYet,
 };
+/** @brief Shape of the curve that maps a pan position to channel gains. */
+enum PanCurve {
+    PanCurve_Sqrt,
+    PanCurve_SinCos,
+    PanCurve_Linear,
+};
+
+/** @brief Pan curve selection consumed by CalcPanRatio() and CalcSurroundPanRatio(). */
+struct PanInfo {
+    /** @brief Selects the square-root curve with no modifiers. */
+    PanInfo()
+        : curve(PanCurve_Sqrt), centerZeroFlag(false), zeroClampFlag(false), _6(false),
+          isCompatibleMode(false) {}
+
+    PanCurve curve;
+    bool centerZeroFlag;
+    bool zeroClampFlag;
+    bool _6;
+    bool isCompatibleMode;
+};
+
+float CalcPanRatio(float pan, const PanInfo& rInfo, OutputMode mode);
+float CalcSurroundPanRatio(float span, const PanInfo& rInfo);
+u16 CalcLpfFreq(float scale);
 u32 CalcRandom();
 const void* GetWaveFileOfWaveSound(const void* pWaveSoundFile, u32 index, const SoundArchive& rArchive,
                                    const SoundArchiveLoader& rLoader);

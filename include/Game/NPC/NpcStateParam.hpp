@@ -15,8 +15,12 @@ public:
     /** @return Drop height checked ahead of the NPC to avoid falling off cliffs. */
     f32 getFallCheckDrop() const { return mFallCheckDrop; }
 
+    /** @return Gravity applied to the NPC. */
+    f32 getGravity() const { return mGravity; }
+
 private:
-    u8 _0[0xc];
+    f32 mGravity;  // 0x0
+    u8 _4[0xc - 0x4];
     f32 mFallCheckDrop;  // 0xc
     u8 _10[0x18 - 0x10];
 };

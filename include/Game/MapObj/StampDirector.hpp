@@ -44,6 +44,8 @@ public:
 
     al::LayoutResource* getLayoutResource() const { return mLayoutResource; }
 
+    s32 getStartingStampId() const { return mStartingStampId; }
+
     bool isUseNoCodeWallFilter() const { return _49; }
 
     void setUseNoCodeWallFilter(bool isUse) { _49 = isUse; }
@@ -54,7 +56,9 @@ private:
     al::Resource* mStampResource;              // 0x08
     al::LayoutResource* mLayoutResource;       // 0x10
     void* _18;                                 // 0x18
-    u8 _20[0x28];                              // 0x20
+    u8 _20[0x14];                              // 0x20
+    s32 mStartingStampId;                      // 0x34
+    u8 _38[0x10];                              // 0x38
     bool _48;                                  // 0x48
     bool _49;                                  // 0x49
     al::IUseAudioKeeper* mAudioKeeperUser;     // 0x50
