@@ -35402,9 +35402,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100540990			FALSE	_ZN2nn3atk11SoundPlayer23detail_AppendPlayerHeapEPNS0_6detail10PlayerHeapE	nn::atk::SoundPlayer::detail_AppendPlayerHeap(nn::atk::detail::PlayerHeap*)	
 0x71005409C0			FALSE	_ZN2nn3atk11SoundPlayer22detail_AllocPlayerHeapEv	nn::atk::SoundPlayer::detail_AllocPlayerHeap()	
 0x7100540A00			FALSE	_ZN2nn3atk11SoundPlayer21detail_FreePlayerHeapEPNS0_6detail10PlayerHeapE	nn::atk::SoundPlayer::detail_FreePlayerHeap(nn::atk::detail::PlayerHeap*)	
-0x7100540A40		_ZN2nn3atk6detail10BasicSoundC2Ev	FALSE	_ZN2nn3atk6detail10BasicSoundC2Ev	nn::atk::detail::BasicSound::BasicSound()	
+0x7100540A40	NintendoWare/atk/detail	atk_BasicSound.o	FALSE	_ZN2nn3atk6detail10BasicSoundC2Ev	nn::atk::detail::BasicSound::BasicSound()	
 0x7100540B00			FALSE	_ZN2nn3atk6detail10BasicSound10InitializeEPNS0_14OutputReceiverE	nn::atk::detail::BasicSound::Initialize(nn::atk::OutputReceiver*)	
-0x7100540CB0	NintendoWare/atk/detail	atk_BasicSound.o	FALSE	_ZN2nn3atk6detail10BasicSound11SetPriorityEii	nn::atk::detail::BasicSound::SetPriority(int, int)	object/folder from debug builds' assert paths
+0x7100540CB0			FALSE	_ZN2nn3atk6detail10BasicSound11SetPriorityEii	nn::atk::detail::BasicSound::SetPriority(int, int)	object/folder from debug builds' assert paths
 0x7100540CC0			FALSE	_ZNK2nn3atk6detail10BasicSound11GetPriorityEPiS3_	nn::atk::detail::BasicSound::GetPriority(int*, int*) const	
 0x7100540CE0			FALSE	_ZN2nn3atk6detail10BasicSound46ClearIsFinalizedForCannotAllocatedResourceFlagEv	nn::atk::detail::BasicSound::ClearIsFinalizedForCannotAllocatedResourceFlag()	
 0x7100540D40			FALSE	_ZN2nn3atk6detail10BasicSound8FinalizeEv	nn::atk::detail::BasicSound::Finalize()	
@@ -35508,7 +35508,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100543340			FALSE	_ZN2nn3atk6detail10BasicSound22OnUpdatePlayerPriorityEv	nn::atk::detail::BasicSound::OnUpdatePlayerPriority()	
 0x7100543350			FALSE	_ZN2nn3atk6detail10BasicSound13OnUpdateParamEv	nn::atk::detail::BasicSound::OnUpdateParam()	
 0x7100543360			FALSE	_ZN2nn3atk6detail10BasicSound24GetRuntimeTypeInfoStaticEv	nn::atk::detail::BasicSound::GetRuntimeTypeInfoStatic()	
-0x71005433C0		atk_SoundHandle.o	FALSE	_ZN2nn3atk11SoundHandle22detail_DuplicateHandleEPS1_	nn::atk::SoundHandle::detail_DuplicateHandle(nn::atk::SoundHandle*)	
+0x71005433C0	NintendoWare/atk/detail	atk_SoundHandle.o	FALSE	_ZN2nn3atk11SoundHandle22detail_DuplicateHandleEPS1_	nn::atk::SoundHandle::detail_DuplicateHandle(nn::atk::SoundHandle*)	
 0x7100543450			FALSE	_ZN2nn3atk11SoundHandle11DetachSoundEv	nn::atk::SoundHandle::DetachSound()	
 0x71005434A0			FALSE	_ZN2nn3atk11SoundHandle30detail_AttachSoundAsTempHandleEPNS0_6detail10BasicSoundE	nn::atk::SoundHandle::detail_AttachSoundAsTempHandle(nn::atk::detail::BasicSound*)	
 0x71005434E0			FALSE	_ZN2nn3atk11SoundHandle18detail_AttachSoundEPNS0_6detail10BasicSoundE	nn::atk::SoundHandle::detail_AttachSound(nn::atk::detail::BasicSound*)	

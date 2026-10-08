@@ -3387,10 +3387,8 @@ src/nw/atk/detail/seq/atk_SequenceSoundPlayer.cpp:
     .text   start:0x0053C350 end:0x0053F6C4
 src/nw/atk/atk_SoundPlayer.cpp:
     .text   start:0x0053F6D0 end:0x00540A38
-src/nw/atk/_ZN2nn3atk6detail10BasicSoundC2Ev.cpp:
-    .text   start:0x00540A40 end:0x00540CA4
 src/nw/atk/detail/atk_BasicSound.cpp:
-    .text   start:0x00540CB0 end:0x005433C0
+    .text   start:0x00540A40 end:0x005433C0
 src/nw/atk/detail/atk_SoundHandle.cpp: done
     .text   start:0x005433C0 end:0x00543540
 src/nw/atk/detail/atk_ExternalSoundPlayer.cpp:
