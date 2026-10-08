@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 namespace al {
 class LiveActor;
@@ -12,6 +13,10 @@ class PlayerModelWorldMtxCallbackHolder;
 class PlayerModelIK {
 public:
     PlayerModelIK(al::LiveActor* pActor, PlayerModelWorldMtxCallbackHolder* pCallbackHolder);
+
+    void updateWorldMatrix();
+    bool calcTargetPos(sead::Vector3f* pOut, const char* pJointName) const;
+    void calc(const char* pJointName, const char* pTipJointName, const sead::Vector3f& rTarget);
 
     /** @brief Enables the IK (if it isn't already). */
     void validate() {
