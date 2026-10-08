@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 #include <prim/seadBitFlag.h>
 
@@ -19,69 +20,110 @@ class NetworkSystem;
 class CourseSelectLayout;
 class CourseSelectMiniature;
 class CourseSelectNode;
+class CourseSelectObjKeeper;
 class CourseSelectPuppeteerGroup;
+class CourseSelectRocket;
 class CourseSelectScene;
 class CourseSelectSensor;
 class CourseSelectWindowHolder;
 class DemoOpeningSwitch;
 class DemoTimerStageSwitchController;
+class DrcTouchChecker;
 class ICourseSelectActorController;
 class PlayerCrown;
 
+/**
+ * @brief Scene object driving the course-select map: it knows the miniatures, the road nodes and
+ * the players, opens the roads to the cleared courses, places the players and picks the object
+ * the main player stands on so the layouts can show it and the players can enter it.
+ */
 class CourseSelectDirector : public al::ISceneObj {
 public:
     explicit CourseSelectDirector(CourseSelectScene* pScene);
 
-    static CourseSelectDirector* getCourseSelectDirector(const al::IUseSceneObjHolder* pUser);
     static CourseSelectDirector* tryGetCourseSelectDirector(const al::IUseSceneObjHolder* pUser);
+    static CourseSelectDirector* getCourseSelectDirector(const al::IUseSceneObjHolder* pUser);
     /** @brief Registers the opening-demo switch actor. @param pSwitch Switch controller. */
     void setDemoOpeningSwitch(DemoOpeningSwitch* pSwitch) { mDemoOpeningSwitch = pSwitch; }
     /** @brief Registers timed demo switches. @param pController Timed switch controller. */
-    void setDemoTimerStageSwitchController(DemoTimerStageSwitchController* pController) { mDemoTimerStageSwitchController = pController; }
+    void setDemoTimerStageSwitchController(DemoTimerStageSwitchController* pController) {
+        mDemoTimerStageSwitchController = pController;
+    }
+    /** @brief Registers the rocket of the map. @param pRocket Rocket actor. */
+    void setRocket(CourseSelectRocket* pRocket) { mRocket = pRocket; }
 
     void init(const al::ActorInitInfo& rInfo);
+    bool reviveUser(s32 userId, ICourseSelectActorController* pController, bool isAppearDemo);
+    bool activateUser(s32 userId, bool isAppearDemo);
+    bool isPlayLeaveDemo(s32 userId) const;
+    bool leaveUser(s32 userId);
+    bool isPlayPuppeterDemoAll() const;
+    void setMainPlayer(al::LiveActor* pPlayer);
     void createLayout(const al::LayoutInitInfo& rInfo, CourseSelectWindowHolder* pWindowHolder,
                       al::NetworkSystem* pNetworkSystem, al::ErrorViewer* pErrorViewer,
                       al::HomeButton* pHomeButton);
-    void initAfterPlacement();
-    void connectNodeLink();
-    void registerNode(CourseSelectNode* pNode);
-    void registerObject(al::LiveActor* pActor, s32 worldId);
     void registerStage(CourseSelectMiniature* pMiniature);
-    void setWorldId(s32 worldId);
-    void setMainPlayer(al::LiveActor* pPlayer);
-    void initPlayerPositionOpening(const char* pName);
-    void initPlayerPositionAfterEnding();
-    void initPlayerPositionStage(s32 courseId);
-    void setPlayerPositionWorldStart(s32 worldId);
-    CourseSelectMiniature* tryFindMiniatureObj(s32 courseId) const;
+    void registerObject(al::LiveActor* pActor, s32 worldId);
+    void registerNode(CourseSelectNode* pNode);
     CourseSelectMiniature* findMiniatureObj(s32 courseId) const;
+    CourseSelectMiniature* tryFindMiniatureObj(s32 courseId) const;
+    CourseSelectMiniature* tryFindCasinoRoom(s32 worldId) const;
     CourseSelectMiniature* findKoopaCastle(s32 worldId) const;
     al::LiveActor* tryFindNearestActor() const;
+    s32 tryFindNextCourse(CourseSelectMiniature** pMiniatures, s32 maxNum, s32 courseId) const;
+    s32 tryFindPrevCourse(CourseSelectMiniature** pMiniatures, s32 maxNum, s32 courseId) const;
+    s32 tryFindNodeList(CourseSelectNode** pNodes, s32 maxNum, CourseSelectNode* pFrom,
+                        CourseSelectNode* pTo) const;
+    CourseSelectNode* tryFindFirstCrossingNode(const CourseSelectNode* pNode, s32 depth) const;
+    CourseSelectNode* tryFindNodeFromTrans(const sead::Vector3f& rTrans);
+    void openRoadImmediately(CourseSelectNode* pFrom, CourseSelectNode* pTo);
+    bool isAllwaysOpenCourse(s32 courseId) const;
+    bool isEnableEnterSelectedSensor() const;
+    bool isTriggerDecideMainPlayer() const;
+    void setWorldId(s32 worldId);
+    s32 getMainPlayerPortNum() const;
+    bool isPlayPuppeterDemo(s32 userId) const;
+    bool isPlayPuppeterDemoAny() const;
+    bool isPlayEntryDemo(s32 userId) const;
+    bool isPlayEntryDemoAny() const;
+    bool isInCourseSelectBubbleAny() const;
+    bool isActiveActorControllerLayout(ICourseSelectActorController* pController) const;
+    al::LiveActor* tryFindPlayerByUserId(s32 userId) const;
+    void updateActiveWorld(const sead::BitFlag32& rWorldFlag);
     void setAfterOpeningDemo();
+    void startEnterDemo(ICourseSelectActorController* pController);
+    void startEnterMiiverse();
+    void startEnterConfirm();
+    void cancelEnter();
     void startDemo(bool isSkipLayout);
     void endDemo(bool isAppearLayout);
     bool isDemo() const;
-    bool isPlayPuppeterDemoAll() const;
-    bool isPlayPuppeterDemoAny() const;
-    bool isPlayPuppeterDemo(s32 userId) const;
-    bool isPlayEntryDemoAny() const;
-    bool isPlayLeaveDemo(s32 userId) const;
-    bool isInCourseSelectBubbleAny() const;
-    void activateUser(s32 userId, bool isAppearDemo);
-    void leaveUser(s32 userId);
-    void cancelEnter();
+    bool isMapPauseWorldJump() const;
     void appearLayout();
+    void initAfterPlacement();
+    void connectNodeLink();
+    void initPlayerPositionOpening(const sead::Vector3f& rTrans);
+    /** @deprecated Old guess of the signature, still used by CourseSelectScene. */
+    void initPlayerPositionOpening(const char* pName);
+    void initPlayerPositionStage(s32 courseId);
+    void initPlayerPositionAfterEnding();
+    void setPlayerPositionStage(s32 courseId);
+    void setPlayerPositionWorldStart(s32 worldId);
+    void startOpenRocketDemo();
+    bool isEndOpenRocketDemo() const;
+    bool isPlayerMove() const;
+    void invalidateButtonDemo();
     void prepareFrame();
     void update();
-    void updateActiveWorld(const sead::BitFlag32& rWorldFlag);
-    bool isAllwaysOpenCourse(s32 courseId) const;
-    s32 tryFindNextCourse(CourseSelectMiniature** pMiniatures, s32 maxNum, s32 courseId) const;
-    CourseSelectNode* tryFindNodeFromTrans(const sead::Vector3f& rTrans);
-    void checkDrcTouch(CourseSelectSensor* pSensor);
     void touchPlayer(CourseSelectSensor* pSensor, al::LiveActor* pPlayer);
-    bool isEnableEnterSelectedSensor() const;
-    bool isTriggerDecideMainPlayer() const;
+    bool checkDrcTouch(CourseSelectSensor* pSensor);
+    void tryResetSelectedActorController(const ICourseSelectActorController* pController);
+
+    /**
+     * @brief Gets the name of the scene object.
+     * @return The name.
+     */
+    const char* getSceneObjName() const override { return "コースセレクトデータ管理"; }
 
     /** @brief Gets the course select scene. @return The scene. */
     CourseSelectScene* getScene() const { return mScene; }
@@ -109,24 +151,34 @@ public:
     al::LiveActor* getUnLockActor() const { return mUnLockActor; }
 
 private:
+    /** @brief Maximum number of sensors touched in one frame. */
+    static constexpr s32 cTouchSensorNumMax = 16;
+
+    typedef sead::FixedPtrArray<CourseSelectSensor, cTouchSensorNumMax> TouchSensorArray;
+
     CourseSelectScene* mScene;  // 0x8
-    CourseSelectLayout* mLayout;  // 0x10
-    unsigned char _18[0x150 - 0x18];
-    CourseSelectNode** mNodes;  // 0x150
-    s32 mNodeNum;  // 0x158
-    unsigned char _15c[0x160 - 0x15c];
-    al::LiveActor* mMainPlayer;  // 0x160
-    PlayerCrown* mPlayerCrown;  // 0x168
-    unsigned char _170[0x178 - 0x170];
-    ICourseSelectActorController* mSelectedController;  // 0x178
-    unsigned char _180[0x188 - 0x180];
-    CourseSelectPuppeteerGroup* mPuppeteerGroup;  // 0x188
-    unsigned char _190[0x1b0 - 0x190];
-    al::LiveActor* mUnLockActor;  // 0x1b0
-    DemoTimerStageSwitchController* mDemoTimerStageSwitchController;
-    DemoOpeningSwitch* mDemoOpeningSwitch;
-    s32 mActiveWorldId;  // 0x1c8
-    bool mIsEventGateKeeper;  // 0x1cc
+    CourseSelectLayout* mLayout = nullptr;  // 0x10
+    CourseSelectWindowHolder* mWindowHolder;  // 0x18
+    TouchSensorArray mPlayerTouchSensors;  // 0x20
+    TouchSensorArray mDrcTouchSensors;  // 0xb0
+    sead::PtrArray<CourseSelectMiniature> mMiniatures;  // 0x140
+    CourseSelectNode** mNodes = nullptr;  // 0x150
+    s32 mNodeNum = 0;  // 0x158
+    al::LiveActor* mMainPlayer = nullptr;  // 0x160
+    PlayerCrown* mPlayerCrown = nullptr;  // 0x168
+    bool mIsForceSelect = false;  // 0x170
+    ICourseSelectActorController* mSelectedController = nullptr;  // 0x178
+    ICourseSelectActorController* mNearestController = nullptr;  // 0x180
+    CourseSelectPuppeteerGroup* mPuppeteerGroup = nullptr;  // 0x188
+    CourseSelectObjKeeper* mObjKeeper = nullptr;  // 0x190
+    bool mIsEnter = false;  // 0x198
+    CourseSelectRocket* mRocket = nullptr;  // 0x1a0
+    DrcTouchChecker* mDrcTouchChecker = nullptr;  // 0x1a8
+    al::LiveActor* mUnLockActor = nullptr;  // 0x1b0
+    DemoTimerStageSwitchController* mDemoTimerStageSwitchController = nullptr;  // 0x1b8
+    DemoOpeningSwitch* mDemoOpeningSwitch = nullptr;  // 0x1c0
+    s32 mActiveWorldId = -1;  // 0x1c8
+    bool mIsEventGateKeeper = false;  // 0x1cc
 };
 
 static_assert(sizeof(CourseSelectDirector) == 0x1d0);
