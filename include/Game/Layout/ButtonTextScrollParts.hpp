@@ -9,7 +9,6 @@ class LayoutInitInfo;
 
 /**
  * @brief Cursor-selectable option button that scrolls left/right through a list of message labels.
- * @note Only the members used by already-decompiled callers are declared.
  */
 class ButtonTextScrollParts : public CursorTarget {
 public:
@@ -18,6 +17,16 @@ public:
                           const char* pMessageArchive, const char** pLabels, s32 labelNum);
 
     void control() override;
+
+    void exeWait();
+    void exeSelect();
+    void exeTouchCenter();
+    void exeTouchRight();
+    void exeTouchLeft();
+    void exeOutsideHold();
+    void exeTextScrollOut();
+    void exeTextScrollIn();
+
     void select() override;
     bool isEnableControl() const;
     void decide() override;
@@ -25,17 +34,41 @@ public:
     void enable() override;
     void disable() override;
     bool isDisable() const override;
+
+    void exeDecide();
+    void exeDisable();
+    void exeHide();
+
     bool isDecide() const override;
     bool isDecideEnd() const override;
     bool isTouch() const override;
-    bool up() override;
-    bool down() override;
     bool left() override;
     bool right() override;
     void setLabelIdx(s32 index);
-    bool isValid() const override;
-    void invalidate() override;
-    void validate() override;
+
+    /**
+     * @brief Returns whether the button reacts to touch input while waiting.
+     * @return True if touch input is accepted.
+     */
+    bool isValid() const override { return mIsValid; }
+
+    /** @brief Stops the button from reacting to touch input while waiting. */
+    void invalidate() override { mIsValid = false; }
+
+    /** @brief Lets the button react to touch input while waiting. */
+    void validate() override { mIsValid = true; }
+
+    /**
+     * @brief Vertical cursor navigation is not handled by this button.
+     * @return Always false.
+     */
+    bool up() override { return false; }
+
+    /**
+     * @brief Vertical cursor navigation is not handled by this button.
+     * @return Always false.
+     */
+    bool down() override { return false; }
 
     /**
      * @brief Read the index of the currently shown label.
@@ -44,8 +77,13 @@ public:
     s32 getLabelIdx() const { return mLabelIdx; }
 
 private:
-    u8 mUnreconstructed12c[0x20];
-    s32 mLabelIdx;
-    u8 mUnreconstructed150[0x8];
+    bool mIsValid = true;
+    bool mIsScrollRight = true;
+    al::LayoutActor* mMessageLayout;
+    const char* mMessageArchive;
+    const char** mLabels;
+    s32 mLabelNum;
+    s32 mLabelIdx = -1;
+    bool mIsSelectStarted = false;
 };
 static_assert(sizeof(ButtonTextScrollParts) == 0x158);
