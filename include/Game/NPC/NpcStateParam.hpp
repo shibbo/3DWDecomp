@@ -28,29 +28,36 @@ private:
 static_assert(sizeof(NpcStateParam) == 0x18);
 
 /**
- * @brief Parameters of the NPC turn state.
- * @note The fields have not been reconstructed yet.
+ * @brief Parameters of the NPC turn state: when an NPC turns to face a nearby player.
  */
 class NpcStateTurnParam {
 public:
-    NpcStateTurnParam(f32 _0, f32 _4, f32 _8, f32 _c, bool _10, bool _11, s32 _14);
+    NpcStateTurnParam(f32 startTurnAngle, f32 endTurnAngle, f32 turnDegree, f32 searchRadius,
+                      bool isEnableTurn, bool isTurnOnlyWaitAfter, s32 turnEndStep);
 
-private:
-    u8 _0[0x18];
+    f32 mStartTurnAngle;        // 0x0
+    f32 mEndTurnAngle;          // 0x4
+    f32 mTurnDegree;            // 0x8
+    f32 mSearchRadius;          // 0xc
+    bool mIsEnableTurn;         // 0x10
+    bool mIsTurnOnlyWaitAfter;  // 0x11
+    s32 mTurnEndStep;           // 0x14
 };
 
 static_assert(sizeof(NpcStateTurnParam) == 0x18);
 
 /**
- * @brief Parameters of the NPC rumble state.
- * @note The fields have not been reconstructed yet.
+ * @brief Parameters of the NPC rumble (squash when trampled) reaction.
  */
 class NpcStateRumbleParam {
 public:
-    NpcStateRumbleParam(s32 _0, f32 _4, f32 _8, f32 _c, f32 _10);
+    NpcStateRumbleParam(s32 frames, f32 frequency, f32 angleOffset, f32 amplitude, f32 baseScale);
 
-private:
-    u8 _0[0x14];
+    s32 mFrames;        // 0x0
+    f32 mFrequency;     // 0x4
+    f32 mAngleOffset;   // 0x8
+    f32 mAmplitude;     // 0xc
+    f32 mBaseScale;     // 0x10
 };
 
 static_assert(sizeof(NpcStateRumbleParam) == 0x14);

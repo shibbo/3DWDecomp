@@ -16,6 +16,8 @@
 #include "MapObj/LuckyIslandController.hpp"
 #include "MapObj/LuckyIsland.hpp"
 #include "Camera/CameraLookAtPoint.hpp"
+#include "Camera/FlyOverCamera.hpp"
+#include "Camera/IntroFlyOverCamera.hpp"
 #include "MapObj/Fury/FloatingIslandRailPart.hpp"
 #include "MapObj/Fury/DisasterSpikeBouncy.hpp"
 #include "MapObj/Fury/DisasterFixMapParts.hpp"
@@ -987,14 +989,6 @@ static_assert(sizeof(FloatingTerrain) == 0x170);
 
 
 
-class FlyOverCamera : public al::LiveActor {
-public:
-    explicit FlyOverCamera(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x8c];
-};
-static_assert(sizeof(FlyOverCamera) == 0x1d0);
 
 class FortressGoal : public al::LiveActor {
 public:
@@ -1285,14 +1279,6 @@ static_assert(sizeof(InkPuddle) == 0x150);
 
 
 
-class IntroFlyOverCamera : public al::LiveActor {
-public:
-    explicit IntroFlyOverCamera(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xa4];
-};
-static_assert(sizeof(IntroFlyOverCamera) == 0x1e8);
 
 class IslandFlag : public al::LiveActor {
 public:
@@ -2500,14 +2486,7 @@ private:
 };
 static_assert(sizeof(Ukibo) == 0x1d0);
 
-class WarpCube : public al::LiveActor {
-public:
-    explicit WarpCube(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xac];
-};
-static_assert(sizeof(WarpCube) == 0x1f0);
+#include "MapObj/WarpCube.hpp"
 
 class WarpDoor : public al::LiveActor {
 public:

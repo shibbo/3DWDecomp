@@ -20,6 +20,9 @@ public:
     void setRequestDistance(f32 distance);
     void setNoCameraReset(bool isNoReset);
     void setTrans(sead::Vector3f& rTrans);
+    f32 getRequestDistance();
+    void setRotateY(f32 rotateY);
+    void setFollowExact(bool isExact);
 
 private:
     u8 _148[0x158 - 0x148];

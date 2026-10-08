@@ -70,6 +70,15 @@ public:
     void tryEmitMoveEffect(bool isEmit, const char* pName, s32 flag);
     bool isJumping();
 
+    /** @return Whether a jump can be requested. */
+    bool isEnableJump() const { return _2f; }
+
+    /** @return Whether a jump was requested and not started yet. */
+    bool isRequestJump() const { return mIsRequestJump; }
+
+    /** @return Whether Plessie waits to dive after surfacing. */
+    bool isWaitDoDive() const { return mIsWaitDoDive; }
+
 private:
     s32 mAirCount = 0;               // 0x20
     f32 mHandle = 0.0f;              // 0x24

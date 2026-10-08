@@ -69,6 +69,7 @@ public:
     s32 getWidth() const { return *mSizeW; }
     s32 getHeight() const { return *mSizeH; }
     const TextureSampler* getDepthSampler() const { return mDepthSampler; }
+    const TextureData* getDepthTexture() const { return mDepthTexture; }
 
 private:
     void freeFull_() const;

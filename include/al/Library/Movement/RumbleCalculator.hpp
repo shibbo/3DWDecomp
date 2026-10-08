@@ -15,6 +15,7 @@ public:
     void reset();
     bool isEnd() const { return mFrame >= mMaxFrame; }
     float getValueY() const { return mOut.y; }
+    const sead::Vector3f& getValue() const { return mOut; }
 
     virtual void calcValues(sead::Vector3f* out, const sead::Vector3f& in) = 0;
 

@@ -14,6 +14,7 @@ public:
     int getCurFrame() const;
     void update();
     void tryCancelAudio(int frames, bool flag);
+    void tryCancel(bool flag);
     void setForceIgnoreCharId();
     /** @brief Gets the player actor count. @return Number of demo players. */
     int getPlayerCount() const { return mPlayerCount; }

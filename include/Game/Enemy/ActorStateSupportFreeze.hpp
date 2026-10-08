@@ -51,6 +51,9 @@ public:
     /** @brief Directly sets the actor freezing the host, e.g. one relayed from a linked actor. */
     void forceSetTouchActor(al::LiveActor* pActor) { mTouchActor = pActor; }
 
+    /** @brief Keeps the host frozen until the state is ended from outside. */
+    void onKeepFreeze() { mIsKeepFreeze = true; }
+
 private:
     al::LiveActor* mTouchActor = nullptr;
     al::AnimScaleController* mScaleController = nullptr;

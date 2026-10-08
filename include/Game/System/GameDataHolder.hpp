@@ -240,6 +240,58 @@ class GameDataHolder : public al::ISceneObj {
 
     void setNeedCourseSelectPlayReport(bool isNeed) { mUnknown6B = isNeed; }
 
+    /**
+     * @brief Set the ocean-quadrant scenario lists.
+     * @param pList The ocean scenario lists.
+     */
+    void setOceanScenarioList(OceanScenarioList* pList) { mpOceanScenarioList = pList; }
+
+    /**
+     * @brief Set the Bowser's Fury island database.
+     * @param pList The island list.
+     */
+    void setIslandDataList(IslandDataList* pList) { mpIslandDataList = pList; }
+
+    /**
+     * @brief Set the players of the current scene.
+     * @param pHolder The player holder, or nullptr when the scene ends.
+     */
+    void setPlayerHolder(al::PlayerHolder* pHolder) { mpPlayerHolder = pHolder; }
+
+    /**
+     * @brief Set the two unknown flags at 0x61 and 0x62 (cleared by the single mode scene).
+     * @param is61 Value of the flag at 0x61.
+     * @param is62 Value of the flag at 0x62.
+     */
+    void setUnknownFlags61And62(bool is61, bool is62) {
+        mUnknown62 = is62;
+        mUnknown61 = is61;
+    }
+
+    /**
+     * @brief Check whether the players are frozen (flag at 0x61, single mode).
+     * @return True while the freeze mode is on.
+     */
+    bool isFreezeMode() const { return mUnknown61; }
+
+    /**
+     * @brief Check the unknown flag at 0x62 (players are not updated while frozen when set).
+     * @return The flag value.
+     */
+    bool isUnknown62() const { return mUnknown62; }
+
+    /**
+     * @brief Check whether the play start report is still to be sent (flag at 0x6c).
+     * @return True when the report is pending.
+     */
+    bool isNeedPlayStartReport() const { return mUnknown6C; }
+
+    /**
+     * @brief Set whether the play start report is still to be sent.
+     * @param isNeed True when the report is pending.
+     */
+    void setNeedPlayStartReport(bool isNeed) { mUnknown6C = isNeed; }
+
   private:
     friend class PlayReport;
 

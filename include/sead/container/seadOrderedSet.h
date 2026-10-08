@@ -186,4 +186,17 @@ inline void OrderedSet<Value>::Node::erase_()
     map->mFreeList.free(this_);
     --map->mSize;
 }
+
+/// OrderedSet with an inline node buffer of N elements.
+template <typename Value, s32 N>
+class FixedOrderedSet : public OrderedSet<Value>
+{
+public:
+    FixedOrderedSet() { this->setBuffer(N, mWork); }
+
+private:
+    using Node = typename OrderedSet<Value>::Node;
+
+    alignas(Node) u8 mWork[N * sizeof(Node)];
+};
 }  // namespace sead

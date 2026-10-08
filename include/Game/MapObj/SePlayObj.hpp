@@ -23,6 +23,40 @@ public:
         init(rInfo);
     }
 
+    /**
+     * @brief Initialize the sound object with its default audio keeper so that it follows the
+     * actor it is attached to.
+     * @param rInfo Placement information.
+     */
+    void initAttached(const al::ActorInitInfo& rInfo) {
+        mIsAttached = true;
+        mUpdatePose = false;
+        init(rInfo);
+    }
+
+    /**
+     * @brief Initialize the sound object as an attached one whose pose is set by its owner.
+     * @param rInfo Placement information.
+     */
+    void initAttachedUpdatePose(const al::ActorInitInfo& rInfo) {
+        mIsAttached = true;
+        mUpdatePose = true;
+        init(rInfo);
+    }
+
+    /**
+     * @brief Inline form of initWithAudioKeeper: an attached sound object whose pose is set by
+     * its owner, playing through the given audio keeper.
+     * @param rInfo Placement information.
+     * @param pAudioKeeperName Name of the audio keeper to use.
+     */
+    void initAttachedUpdatePose(const al::ActorInitInfo& rInfo, const char* pAudioKeeperName) {
+        mAudioKeeperName = pAudioKeeperName;
+        mIsAttached = true;
+        mUpdatePose = true;
+        init(rInfo);
+    }
+
 private:
     const char* mSeName = nullptr;
     bool mIsValidClipping = false;

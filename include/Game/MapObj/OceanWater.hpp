@@ -130,7 +130,7 @@ class OceanWater : public al::OceanWaveDirector {
      */
     virtual f32 getWaterHeight(const sead::Vector3f& rPos, bool isIgnoreWave) { return 0.0f; }
 
-  private:
+  protected:
     sead::Vector3f mFlowDir = {0.0f, 0.0f, 0.0f};                // 0x158
     sead::Vector2f _164;                                         // 0x164
     WaveGrid::Data mGridData;                                    // 0x170

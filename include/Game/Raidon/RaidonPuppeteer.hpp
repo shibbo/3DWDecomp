@@ -41,6 +41,9 @@ public:
     /** @return Whether this rider requested a jump. */
     bool isRequestJump() const { return mJumpRequest > 0; }
 
+    /** @return Whether this rider is jumping. */
+    bool isJump() const { return mIsJump; }
+
 private:
     u8 _18[0x38 - 0x18];
     f32 mStickX;       // 0x38
@@ -49,7 +52,8 @@ private:
     f32 mAccel;        // 0x44
     u8 _48[0x4c - 0x48];
     s32 mJumpRequest;  // 0x4c
-    u8 _50[0x58 - 0x50];
+    bool mIsJump;      // 0x50
+    u8 _51[0x58 - 0x51];
 };
 
 static_assert(sizeof(RaidonPuppeteer) == 0x58);

@@ -18,6 +18,18 @@ public:
     void exeShakeEnd();
     void setStateAfter();
     void setStateBefore();
+
+    /**
+     * Gets the actor init info of the players restarting at this checkpoint.
+     * @return The actor init info.
+     */
+    const al::ActorInitInfo* getPlayerInfo() const { return mPlayerInfo; }
+
+    /**
+     * Gets the id of this checkpoint in its zone.
+     * @return The checkpoint id (1-based).
+     */
+    int getCheckpointId() const { return mCheckpointId; }
 private:
     al::ActorInitInfo* mPlayerInfo = nullptr;
     al::PlacementId* mPlacementId;

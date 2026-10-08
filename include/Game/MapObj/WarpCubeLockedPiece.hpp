@@ -19,6 +19,10 @@ public:
     void exeAppearFall();
     void exeWait();
     void exeAssistRotate();
+
+    /** @brief Set the piece counter layout. @param pCounter The counter of the warp box. */
+    void setCounter(CounterWarpCube* pCounter) { mCounter = pCounter; }
+
 private:
     sead::Quatf mBaseQuat = sead::Quatf::unit;
     sead::Vector3f mBaseTrans{0.0f, 0.0f, 0.0f};

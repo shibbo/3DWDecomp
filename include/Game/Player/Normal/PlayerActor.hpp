@@ -156,6 +156,8 @@ public:
     void setEnableSingleJoyCamera(bool isEnable);
     s32 getInputPort() const;
     void replaceInputPort(s32 port);
+    void appearSingleMode(bool isDemo);
+    void setSingleModeInput(bool isEnable);
     const IUsePlayerKeyConfig* getKeyConfig() const;
     IUsePlayerPuppet* getPlayerPuppet();
     void requestBind(al::HitSensor* pSensor, f32 priority, s32 type);

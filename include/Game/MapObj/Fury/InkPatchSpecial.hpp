@@ -13,6 +13,15 @@ public:
     const char* getSceneObjName() const override;
     void setSpecialPatch(InkPatch* patch) { mSpecialPatch = patch; }
     int getProgress() const { return _20; }
+
+    /**
+     * @brief Advances the progress counter, saturating at the largest int.
+     */
+    void incProgress() {
+        if (_20 != 0x7fffffff) {
+            _20++;
+        }
+    }
 private:
     InkPatch* mSpecialPatch = nullptr;
     InkPatch* mUnlockers[2] = {};

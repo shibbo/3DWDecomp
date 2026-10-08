@@ -19,6 +19,7 @@ public:
     void initCourseSelectPlayer(const al::LayoutInitInfo& rInfo, bool isKiosk);
     void hidePlayer();
     void showPlayer();
+    bool isInCourseSelectBubble() const;
 
 private:
     u8 _648[0x680 - 0x648];

@@ -40,6 +40,59 @@ public:
     bool isImmediateDemoSwitch() const { return mIsImmediateDemoSwitch; }
     void resetImmediateDemoSwitch() { mIsImmediateDemoSwitch = false; }
 
+    /**
+     * @brief Sets the audio director the demos change the audio demo type of.
+     * @param pAudioDirector The audio director.
+     */
+    void setAudioDirector(AudioDirector* pAudioDirector) { mAudioDirector = pAudioDirector; }
+
+    /**
+     * @brief Gets the audio demo type of the active demo.
+     * @return The audio demo type.
+     */
+    s32 getAudioDemoType() const { return mAudioDemoType; }
+
+    /**
+     * @brief Checks whether the audio demo type changed since it was last read.
+     * @return Whether the audio demo type changed.
+     */
+    bool isChangedAudioDemoType() const { return mIsChangedAudioDemoType; }
+
+    /**
+     * @brief Clears the audio demo type change flag.
+     */
+    void resetChangedAudioDemoType() { mIsChangedAudioDemoType = false; }
+
+    /**
+     * @brief Sets the unknown flag at 0xd4 (set while the Bowser's Fury intro plays).
+     * @param isSet The flag value.
+     */
+    void setUnknownD4(bool isSet) { _d4 = isSet; }
+
+    /** @brief Gets the unknown flag at 0xd4. @return The flag value. */
+    bool isUnknownD4() const { return _d4; }
+
+    /** @brief Gets the unknown flag at 0xd5. @return The flag value. */
+    bool isUnknownD5() const { return _d5; }
+
+    /** @brief Gets the unknown flag at 0xe1. @return The flag value. */
+    bool isUnknownE1() const { return _e1; }
+
+    /** @brief Sets the unknown flag at 0xe1. @param isSet The flag value. */
+    void setUnknownE1(bool isSet) { _e1 = isSet; }
+
+    /** @brief Sets the unknown flag at 0xe2. @param isSet The flag value. */
+    void setUnknownE2(bool isSet) { _e2 = isSet; }
+
+    /** @brief Gets the unknown flag at 0xe2. @return The flag value. */
+    bool isUnknownE2() const { return _e2; }
+
+    /** @brief Gets the unknown flag at 0xe3. @return The flag value. */
+    bool isUnknownE3() const { return _e3; }
+
+    /** @brief Sets the unknown flag at 0xe3. @param isSet The flag value. */
+    void setUnknownE3(bool isSet) { _e3 = isSet; }
+
     const char* mActiveDemoName = nullptr;
     LiveActor** mDemoActors = nullptr;
     s32 mDemoActorNum = 0;

@@ -61,6 +61,36 @@ public:
     al::LiveActor* getIslandFlag() const { return mIslandFlag; }
 
     /**
+     * Gets the id of the island.
+     * @return The island id.
+     */
+    s32 getIslandId() const { return mIslandId; }
+
+    /**
+     * Gets the name of the island stage.
+     * @return The island name.
+     */
+    const char* getIslandName() const { return mIslandName; }
+
+    /**
+     * Gets the placement object name of the island holder.
+     * @return The object name.
+     */
+    const char* getObjectName() const { return mObjectName; }
+
+    /**
+     * Sets the id of the island.
+     * @param islandId The island id.
+     */
+    void setIslandId(s32 islandId) { mIslandId = islandId; }
+
+    /**
+     * Sets the position of the effect played when the island appears.
+     * @param rPos The effect position.
+     */
+    void setAppearEffectPos(const sead::Vector3f& rPos) { mAppearEffectPos = rPos; }
+
+    /**
      * @brief Access the island's lighthouse.
      * @return The lighthouse, or nullptr when the island has none.
      */

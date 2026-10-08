@@ -28,6 +28,9 @@ static_assert(sizeof(ActorStateDemoCameraParam) == 0x38);
 class ActorStateDemoCamera : public al::ActorStateBase {
 public:
     ActorStateDemoCamera(al::LiveActor*, const al::ActorInitInfo&, const char*, const ActorStateDemoCameraParam*, bool);
+    bool tryStart(const al::Nerve*);
+    int getPlayStep() const;
+    bool isGreaterEqualPlayStep(int step) const;
 
 private:
     u8 mUnreconstructed20[0xa0];

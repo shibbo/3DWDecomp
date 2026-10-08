@@ -47,6 +47,8 @@ public:
     void setParamInvalidateKillByArea(bool);
     void setParamInvalidateClippingOnKill(bool);
     bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
+    void setParamDefaultAbove();
+    void changeModel(al::LiveActor*);
 private:
     ItemStatePopUpFrontParam mParam;
     float mColliderRadius;

@@ -67,6 +67,9 @@ public:
     s32 getLinkNum() const { return mLinkedList.size(); }
     /** @brief Gets the director index of the first node linking to this one. @return The index. */
     s32 getFrontLinkNodeIndex() const { return *mLinkedList.front(); }
+    /** @brief Gets the director index of a node linking to this one. @param index Link index.
+     * @return The node index. */
+    s32 getLinkNodeIndex(s32 index) const { return *mLinkedList(index); }
 
 private:
     inline void createPointObj(const al::ActorInitInfo& rInfo);

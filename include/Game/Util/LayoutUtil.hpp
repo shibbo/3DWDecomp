@@ -38,6 +38,7 @@ void replacePaneMsgNumber3(al::IUseMessageSystem* pMsgSystem, al::IUseLayout* pL
                            s32 number1, s32 number2, s32 number3);
 void appearCameraChangeLayout(const al::IUseSceneObjHolder* pHolder);
 void disappearCameraChangeLayout(const al::IUseSceneObjHolder* pHolder);
+void disappearCameraChangeLayoutAndResetCameraMode(const al::IUseSceneObjHolder* pHolder);
 void disappearGyroIconInKinopioBrigade(const al::IUseSceneObjHolder* pHolder);
 void convertPlayerLifeToText(sead::WBufferedSafeString* pOut, s32 life);
 void setPaneDecideIconFont(al::IUseLayout* pLayout, const char* pPaneName, s32 port);

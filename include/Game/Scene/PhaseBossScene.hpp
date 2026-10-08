@@ -69,7 +69,6 @@ class PhaseBossScene : public SingleModeScene {
     static MemorySceneHeapCustomAlloc sCustomAlloc;
 
   private:
-    u8 mUnknown378;            // Last byte of the SingleModeScene state (tail padding reuse).
     bool mIsPhaseEnd = false;  // 0x379
     bool mIsGameOver = false;  // 0x37a
 };

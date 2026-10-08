@@ -42,6 +42,12 @@ public:
 
     ShadowMaskKeeper* getShadowMaskKeeper() const { return mShadowMaskKeeper; }
 
+    /**
+     * @brief Sets the unknown flag at 0x1ef8 (on while the snapshot mode is active).
+     * @param isSet The flag value.
+     */
+    void setUnknown1ef8(bool isSet) { _1ef8 = isSet; }
+
     void* _0;
     ShadowMaskKeeper* mShadowMaskKeeper;
     DepthShadowDrawer* mDepthShadowDrawer;
@@ -61,7 +67,9 @@ public:
     f32 _400;
     u8 _404[0x420 - 0x404];
     f32 _420;
-    u8 _424[0x1f00 - 0x424];
+    u8 _424[0x1ef8 - 0x424];
+    bool _1ef8;
+    u8 _1ef9[0x1f00 - 0x1ef9];
 };
 
 static_assert(sizeof(ShadowDirector) == 0x1f00);

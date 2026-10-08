@@ -215,7 +215,7 @@ public:
     void setPlessieCameraOn(f32 min, f32 max);
     void setPlessieMode(bool isPlessie);
     void setVerticalAngleRange(f32 min, f32 max);
-    static void setPlessieCameraOff();
+    void setPlessieCameraOff();
     void exeFollow();
     bool trySwitchLimitObj();
     void updateInputOrSubTargetTurnH();
@@ -253,6 +253,15 @@ public:
     const sead::Vector3f& getPrevTargetTrans() const { return mPrevTargetTrans; }
 
     s32 getTurnState() const { return mTurnState; }
+
+    /** @param isPrior Whether the requested distance wins over the computed one. */
+    void setPriorRequestDistance(bool isPrior) { mIsPriorRequestDistance = isPrior; }
+
+    /** @param isFreeze Whether the horizontal angle is frozen in Plessie mode. */
+    void setPlessieFreezeAngleH(bool isFreeze) { mIsPlessieFreezeAngleH = isFreeze; }
+
+    /** @param isFollow Whether the snapshot roll follows the target. */
+    void setSnapShotRollFollow(bool isFollow) { mIsSnapShotRollFollow = isFollow; }
 
 private:
     void createStartAngleParam();

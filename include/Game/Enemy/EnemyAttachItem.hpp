@@ -17,8 +17,13 @@ public:
     void setFollowTransPtr(const sead::Vector3f* pTrans);
     void endAttach(bool isPopUp);
 
+    /** @brief Gets the item actor created for this attachment (nullptr before init). */
+    al::LiveActor* getItemActor() const { return mItemActor; }
+
 private:
-    u8 _144[0x44];
+    u8 _144[0x4];
+    al::LiveActor* mItemActor;
+    u8 _150[0x38];
 };
 
 static_assert(sizeof(EnemyAttachItem) == 0x188);

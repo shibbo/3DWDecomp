@@ -291,6 +291,8 @@ public:
      */
     SuperBowser* getSuperBowser() const { return mpSuperBowser; }
 
+    SuperBowserShell* getSuperBowserShell() const { return mShell; }
+
     /**
      * @brief Count the frames elapsed in disaster mode, including the saved offset.
      * @return The elapsed disaster-mode frames.

@@ -45,6 +45,7 @@ void replaceDemoPlayerAll(const al::LiveActor* pActor, const sead::Vector3f& rTr
                           const sead::Quatf& rQuat, f32 offset);
 bool isAnyActiveDemo(const al::LiveActor* pActor);
 bool isActiveDemo(const al::LiveActor* pActor);
+bool isActiveDemoMovingCamera(const al::LiveActor* pActor);
 bool isActiveDemoCutscene(const al::LiveActor* pActor);
 bool tryCancelStageDemoStrict(const al::LiveActor* pActor);
 bool isActiveDemoInGameCutscene(const al::LiveActor* pActor);

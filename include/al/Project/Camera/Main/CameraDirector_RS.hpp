@@ -137,6 +137,9 @@ public:
 
     SceneCameraCtrl* getSceneCameraCtrl() const { return mSceneCameraCtrl; }
 
+    /** @param isPlessie Whether the camera currently follows Plessie. */
+    void setPlessieCamera(bool isPlessie) { mIsPlessieCamera = isPlessie; }
+
     CameraPoserSceneInfo_RS* getSceneInfo() const { return mSceneInfo; }
 
     CameraTicketHolder* getTicketHolder() const { return mTicketHolder; }
@@ -175,16 +178,12 @@ public:
     ClippingDirectorBase* mClippingDirectorBase;
     sead::Vector3f mStoredCameraPos;  // 0xb8
     sead::Vector3f mStoredLookAtPos;  // 0xc4
-    u64 _d0;
-    u64 _d8;
-    u64 _e0;
-    u64 _e8;
-    u64 _f0;
-    u64 _f8;
+    sead::Matrix34f mViewMtx;  // 0xd0
     u8 _100;
     u8 _101;
     u8 _102;
     u8 _103;
     bool mIsStoredCamera;  // 0x104
+    bool mIsPlessieCamera;  // 0x105
 };
 }  // namespace al

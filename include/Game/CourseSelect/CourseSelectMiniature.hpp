@@ -104,6 +104,14 @@ public:
     CourseSelectNode* getNode() const { return mNode; }
     /** @brief Gets the controller the puppeteers use. @return The controller. */
     MiniatureController* getController() const { return mController; }
+    /** @brief Gets the number of courses opened by clearing this one. @return The count. */
+    s32 getNextCourseNum() const { return mNextCourseNum; }
+    /** @brief Gets the ids of the courses opened by clearing this one. @return The id array. */
+    const s32* getNextCourseIds() const { return mNextCourseIds; }
+    /** @brief Gets whether a dokan is linked to the miniature. @return true if linked. */
+    bool hasDokanLink() const { return mHasDokanLink; }
+    /** @brief Gets the position of the linked dokan. @return The dokan position. */
+    const sead::Vector3f& getDokanTrans() const { return mDokanTrans; }
 
 private:
     inline void showCloseModel();

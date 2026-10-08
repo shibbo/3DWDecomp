@@ -112,6 +112,11 @@ public:
     void setLerpRate(f32 rate) { mLerpRate = rate; }
     void setLerpPaused(bool paused) { mIsLerpPaused = paused; }
 
+    /**
+     * @brief Locks the current graphics area (used when the player dies).
+     */
+    void lockArea() { mIsLockArea = true; }
+
 private:
     const GraphicsSystemInfo* mSystemInfo;
     const char* mStageName = nullptr;

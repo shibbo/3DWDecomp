@@ -23,6 +23,7 @@ public:
     bool isLastShard() const;
     bool isFinalShard() const;
     int getId() const { return mId; }
+    void setShardId(int shardId) { mShardId = shardId; }
     static bool sIsFinalShardGetPending;
 private:
     struct Piece { sead::Vector3f offset; Shards* actor; };

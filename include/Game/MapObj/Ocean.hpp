@@ -74,7 +74,15 @@ class Ocean {
     u8 _0[0xa850];
     OceanFixedObjList<Ripple, cRippleMax> mRippleList;  // 0xa850
     OceanFixedObjList<Wake, cWakeMax> mWakeList;        // 0xc680
-    u8 _c8b0[0x4c8e8 - 0xc8b0];
+    u8 _c8b0[0x4c8e0 - 0xc8b0];
+    s64 mTime;  // 0x4c8e0
+
+  public:
+    /**
+     * @brief Get the simulation time of the ocean.
+     * @return The time, in frames.
+     */
+    s64 getTime() const { return mTime; }
 };
 
 static_assert(sizeof(Ocean) == 0x4c8e8);

@@ -52,6 +52,8 @@ class SnapshotState;
  * @brief Scene of the course select map (the world map between the courses).
  */
 class CourseSelectScene : public al::Scene {
+    friend class CourseSelectDirector;
+
 public:
     explicit CourseSelectScene(bool isAfterEndingEvent);
     ~CourseSelectScene() override;

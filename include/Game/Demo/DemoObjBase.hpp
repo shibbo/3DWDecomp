@@ -60,6 +60,18 @@ public:
     /** @brief Sets whether Bowser Jr. is hidden while the demo plays. */
     void setHideKoopaJr(bool isHide) { mHideKoopaJr = isHide; }
 
+    /**
+     * @brief Allow or forbid skipping the demo.
+     * @param isAllow True to allow skipping.
+     */
+    void setAllowSkip(bool isAllow) { mAllowSkip = isAllow; }
+
+    /**
+     * @brief Disable or enable screen captures during the demo.
+     * @param isDisable True to disable captures.
+     */
+    void setDisableCapture(bool isDisable) { mDisableCapture = isDisable; }
+
 protected:
     const char* mDemoName = nullptr;
     DemoSceneActorHolder* mDemo = nullptr;

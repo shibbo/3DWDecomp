@@ -142,6 +142,12 @@ public:
      */
     void setDisablePause(bool isDisable) { mIsDisablePause = isDisable; }
 
+    /**
+     * @brief Check whether opening the pause menu is disabled.
+     * @return True while the pause menu cannot be opened.
+     */
+    bool isDisablePause() const { return mIsDisablePause; }
+
 private:
     CounterCoinParts* mCounterCoin = nullptr;             // 0x138
     CounterGoalItemParts* mCounterGoalItem;               // 0x140

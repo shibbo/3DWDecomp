@@ -6,15 +6,588 @@ namespace al {
     class ByamlIter;
 }
 
-/// Defines a tuning value: a member and a virtual getter that asks the override
-/// parameter set instead while one is active.
-#define PLAYER_CONST_PARAM(Type, Name)                                  \
-    virtual Type get##Name() const {                                     \
-        if (mIsOverride) {                                               \
-            return mOverrideParam->get##Name();                          \
-        }                                                                \
-        return m##Name;                                                  \
-    }
+/// Every tuning value as X(Type, Name), in getter (vtable) order.
+#define PLAYER_CONST_PARAM_LIST(X)                                            \
+    X(f32, Gravity)                                                           \
+    X(f32, CenterHeight)                                                      \
+    X(f32, BodyRadius)                                                        \
+    X(f32, CollectInfoRadiusAddition)                                         \
+    X(f32, SnapGroundMaxLength)                                               \
+    X(f32, SnapWallMaxLength)                                                 \
+    X(f32, StickRoundThreshold)                                               \
+    X(f32, HeightCheckLength)                                                 \
+    X(f32, CutVelLimit)                                                       \
+    X(f32, CutVelRate)                                                        \
+    X(s32, ThrowInvalidationFrames)                                           \
+    X(f32, Tall)                                                              \
+    X(f32, ChestRadius)                                                       \
+    X(f32, DashCheckRadius)                                                   \
+    X(f32, ShadowCheckLength)                                                 \
+    X(f32, ShadowLengthMax)                                                   \
+    X(s32, PivotFrame)                                                        \
+    X(f32, PivotDegree)                                                       \
+    X(f32, NormalMaxSpeed)                                                    \
+    X(f32, DashMaxSpeed)                                                      \
+    X(f32, SuperDashSpeed)                                                    \
+    X(s32, SuperDashTimer)                                                    \
+    X(s32, SuperDashTimerMini)                                                \
+    X(s32, SuperDashTimerFire)                                                \
+    X(s32, SuperDashTimerClimb)                                               \
+    X(s32, SuperDashTimerRaccoonDog)                                          \
+    X(s32, SuperDashTimerBoomerang)                                           \
+    X(s32, SuperDashTimerRaccoonDogWhite)                                     \
+    X(f32, SuperDashStartAnimRate)                                            \
+    X(s32, SuperDashStartAnimFrame)                                           \
+    X(s32, BrakeFrame)                                                        \
+    X(s32, DashBrakeFrame)                                                    \
+    X(s32, StickOnBrakeFrame)                                                 \
+    X(s32, BrakeFrameOnIce)                                                   \
+    X(s32, AccelFrame)                                                        \
+    X(s32, DashAccelFrame)                                                    \
+    X(f32, RoundLimitDegreeMax)                                               \
+    X(f32, RoundLimitDegreeMin)                                               \
+    X(f32, RunAnimRateMax)                                                    \
+    X(f32, GiantRunAnimRateMax)                                               \
+    X(f32, ShortAnimRateEff)                                                  \
+    X(s32, DashStartFrame)                                                    \
+    X(s32, ModifiedDashStartFrame)                                            \
+    X(s32, DashStartBlendFrame)                                               \
+    X(s32, DashInputSuccessFrame)                                             \
+    X(f32, DownHillAccelStartDegree)                                          \
+    X(f32, DownHillAccelEndDegree)                                            \
+    X(f32, DownHillAccelAddRate)                                              \
+    X(f32, DashPanelSpeed)                                                    \
+    X(f32, ModifiedDashPanelSpeed)                                            \
+    X(f32, DashPanelOverRate)                                                 \
+    X(s32, DashPanelTimer)                                                    \
+    X(f32, FlingPoleSpeed)                                                    \
+    X(s32, GroundOffFrame)                                                    \
+    X(s32, ClimbToGroundMoveFrame)                                            \
+    X(f32, TiltMaxDegree)                                                     \
+    X(f32, TiltBlendRate)                                                     \
+    X(f32, TiltMaxFrontAngle)                                                 \
+    X(f32, HoldingTiltMaxFrontAngle)                                          \
+    X(f32, TiltStartSpeed)                                                    \
+    X(f32, TiltEndSpeed)                                                      \
+    X(f32, ClimbRunAnimRateEff)                                               \
+    X(f32, PanelDashAnimRate)                                                 \
+    X(f32, ModifiedPanelDashAnimRate)                                         \
+    X(f32, SlopeMaxSpeedScale)                                                \
+    X(f32, MaxSpeedScale)                                                     \
+    X(f32, DashSignAnimRate)                                                  \
+    X(f32, DashSignMaxLoop)                                                   \
+    X(f32, DashSignMaxSpeed)                                                  \
+    X(s32, DashSignAnimFrameMax)                                              \
+    X(f32, JumpDirRotLimit)                                                   \
+    X(f32, JumpPowLow)                                                        \
+    X(f32, JumpPow)                                                           \
+    X(s32, JumpPowCountMax)                                                   \
+    X(f32, JumpExtensionGravityRate)                                          \
+    X(f32, JumpSideVelRate)                                                   \
+    X(f32, JumpFrontBrakeRate)                                                \
+    X(f32, JumpRotBlendRate)                                                  \
+    X(s32, JumpAccelFrame)                                                    \
+    X(s32, ReleaseAccelFrame)                                                 \
+    X(s32, JumpAccelAddFrame)                                                 \
+    X(f32, JumpCancelBrakeRate)                                               \
+    X(f32, JumpCancelMinSpeed)                                                \
+    X(s32, ContinuousJumpTimer)                                               \
+    X(s32, ContinuousJumpCount)                                               \
+    X(f32, FallSpeedMax)                                                      \
+    X(f32, DashJumpAddition)                                                  \
+    X(f32, PunchReflectPower)                                                 \
+    X(s32, GlideInhibitFrameAfterPunch)                                       \
+    X(f32, WalkMinSpeedRate)                                                  \
+    X(s32, JumpHVelSamplingNum)                                               \
+    X(f32, FollowFrontDamper)                                                 \
+    X(f32, FollowBackDamper)                                                  \
+    X(s32, FlightDurationCount)                                               \
+    X(f32, FlightDurationRotBlendRate)                                        \
+    X(s32, FlightDurationJumpStartInhibitFrame)                               \
+    X(f32, FlightDurationSideDamper)                                          \
+    X(f32, RaccoonDogFallSpeedMax)                                            \
+    X(f32, RaccoonDogFallGravityRate)                                         \
+    X(f32, RaccoonDogFallGravityAdd)                                          \
+    X(f32, RaccoonDogFirstFallDamper)                                         \
+    X(f32, RaccoonDogRotBlendRate)                                            \
+    X(f32, RaccoonDogFallSideDamper)                                          \
+    X(f32, TrampleJumpGravity)                                                \
+    X(f32, TrampleJump)                                                       \
+    X(f32, TrampleJumpSideVelRate)                                            \
+    X(f32, TrampleHighJumpGravity)                                            \
+    X(f32, TrampleHighJump)                                                   \
+    X(f32, TrampleHipDropGravity)                                             \
+    X(f32, TrampleHipDropJump)                                                \
+    X(f32, RisingTrampleJumpGravity)                                          \
+    X(f32, RisingTrampleJump)                                                 \
+    X(f32, RisingTrampleHighJumpGravity)                                      \
+    X(f32, RisingTrampleHighJump)                                             \
+    X(f32, RisingTrampleHVelBrakeRate)                                        \
+    X(f32, PunchedJumpGravity)                                                \
+    X(f32, PunchedJump)                                                       \
+    X(f32, RisingPunchedHVelBrakeRate)                                        \
+    X(f32, TossedJumpGravity)                                                 \
+    X(f32, TossedJump)                                                        \
+    X(f32, TossedHighJumpGravity)                                             \
+    X(f32, TossedHighJump)                                                    \
+    X(f32, TossedHipDropGravity)                                              \
+    X(f32, TossedHipDropJump)                                                 \
+    X(f32, RisingTossedJumpGravity)                                           \
+    X(f32, RisingTossedJump)                                                  \
+    X(f32, RisingTossedHighJumpGravity)                                       \
+    X(f32, RisingTossedHighJump)                                              \
+    X(f32, RisingTossedHVelBrakeRate)                                         \
+    X(f32, SquatBrakeEndSpeed)                                                \
+    X(f32, SquatShiftSpeedRate)                                               \
+    X(f32, SquatAccelRate)                                                    \
+    X(s32, SquatNoBrakeFrame)                                                 \
+    X(f32, SquatBrakeRate)                                                    \
+    X(f32, SquatBrakeRateOnSkate)                                             \
+    X(f32, SquatBrakeSideAccel)                                               \
+    X(f32, SquatBrakeSideBrakeRate)                                           \
+    X(f32, SquatBrakeSideBrakeRateOnSkate)                                    \
+    X(f32, SquatBrakeSideMaxSpeedRate)                                        \
+    X(f32, SquatWalkSpeed)                                                    \
+    X(f32, SquatWalkFrontVecBlend)                                            \
+    X(s32, SquatEnergyAccelFrame)                                             \
+    X(f32, SquatJumpGravity)                                                  \
+    X(f32, SquatJumpPow)                                                      \
+    X(f32, SquatHighJumpPow)                                                  \
+    X(f32, SquatJumpBackPow)                                                  \
+    X(f32, SquatJumpTramplePow)                                               \
+    X(f32, HipDropSpeed)                                                      \
+    X(s32, HipDropLandCancelFrame)                                            \
+    X(f32, HipDropHeight)                                                     \
+    X(s32, HipDropMsgInterval)                                                \
+    X(f32, HipDropKnockDownRadiusMin)                                         \
+    X(f32, HipDropKnockDownRadiusMax)                                         \
+    X(f32, HipDropStartAnimRate)                                              \
+    X(s32, HipDropKnockDownFrame)                                             \
+    X(f32, HipDropJumpPow)                                                    \
+    X(s32, HipDropJumpPowCountMax)                                            \
+    X(s32, HipDropJumpPermitBeginFrame)                                       \
+    X(s32, HipDropJumpPermitEndFrame)                                         \
+    X(f32, WallHeightLowLimit)                                                \
+    X(f32, WallGravity)                                                       \
+    X(f32, WallMaxSpeed)                                                      \
+    X(f32, WallApartFrame)                                                    \
+    X(f32, WallSnapDistance)                                                  \
+    X(f32, WallSlideMaxSpeed)                                                 \
+    X(f32, WallSlideAccel)                                                    \
+    X(s32, WallInhibitAfterPunch)                                             \
+    X(f32, WallJumpGravity)                                                   \
+    X(f32, WallJumpHSpeed)                                                    \
+    X(f32, WallJumpPow)                                                       \
+    X(s32, WallJumpInvalidateInputFrame)                                      \
+    X(s32, WallJumpDirEffectiveFrame)                                         \
+    X(f32, WallJumpDirLimit)                                                  \
+    X(f32, WallJumpLimitPlay)                                                 \
+    X(s32, WallClimbReadyFrame)                                               \
+    X(s32, WallClimbReadyWaitFrame)                                           \
+    X(s32, WallClimbReadyFromSlopeFrame)                                      \
+    X(f32, WallClimbAccel)                                                    \
+    X(f32, WallClimbMaxSpeed)                                                 \
+    X(f32, WallClimbDashMaxSpeed)                                             \
+    X(s32, WallClimbFrame)                                                    \
+    X(s32, WallClimbFrame1)                                                   \
+    X(s32, WallClimbFrame2)                                                   \
+    X(s32, WallClimbDashFrame)                                                \
+    X(s32, WallClimbDashFrame1)                                               \
+    X(s32, WallClimbDashFrame2)                                               \
+    X(s32, WallClimbStopFrame)                                                \
+    X(f32, WallClimbBrakeRate)                                                \
+    X(s32, WallClimbNoWallFrame)                                              \
+    X(f32, WallClimbMaxSideSpeed)                                             \
+    X(f32, WallClimbDashMaxSideSpeed)                                         \
+    X(f32, WallClimbSideAccel)                                                \
+    X(f32, WallClimbRetainThreshold)                                          \
+    X(f32, WallClimbInvalidSideMoveDegree)                                    \
+    X(f32, WallClimbDashAnimRate)                                             \
+    X(f32, WallClimbNormalAnimRate)                                           \
+    X(s32, WallClimbJumpPowCountMax)                                          \
+    X(f32, WallClimbJumpDashAddition)                                         \
+    X(f32, WallClimbJumpPowLow)                                               \
+    X(f32, WallClimbJumpPow)                                                  \
+    X(f32, WallClimbSlideGravity)                                             \
+    X(f32, WallClimbSlideMaxSpeed)                                            \
+    X(f32, WallClimbSlideSideAccel)                                           \
+    X(f32, WallClimbSlideSideMaxSpeed)                                        \
+    X(f32, WallClimbSlideStartBrakeRate)                                      \
+    X(s32, ClimbAirStopFrame)                                                 \
+    X(f32, ClimbAirStopRotateVelMax)                                          \
+    X(f32, LongJumpSuccessSpeed)                                              \
+    X(f32, LongJumpSpeedMin)                                                  \
+    X(f32, LongJumpBrake)                                                     \
+    X(f32, LongJumpSideAccel)                                                 \
+    X(s32, LongJumpCancelFrame)                                               \
+    X(s32, LongJumpFastSuccessFrame)                                          \
+    X(f32, LongJumpFastGravity)                                               \
+    X(f32, LongJumpFastJumpPow)                                               \
+    X(f32, LongJumpFastSpeed)                                                 \
+    X(f32, LongJumpSlowGravity)                                               \
+    X(f32, LongJumpSlowJumpPow)                                               \
+    X(f32, LongJumpSlowSpeed)                                                 \
+    X(s32, DashBrakeCommandFrame)                                             \
+    X(s32, DashBrakeActionFrame)                                              \
+    X(f32, DashBrakeSpeed)                                                    \
+    X(f32, TurnJumpGravity)                                                   \
+    X(f32, TurnJumpPow)                                                       \
+    X(f32, TurnJumpVelH)                                                      \
+    X(f32, TurnJumpBrake)                                                     \
+    X(f32, TurnJumpAccel)                                                     \
+    X(f32, TurnJumpSideAccel)                                                 \
+    X(s32, TurnJumpToFlightDurationFrame)                                     \
+    X(f32, WaitRollingMinSpeed)                                               \
+    X(s32, WaitRollingNoBrakeFrame)                                           \
+    X(f32, WaitRollingBrakeRate)                                              \
+    X(f32, WaitRollingSideBrakeRate)                                          \
+    X(f32, WaitRollingSideAccel)                                              \
+    X(f32, WaitRollingSideMaxSpeed)                                           \
+    X(f32, NormalRollingMinSpeed)                                             \
+    X(s32, NormalRollingNoBrakeFrame)                                         \
+    X(f32, NormalRollingBrakeRate)                                            \
+    X(f32, NormalRollingSideBrakeRate)                                        \
+    X(f32, NormalRollingSideAccel)                                            \
+    X(f32, NormalRollingSideMaxSpeed)                                         \
+    X(f32, AirRollingMinSpeed)                                                \
+    X(s32, AirRollingNoBrakeFrame)                                            \
+    X(f32, AirRollingBrakeRate)                                               \
+    X(f32, AirRollingSideBrakeRate)                                           \
+    X(f32, AirRollingSideAccel)                                               \
+    X(f32, AirRollingSideMaxSpeed)                                            \
+    X(f32, AirRollingJumpPow)                                                 \
+    X(f32, AirRollingGravity)                                                 \
+    X(f32, RollingMinSpeed)                                                   \
+    X(s32, RollingNoBrakeFrame)                                               \
+    X(f32, RollingBrakeRate)                                                  \
+    X(f32, RollingSideBrakeRate)                                              \
+    X(f32, RollingSideAccel)                                                  \
+    X(f32, RollingSideMaxSpeed)                                               \
+    X(f32, RaccoonDogWaitRollingMinSpeed)                                     \
+    X(s32, RaccoonDogWaitRollingNoBrakeFrame)                                 \
+    X(f32, RaccoonDogWaitRollingBrakeRate)                                    \
+    X(f32, RaccoonDogWaitRollingSideBrakeRate)                                \
+    X(f32, RaccoonDogWaitRollingSideAccel)                                    \
+    X(f32, RaccoonDogWaitRollingSideMaxSpeed)                                 \
+    X(f32, RaccoonDogNormalRollingMinSpeed)                                   \
+    X(s32, RaccoonDogNormalRollingNoBrakeFrame)                               \
+    X(f32, RaccoonDogNormalRollingBrakeRate)                                  \
+    X(f32, RaccoonDogNormalRollingSideBrakeRate)                              \
+    X(f32, RaccoonDogNormalRollingSideAccel)                                  \
+    X(f32, RaccoonDogNormalRollingSideMaxSpeed)                               \
+    X(f32, RaccoonDogDashRollingMinSpeed)                                     \
+    X(s32, RaccoonDogDashRollingNoBrakeFrame)                                 \
+    X(f32, RaccoonDogDashRollingBrakeRate)                                    \
+    X(f32, RaccoonDogDashRollingSideBrakeRate)                                \
+    X(f32, RaccoonDogDashRollingSideAccel)                                    \
+    X(f32, RaccoonDogDashRollingSideMaxSpeed)                                 \
+    X(f32, RollingTramplePow)                                                 \
+    X(f32, WaitRollingAttackJumpGravity)                                      \
+    X(f32, WaitRollingAttackJumpPow)                                          \
+    X(f32, WaitRollingAttackVelH)                                             \
+    X(f32, NormalRollingAttackJumpGravity)                                    \
+    X(f32, NormalRollingAttackJumpPow)                                        \
+    X(f32, NormalRollingAttackVelH)                                           \
+    X(f32, RollingAttackJumpGravity)                                          \
+    X(f32, RollingAttackJumpPow)                                              \
+    X(f32, RollingAttackVelH)                                                 \
+    X(f32, RaccoonDogWaitRollingAttackJumpGravity)                            \
+    X(f32, RaccoonDogWaitRollingAttackJumpPow)                                \
+    X(f32, RaccoonDogWaitRollingAttackVelH)                                   \
+    X(f32, RaccoonDogWaitRollingAttackHighJumpGravity)                        \
+    X(f32, RaccoonDogWaitRollingAttackHighJumpPow)                            \
+    X(f32, RaccoonDogWaitRollingAttackHighVelH)                               \
+    X(f32, CommonRollingAttackSpeedMin)                                       \
+    X(f32, CommonRollingAttackBrake)                                          \
+    X(f32, CommonRollingAttackSideAccel)                                      \
+    X(f32, RollingHitBound)                                                   \
+    X(s32, WallHitLandCancelFrame)                                            \
+    X(s32, DamageInvalidCount)                                                \
+    X(s32, DamageCancelFrame)                                                 \
+    X(s32, InvincibleFrame)                                                   \
+    X(s32, InvincibleDashFrame)                                               \
+    X(f32, InvincibleDashSpeed)                                               \
+    X(f32, InvincibleJumpPow)                                                 \
+    X(s32, InvincibleJumpPowCountMax)                                         \
+    X(s32, TailAttackStart)                                                   \
+    X(s32, TailAttackFrame)                                                   \
+    X(s32, TailAttackInterval)                                                \
+    X(f32, StandSwimRisePower)                                                \
+    X(f32, StandSwimRiseSpeedMax)                                             \
+    X(f32, StandSwimGravity)                                                  \
+    X(f32, StandSwimFallSpeedMax)                                             \
+    X(f32, StandSwimHorizontalFloorDashAccel)                                 \
+    X(f32, StandSwimHorizontalFloorDashSpeedMax)                              \
+    X(f32, StandSwimHorizontalFloorAccel)                                     \
+    X(f32, StandSwimHorizontalFloorSpeedMax)                                  \
+    X(f32, NoSinkSwimHorizontalHighAccel)                                     \
+    X(f32, NoSinkSwimHorizontalHighInputMin)                                  \
+    X(f32, NoSinkSwimHorizontalHighSpeedMax)                                  \
+    X(f32, NoSinkSwimHorizontalHighSpeedMin)                                  \
+    X(f32, StandSwimHorizontalHighAccel)                                      \
+    X(f32, StandSwimHorizontalHighSpeedMax)                                   \
+    X(f32, StandSwimHorizontalLowAccel)                                       \
+    X(f32, StandSwimHorizontalLowSpeedMax)                                    \
+    X(f32, StandSwimHorizontalBrakeRate)                                      \
+    X(s32, StandSwimHighAccelPermitFrame)                                     \
+    X(f32, StandSwimForwardBentDegree)                                        \
+    X(f32, StandSwimForwardBentBlend)                                         \
+    X(f32, StandSwimFlowFieldBlend)                                           \
+    X(f32, StandSwimRotSpeed)                                                 \
+    X(f32, StandSwimSurfaceRotSpeed)                                          \
+    X(f32, StandSwimSurfaceRotSpeedNoMovement)                                \
+    X(f32, StandSwimWalkAnimMinRate)                                          \
+    X(f32, StandSwimWalkAnimMaxRate)                                          \
+    X(f32, StandSwimWalkMaxSpeed)                                             \
+    X(s32, StandSwimPaddleAnimInterval)                                       \
+    X(s32, StandSwimPaddleAnimRateIntervalMax)                                \
+    X(s32, StandSwimPaddleAnimRateIntervalMin)                                \
+    X(f32, StandSwimPaddleAnimMaxRate)                                        \
+    X(f32, SwimHRotSpeed)                                                     \
+    X(f32, SwimVRotSpeed)                                                     \
+    X(f32, SwimPaddleAccel)                                                   \
+    X(f32, SwimPaddleSpeedMax)                                                \
+    X(s32, SwimPaddleFrame)                                                   \
+    X(f32, SwimKickAccel)                                                     \
+    X(f32, SwimKickSpeedMax)                                                  \
+    X(f32, SwimKickBrake)                                                     \
+    X(f32, SwimBrake)                                                         \
+    X(f32, SwimSideBrake)                                                     \
+    X(s32, StandSwimFromDiveTimer)                                            \
+    X(f32, StandSwimFromDiveRisePower)                                        \
+    X(f32, StandSwimFromDiveRisePowerClimb)                                   \
+    X(f32, SwimDiveStartSpeed)                                                \
+    X(f32, SwimDiveBrake)                                                     \
+    X(f32, SwimDiveEndSpeed)                                                  \
+    X(s32, SwimDiveLandCount)                                                 \
+    X(s32, SwimDiveLandCancelFrame)                                           \
+    X(s32, SwimDiveButtonValidFrame)                                          \
+    X(f32, DiveStartSpeed)                                                    \
+    X(f32, DiveBrake)                                                         \
+    X(f32, DiveBrakeSingleMode)                                               \
+    X(f32, DiveEndSpeed)                                                      \
+    X(f32, StandSwimTramplePower)                                             \
+    X(f32, DiveTramplePower)                                                  \
+    X(f32, DiveTrampleCancelFrame)                                            \
+    X(f32, SwimSurfaceStartDist)                                              \
+    X(f32, SwimSurfaceEndDist)                                                \
+    X(f32, SwimSurfaceStartDistShort)                                         \
+    X(f32, SwimSurfaceEndDistShort)                                           \
+    X(f32, SwimSurfaceVelDamper)                                              \
+    X(f32, SwimSurfaceGravity)                                                \
+    X(s32, SwimSurfaceValidDamperFrame)                                       \
+    X(s32, SwimSurfaceDamperLerpFrame)                                        \
+    X(f32, SwimSurfaceBaseHeight)                                             \
+    X(f32, SwimSurfaceBaseHeightShort)                                        \
+    X(f32, SwimSurfaceSpring)                                                 \
+    X(f32, SwimSurfaceVerticalOffset)                                         \
+    X(f32, SwimSurfacePivotRate)                                              \
+    X(f32, SwimSurfacePivotCancelAngle)                                       \
+    X(f32, SwimSurfaceSpeedThreshold)                                         \
+    X(s32, SwimSurfacePivotCounter)                                           \
+    X(f32, SwimSurfaceTiltDuringPivotMaxDegree)                               \
+    X(f32, SwimSurfaceTiltMaxDegree)                                          \
+    X(f32, SwimSurfaceTiltMaxFrontAngle)                                      \
+    X(f32, SwimSurfaceClimbAnimationRate)                                     \
+    X(f32, SwimSurfaceSpringForSurfaceSwim)                                   \
+    X(f32, SwimSurfaceSpringForSurfaceSwimClimb)                              \
+    X(f32, SwimJumpPow)                                                       \
+    X(s32, SwimSquatInhibitFrame)                                             \
+    X(f32, PropellerRisePow)                                                  \
+    X(s32, PropellerPowSustain)                                               \
+    X(s32, PropellerPowSustainMin)                                            \
+    X(s32, PropellerPowRelease)                                               \
+    X(f32, PropellerBeforeDropGravity)                                        \
+    X(f32, PropellerRiseGravity)                                              \
+    X(f32, PropellerAfterDropGravity)                                         \
+    X(f32, PropellerFallSpeedMax)                                             \
+    X(f32, PropellerButtonOffFallSpeedMax)                                    \
+    X(f32, PropellerEngineBrakeVel)                                           \
+    X(f32, PropellerEngineBrakeRate)                                          \
+    X(f32, PropellerEngineBrakeEndVel)                                        \
+    X(f32, PropellerRotBlendRate)                                             \
+    X(f32, PropellerSideDamper)                                               \
+    X(f32, PropellerStickOffBrakeRate)                                        \
+    X(f32, LongFallDistance)                                                  \
+    X(s32, StatueFallStartFrame)                                              \
+    X(s32, StatueLandFrame)                                                   \
+    X(s32, StatueEndFrame)                                                    \
+    X(s32, StatueEndAnimStep)                                                 \
+    X(f32, StatueFallSpeedInWater)                                            \
+    X(f32, SlideSlopeAngle)                                                   \
+    X(f32, SlideSlopeEndAngle)                                                \
+    X(f32, SlideEndSpeed)                                                     \
+    X(f32, SlideAccel)                                                        \
+    X(f32, SlideMaxSpeed)                                                     \
+    X(f32, SlideSideBrake)                                                    \
+    X(f32, SlideSideAccel)                                                    \
+    X(f32, SlideSideMaxSpeed)                                                 \
+    X(f32, SlideSideAccelOnLevelLand)                                         \
+    X(f32, SlideSideMaxSpeedOnLevelLand)                                      \
+    X(f32, SlideBrake)                                                        \
+    X(f32, ForceSlideBrake)                                                   \
+    X(f32, SlidePostureBlendRate)                                             \
+    X(f32, ForceSlideSpeed)                                                   \
+    X(f32, ForceSlideSpeedUpRate)                                             \
+    X(f32, SlideTiltBlendRate)                                                \
+    X(f32, SlideTiltMaxDegree)                                                \
+    X(s32, SlideInvalidFrame)                                                 \
+    X(f32, ForceSlideMaxSpeed)                                                \
+    X(s32, SlideFallCancelFrame)                                              \
+    X(f32, SlideJumpHVelScale)                                                \
+    X(s32, HoldShakeInterval)                                                 \
+    X(s32, HoldThrowFrontTiming)                                              \
+    X(s32, HoldThrowUpTiming)                                                 \
+    X(f32, HoldJumpFrontVel)                                                  \
+    X(f32, HoldJumpUpVel)                                                     \
+    X(s32, ClimbAttackInterval)                                               \
+    X(s32, ClimbAttackWaitInterval)                                           \
+    X(s32, ClimbAttackCancelFrame)                                            \
+    X(s32, ClimbAttackSensorOnFrame)                                          \
+    X(f32, ClimbBodyAttackFrontVel)                                           \
+    X(f32, ClimbBodyAttackDownVel)                                            \
+    X(s32, ClimbBodyAttackFrame)                                              \
+    X(f32, ClimbBodyAttackGravity)                                            \
+    X(f32, ClimbBodyAttackFallSpeedMax)                                       \
+    X(f32, ClimbBodyAttackHBrakeRate)                                         \
+    X(f32, ClimbBodyAttackSideAccel)                                          \
+    X(f32, ClimbBodyAttackSideMoveDist)                                       \
+    X(f32, SinkSandMoveMaxSpeed)                                              \
+    X(f32, SinkSandMoveMaxDashSpeed)                                          \
+    X(s32, SinkSandInvalidFrameInJump)                                        \
+    X(f32, PushedBrakeRate)                                                   \
+    X(f32, PushedBrakeMaxRate)                                                \
+    X(f32, PushedJumpCancelSpeed)                                             \
+    X(s32, GroundSpinFrame)                                                   \
+    X(f32, GroundSpinAccel)                                                   \
+    X(f32, GroundSpinBrake)                                                   \
+    X(f32, GroundSpinVelMax)                                                  \
+    X(f32, SpinJumpGravity)                                                   \
+    X(f32, SpinJumpPow)                                                       \
+    X(s32, SpinAttackInterval)                                                \
+    X(s32, SpinAttackCancelFrame)                                             \
+    X(s32, SpinAttackSensorOnFrame)                                           \
+    X(f32, SpinAttackJumpPow)                                                 \
+    X(f32, SpinAttackJumpGravity)                                             \
+    X(f32, SpinAttackGroundBrake)                                             \
+    X(f32, SkateJumpGravity)                                                  \
+    X(f32, SkateJumpPowLow)                                                   \
+    X(f32, SkateJumpPow)                                                      \
+    X(s32, SkateJumpPowCountMax)                                              \
+    X(f32, SkateJumpThreshold)                                                \
+    X(s32, CoopHipDropFrame)                                                  \
+    X(f32, CoopHipDropRadiusMin)                                              \
+    X(f32, CoopHipDropRadius)                                                 \
+    X(s32, GiantHipDropFrame)                                                 \
+    X(f32, GiantHipDropRadiusMin)                                             \
+    X(f32, GiantHipDropRadiusMax)                                             \
+    X(f32, KnockDownVelH)                                                     \
+    X(f32, KnockDownVelV)                                                     \
+    X(s32, KnockDownCancelFrame)                                              \
+    X(f32, ReflectJumpGravity)                                                \
+    X(f32, ReflectJump)                                                       \
+    X(f32, RisingReflectJumpHVelBrakeRate)                                    \
+    X(s32, TossCancelFrame)                                                   \
+    X(s32, ManekinekoFallStartFrame)                                          \
+    X(s32, ManekinekoLandFrame)                                               \
+    X(s32, ManekinekoEndNoticeFrame)                                          \
+    X(s32, ManekinekoEndFrame)                                                \
+    X(s32, ManekinekoCancelFrame)                                             \
+    X(f32, ManekinekoFallSpeedInWater)                                        \
+    X(s32, GroomingMaxInterval)                                               \
+    X(s32, GroomingMinInterval)                                               \
+    X(s32, SePropellerBeginStep)                                              \
+    X(f32, SeFootNoteNormalVolMul)                                            \
+    X(f32, SeFootNoteNormalPitDec)                                            \
+    X(f32, SeFootNoteDashVolAdd)                                              \
+    X(f32, SeFootNoteDashPitAdd)                                              \
+    X(f32, GigaCommonAnimRate)                                                \
+    X(f32, GigaMiniRunAnimRateMax)                                            \
+    X(f32, GigaMiniDashAnimRateMax)                                           \
+    X(f32, GigaSuperRunAnimRateMax)                                           \
+    X(f32, GigaSuperDashAnimRateMax)                                          \
+    X(f32, GigaClimbRunAnimRateMax)                                           \
+    X(f32, GigaClimbDashAnimRateMax)                                          \
+    X(f32, GigaNormalMaxSpeed)                                                \
+    X(f32, GigaDashMaxSpeed)                                                  \
+    X(f32, GigaSuperDashSpeed)                                                \
+    X(f32, GigaInvincibleDashSpeed)                                           \
+    X(s32, GigaAccelFrame)                                                    \
+    X(f32, GigaSquatWalkSpeed)                                                \
+    X(f32, GigaGroundSpinAccel)                                               \
+    X(f32, GigaGroundSpinBrake)                                               \
+    X(f32, GigaKnockDownVelH)                                                 \
+    X(f32, GigaKnockDownVelV)                                                 \
+    X(f32, GigaLeftFootHrTime)                                                \
+    X(f32, GigaRightFootHrTime)                                               \
+    X(f32, GigaClimbLeftWalkHrTime)                                           \
+    X(f32, GigaClimbRightWalkHrTime)                                          \
+    X(f32, GigaClimbLeftRunHrTime)                                            \
+    X(f32, GigaClimbRightRunHrTime)                                           \
+    X(f32, GigaRoundLimitDegreeMax)                                           \
+    X(f32, GigaRoundLimitDegreeMin)                                           \
+    X(f32, GigaNormalRollingMinSpeed)                                         \
+    X(f32, GigaNormalGravityAddition)                                         \
+    X(f32, GigaSquatBrakeRate)                                                \
+    X(f32, GigaGravity)                                                       \
+    X(f32, GigaFallSpeedMax)                                                  \
+    X(f32, GigaFloatFallSpeedMax)                                             \
+    X(f32, GigaJumpPow)                                                       \
+    X(f32, GigaJumpPowLow)                                                    \
+    X(s32, GigaJumpPowCountMax)                                               \
+    X(f32, GigaJumpCancelBrakeRate)                                           \
+    X(f32, GigaJumpCancelMinSpeed)                                            \
+    X(f32, GigaHipDropSpeed)                                                  \
+    X(f32, GigaHipDropAnimRate)                                               \
+    X(f32, GigaHipDropJumpPow)                                                \
+    X(f32, GigaTrampleJump)                                                   \
+    X(f32, GigaLongJumpSlowSpeed)                                             \
+    X(f32, GigaLongJumpFastSpeed)                                             \
+    X(f32, GigaLongJumpSlowJumpPow)                                           \
+    X(f32, GigaLongJumpFastJumpPow)                                           \
+    X(f32, GigaLongJumpSlowGravity)                                           \
+    X(f32, GigaLongJumpFastGravity)                                           \
+    X(f32, GigaSquatJumpGravity)                                              \
+    X(f32, GigaSquatJumpPow)                                                  \
+    X(f32, GigaSquatHighJumpPow)                                              \
+    X(f32, GigaSquatJumpBackPow)                                              \
+    X(f32, GigaSpinJumpGravity)                                               \
+    X(f32, GigaSpinJumpPow)                                                   \
+    X(f32, GigaNormalRollingAttackJumpGravity)                                \
+    X(f32, GigaNormalRollingAttackJumpPow)                                    \
+    X(f32, GigaNormalRollingAttackVelH)                                       \
+    X(f32, GigaWallJumpHSpeed)                                                \
+    X(f32, GigaLongJumpBrake)                                                 \
+    X(f32, GigaLongJumpSpeedMin)                                              \
+    X(f32, GigaLongJumpSideAccel)                                             \
+    X(s32, GigaLandFrame)                                                     \
+    X(f32, GigaWallClimbMaxSpeed)                                             \
+    X(f32, GigaWallClimbDashMaxSpeed)                                         \
+    X(f32, GigaWallClimbAccel)                                                \
+    X(f32, GigaWallClimbMaxSideSpeed)                                         \
+    X(f32, GigaWallClimbDashMaxSideSpeed)                                     \
+    X(f32, GigaWallClimbSideAccel)                                            \
+    X(f32, GigaWallSnapDistance)                                              \
+    X(f32, GigaWallClimbJumpPowLow)                                           \
+    X(f32, GigaWallClimbJumpPow)                                              \
+    X(f32, GigaWallClimbSlideGravity)                                         \
+    X(f32, GigaWallClimbSlideMaxSpeed)                                        \
+    X(f32, GigaWallClimbSlideSideAccel)                                       \
+    X(f32, GigaWallClimbSlideSideMaxSpeed)                                    \
+    X(f32, FlashRangeAttackLengthOffset)                                      \
+    X(f32, FlashRangeAttackDegreeScale)                                       \
+    X(f32, FlashRangeAttackHeightMax)                                         \
+    X(f32, FlashRangeAttackHeightMin)                                         \
+    X(s32, IsEnableHeadLightOfx)                                              \
+    X(f32, HeadLightOfxOffsetY)                                               \
+    X(f32, HeadLightOfxOffsetZ)                                               \
+    X(f32, HeadLightPrePassPointLightRadiusScale)                             \
+    X(f32, HeadLightPrePassPointLightOffsetY)                                 \
+    X(f32, HeadLightPrePassPointLightOffsetZ)
+
+/// Declares the getter of one tuning value. The getter asks the override parameter set
+/// instead while one is active.
+#define PLAYER_CONST_PARAM_DECLARE_GETTER(Type, Name) virtual Type get##Name() const;
 
 /// The player's tuning values (speeds, jump heights, frame counts, ...), read from
 /// PlayerConst.byml. Another set can override it (e.g. for Bowser's Fury's modes).
@@ -23,587 +596,14 @@ public:
     PlayerConstParam();
     PlayerConstParam(const al::ByamlIter&);
 
-    PLAYER_CONST_PARAM(f32, Gravity)
-    PLAYER_CONST_PARAM(f32, CenterHeight)
-    PLAYER_CONST_PARAM(f32, BodyRadius)
-    PLAYER_CONST_PARAM(f32, CollectInfoRadiusAddition)
-    PLAYER_CONST_PARAM(f32, SnapGroundMaxLength)
-    PLAYER_CONST_PARAM(f32, SnapWallMaxLength)
-    PLAYER_CONST_PARAM(f32, StickRoundThreshold)
-    PLAYER_CONST_PARAM(f32, HeightCheckLength)
-    PLAYER_CONST_PARAM(f32, CutVelLimit)
-    PLAYER_CONST_PARAM(f32, CutVelRate)
-    PLAYER_CONST_PARAM(s32, ThrowInvalidationFrames)
-    PLAYER_CONST_PARAM(f32, Tall)
-    PLAYER_CONST_PARAM(f32, ChestRadius)
-    PLAYER_CONST_PARAM(f32, DashCheckRadius)
-    PLAYER_CONST_PARAM(f32, ShadowCheckLength)
-    PLAYER_CONST_PARAM(f32, ShadowLengthMax)
-    PLAYER_CONST_PARAM(s32, PivotFrame)
-    PLAYER_CONST_PARAM(f32, PivotDegree)
-    PLAYER_CONST_PARAM(f32, NormalMaxSpeed)
-    PLAYER_CONST_PARAM(f32, DashMaxSpeed)
-    PLAYER_CONST_PARAM(f32, SuperDashSpeed)
-    PLAYER_CONST_PARAM(s32, SuperDashTimer)
-    PLAYER_CONST_PARAM(s32, SuperDashTimerMini)
-    PLAYER_CONST_PARAM(s32, SuperDashTimerFire)
-    PLAYER_CONST_PARAM(s32, SuperDashTimerClimb)
-    PLAYER_CONST_PARAM(s32, SuperDashTimerRaccoonDog)
-    PLAYER_CONST_PARAM(s32, SuperDashTimerBoomerang)
-    PLAYER_CONST_PARAM(s32, SuperDashTimerRaccoonDogWhite)
-    PLAYER_CONST_PARAM(f32, SuperDashStartAnimRate)
-    PLAYER_CONST_PARAM(s32, SuperDashStartAnimFrame)
-    PLAYER_CONST_PARAM(s32, BrakeFrame)
-    PLAYER_CONST_PARAM(s32, DashBrakeFrame)
-    PLAYER_CONST_PARAM(s32, StickOnBrakeFrame)
-    PLAYER_CONST_PARAM(s32, BrakeFrameOnIce)
-    PLAYER_CONST_PARAM(s32, AccelFrame)
-    PLAYER_CONST_PARAM(s32, DashAccelFrame)
-    PLAYER_CONST_PARAM(f32, RoundLimitDegreeMax)
-    PLAYER_CONST_PARAM(f32, RoundLimitDegreeMin)
-    PLAYER_CONST_PARAM(f32, RunAnimRateMax)
-    PLAYER_CONST_PARAM(f32, GiantRunAnimRateMax)
-    PLAYER_CONST_PARAM(f32, ShortAnimRateEff)
-    PLAYER_CONST_PARAM(s32, DashStartFrame)
-    PLAYER_CONST_PARAM(s32, ModifiedDashStartFrame)
-    PLAYER_CONST_PARAM(s32, DashStartBlendFrame)
-    PLAYER_CONST_PARAM(s32, DashInputSuccessFrame)
-    PLAYER_CONST_PARAM(f32, DownHillAccelStartDegree)
-    PLAYER_CONST_PARAM(f32, DownHillAccelEndDegree)
-    PLAYER_CONST_PARAM(f32, DownHillAccelAddRate)
-    PLAYER_CONST_PARAM(f32, DashPanelSpeed)
-    PLAYER_CONST_PARAM(f32, ModifiedDashPanelSpeed)
-    PLAYER_CONST_PARAM(f32, DashPanelOverRate)
-    PLAYER_CONST_PARAM(s32, DashPanelTimer)
-    PLAYER_CONST_PARAM(f32, FlingPoleSpeed)
-    PLAYER_CONST_PARAM(s32, GroundOffFrame)
-    PLAYER_CONST_PARAM(s32, ClimbToGroundMoveFrame)
-    PLAYER_CONST_PARAM(f32, TiltMaxDegree)
-    PLAYER_CONST_PARAM(f32, TiltBlendRate)
-    PLAYER_CONST_PARAM(f32, TiltMaxFrontAngle)
-    PLAYER_CONST_PARAM(f32, HoldingTiltMaxFrontAngle)
-    PLAYER_CONST_PARAM(f32, TiltStartSpeed)
-    PLAYER_CONST_PARAM(f32, TiltEndSpeed)
-    PLAYER_CONST_PARAM(f32, ClimbRunAnimRateEff)
-    PLAYER_CONST_PARAM(f32, PanelDashAnimRate)
-    PLAYER_CONST_PARAM(f32, ModifiedPanelDashAnimRate)
-    PLAYER_CONST_PARAM(f32, SlopeMaxSpeedScale)
-    PLAYER_CONST_PARAM(f32, MaxSpeedScale)
-    PLAYER_CONST_PARAM(f32, DashSignAnimRate)
-    PLAYER_CONST_PARAM(f32, DashSignMaxLoop)
-    PLAYER_CONST_PARAM(f32, DashSignMaxSpeed)
-    PLAYER_CONST_PARAM(s32, DashSignAnimFrameMax)
-    PLAYER_CONST_PARAM(f32, JumpDirRotLimit)
-    PLAYER_CONST_PARAM(f32, JumpPowLow)
-    PLAYER_CONST_PARAM(f32, JumpPow)
-    PLAYER_CONST_PARAM(s32, JumpPowCountMax)
-    PLAYER_CONST_PARAM(f32, JumpExtensionGravityRate)
-    PLAYER_CONST_PARAM(f32, JumpSideVelRate)
-    PLAYER_CONST_PARAM(f32, JumpFrontBrakeRate)
-    PLAYER_CONST_PARAM(f32, JumpRotBlendRate)
-    PLAYER_CONST_PARAM(s32, JumpAccelFrame)
-    PLAYER_CONST_PARAM(s32, ReleaseAccelFrame)
-    PLAYER_CONST_PARAM(s32, JumpAccelAddFrame)
-    PLAYER_CONST_PARAM(f32, JumpCancelBrakeRate)
-    PLAYER_CONST_PARAM(f32, JumpCancelMinSpeed)
-    PLAYER_CONST_PARAM(s32, ContinuousJumpTimer)
-    PLAYER_CONST_PARAM(s32, ContinuousJumpCount)
-    PLAYER_CONST_PARAM(f32, FallSpeedMax)
-    PLAYER_CONST_PARAM(f32, DashJumpAddition)
-    PLAYER_CONST_PARAM(f32, PunchReflectPower)
-    PLAYER_CONST_PARAM(s32, GlideInhibitFrameAfterPunch)
-    PLAYER_CONST_PARAM(f32, WalkMinSpeedRate)
-    PLAYER_CONST_PARAM(s32, JumpHVelSamplingNum)
-    PLAYER_CONST_PARAM(f32, FollowFrontDamper)
-    PLAYER_CONST_PARAM(f32, FollowBackDamper)
-    PLAYER_CONST_PARAM(s32, FlightDurationCount)
-    PLAYER_CONST_PARAM(f32, FlightDurationRotBlendRate)
-    PLAYER_CONST_PARAM(s32, FlightDurationJumpStartInhibitFrame)
-    PLAYER_CONST_PARAM(f32, FlightDurationSideDamper)
-    PLAYER_CONST_PARAM(f32, RaccoonDogFallSpeedMax)
-    PLAYER_CONST_PARAM(f32, RaccoonDogFallGravityRate)
-    PLAYER_CONST_PARAM(f32, RaccoonDogFallGravityAdd)
-    PLAYER_CONST_PARAM(f32, RaccoonDogFirstFallDamper)
-    PLAYER_CONST_PARAM(f32, RaccoonDogRotBlendRate)
-    PLAYER_CONST_PARAM(f32, RaccoonDogFallSideDamper)
-    PLAYER_CONST_PARAM(f32, TrampleJumpGravity)
-    PLAYER_CONST_PARAM(f32, TrampleJump)
-    PLAYER_CONST_PARAM(f32, TrampleJumpSideVelRate)
-    PLAYER_CONST_PARAM(f32, TrampleHighJumpGravity)
-    PLAYER_CONST_PARAM(f32, TrampleHighJump)
-    PLAYER_CONST_PARAM(f32, TrampleHipDropGravity)
-    PLAYER_CONST_PARAM(f32, TrampleHipDropJump)
-    PLAYER_CONST_PARAM(f32, RisingTrampleJumpGravity)
-    PLAYER_CONST_PARAM(f32, RisingTrampleJump)
-    PLAYER_CONST_PARAM(f32, RisingTrampleHighJumpGravity)
-    PLAYER_CONST_PARAM(f32, RisingTrampleHighJump)
-    PLAYER_CONST_PARAM(f32, RisingTrampleHVelBrakeRate)
-    PLAYER_CONST_PARAM(f32, PunchedJumpGravity)
-    PLAYER_CONST_PARAM(f32, PunchedJump)
-    PLAYER_CONST_PARAM(f32, RisingPunchedHVelBrakeRate)
-    PLAYER_CONST_PARAM(f32, TossedJumpGravity)
-    PLAYER_CONST_PARAM(f32, TossedJump)
-    PLAYER_CONST_PARAM(f32, TossedHighJumpGravity)
-    PLAYER_CONST_PARAM(f32, TossedHighJump)
-    PLAYER_CONST_PARAM(f32, TossedHipDropGravity)
-    PLAYER_CONST_PARAM(f32, TossedHipDropJump)
-    PLAYER_CONST_PARAM(f32, RisingTossedJumpGravity)
-    PLAYER_CONST_PARAM(f32, RisingTossedJump)
-    PLAYER_CONST_PARAM(f32, RisingTossedHighJumpGravity)
-    PLAYER_CONST_PARAM(f32, RisingTossedHighJump)
-    PLAYER_CONST_PARAM(f32, RisingTossedHVelBrakeRate)
-    PLAYER_CONST_PARAM(f32, SquatBrakeEndSpeed)
-    PLAYER_CONST_PARAM(f32, SquatShiftSpeedRate)
-    PLAYER_CONST_PARAM(f32, SquatAccelRate)
-    PLAYER_CONST_PARAM(s32, SquatNoBrakeFrame)
-    PLAYER_CONST_PARAM(f32, SquatBrakeRate)
-    PLAYER_CONST_PARAM(f32, SquatBrakeRateOnSkate)
-    PLAYER_CONST_PARAM(f32, SquatBrakeSideAccel)
-    PLAYER_CONST_PARAM(f32, SquatBrakeSideBrakeRate)
-    PLAYER_CONST_PARAM(f32, SquatBrakeSideBrakeRateOnSkate)
-    PLAYER_CONST_PARAM(f32, SquatBrakeSideMaxSpeedRate)
-    PLAYER_CONST_PARAM(f32, SquatWalkSpeed)
-    PLAYER_CONST_PARAM(f32, SquatWalkFrontVecBlend)
-    PLAYER_CONST_PARAM(s32, SquatEnergyAccelFrame)
-    PLAYER_CONST_PARAM(f32, SquatJumpGravity)
-    PLAYER_CONST_PARAM(f32, SquatJumpPow)
-    PLAYER_CONST_PARAM(f32, SquatHighJumpPow)
-    PLAYER_CONST_PARAM(f32, SquatJumpBackPow)
-    PLAYER_CONST_PARAM(f32, SquatJumpTramplePow)
-    PLAYER_CONST_PARAM(f32, HipDropSpeed)
-    PLAYER_CONST_PARAM(s32, HipDropLandCancelFrame)
-    PLAYER_CONST_PARAM(f32, HipDropHeight)
-    PLAYER_CONST_PARAM(s32, HipDropMsgInterval)
-    PLAYER_CONST_PARAM(f32, HipDropKnockDownRadiusMin)
-    PLAYER_CONST_PARAM(f32, HipDropKnockDownRadiusMax)
-    PLAYER_CONST_PARAM(f32, HipDropStartAnimRate)
-    PLAYER_CONST_PARAM(s32, HipDropKnockDownFrame)
-    PLAYER_CONST_PARAM(f32, HipDropJumpPow)
-    PLAYER_CONST_PARAM(s32, HipDropJumpPowCountMax)
-    PLAYER_CONST_PARAM(s32, HipDropJumpPermitBeginFrame)
-    PLAYER_CONST_PARAM(s32, HipDropJumpPermitEndFrame)
-    PLAYER_CONST_PARAM(f32, WallHeightLowLimit)
-    PLAYER_CONST_PARAM(f32, WallGravity)
-    PLAYER_CONST_PARAM(f32, WallMaxSpeed)
-    PLAYER_CONST_PARAM(f32, WallApartFrame)
-    PLAYER_CONST_PARAM(f32, WallSnapDistance)
-    PLAYER_CONST_PARAM(f32, WallSlideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, WallSlideAccel)
-    PLAYER_CONST_PARAM(s32, WallInhibitAfterPunch)
-    PLAYER_CONST_PARAM(f32, WallJumpGravity)
-    PLAYER_CONST_PARAM(f32, WallJumpHSpeed)
-    PLAYER_CONST_PARAM(f32, WallJumpPow)
-    PLAYER_CONST_PARAM(s32, WallJumpInvalidateInputFrame)
-    PLAYER_CONST_PARAM(s32, WallJumpDirEffectiveFrame)
-    PLAYER_CONST_PARAM(f32, WallJumpDirLimit)
-    PLAYER_CONST_PARAM(f32, WallJumpLimitPlay)
-    PLAYER_CONST_PARAM(s32, WallClimbReadyFrame)
-    PLAYER_CONST_PARAM(s32, WallClimbReadyWaitFrame)
-    PLAYER_CONST_PARAM(s32, WallClimbReadyFromSlopeFrame)
-    PLAYER_CONST_PARAM(f32, WallClimbAccel)
-    PLAYER_CONST_PARAM(f32, WallClimbMaxSpeed)
-    PLAYER_CONST_PARAM(f32, WallClimbDashMaxSpeed)
-    PLAYER_CONST_PARAM(s32, WallClimbFrame)
-    PLAYER_CONST_PARAM(s32, WallClimbFrame1)
-    PLAYER_CONST_PARAM(s32, WallClimbFrame2)
-    PLAYER_CONST_PARAM(s32, WallClimbDashFrame)
-    PLAYER_CONST_PARAM(s32, WallClimbDashFrame1)
-    PLAYER_CONST_PARAM(s32, WallClimbDashFrame2)
-    PLAYER_CONST_PARAM(s32, WallClimbStopFrame)
-    PLAYER_CONST_PARAM(f32, WallClimbBrakeRate)
-    PLAYER_CONST_PARAM(s32, WallClimbNoWallFrame)
-    PLAYER_CONST_PARAM(f32, WallClimbMaxSideSpeed)
-    PLAYER_CONST_PARAM(f32, WallClimbDashMaxSideSpeed)
-    PLAYER_CONST_PARAM(f32, WallClimbSideAccel)
-    PLAYER_CONST_PARAM(f32, WallClimbRetainThreshold)
-    PLAYER_CONST_PARAM(f32, WallClimbInvalidSideMoveDegree)
-    PLAYER_CONST_PARAM(f32, WallClimbDashAnimRate)
-    PLAYER_CONST_PARAM(f32, WallClimbNormalAnimRate)
-    PLAYER_CONST_PARAM(s32, WallClimbJumpPowCountMax)
-    PLAYER_CONST_PARAM(f32, WallClimbJumpDashAddition)
-    PLAYER_CONST_PARAM(f32, WallClimbJumpPowLow)
-    PLAYER_CONST_PARAM(f32, WallClimbJumpPow)
-    PLAYER_CONST_PARAM(f32, WallClimbSlideGravity)
-    PLAYER_CONST_PARAM(f32, WallClimbSlideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, WallClimbSlideSideAccel)
-    PLAYER_CONST_PARAM(f32, WallClimbSlideSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, WallClimbSlideStartBrakeRate)
-    PLAYER_CONST_PARAM(s32, ClimbAirStopFrame)
-    PLAYER_CONST_PARAM(f32, ClimbAirStopRotateVelMax)
-    PLAYER_CONST_PARAM(f32, LongJumpSuccessSpeed)
-    PLAYER_CONST_PARAM(f32, LongJumpSpeedMin)
-    PLAYER_CONST_PARAM(f32, LongJumpBrake)
-    PLAYER_CONST_PARAM(f32, LongJumpSideAccel)
-    PLAYER_CONST_PARAM(s32, LongJumpCancelFrame)
-    PLAYER_CONST_PARAM(s32, LongJumpFastSuccessFrame)
-    PLAYER_CONST_PARAM(f32, LongJumpFastGravity)
-    PLAYER_CONST_PARAM(f32, LongJumpFastJumpPow)
-    PLAYER_CONST_PARAM(f32, LongJumpFastSpeed)
-    PLAYER_CONST_PARAM(f32, LongJumpSlowGravity)
-    PLAYER_CONST_PARAM(f32, LongJumpSlowJumpPow)
-    PLAYER_CONST_PARAM(f32, LongJumpSlowSpeed)
-    PLAYER_CONST_PARAM(s32, DashBrakeCommandFrame)
-    PLAYER_CONST_PARAM(s32, DashBrakeActionFrame)
-    PLAYER_CONST_PARAM(f32, DashBrakeSpeed)
-    PLAYER_CONST_PARAM(f32, TurnJumpGravity)
-    PLAYER_CONST_PARAM(f32, TurnJumpPow)
-    PLAYER_CONST_PARAM(f32, TurnJumpVelH)
-    PLAYER_CONST_PARAM(f32, TurnJumpBrake)
-    PLAYER_CONST_PARAM(f32, TurnJumpAccel)
-    PLAYER_CONST_PARAM(f32, TurnJumpSideAccel)
-    PLAYER_CONST_PARAM(s32, TurnJumpToFlightDurationFrame)
-    PLAYER_CONST_PARAM(f32, WaitRollingMinSpeed)
-    PLAYER_CONST_PARAM(s32, WaitRollingNoBrakeFrame)
-    PLAYER_CONST_PARAM(f32, WaitRollingBrakeRate)
-    PLAYER_CONST_PARAM(f32, WaitRollingSideBrakeRate)
-    PLAYER_CONST_PARAM(f32, WaitRollingSideAccel)
-    PLAYER_CONST_PARAM(f32, WaitRollingSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, NormalRollingMinSpeed)
-    PLAYER_CONST_PARAM(s32, NormalRollingNoBrakeFrame)
-    PLAYER_CONST_PARAM(f32, NormalRollingBrakeRate)
-    PLAYER_CONST_PARAM(f32, NormalRollingSideBrakeRate)
-    PLAYER_CONST_PARAM(f32, NormalRollingSideAccel)
-    PLAYER_CONST_PARAM(f32, NormalRollingSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, AirRollingMinSpeed)
-    PLAYER_CONST_PARAM(s32, AirRollingNoBrakeFrame)
-    PLAYER_CONST_PARAM(f32, AirRollingBrakeRate)
-    PLAYER_CONST_PARAM(f32, AirRollingSideBrakeRate)
-    PLAYER_CONST_PARAM(f32, AirRollingSideAccel)
-    PLAYER_CONST_PARAM(f32, AirRollingSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, AirRollingJumpPow)
-    PLAYER_CONST_PARAM(f32, AirRollingGravity)
-    PLAYER_CONST_PARAM(f32, RollingMinSpeed)
-    PLAYER_CONST_PARAM(s32, RollingNoBrakeFrame)
-    PLAYER_CONST_PARAM(f32, RollingBrakeRate)
-    PLAYER_CONST_PARAM(f32, RollingSideBrakeRate)
-    PLAYER_CONST_PARAM(f32, RollingSideAccel)
-    PLAYER_CONST_PARAM(f32, RollingSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingMinSpeed)
-    PLAYER_CONST_PARAM(s32, RaccoonDogWaitRollingNoBrakeFrame)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingBrakeRate)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingSideBrakeRate)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingSideAccel)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, RaccoonDogNormalRollingMinSpeed)
-    PLAYER_CONST_PARAM(s32, RaccoonDogNormalRollingNoBrakeFrame)
-    PLAYER_CONST_PARAM(f32, RaccoonDogNormalRollingBrakeRate)
-    PLAYER_CONST_PARAM(f32, RaccoonDogNormalRollingSideBrakeRate)
-    PLAYER_CONST_PARAM(f32, RaccoonDogNormalRollingSideAccel)
-    PLAYER_CONST_PARAM(f32, RaccoonDogNormalRollingSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, RaccoonDogDashRollingMinSpeed)
-    PLAYER_CONST_PARAM(s32, RaccoonDogDashRollingNoBrakeFrame)
-    PLAYER_CONST_PARAM(f32, RaccoonDogDashRollingBrakeRate)
-    PLAYER_CONST_PARAM(f32, RaccoonDogDashRollingSideBrakeRate)
-    PLAYER_CONST_PARAM(f32, RaccoonDogDashRollingSideAccel)
-    PLAYER_CONST_PARAM(f32, RaccoonDogDashRollingSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, RollingTramplePow)
-    PLAYER_CONST_PARAM(f32, WaitRollingAttackJumpGravity)
-    PLAYER_CONST_PARAM(f32, WaitRollingAttackJumpPow)
-    PLAYER_CONST_PARAM(f32, WaitRollingAttackVelH)
-    PLAYER_CONST_PARAM(f32, NormalRollingAttackJumpGravity)
-    PLAYER_CONST_PARAM(f32, NormalRollingAttackJumpPow)
-    PLAYER_CONST_PARAM(f32, NormalRollingAttackVelH)
-    PLAYER_CONST_PARAM(f32, RollingAttackJumpGravity)
-    PLAYER_CONST_PARAM(f32, RollingAttackJumpPow)
-    PLAYER_CONST_PARAM(f32, RollingAttackVelH)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingAttackJumpGravity)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingAttackJumpPow)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingAttackVelH)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingAttackHighJumpGravity)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingAttackHighJumpPow)
-    PLAYER_CONST_PARAM(f32, RaccoonDogWaitRollingAttackHighVelH)
-    PLAYER_CONST_PARAM(f32, CommonRollingAttackSpeedMin)
-    PLAYER_CONST_PARAM(f32, CommonRollingAttackBrake)
-    PLAYER_CONST_PARAM(f32, CommonRollingAttackSideAccel)
-    PLAYER_CONST_PARAM(f32, RollingHitBound)
-    PLAYER_CONST_PARAM(s32, WallHitLandCancelFrame)
-    PLAYER_CONST_PARAM(s32, DamageInvalidCount)
-    PLAYER_CONST_PARAM(s32, DamageCancelFrame)
-    PLAYER_CONST_PARAM(s32, InvincibleFrame)
-    PLAYER_CONST_PARAM(s32, InvincibleDashFrame)
-    PLAYER_CONST_PARAM(f32, InvincibleDashSpeed)
-    PLAYER_CONST_PARAM(f32, InvincibleJumpPow)
-    PLAYER_CONST_PARAM(s32, InvincibleJumpPowCountMax)
-    PLAYER_CONST_PARAM(s32, TailAttackStart)
-    PLAYER_CONST_PARAM(s32, TailAttackFrame)
-    PLAYER_CONST_PARAM(s32, TailAttackInterval)
-    PLAYER_CONST_PARAM(f32, StandSwimRisePower)
-    PLAYER_CONST_PARAM(f32, StandSwimRiseSpeedMax)
-    PLAYER_CONST_PARAM(f32, StandSwimGravity)
-    PLAYER_CONST_PARAM(f32, StandSwimFallSpeedMax)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalFloorDashAccel)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalFloorDashSpeedMax)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalFloorAccel)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalFloorSpeedMax)
-    PLAYER_CONST_PARAM(f32, NoSinkSwimHorizontalHighAccel)
-    PLAYER_CONST_PARAM(f32, NoSinkSwimHorizontalHighInputMin)
-    PLAYER_CONST_PARAM(f32, NoSinkSwimHorizontalHighSpeedMax)
-    PLAYER_CONST_PARAM(f32, NoSinkSwimHorizontalHighSpeedMin)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalHighAccel)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalHighSpeedMax)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalLowAccel)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalLowSpeedMax)
-    PLAYER_CONST_PARAM(f32, StandSwimHorizontalBrakeRate)
-    PLAYER_CONST_PARAM(s32, StandSwimHighAccelPermitFrame)
-    PLAYER_CONST_PARAM(f32, StandSwimForwardBentDegree)
-    PLAYER_CONST_PARAM(f32, StandSwimForwardBentBlend)
-    PLAYER_CONST_PARAM(f32, StandSwimFlowFieldBlend)
-    PLAYER_CONST_PARAM(f32, StandSwimRotSpeed)
-    PLAYER_CONST_PARAM(f32, StandSwimSurfaceRotSpeed)
-    PLAYER_CONST_PARAM(f32, StandSwimSurfaceRotSpeedNoMovement)
-    PLAYER_CONST_PARAM(f32, StandSwimWalkAnimMinRate)
-    PLAYER_CONST_PARAM(f32, StandSwimWalkAnimMaxRate)
-    PLAYER_CONST_PARAM(f32, StandSwimWalkMaxSpeed)
-    PLAYER_CONST_PARAM(s32, StandSwimPaddleAnimInterval)
-    PLAYER_CONST_PARAM(s32, StandSwimPaddleAnimRateIntervalMax)
-    PLAYER_CONST_PARAM(s32, StandSwimPaddleAnimRateIntervalMin)
-    PLAYER_CONST_PARAM(f32, StandSwimPaddleAnimMaxRate)
-    PLAYER_CONST_PARAM(f32, SwimHRotSpeed)
-    PLAYER_CONST_PARAM(f32, SwimVRotSpeed)
-    PLAYER_CONST_PARAM(f32, SwimPaddleAccel)
-    PLAYER_CONST_PARAM(f32, SwimPaddleSpeedMax)
-    PLAYER_CONST_PARAM(s32, SwimPaddleFrame)
-    PLAYER_CONST_PARAM(f32, SwimKickAccel)
-    PLAYER_CONST_PARAM(f32, SwimKickSpeedMax)
-    PLAYER_CONST_PARAM(f32, SwimKickBrake)
-    PLAYER_CONST_PARAM(f32, SwimBrake)
-    PLAYER_CONST_PARAM(f32, SwimSideBrake)
-    PLAYER_CONST_PARAM(s32, StandSwimFromDiveTimer)
-    PLAYER_CONST_PARAM(f32, StandSwimFromDiveRisePower)
-    PLAYER_CONST_PARAM(f32, StandSwimFromDiveRisePowerClimb)
-    PLAYER_CONST_PARAM(f32, SwimDiveStartSpeed)
-    PLAYER_CONST_PARAM(f32, SwimDiveBrake)
-    PLAYER_CONST_PARAM(f32, SwimDiveEndSpeed)
-    PLAYER_CONST_PARAM(s32, SwimDiveLandCount)
-    PLAYER_CONST_PARAM(s32, SwimDiveLandCancelFrame)
-    PLAYER_CONST_PARAM(s32, SwimDiveButtonValidFrame)
-    PLAYER_CONST_PARAM(f32, DiveStartSpeed)
-    PLAYER_CONST_PARAM(f32, DiveBrake)
-    PLAYER_CONST_PARAM(f32, DiveBrakeSingleMode)
-    PLAYER_CONST_PARAM(f32, DiveEndSpeed)
-    PLAYER_CONST_PARAM(f32, StandSwimTramplePower)
-    PLAYER_CONST_PARAM(f32, DiveTramplePower)
-    PLAYER_CONST_PARAM(f32, DiveTrampleCancelFrame)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceStartDist)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceEndDist)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceStartDistShort)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceEndDistShort)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceVelDamper)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceGravity)
-    PLAYER_CONST_PARAM(s32, SwimSurfaceValidDamperFrame)
-    PLAYER_CONST_PARAM(s32, SwimSurfaceDamperLerpFrame)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceBaseHeight)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceBaseHeightShort)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceSpring)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceVerticalOffset)
-    PLAYER_CONST_PARAM(f32, SwimSurfacePivotRate)
-    PLAYER_CONST_PARAM(f32, SwimSurfacePivotCancelAngle)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceSpeedThreshold)
-    PLAYER_CONST_PARAM(s32, SwimSurfacePivotCounter)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceTiltDuringPivotMaxDegree)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceTiltMaxDegree)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceTiltMaxFrontAngle)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceClimbAnimationRate)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceSpringForSurfaceSwim)
-    PLAYER_CONST_PARAM(f32, SwimSurfaceSpringForSurfaceSwimClimb)
-    PLAYER_CONST_PARAM(f32, SwimJumpPow)
-    PLAYER_CONST_PARAM(s32, SwimSquatInhibitFrame)
-    PLAYER_CONST_PARAM(f32, PropellerRisePow)
-    PLAYER_CONST_PARAM(s32, PropellerPowSustain)
-    PLAYER_CONST_PARAM(s32, PropellerPowSustainMin)
-    PLAYER_CONST_PARAM(s32, PropellerPowRelease)
-    PLAYER_CONST_PARAM(f32, PropellerBeforeDropGravity)
-    PLAYER_CONST_PARAM(f32, PropellerRiseGravity)
-    PLAYER_CONST_PARAM(f32, PropellerAfterDropGravity)
-    PLAYER_CONST_PARAM(f32, PropellerFallSpeedMax)
-    PLAYER_CONST_PARAM(f32, PropellerButtonOffFallSpeedMax)
-    PLAYER_CONST_PARAM(f32, PropellerEngineBrakeVel)
-    PLAYER_CONST_PARAM(f32, PropellerEngineBrakeRate)
-    PLAYER_CONST_PARAM(f32, PropellerEngineBrakeEndVel)
-    PLAYER_CONST_PARAM(f32, PropellerRotBlendRate)
-    PLAYER_CONST_PARAM(f32, PropellerSideDamper)
-    PLAYER_CONST_PARAM(f32, PropellerStickOffBrakeRate)
-    PLAYER_CONST_PARAM(f32, LongFallDistance)
-    PLAYER_CONST_PARAM(s32, StatueFallStartFrame)
-    PLAYER_CONST_PARAM(s32, StatueLandFrame)
-    PLAYER_CONST_PARAM(s32, StatueEndFrame)
-    PLAYER_CONST_PARAM(s32, StatueEndAnimStep)
-    PLAYER_CONST_PARAM(f32, StatueFallSpeedInWater)
-    PLAYER_CONST_PARAM(f32, SlideSlopeAngle)
-    PLAYER_CONST_PARAM(f32, SlideSlopeEndAngle)
-    PLAYER_CONST_PARAM(f32, SlideEndSpeed)
-    PLAYER_CONST_PARAM(f32, SlideAccel)
-    PLAYER_CONST_PARAM(f32, SlideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, SlideSideBrake)
-    PLAYER_CONST_PARAM(f32, SlideSideAccel)
-    PLAYER_CONST_PARAM(f32, SlideSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, SlideSideAccelOnLevelLand)
-    PLAYER_CONST_PARAM(f32, SlideSideMaxSpeedOnLevelLand)
-    PLAYER_CONST_PARAM(f32, SlideBrake)
-    PLAYER_CONST_PARAM(f32, ForceSlideBrake)
-    PLAYER_CONST_PARAM(f32, SlidePostureBlendRate)
-    PLAYER_CONST_PARAM(f32, ForceSlideSpeed)
-    PLAYER_CONST_PARAM(f32, ForceSlideSpeedUpRate)
-    PLAYER_CONST_PARAM(f32, SlideTiltBlendRate)
-    PLAYER_CONST_PARAM(f32, SlideTiltMaxDegree)
-    PLAYER_CONST_PARAM(s32, SlideInvalidFrame)
-    PLAYER_CONST_PARAM(f32, ForceSlideMaxSpeed)
-    PLAYER_CONST_PARAM(s32, SlideFallCancelFrame)
-    PLAYER_CONST_PARAM(f32, SlideJumpHVelScale)
-    PLAYER_CONST_PARAM(s32, HoldShakeInterval)
-    PLAYER_CONST_PARAM(s32, HoldThrowFrontTiming)
-    PLAYER_CONST_PARAM(s32, HoldThrowUpTiming)
-    PLAYER_CONST_PARAM(f32, HoldJumpFrontVel)
-    PLAYER_CONST_PARAM(f32, HoldJumpUpVel)
-    PLAYER_CONST_PARAM(s32, ClimbAttackInterval)
-    PLAYER_CONST_PARAM(s32, ClimbAttackWaitInterval)
-    PLAYER_CONST_PARAM(s32, ClimbAttackCancelFrame)
-    PLAYER_CONST_PARAM(s32, ClimbAttackSensorOnFrame)
-    PLAYER_CONST_PARAM(f32, ClimbBodyAttackFrontVel)
-    PLAYER_CONST_PARAM(f32, ClimbBodyAttackDownVel)
-    PLAYER_CONST_PARAM(s32, ClimbBodyAttackFrame)
-    PLAYER_CONST_PARAM(f32, ClimbBodyAttackGravity)
-    PLAYER_CONST_PARAM(f32, ClimbBodyAttackFallSpeedMax)
-    PLAYER_CONST_PARAM(f32, ClimbBodyAttackHBrakeRate)
-    PLAYER_CONST_PARAM(f32, ClimbBodyAttackSideAccel)
-    PLAYER_CONST_PARAM(f32, ClimbBodyAttackSideMoveDist)
-    PLAYER_CONST_PARAM(f32, SinkSandMoveMaxSpeed)
-    PLAYER_CONST_PARAM(f32, SinkSandMoveMaxDashSpeed)
-    PLAYER_CONST_PARAM(s32, SinkSandInvalidFrameInJump)
-    PLAYER_CONST_PARAM(f32, PushedBrakeRate)
-    PLAYER_CONST_PARAM(f32, PushedBrakeMaxRate)
-    PLAYER_CONST_PARAM(f32, PushedJumpCancelSpeed)
-    PLAYER_CONST_PARAM(s32, GroundSpinFrame)
-    PLAYER_CONST_PARAM(f32, GroundSpinAccel)
-    PLAYER_CONST_PARAM(f32, GroundSpinBrake)
-    PLAYER_CONST_PARAM(f32, GroundSpinVelMax)
-    PLAYER_CONST_PARAM(f32, SpinJumpGravity)
-    PLAYER_CONST_PARAM(f32, SpinJumpPow)
-    PLAYER_CONST_PARAM(s32, SpinAttackInterval)
-    PLAYER_CONST_PARAM(s32, SpinAttackCancelFrame)
-    PLAYER_CONST_PARAM(s32, SpinAttackSensorOnFrame)
-    PLAYER_CONST_PARAM(f32, SpinAttackJumpPow)
-    PLAYER_CONST_PARAM(f32, SpinAttackJumpGravity)
-    PLAYER_CONST_PARAM(f32, SpinAttackGroundBrake)
-    PLAYER_CONST_PARAM(f32, SkateJumpGravity)
-    PLAYER_CONST_PARAM(f32, SkateJumpPowLow)
-    PLAYER_CONST_PARAM(f32, SkateJumpPow)
-    PLAYER_CONST_PARAM(s32, SkateJumpPowCountMax)
-    PLAYER_CONST_PARAM(f32, SkateJumpThreshold)
-    PLAYER_CONST_PARAM(s32, CoopHipDropFrame)
-    PLAYER_CONST_PARAM(f32, CoopHipDropRadiusMin)
-    PLAYER_CONST_PARAM(f32, CoopHipDropRadius)
-    PLAYER_CONST_PARAM(s32, GiantHipDropFrame)
-    PLAYER_CONST_PARAM(f32, GiantHipDropRadiusMin)
-    PLAYER_CONST_PARAM(f32, GiantHipDropRadiusMax)
-    PLAYER_CONST_PARAM(f32, KnockDownVelH)
-    PLAYER_CONST_PARAM(f32, KnockDownVelV)
-    PLAYER_CONST_PARAM(s32, KnockDownCancelFrame)
-    PLAYER_CONST_PARAM(f32, ReflectJumpGravity)
-    PLAYER_CONST_PARAM(f32, ReflectJump)
-    PLAYER_CONST_PARAM(f32, RisingReflectJumpHVelBrakeRate)
-    PLAYER_CONST_PARAM(s32, TossCancelFrame)
-    PLAYER_CONST_PARAM(s32, ManekinekoFallStartFrame)
-    PLAYER_CONST_PARAM(s32, ManekinekoLandFrame)
-    PLAYER_CONST_PARAM(s32, ManekinekoEndNoticeFrame)
-    PLAYER_CONST_PARAM(s32, ManekinekoEndFrame)
-    PLAYER_CONST_PARAM(s32, ManekinekoCancelFrame)
-    PLAYER_CONST_PARAM(f32, ManekinekoFallSpeedInWater)
-    PLAYER_CONST_PARAM(s32, GroomingMaxInterval)
-    PLAYER_CONST_PARAM(s32, GroomingMinInterval)
-    PLAYER_CONST_PARAM(s32, SePropellerBeginStep)
-    PLAYER_CONST_PARAM(f32, SeFootNoteNormalVolMul)
-    PLAYER_CONST_PARAM(f32, SeFootNoteNormalPitDec)
-    PLAYER_CONST_PARAM(f32, SeFootNoteDashVolAdd)
-    PLAYER_CONST_PARAM(f32, SeFootNoteDashPitAdd)
-    PLAYER_CONST_PARAM(f32, GigaCommonAnimRate)
-    PLAYER_CONST_PARAM(f32, GigaMiniRunAnimRateMax)
-    PLAYER_CONST_PARAM(f32, GigaMiniDashAnimRateMax)
-    PLAYER_CONST_PARAM(f32, GigaSuperRunAnimRateMax)
-    PLAYER_CONST_PARAM(f32, GigaSuperDashAnimRateMax)
-    PLAYER_CONST_PARAM(f32, GigaClimbRunAnimRateMax)
-    PLAYER_CONST_PARAM(f32, GigaClimbDashAnimRateMax)
-    PLAYER_CONST_PARAM(f32, GigaNormalMaxSpeed)
-    PLAYER_CONST_PARAM(f32, GigaDashMaxSpeed)
-    PLAYER_CONST_PARAM(f32, GigaSuperDashSpeed)
-    PLAYER_CONST_PARAM(f32, GigaInvincibleDashSpeed)
-    PLAYER_CONST_PARAM(s32, GigaAccelFrame)
-    PLAYER_CONST_PARAM(f32, GigaSquatWalkSpeed)
-    PLAYER_CONST_PARAM(f32, GigaGroundSpinAccel)
-    PLAYER_CONST_PARAM(f32, GigaGroundSpinBrake)
-    PLAYER_CONST_PARAM(f32, GigaKnockDownVelH)
-    PLAYER_CONST_PARAM(f32, GigaKnockDownVelV)
-    PLAYER_CONST_PARAM(f32, GigaLeftFootHrTime)
-    PLAYER_CONST_PARAM(f32, GigaRightFootHrTime)
-    PLAYER_CONST_PARAM(f32, GigaClimbLeftWalkHrTime)
-    PLAYER_CONST_PARAM(f32, GigaClimbRightWalkHrTime)
-    PLAYER_CONST_PARAM(f32, GigaClimbLeftRunHrTime)
-    PLAYER_CONST_PARAM(f32, GigaClimbRightRunHrTime)
-    PLAYER_CONST_PARAM(f32, GigaRoundLimitDegreeMax)
-    PLAYER_CONST_PARAM(f32, GigaRoundLimitDegreeMin)
-    PLAYER_CONST_PARAM(f32, GigaNormalRollingMinSpeed)
-    PLAYER_CONST_PARAM(f32, GigaNormalGravityAddition)
-    PLAYER_CONST_PARAM(f32, GigaSquatBrakeRate)
-    PLAYER_CONST_PARAM(f32, GigaGravity)
-    PLAYER_CONST_PARAM(f32, GigaFallSpeedMax)
-    PLAYER_CONST_PARAM(f32, GigaFloatFallSpeedMax)
-    PLAYER_CONST_PARAM(f32, GigaJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaJumpPowLow)
-    PLAYER_CONST_PARAM(s32, GigaJumpPowCountMax)
-    PLAYER_CONST_PARAM(f32, GigaJumpCancelBrakeRate)
-    PLAYER_CONST_PARAM(f32, GigaJumpCancelMinSpeed)
-    PLAYER_CONST_PARAM(f32, GigaHipDropSpeed)
-    PLAYER_CONST_PARAM(f32, GigaHipDropAnimRate)
-    PLAYER_CONST_PARAM(f32, GigaHipDropJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaTrampleJump)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpSlowSpeed)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpFastSpeed)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpSlowJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpFastJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpSlowGravity)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpFastGravity)
-    PLAYER_CONST_PARAM(f32, GigaSquatJumpGravity)
-    PLAYER_CONST_PARAM(f32, GigaSquatJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaSquatHighJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaSquatJumpBackPow)
-    PLAYER_CONST_PARAM(f32, GigaSpinJumpGravity)
-    PLAYER_CONST_PARAM(f32, GigaSpinJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaNormalRollingAttackJumpGravity)
-    PLAYER_CONST_PARAM(f32, GigaNormalRollingAttackJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaNormalRollingAttackVelH)
-    PLAYER_CONST_PARAM(f32, GigaWallJumpHSpeed)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpBrake)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpSpeedMin)
-    PLAYER_CONST_PARAM(f32, GigaLongJumpSideAccel)
-    PLAYER_CONST_PARAM(s32, GigaLandFrame)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbMaxSpeed)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbDashMaxSpeed)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbAccel)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbMaxSideSpeed)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbDashMaxSideSpeed)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbSideAccel)
-    PLAYER_CONST_PARAM(f32, GigaWallSnapDistance)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbJumpPowLow)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbJumpPow)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbSlideGravity)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbSlideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbSlideSideAccel)
-    PLAYER_CONST_PARAM(f32, GigaWallClimbSlideSideMaxSpeed)
-    PLAYER_CONST_PARAM(f32, FlashRangeAttackLengthOffset)
-    PLAYER_CONST_PARAM(f32, FlashRangeAttackDegreeScale)
-    PLAYER_CONST_PARAM(f32, FlashRangeAttackHeightMax)
-    PLAYER_CONST_PARAM(f32, FlashRangeAttackHeightMin)
-    PLAYER_CONST_PARAM(s32, IsEnableHeadLightOfx)
-    PLAYER_CONST_PARAM(f32, HeadLightOfxOffsetY)
-    PLAYER_CONST_PARAM(f32, HeadLightOfxOffsetZ)
-    PLAYER_CONST_PARAM(f32, HeadLightPrePassPointLightRadiusScale)
-    PLAYER_CONST_PARAM(f32, HeadLightPrePassPointLightOffsetY)
-    PLAYER_CONST_PARAM(f32, HeadLightPrePassPointLightOffsetZ)
+    PLAYER_CONST_PARAM_LIST(PLAYER_CONST_PARAM_DECLARE_GETTER)
 
     /// Make the getters ask the override parameter set (or stop doing so).
     void setOverride(bool isOverride) { mIsOverride = isOverride; }
     /// Whether the getters currently ask the override parameter set.
     bool isOverride() const { return mIsOverride; }
+    /// The parameter set the getters ask while overriding.
+    const PlayerConstParam* getOverrideParam() const { return mOverrideParam; }
 
 private:
     f32 mGravity;  // 0x8
@@ -1186,4 +1186,4 @@ private:
     bool mIsOverride;                        // 0x910
 };
 
-#undef PLAYER_CONST_PARAM
+#undef PLAYER_CONST_PARAM_DECLARE_GETTER

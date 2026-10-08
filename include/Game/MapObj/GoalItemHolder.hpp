@@ -45,6 +45,8 @@ public:
      * @param isDemo Whether a collect demo is running.
      */
     void setCollectDemo(bool isDemo) { mUnknown38 = isDemo; }
+    bool isCollectDemo() const { return mUnknown38; }
+    void setWindowProcessing(WindowProcessing* pWindow) { mWindowProcessing = pWindow; }
 private:
     sead::PtrArray<GoalItem> mGoalItems;
     GoalItem* mCurrentGoalItem = nullptr;

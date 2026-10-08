@@ -23,9 +23,17 @@ public:
     CourseSelectSensor(CourseSelectSensorType type, ICourseSelectActorController* pController);
 
     void setSensor(const al::HitSensor* pSensor);
+    bool isUseCourseSelectLayoutType() const;
+
+    /** @brief Gets the controller of the object owning the sensor. @return The controller. */
+    ICourseSelectActorController* getController() const { return mController; }
+    /** @brief Gets the linked hit sensor. @return The hit sensor. */
+    const al::HitSensor* getHitSensor() const { return mHitSensor; }
 
 private:
-    u8 _0[0x18];
+    CourseSelectSensorType mType;  // 0x0
+    ICourseSelectActorController* mController;  // 0x8
+    const al::HitSensor* mHitSensor;  // 0x10
 };
 
 static_assert(sizeof(CourseSelectSensor) == 0x18);

@@ -86,6 +86,18 @@ public:
     bool isEnd() const;
     bool isEndOnWarp() const;
     void updatePlayerTracker(bool isForce);
+
+    /**
+     * @brief Check whether the map can be opened.
+     * @return True when the map is enabled.
+     */
+    bool isMapEnable() const { return mIsMapEnable; }
+
+    /**
+     * @brief Get the island chosen as the warp destination.
+     * @return The island id.
+     */
+    s32 getWarpIslandId() const { return mWarpIslandId; }
     void updatePlayerTrackerForBonusArea(sead::Vector3f trans);
     void addSpecialShineLocation(al::LiveActor* pActor, sead::Vector3f trans,
                                  ScenarioInfo scenarioInfo);
