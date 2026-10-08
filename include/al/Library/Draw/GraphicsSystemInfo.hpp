@@ -158,6 +158,7 @@ public:
     }
     const char* getLodSettingName() const { return mLodSettingName; }
     GraphicsAreaTarget getAreaTarget() const { return GraphicsAreaTarget(mAreaTarget); }
+    void setAreaTarget(GraphicsAreaTarget::ValueType target) { mAreaTarget = target; }
 
     ViewIndexedUboArrayTree mViewIndexedUboArrayTree;
     union {

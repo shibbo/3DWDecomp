@@ -118,6 +118,9 @@ public:
                              const char* pListName);
     void initPlacementNodeItem(const al::ActorInitInfo& rInfo);
 
+    /** @brief Gets the world the map shows. @return The world id. */
+    s32 getWorldId() const { return mWorldId; }
+
 private:
     /** Number of control users that can idle until they are made to leave. */
     static constexpr s32 cControlUserNum = 4;

@@ -21,6 +21,7 @@ public:
     enum Result {
         cResult_Success = 0,
         cResult_Unhandled = 4,
+        cResult_Unsupported = 6,
     };
 
     /**
@@ -39,8 +40,10 @@ public:
         /// Process: the events that happened since the last call.
         struct {
             u64 mEvents;
-            u64 mReserved;
+            u64 mClock;
             u64* mCycles;
+            u64 mReserved;
+            void* mInput;
         } mProcess;
 
         /// System: a command with a value.
@@ -78,19 +81,53 @@ public:
     /// Destroy the unit, clearing its descriptor.
     virtual ~CPlatformUnit() { mDescriptor = {}; }
 
-    virtual void Initialize(CPlatformUnit* pParent);
-    virtual void Finalize();
-    virtual int Notify(CPlatformUnit* pUnit, u64 channel, u64 operation, void* pArgument);
+    virtual int Initialize(CPlatformUnit* pParent) = 0;
+    virtual int Finalize() = 0;
+    virtual int Notify(CPlatformUnit* pUnit, u64 channel, u64 operation, void* pArgument) = 0;
     virtual int SystemAttach(CPlatformUnit* pUnit, u64 channel, u64 operation,
-                             UArgument* pArgument);
+                             UArgument* pArgument) = 0;
     virtual int SystemDetach(CPlatformUnit* pUnit, u64 channel, u64 operation,
-                             UArgument* pArgument);
-    virtual int System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument);
-    virtual int Access(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument);
-    virtual int Process(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument);
-    virtual bool ExportContent(void* pBuffer, u64 bufferSize, u64& rSize);
-    virtual bool ImportContent(const void* pBuffer, u64 bufferSize, u64& rSize);
-    virtual bool InferContentSize(u64& rSize);
+                             UArgument* pArgument) = 0;
+    virtual int System(CPlatformUnit* pUnit, u64 channel, u64 operation,
+                       UArgument* pArgument) = 0;
+    virtual int Access(CPlatformUnit* pUnit, u64 channel, u64 operation,
+                       UArgument* pArgument) = 0;
+    virtual int Process(CPlatformUnit* pUnit, u64 channel, u64 operation,
+                        UArgument* pArgument) = 0;
+
+    /**
+     * @brief Export the state of the unit (not supported by default).
+     * @param pBuffer The destination buffer.
+     * @param bufferSize The size of the destination buffer.
+     * @param rSize Receives the number of bytes written.
+     * @return cResult_Unsupported.
+     */
+    virtual int ExportContent(void* pBuffer, u64 bufferSize, u64& rSize) {
+        rSize = 0;
+        return cResult_Unsupported;
+    }
+
+    /**
+     * @brief Import the state of the unit (not supported by default).
+     * @param pBuffer The source buffer.
+     * @param bufferSize The size of the source buffer.
+     * @param rSize Receives the number of bytes read.
+     * @return cResult_Unsupported.
+     */
+    virtual int ImportContent(const void* pBuffer, u64 bufferSize, u64& rSize) {
+        rSize = 0;
+        return cResult_Unsupported;
+    }
+
+    /**
+     * @brief Compute the size of the exported state (not supported by default).
+     * @param rSize Receives the size.
+     * @return cResult_Unsupported.
+     */
+    virtual int InferContentSize(u64& rSize) {
+        rSize = 0;
+        return cResult_Unsupported;
+    }
 
     SDescriptor mDescriptor;
 };

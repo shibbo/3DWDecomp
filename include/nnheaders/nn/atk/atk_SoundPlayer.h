@@ -118,6 +118,27 @@ public:
      */
     SoundList& detail_GetSoundList() { return m_SoundList; }
 
+    /** @brief Gets the player volume. @return Linear gain. */
+    f32 GetVolume() const { return m_Volume; }
+    /** @brief Gets the low-pass filter offset. @return Frequency offset. */
+    f32 GetLowPassFilterFrequency() const { return m_LpfFreq; }
+    /** @brief Gets the biquad filter type. @return Filter type, or -1 when unset. */
+    int GetBiquadFilterType() const { return m_BiquadType; }
+    /** @brief Gets the biquad filter strength. @return Filter value. */
+    f32 GetBiquadFilterValue() const { return m_BiquadValue; }
+    /** @brief Gets the output lines new sounds use. @return Output line flags. */
+    u32 GetDefaultOutputLine() const { return m_OutputLineFlag; }
+    /** @brief Gets the volume of the main output. @return Linear gain. */
+    f32 GetOutputVolume() const { return m_OutputVolume; }
+    /** @brief Gets the main send of the main output. @return Send level. */
+    f32 GetOutputMainSend() const { return m_MainSend; }
+    /**
+     * @brief Gets an aux bus send of the main output.
+     * @param bus Aux bus.
+     * @return Send level.
+     */
+    f32 GetOutputEffectSend(AuxBus bus) const { return m_FxSend[bus]; }
+
     void detail_SortPriorityList(bool reverse);
     void detail_SortPriorityList(detail::BasicSound* pSound);
     bool detail_AppendSound(detail::BasicSound* pSound);

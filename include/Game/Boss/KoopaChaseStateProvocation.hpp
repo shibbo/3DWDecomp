@@ -13,6 +13,9 @@ public:
     void exeProvocation();
     void exeFire();
 
+    void setFireEnabled(bool isEnabled) { mIsFireEnabled = isEnabled; }
+    void setClearInterpole(bool isClear) { mIsClearInterpole = isClear; }
+
 private:
     KoopaChase* mHost;
     KoopaChaseStateFire* mStateFire = nullptr;

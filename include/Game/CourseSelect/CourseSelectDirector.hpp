@@ -127,6 +127,8 @@ public:
 
     /** @brief Gets the course select scene. @return The scene. */
     CourseSelectScene* getScene() const { return mScene; }
+    /** @brief Gets the message windows of the map. @return The window holder. */
+    CourseSelectWindowHolder* getWindowHolder() const { return mWindowHolder; }
     /** @brief Gets the controller of the object the main player stands on. @return The controller. */
     ICourseSelectActorController* getSelectedController() const { return mSelectedController; }
     /** @brief Gets the puppeteers of the players. @return The puppeteer group. */

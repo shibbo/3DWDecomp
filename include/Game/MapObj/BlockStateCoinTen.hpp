@@ -15,6 +15,7 @@ public:
     bool isAppearCoinMax() const;
     BoxCoin* getBoxCoin() const;
     bool isTimerEndOrCoinMax() const;
+    void setCoinMax(int coinMax) { mMaxCoins = coinMax; }
     void exeWait();
     void exeAppearCoin();
     void exeAppearCoinWait();

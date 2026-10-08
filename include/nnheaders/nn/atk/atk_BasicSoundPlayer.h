@@ -36,6 +36,20 @@ public:
     bool IsStarted() const { return mStartedFlag; }
     /** @brief Tests whether the player is paused. @return Whether the player is paused. */
     bool IsPause() const { return mPauseFlag; }
+    /** @brief Clears the player's event before a new sound uses the player. */
+    void ClearEvent() { os::ClearEvent(&mEvent); }
+    /** @brief Tests whether playback reached its end. @return Whether the player is finished. */
+    bool IsPlayFinished() const { return mFinishFlag; }
+    /**
+     * @brief Tests whether the player was finalized because a resource could not be allocated.
+     * @return Whether the player gave up for lack of resources.
+     */
+    bool IsFinalizedForCannotAllocateResource() const { return mIsFinalizedForCannotAllocateResource; }
+    /**
+     * @brief Sets the additional parameters of the main output.
+     * @param pParam Additional parameters, or nullptr.
+     */
+    void SetTvAdditionalParam(OutputAdditionalParam* pParam) { mTvAdditionalParam = pParam; }
 
 protected:
     os::EventType mEvent;

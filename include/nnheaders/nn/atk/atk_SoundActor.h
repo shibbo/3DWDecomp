@@ -30,6 +30,12 @@ public:
         return m_pActorPlayers[actorPlayerId];
     }
 
+    /**
+     * @brief Gets the parameters applied to every sound of this actor.
+     * @return Actor parameters.
+     */
+    const detail::SoundActorParam& detail_GetActorParam() const { return m_ActorParam; }
+
     virtual StartResult SetupSound(SoundHandle* pHandle, u32 soundId, const StartInfo* pStartInfo,
                                    void* pSetupArg);
     virtual StartResult SetupSound(SoundHandle* pHandle, u32 soundId, const char* pSoundArchiveName,
@@ -48,7 +54,7 @@ private:
 
     u8 _8[0x90 - 0x8];
     detail::ExternalSoundPlayer* m_pActorPlayers[ActorPlayerCount];
-    u8 _b0[0xcc - 0xb0];
+    detail::SoundActorParam m_ActorParam;
     bool m_IsInitialized;
     bool m_IsFinalized;
 };

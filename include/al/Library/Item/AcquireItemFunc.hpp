@@ -16,6 +16,7 @@ namespace al {
     void appearItem(const LiveActor*);
     void appearItem(const LiveActor*, const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&, const HitSensor*);
     void appearItem(const LiveActor*, const sead::Vector3f&, const sead::Vector3f&, const HitSensor*);
+    void appearItem(const LiveActor*, const sead::Vector3f&, const sead::Vector3f&);
     void appearItemTiming(const LiveActor*, const char*);
     void appearItemTiming(const LiveActor*, const char*, const sead::Vector3f&, const sead::Vector3f&, const HitSensor*, bool);
     void appearItemTiming(const LiveActor*, const char*, const sead::Vector3f&, const sead::Vector3f&);

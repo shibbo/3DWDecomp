@@ -8,7 +8,10 @@ namespace nn::atk {
 typedef volatile s16 vs16;
 
 /** @brief Pause policy shared by sound players and individual sounds. */
-enum PauseMode {};
+enum PauseMode {
+    PauseMode_Default,
+    PauseMode_PauseImmediately,
+};
 
 /** @brief Encoding of wave and stream sample data. */
 enum SampleFormat : int {

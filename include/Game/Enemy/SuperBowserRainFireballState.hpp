@@ -10,7 +10,11 @@ class SuperBowserRainFireballState {
 public:
     /// Tuning parameters of the fireball rain.
     struct Param {
-        u8 _0[0x44];
+        u8 _0[0x14];
+        f32 mFallSpeed;        // 0x14
+        u8 _18[0x24];
+        f32 mFlyScale;         // 0x3c
+        f32 mLandScale;        // 0x40
         f32 mCheckHeight;      // 0x44
         s32 mCheckRingFrame;   // 0x48
     };

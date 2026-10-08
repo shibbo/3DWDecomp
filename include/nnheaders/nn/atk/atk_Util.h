@@ -3,6 +3,7 @@
 #include <nn/types.h>
 
 namespace nn::atk {
+class OutputReceiver;
 class SoundArchive;
 enum SampleFormat : int;
 namespace detail {
@@ -47,6 +48,7 @@ WaveArchiveLoadStatus GetWaveArchiveOfBank(LoadItemInfo& rWarcInfo, bool& rIsLoa
                                            const void* pBankFile, const SoundArchive& rArchive,
                                            const SoundArchiveLoader& rLoader);
 size_t GetByteBySample(size_t samples, SampleFormat format);
+int GetOutputReceiverMixBufferIndex(const OutputReceiver* pReceiver, int channel, int bus);
 } // namespace Util
 } // namespace detail
 } // namespace nn::atk

@@ -7,6 +7,10 @@ class KoopaChaseMover;
 
 class KoopaChase : public al::LiveActor {
 public:
+    static f32 getRunStartDistance();
+    static f32 getRunStopDistance();
+    void stopEffectAll();
+
     KoopaChaseKoopa* mKoopa;
     al::LiveActor* mTargetPlayer;
     al::LiveActor* mLookAtTargetPlayer;

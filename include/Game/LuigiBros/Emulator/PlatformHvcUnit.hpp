@@ -31,11 +31,14 @@ public:
     struct _SPage {
         u8 mType;
         u8 mLimit;
-        u8 _02[6];
+        u16 _02;
+        u8 _04[4];
         u64 mOffset;
         u8 _10;
         u8 mLine;
-        u8 _12[0xe];
+        u16 _12;
+        u8 _14[4];
+        u64 _18;
     };
 
     static_assert(sizeof(_SPage) == 0x20, "_SPage size");
@@ -49,21 +52,100 @@ public:
     /**
      * @brief Per-title settings of the emulated cartridge.
      */
-    struct _STitleSetting {
-        u8 _00[0x30];
+    struct _STitleElement {
+        const void* mImage;
+        const void* mDiskImage;
+        void* _10;
+        void* mDiskSystem;
+        void* _20;
+        u64 _28;
         u64 mTitleId;
+        u64 _38;
     };
 
+    static_assert(sizeof(_STitleElement) == 0x40, "_STitleElement size");
+
+    using _STitleSetting = _STitleElement;
+
+    /// Number of entries of _SCustomParameter::mLineScroll.
+    static constexpr s32 cLineScrollNum = 314;
+
+    /// Number of sound channels with a mixing setting.
+    static constexpr s32 cSoundChannelNum = 9;
+
     /**
-     * @brief Per-title rendering parameters.
+     * @brief Per-title rendering and mixing parameters.
      */
-    struct _STitleRender {
-        u8 _00[0x32];
+    struct _SCustomParameter {
+        u64 _00[6];
+        u16 _30;
         u8 mVisibleTop;
         u8 mVisibleBottom;
         u8 mSpriteLimit;
         u8 mIsSprite0HitAlways;
-        _SLineScroll mLineScroll[240];
+        _SLineScroll mLineScroll[cLineScrollNum];
+        u8 _51e;
+        u8 _51f;
+        u8 _520;
+        u8 _521;
+        u8 _522;
+        u8 _523[5];
+        s64 mVolumeScale;
+        s8 mVolume[cSoundChannelNum];
+        s8 mRate[cSoundChannelNum];
+        s8 mPan[cSoundChannelNum];
+        s8 mPanMaster;
+        u8 _54c[4];
+        u32 _550;
+        u8 _554[4];
+    };
+
+    static_assert(sizeof(_SCustomParameter) == 0x558, "_SCustomParameter size");
+
+    using _STitleRender = _SCustomParameter;
+
+    /**
+     * @brief Statistics gathered while emulating.
+     */
+    struct _SSurveyParameter {
+        u64 _00;
+    };
+
+    /**
+     * @brief Divides the master clock into frames and scanlines.
+     */
+    struct _SCycleController {
+        void Initialize(_STitleElement& rElement);
+        void AdjustParameter(s32, s32, s32, s32, s32, s32);
+        void ChangeSequenceMode(s32 mode);
+        void Finalize();
+        u64 Progress(u64 cycles);
+
+        u64 mFrameClock;
+        u64 _08;
+        u64 mScanlineClock;
+        u64 _18;
+        u64 _20;
+        u64 _28;
+        s64 _30;
+        s64 _38;
+    };
+
+    /**
+     * @brief Pending reset and interrupt requests.
+     */
+    struct _SOrderController {
+        void Initialize(_STitleElement& rElement);
+        void Finalize();
+
+        u16 mResetRequest;
+        u16 _02;
+        u16 mInterruptRequest;
+        u16 _06;
+        u16 _08;
+        u16 _0a;
+        u16 _0c;
+        u16 _0e;
     };
 
     /**
@@ -85,30 +167,64 @@ public:
         }
 
         u8 mMapper;
-        u8 _01[7];
+        u8 _01;
+        u8 _02;
+        u8 _03;
+        u8 _04[4];
         _SPage mCpuPages[16];
         _SPage mPpuPages[80];
-        u64 _c08;
-        u64 mFrameClock;
-        u64 _c18;
-        u64 mScanlineClock;
-        u8 _c28[0x1648 - 0xc28];
+        u16 mCycleRemain;
+        u16 mCycleDebt;
+        u8 _c0c[4];
+
+        union {
+            _SCycleController mCycleController;
+
+            struct {
+                u64 mFrameClock;
+                u64 _c18;
+                u64 mScanlineClock;
+            };
+        };
+
+        u8 _c50[8];
+        u64 mCpuClock;
+        u64 mCpuClockBase;
+        u8 _c68[0xd78 - 0xc68];
+        u64 _d78;
+        u8 _d80[0x11e8 - 0xd80];
+        u64 _11e8[4];
+        u8 _1208[0x1280 - 0x1208];
+        u64 _1280[3];
+        u8 _1298[0x1648 - 0x1298];
         u64 mDmaCycles;
         u8 _1650[0x1718 - 0x1650];
-        u16 mResetRequest;
-        u16 _171a;
-        u16 mInterruptRequest;
-        u8 _171e[0x1728 - 0x171e];
+
+        union {
+            _SOrderController mOrderController;
+
+            struct {
+                u16 mResetRequest;
+                u16 _171a;
+                u16 mInterruptRequest;
+            };
+        };
+
         u8* mMemory;
         u8* mFrameBuffer;
-        u8 _1738[0x1758 - 0x1738];
-        _STitleSetting* mTitleSetting;
-        _STitleRender* mTitleRender;
+        s16* mAudioBuffer;
+        u8 _1740[0x10];
+        u64 mAudioSampleNum;
+        _STitleElement* mTitleSetting;
+        _SCustomParameter* mTitleRender;
+        u8 _1768[8];
     };
 
     static_assert(__builtin_offsetof(_SEntity, mPpuPages) == 0x208, "_SEntity::mPpuPages");
     static_assert(__builtin_offsetof(_SEntity, mScanlineClock) == 0xc20, "_SEntity::mScanlineClock");
     static_assert(__builtin_offsetof(_SEntity, mTitleRender) == 0x1760, "_SEntity::mTitleRender");
+    static_assert(__builtin_offsetof(_SEntity, mMemory) == 0x1728, "_SEntity::mMemory");
+    static_assert(sizeof(_SEntity) == 0x1770, "_SEntity size");
 
     /**
      * @brief Construct a unit of the given kind.
@@ -117,16 +233,53 @@ public:
      * @param flags The unit flags.
      */
     CPlatformHvcUnit(u8 kind, u64 index, u64 flags) : CPlatformUnit(index, flags) {
+        mIsActive = false;
         mParent = nullptr;
-        _38 = false;
         mDescriptor.mKind = kind;
         mEntity = nullptr;
     }
 
     ~CPlatformHvcUnit() override {}
 
-    void Initialize(CPlatformUnit* pParent) override;
-    void Finalize() override;
+    /**
+     * @brief Attach the unit to its parent and run its prologue.
+     * @param pParent The parent unit.
+     * @return The result of the prologue (0 on success), or 1 without a parent.
+     */
+    int Initialize(CPlatformUnit* pParent) override {
+        if (mIsActive) {
+            return 0;
+        }
+
+        if (pParent == nullptr) {
+            return 1;
+        }
+
+        mParent = pParent;
+        if (pParent != this) {
+            mDescriptor.mFlags *= pParent->mDescriptor.mFlags;
+        }
+
+        mEntity = nullptr;
+        int result = _Prologue();
+        mIsActive = result == 0;
+        return result;
+    }
+
+    /**
+     * @brief Run the epilogue of an active unit.
+     * @return The result of the epilogue (0 on success).
+     */
+    int Finalize() override {
+        if (!mIsActive) {
+            return 0;
+        }
+
+        int result = _Epilogue();
+        mIsActive = result == 0;
+        return result;
+    }
+
     int Notify(CPlatformUnit* pUnit, u64 channel, u64 operation, void* pArgument) override;
     int SystemAttach(CPlatformUnit* pUnit, u64 channel, u64 operation,
                      UArgument* pArgument) override;
@@ -135,9 +288,17 @@ public:
     int System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
     int Access(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
     int Process(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
-    bool ExportContent(void* pBuffer, u64 bufferSize, u64& rSize) override;
-    bool ImportContent(const void* pBuffer, u64 bufferSize, u64& rSize) override;
-    bool InferContentSize(u64& rSize) override;
+    int ExportContent(void* pBuffer, u64 bufferSize, u64& rSize) override;
+    int ImportContent(const void* pBuffer, u64 bufferSize, u64& rSize) override;
+    int InferContentSize(u64& rSize) override;
+
+    static void ConfigureEntity(_SEntity& rEntity, void* pMemory, u8* pFrameBuffer,
+                                s16* pAudioBuffer, u64* pAudioWork, _STitleElement* pElement,
+                                _SCustomParameter* pCustom, _SSurveyParameter* pSurvey);
+    static void GenerateSerializeTag(u8* pBuffer, u8 content, u8 species, u16 version,
+                                     const u8* pComment, u64 size);
+    static void ValidateSerializeTag(const u8* pBuffer, u8 content, u8 species, u16 version,
+                                     const u8* pComment, u64 size);
 
     virtual int _Prologue() = 0;
     virtual int _Epilogue() = 0;
@@ -150,7 +311,7 @@ public:
     virtual const char* _SerializeTagComment() = 0;
 
     CPlatformUnit* mParent;
-    bool _38;
+    bool mIsActive;
     _SEntity* mEntity;
 };
 

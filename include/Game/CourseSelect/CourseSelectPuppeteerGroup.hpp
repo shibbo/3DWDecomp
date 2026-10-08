@@ -27,12 +27,20 @@ public:
     void leaveUser(s32 userId);
     bool isPlayEntryDemo(s32 userId) const;
     bool isPlayLeaveDemo(s32 userId) const;
+    void startRocketDemo(ICourseSelectActorController* pController);
+    void startRocketBreakDemo(ICourseSelectActorController* pController);
+    void startSaveDataWriteInDemo(ICourseSelectActorController* pController);
+    bool isEndSaveDataWriteInDemo(ICourseSelectActorController* pController);
 
     /** @brief Gets the puppeteer of a control user. @param userId User id. @return The puppeteer. */
     CourseSelectPuppeteer* getPuppeteer(s32 userId) const { return mPuppeteers[userId]; }
+    /** @brief Gets the number of puppeteers. @return The puppeteer count. */
+    s32 getPuppeteerNum() const { return mPuppeteerNum; }
 
 private:
-    u8 _148[0x160 - 0x148];
+    u8 _144[0x158 - 0x144];  // starts in the tail padding of al::LiveActor
+    s32 mPuppeteerNum;  // 0x158
+    u8 _15c[0x160 - 0x15c];
     CourseSelectPuppeteer** mPuppeteers;  // 0x160
 };
 

@@ -184,6 +184,7 @@ public:
     void setEnable(bool isEnable) { *mEnable = isEnable; }
 
     bool isEnable() const { return *mEnable && isEnableContext(-1); }
+    bool isEnable(s32 context) const { return *mEnable && isEnableContext(context); }
 
 protected:
     void postRead_() override;

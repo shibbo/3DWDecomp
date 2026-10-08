@@ -18,6 +18,12 @@ public:
 
     virtual void init(const al::LayoutInitInfo& rInfo);
 
+    void startFadeWhite(s32 frame);
+    void endFadeWhite(s32 frame);
+    bool isCloseFadeWhite() const;
+    void appearMessage(const char* pLabel);
+    bool isMessageActive() const;
+
 private:
     u8 _8[0x40 - 0x8];
 };

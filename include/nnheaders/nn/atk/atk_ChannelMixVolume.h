@@ -13,6 +13,8 @@ public:
     bool SetChannelVolume(int index, float volume);
     bool SetChannelVolume(int index, const float* volumes, int count);
     float GetChannelVolume(int index) const;
+    /** @brief Gets the number of channels with a volume. @return Channel count. */
+    int GetChannelCount() const { return mChannelCount; }
 
 private:
     int mChannelCount;

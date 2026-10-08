@@ -114,8 +114,14 @@ public:
     void changeShadowNormal();
     bool update();
 
+    /**
+     * @brief Get the character type watched by this group.
+     * @return The character type.
+     */
+    s32 getCharaType() const { return mCharaType; }
+
 private:
-    PlayerAliveWatcher* mWatcher;                    // 0x00
+    PlayerAliveWatcher* mWatcher;                   // 0x00
     PlayerAliveWatcherCharacter** mCharacters = nullptr;  // 0x08
     TractorBubble* mTractorBubble = nullptr;        // 0x10
     s32 mCharaType;                                 // 0x18

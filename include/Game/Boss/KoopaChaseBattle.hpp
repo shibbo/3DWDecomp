@@ -8,6 +8,8 @@ class KoopaChaseStateDamage;
 // Common virtual interface reconstructed from both battle-level vtables.
 class KoopaChaseBattle : public al::NerveStateBase {
 public:
+    KoopaChaseBattle(const char* pName) : al::NerveStateBase(pName) {}
+
     virtual bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) = 0;
     virtual bool isStateTurnToTarget() const = 0;
     virtual bool isStateUpdatePose() const = 0;

@@ -11,6 +11,7 @@ class ICourseSelectActorController;
 /** @brief Kinds of course-select sensors. */
 enum CourseSelectSensorType : s64 {
     cCourseSelectSensorType_Actor = 0,
+    cCourseSelectSensorType_Rocket = 4,
 };
 
 /**

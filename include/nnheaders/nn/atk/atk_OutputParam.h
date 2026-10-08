@@ -1,7 +1,7 @@
 #pragma once
 
-#include <nn/atk/atk_BasicSound.h>
 #include <nn/atk/atk_Global.h>
+#include <nn/atk/atk_MixParameter.h>
 
 namespace nn::atk::detail {
 /**
@@ -33,3 +33,6 @@ static_assert(sizeof(OutputParam) == 0x50, "OutputParam size");
 namespace nn::atk {
 using detail::OutputParam;
 }  // namespace nn::atk
+
+// Kept for files that used this header to reach BasicSound; BasicSound itself needs OutputParam.
+#include <nn/atk/atk_BasicSound.h>

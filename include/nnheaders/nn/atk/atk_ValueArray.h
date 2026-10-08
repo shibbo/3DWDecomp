@@ -24,6 +24,19 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Reads an entry without a range check.
+     * @param index Entry index.
+     * @return The entry.
+     */
+    T GetValue(int index) const { return mValues[index]; }
+    /**
+     * @brief Writes an entry without a range check.
+     * @param index Entry index.
+     * @param value New value.
+     */
+    void SetValue(int index, T value) { mValues[index] = value; }
+
     /** @brief Gets the number of entries. @return Entry count. */
     int GetCount() const { return mCount; }
     /**

@@ -19,6 +19,20 @@ public:
     float GetBinaryVolume() const { return mVolume; }
     /** @brief Sets the volume of buses in binary mode. @param volume Linear gain. */
     void SetBinaryVolume(float volume) { mVolume = volume; }
+    /** @brief Gets the number of buses with a through mode. @return Bus count. */
+    int GetBusCount() const { return mBusCount; }
+    /**
+     * @brief Reads the through mode of a bus without a range check.
+     * @param bus Bus index.
+     * @return The bus's mode.
+     */
+    u8 GetVolumeThroughMode(int bus) const { return mModes[bus]; }
+    /**
+     * @brief Writes the through mode of a bus without a range check.
+     * @param bus Bus index.
+     * @param mode New mode.
+     */
+    void SetVolumeThroughMode(int bus, u8 mode) { mModes[bus] = mode; }
     /**
      * @brief Reads the through mode of a bus if it exists.
      * @param bus Bus index.

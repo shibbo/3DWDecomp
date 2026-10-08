@@ -24,7 +24,7 @@ public:
     virtual const CourseSelectActorInfo* getCourseSelectActorInfo() const = 0;
     virtual CourseSelectNode* getCourseSelectNode() const = 0;
     virtual void startRouteDokanRider(al::BlockRailRider* pRider);
-    virtual s32 calcOpenNodePriority() const = 0;
+    virtual s32 calcOpenNodePriority() const;
     virtual void startPuppetDemo(CourseSelectPuppeteerGroup* pGroup) = 0;
     virtual void endPuppetDemo() = 0;
     virtual void startBind(CourseSelectPuppeteer* pPuppeteer) = 0;
