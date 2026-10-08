@@ -21,6 +21,7 @@ class DoorLock;
 class GoalItemBindPuppeteer;
 class GoalItemHolder;
 class IGoalItemCollectListener;
+class IGoalItemListener;
 class InkPatch;
 class Lighthouse;
 class SinkedItem;
@@ -141,6 +142,15 @@ public:
     void setIslandId(s32 islandId) { mIslandId = islandId; }
 
     void setLighthouse(Lighthouse* pLighthouse) { mLighthouse = pLighthouse; }
+
+    /**
+     * @brief Set the listener notified when the item's animation ends.
+     * @param pListener The listener (stored in the slot also typed as an end functor; both are
+     * called through the first virtual function).
+     */
+    void setAnimEndListener(IGoalItemListener* pListener) {
+        mAnimEndFunctor = reinterpret_cast<al::FunctorBase*>(pListener);
+    }
 
 private:
     /**

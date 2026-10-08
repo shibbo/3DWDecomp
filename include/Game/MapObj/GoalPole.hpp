@@ -102,6 +102,18 @@ public:
     bool isRunaway() const { return mRunawayState != nullptr; }
     const sead::Matrix34f& getRunawayBaseMtx() const { return mBaseMtx; }
 
+    /**
+     * @brief Height of the pole top, where the players reach the top of the pole.
+     * @return The world Y coordinate of the pole top.
+     */
+    f32 getPoleTopHeight() const { return mPoleTopTrans.y; }
+
+    /**
+     * @brief Whether the players show their fur when jumping off the pole.
+     * @return True if the fur is enabled.
+     */
+    bool isEnableFur() const { return mIsEnableFur; }
+
 private:
     bool mIsGoal = false;  // 0x150
     bool mIsEndGoalDemo = false;  // 0x151

@@ -137,6 +137,8 @@ public:
 
     const CubeMapInfo* getForceCubeMapInfo() const { return mForceCubeMapInfo; }
 
+    void setForceCubeMapInfo(CubeMapInfo* pInfo) { mForceCubeMapInfo = pInfo; }
+
     f32 getModelLightIntensity() const { return mModelLightIntensity; }
     void setModelLightIntensity(f32 intensity) { mModelLightIntensity = intensity; }
 

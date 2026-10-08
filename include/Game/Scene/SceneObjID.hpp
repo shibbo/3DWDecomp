@@ -21,6 +21,7 @@ enum SceneObjID : s32 {
     SceneObjID_PlayerProcess = 17,
     SceneObjID_PlayerStocker = 18,
     SceneObjID_ScoreHolder = 20,
+    SceneObjID_StageTimer = 23,
     SceneObjID_PlayerAliveWatcher = 24,
     SceneObjID_PlayerRetargettingSelector = 25,
     SceneObjID_CameraChangeLayout = 27,

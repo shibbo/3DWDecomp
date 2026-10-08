@@ -8,12 +8,11 @@ class DemoTimerStageSwitchInfo;
 class DemoTimerStageSwitchController : public al::LiveActor {
 public:
     explicit DemoTimerStageSwitchController(const char* pName);
-    /** @brief Destroys the controller. */
-    ~DemoTimerStageSwitchController() override = default;
     void init(const al::ActorInitInfo& rInfo) override;
     void appear() override;
     void prepare(bool isOn);
     void control() override;
+    ~DemoTimerStageSwitchController() override;
 
 private:
     int mInfoCount = 0;

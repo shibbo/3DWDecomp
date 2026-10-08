@@ -40,6 +40,15 @@ public:
     bool isImmediateDemoSwitch() const { return mIsImmediateDemoSwitch; }
     void resetImmediateDemoSwitch() { mIsImmediateDemoSwitch = false; }
 
+    /** @brief Requests that the next demo switch happens immediately. */
+    void setImmediateDemoSwitch() { mIsImmediateDemoSwitch = true; }
+
+    /**
+     * @brief Sets the audio demo type of the active demo without flagging a change.
+     * @param type The audio demo type.
+     */
+    void setAudioDemoType(s32 type) { mAudioDemoType = type; }
+
     /**
      * @brief Sets the audio director the demos change the audio demo type of.
      * @param pAudioDirector The audio director.
@@ -71,6 +80,9 @@ public:
 
     /** @brief Gets the unknown flag at 0xd4. @return The flag value. */
     bool isUnknownD4() const { return _d4; }
+
+    /** @brief Sets the unknown flag at 0xd5 (full sensor update in demos). @param isSet The flag value. */
+    void setUnknownD5(bool isSet) { _d5 = isSet; }
 
     /** @brief Gets the unknown flag at 0xd5. @return The flag value. */
     bool isUnknownD5() const { return _d5; }

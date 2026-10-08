@@ -10,6 +10,7 @@
 
 namespace al {
 class ComboCounter;
+class DemoDirector;
 class LayoutInitInfo;
 class PadRumbleKeeper;
 }  // namespace al
@@ -164,6 +165,7 @@ public:
     void cancelRequestBind(al::HitSensor* pSensor);
     void cancelBindForDemo();
     void cancelForDemo();
+    void addToDemo(al::DemoDirector* pDemoDirector);
     void cancelDeathAnim();
     void forceKill();
     void pauseInvincible(bool isPauseBgm);

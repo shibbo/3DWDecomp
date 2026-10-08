@@ -30,6 +30,8 @@ public:
     void endGoalItemDemo();
     bool tryThrowStockItem(int itemType, const char* pItemName, al::LiveActor* pPlayer);
     bool tryStartAmiiboAttack();
+    void startMysteryBox();
+    void endMysteryBox();
 
     /**
      * @brief Check whether Bowser Jr. is driven by the AI instead of a second player.

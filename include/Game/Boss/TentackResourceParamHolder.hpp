@@ -12,7 +12,9 @@ struct TentackResourceParamInfo {
      */
     s32 getGroupOrder(s32 index) const { return mGroupOrder[index]; }
 
-    unsigned char mUnknown0[0x18];
+    unsigned char mUnknown0[0x10];
+    s32 mSwingTentacleNum;   // 0x10 tentacles that swing in the attack
+    s32 mPeriodNum;          // 0x14 rounds through all groups before the attack ends
     s32 mGroupNum;           // 0x18
     s32* mGroupTentacleNum;  // 0x20 tentacles per group
     s32* mGroupOrder;        // 0x28 order the groups attack in
@@ -35,6 +37,7 @@ class TentackResourceParamHolder {
 public:
     explicit TentackResourceParamHolder(const char* pSuffix);
     s32 getTentacleGroupNumMax(s32 level) const;
+    s32 getSwingTentacleNumMax(s32 level) const;
     TentackResourceParam* getParamAndTurnNext(s32 damage, s32 level, s32 deadHeadType);
     const TentackResourceParamInfo* getParamInfo(s32 damage, s32 level, s32 deadHeadType) const;
 

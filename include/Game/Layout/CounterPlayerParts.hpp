@@ -18,8 +18,16 @@ public:
                        al::LayoutActor* pParent, const PlayerAliveWatcher* pWatcher,
                        bool isUnknown);
 
+    void startDemo();
+    void endDemo();
+
+    /** @brief Show the counter in its Toad Brigade (Captain Toad stage) style. */
+    void setKinopioBrigade() { mIsKinopioBrigade = true; }
+
 private:
-    unsigned char _padding[0x148 - 0x128];
+    unsigned char _padding[0x144 - 0x121];  // members start in al::LayoutActor's tail padding
+    bool mIsKinopioBrigade;  // 0x144
+    unsigned char _145[0x148 - 0x145];
 };
 
 static_assert(sizeof(CounterPlayerParts) == 0x148);

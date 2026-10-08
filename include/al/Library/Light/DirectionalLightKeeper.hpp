@@ -24,6 +24,11 @@ public:
              {5.5f, 5.3f, 5.0f, 1.0f}, 80.0f);
     }
 
+    DirLightParam(const sead::Vector3f& rDir, const sead::Vector3f& rSpcDir,
+                  const sead::Color4f& rColor, const sead::Color4f& rSpcColor, f32 spcPower) {
+        init(rDir, rSpcDir, rColor, rSpcColor, spcPower);
+    }
+
     void init(const sead::Vector3f& rDir, const sead::Vector3f& rSpcDir,
               const sead::Color4f& rColor, const sead::Color4f& rSpcColor, f32 spcPower);
     const sead::Vector3f& getDirectionFrom() const;

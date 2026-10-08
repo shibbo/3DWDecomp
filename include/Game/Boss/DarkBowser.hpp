@@ -136,6 +136,9 @@ public:
     /** @brief Turns gravity back on (e.g. after being knocked away). */
     void validateGravity() { mIsApplyGravity = true; }
 
+    /** @brief Turns gravity off (e.g. while hovering above the player in the shell dive). */
+    void invalidateGravity() { mIsApplyGravity = false; }
+
     /** @brief The battle phase (1 to 4). */
     s32 getPhase() const { return mPhase; }
 

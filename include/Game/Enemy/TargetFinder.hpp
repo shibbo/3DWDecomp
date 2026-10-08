@@ -46,10 +46,17 @@ public:
      */
     bool isFoundTarget() const { return _8 != nullptr && mIsFound; }
 
+    /**
+     * @brief Checks whether a target exists and the flag at 0x11 is set (found this update).
+     * @return Whether a target exists and is currently found.
+     */
+    bool isFoundTargetNow() const { return _8 != nullptr && _11; }
+
     al::LiveActor* mActor;  // 0x00
     al::LiveActor* _8;
     bool mIsFound;  // 0x10
-    u8 _11[7];
+    bool _11;
+    u8 _12[6];
     sead::Vector3f* mFrontDir;      // 0x18
     sead::Vector3f* mSupportUpDir;  // 0x20
     u64 _28;

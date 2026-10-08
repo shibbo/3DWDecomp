@@ -1,5 +1,7 @@
 #pragma once
 
+#include <math/seadQuat.h>
+
 #include "Library/LiveActor/LiveActor.hpp"
 
 /** @brief Tuning parameters shared by Fury Bowser's ring beams. */
@@ -18,6 +20,8 @@ public:
 
     void setRingBeamParam(const DarkBowserRingBeamParam* pParam);
     void cutSoundEffects();
+    void setActiveWithPosture(const sead::Vector3f& rTrans, const sead::Quatf& rQuat);
+    bool isActive() const;
 
     /**
      * @brief Sets how the ring beam behaves when it is emitted.

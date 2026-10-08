@@ -19,6 +19,9 @@ class ShaderHolder;
 class ShadowMaskKeeper;
 
 class DepthShadowDrawer;
+class DepthShadowParam;
+template <typename T>
+class RequestInterp;
 
 class ShadowDirector {
 public:
@@ -41,6 +44,18 @@ public:
     bool isEnableDepthShadow() const;
 
     ShadowMaskKeeper* getShadowMaskKeeper() const { return mShadowMaskKeeper; }
+
+    /**
+     * @brief Requests depth shadow parameters for the current frame.
+     * @param priority The request priority.
+     * @param step The interpolation frames.
+     * @param rParam The requested parameters.
+     * @note Needs Project/Base/RequestInterp.hpp and Library/Shadow/DepthShadowParam.hpp.
+     */
+    template <typename T = DepthShadowParam>
+    void requestDepthShadowParam(s32 priority, s32 step, const T& rParam) {
+        reinterpret_cast<RequestInterp<T>*>(_18)->requestParam(priority, step, rParam);
+    }
 
     /**
      * @brief Sets the unknown flag at 0x1ef8 (on while the snapshot mode is active).

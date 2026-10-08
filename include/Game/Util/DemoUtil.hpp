@@ -4,11 +4,22 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
+#include <math/seadMatrix.h>
+
 namespace al {
+class ActorInitInfo;
 class LiveActor;
+class Scene;
 }  // namespace al
 
+class DemoPlayerController;
+class DemoSceneActorHolder;
+class DemoScenePlayerModel;
+class GameDataHolder;
+class GameDataHolderAccessor;
+class IDemoScenePlayerInfo;
 class PlayerActor;
+class PlayerRetargettingSelector;
 
 namespace alSeFunction {
 enum DemoType : s32;
@@ -58,4 +69,62 @@ void setDemoFullSensorUpdate(const al::LiveActor* pActor, bool isFull);
 void addDemoPlayer(PlayerActor* pPlayer);
 void removeDemoPlayer(PlayerActor* pPlayer);
 void changeActiveDemoAudioType(const al::LiveActor* pActor, alSeFunction::DemoType type);
+bool tryStartDemo(DemoSceneActorHolder* pHolder);
+bool tryEndDemo(DemoSceneActorHolder* pHolder);
+void setEndCameraInterpolateFrame(DemoSceneActorHolder* pHolder, int frames);
+DemoSceneActorHolder* tryCreateDemoSceneHolder(const char* pName, const al::ActorInitInfo& rInfo,
+                                               PlayerRetargettingSelector* pSelector,
+                                               const sead::Matrix34f* pBaseMtx, bool isUseFigure,
+                                               int maxPlayers);
+DemoSceneActorHolder* createDemoSceneHolder(const char* pName, const al::ActorInitInfo& rInfo,
+                                            PlayerRetargettingSelector* pSelector,
+                                            const sead::Matrix34f* pBaseMtx, bool isUseFigure,
+                                            int maxPlayers);
+DemoSceneActorHolder* createDemoSceneHolderLayoutOnly(const char* pName,
+                                                      const al::ActorInitInfo& rInfo,
+                                                      PlayerRetargettingSelector* pSelector,
+                                                      const sead::Matrix34f* pBaseMtx,
+                                                      bool isUseFigure, int maxPlayers);
+void setDemoScenePlayerInfo(DemoSceneActorHolder* pHolder, IDemoScenePlayerInfo* pInfo);
+bool isDemoDirectorAvailable(const al::LiveActor* pActor);
+bool isDemoDirectorAvailable(const al::Scene* pScene);
+bool tryCancelBossDemo(const al::LiveActor* pActor);
+bool tryCancelStageDemo(const al::LiveActor* pActor);
+void setUpdateFreezeButPlayer(const al::LiveActor* pActor, bool isFreeze);
+void setAlreadyShowBossDemo(const al::LiveActor* pActor);
+bool requestStartDemoBinding(const al::LiveActor* pActor);
+void requestEndDemoBinding(const al::LiveActor* pActor);
+bool requestStartDemoPlayer(const al::Scene* pScene);
+void requestEndDemoPlayer(const al::Scene* pScene);
+bool isActiveDemoIntro(const al::LiveActor* pActor);
+bool isActiveDemoPlayer(const al::LiveActor* pActor);
+bool isActiveDemoBinding(const al::LiveActor* pActor);
+bool isActiveDemoPlayerCutscene(const al::LiveActor* pActor);
+bool getImmediateSwitchFlag(const al::LiveActor* pActor);
+int getDemoPlayerNum(const al::LiveActor* pActor);
+DemoPlayerController* getDemoPlayer(const al::LiveActor* pActor, int index);
+DemoPlayerController* getDemoPlayerByCharacter(const al::LiveActor* pActor, int character);
+DemoPlayerController* getDemoPlayerByActor(const al::LiveActor* pActor);
+int getDemoPlayerNum(const al::Scene* pScene);
+DemoPlayerController* getDemoPlayer(const al::Scene* pScene, int index);
+DemoPlayerController* getDemoPlayerByCharacter(const al::Scene* pScene, int character);
+DemoPlayerController* getDemoPlayerByActor(const al::Scene* pScene, const al::LiveActor* pActor);
+void hideDemoPlayerAll(const al::Scene* pScene);
+void showDemoPlayerAll(const al::Scene* pScene);
+void stopSklAnimAndDeleteEffectDemoPlayerAll(const al::Scene* pScene);
+void setActionDemoFrameAll(const al::LiveActor* pActor, int frame);
+void requestCreateAllPlayer(const al::LiveActor* pActor, const char* pSuffix);
+void requestCreateAllFigure(const al::LiveActor* pActor, int character, const char* pSuffix);
+void requestCreateFigureSuper(const al::LiveActor* pActor, int character, const char* pSuffix);
+void requestCreateFigureClimb(const al::LiveActor* pActor, int character, const char* pSuffix);
+void requestCreateFigureClimbGiga(const al::LiveActor* pActor, int character,
+                                  const char* pSuffix);
+DemoScenePlayerModel* getDemoPlayerModel(const al::LiveActor* pActor, int character);
+void releaseDemoPlayerModel(DemoScenePlayerModel* pModel);
+alSeFunction::DemoType getActiveDemoAudioType(const al::LiveActor* pActor);
+void setUpdatePlayerAliveWatcher(const al::LiveActor* pActor, bool isUpdate);
+void tryHideDemoDisableFairyPrincess(DemoSceneActorHolder* pHolder, GameDataHolderAccessor accessor);
+void tryHideDemoDisableFairyPrincess(DemoSceneActorHolder* pHolder,
+                                     const GameDataHolder* pGameDataHolder);
+void tryHideDemoDisableFairyPrincess(DemoSceneActorHolder* pHolder, const al::LiveActor* pActor);
 }  // namespace rc

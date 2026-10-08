@@ -55,6 +55,10 @@ class SkeletonObj {
      * @return Array containing one matrix per bone, or nullptr before initialization.
      */
     const nn::util::Matrix4x3fType* GetWorldMtxArray() const { return m_WorldMtxArray; }
+    /** @brief Access writable world transforms.
+     * @return Array containing one matrix per bone, or nullptr before initialization.
+     */
+    nn::util::Matrix4x3fType* GetWorldMtxArray() { return m_WorldMtxArray; }
     /** @brief Query the number of bones in this skeleton.
      * @return Number of entries in the bone and transform arrays.
      */

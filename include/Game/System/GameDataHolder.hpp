@@ -269,6 +269,18 @@ class GameDataHolder : public al::ISceneObj {
     }
 
     /**
+     * @brief Set whether the scene update is frozen (flag at 0x61).
+     * @param isFreeze Whether the scene update is frozen.
+     */
+    void setFreezeMode(bool isFreeze) { mUnknown61 = isFreeze; }
+
+    /**
+     * @brief Set the unknown flag at 0x62 (players are not updated while frozen when set).
+     * @param isSet The flag value.
+     */
+    void setUnknown62(bool isSet) { mUnknown62 = isSet; }
+
+    /**
      * @brief Check whether the players are frozen (flag at 0x61, single mode).
      * @return True while the freeze mode is on.
      */
