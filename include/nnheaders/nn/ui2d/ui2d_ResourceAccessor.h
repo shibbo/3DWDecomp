@@ -35,5 +35,8 @@ public:
     virtual nn::font::Font* LoadFont(nn::gfx::Device*, const char*);
     virtual bool LoadShader(ShaderInfo*, nn::gfx::Device*, const char*) = 0;
     virtual bool LoadArchiveShader(ShaderInfo*, nn::gfx::Device*, u32, size_t, const u32*) = 0;
+
+    static const char* ArchiveShaderPrefix;
+    static const char* ArchiveShaderSuffix;
 };
 }

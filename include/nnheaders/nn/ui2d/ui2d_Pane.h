@@ -33,6 +33,8 @@ struct ResPane;
 struct ResExtUserData;
 /** @brief Kind of a system-defined extended user data entry attached to a pane. */
 enum PaneSystemDataType : int {
+    PaneSystemDataType_SimpleAABBCollision = 0,
+    PaneSystemDataType_SimpleOBBCollision = 1,
     PaneSystemDataType_AlignmentExInfo = 2,
     PaneSystemDataType_Mask = 3,
     PaneSystemDataType_DropShadow = 4,
@@ -167,12 +169,63 @@ struct SystemDataAlignmentExInfo : SystemDataBase {
 
 /** @brief System data with the settings of a procedural shape. */
 struct SystemDataProceduralShape : SystemDataBase {
-    u8 _04[0xf8];
+    /** @brief Bits of flags. */
+    enum Flag {
+        Flag_InnerStroke = 1 << 0,
+        Flag_InnerShadow = 1 << 1,
+        Flag_ColorOverlay = 1 << 2,
+        Flag_GradationOverlay = 1 << 3,
+        Flag_DropShadow = 1 << 4,
+        Flag_DropShadowKnockout = 1 << 5,
+        Flag_IndividualCorner = 1 << 6,
+        Flag_EffectOnly = 1 << 7,
+    };
+
+    u8 flags;
+    u8 innerStrokeBlendMode;
+    u8 innerShadowBlendMode;
+    u8 innerShadowType;
+    u8 colorOverlayBlendMode;
+    u8 gradationOverlayBlendMode;
+    u8 dropShadowBlendMode;
+    u8 dropShadowType;
+    u8 _0C[0x10];
+    float exp[4];
+    float radius[4];
+    float innerStrokeSize;
+    float innerStrokeColor[4];
+    float innerShadowColor[4];
+    float innerShadowAngle;
+    float innerShadowDistance;
+    float innerShadowSize;
+    float colorOverlayColor[4];
+    float gradationOverlayControlPoint[4];
+    float gradationOverlayColor[4][4];
+    float gradationOverlayAngle;
+    float dropShadowColor[4];
+    float dropShadowAngle;
+    float dropShadowDistance;
+    float dropShadowSize;
+    u8 _EC[0x10];
 };
 
 /** @brief Runtime state of a procedural shape. */
 struct SystemDataProceduralShapeRuntimeInfo : SystemDataBase {
-    u8 _04[0x10];
+    int constantBufferSlot;
+    u32 constantBufferOffset;
+    int dropShadowVertexConstantBufferOffset;
+    int dropShadowConstantBufferOffset;
+};
+
+/** @brief System data with an axis-aligned collision rectangle relative to the pane size. */
+struct SystemDataSimpleAABBCollision : SystemDataBase {
+    nn::util::Float2 size;
+    nn::util::Float2 offset;
+};
+
+/** @brief System data with a rotated collision rectangle relative to the pane size. */
+struct SystemDataSimpleOBBCollision : SystemDataSimpleAABBCollision {
+    float rotate;
 };
 
 /** @brief Runtime information added to panes built with dynamic data enabled. */
@@ -380,6 +433,30 @@ public:
     void SetSize(const Size& rSize) {
         mSizeX = rSize.width;
         mSizeY = rSize.height;
+        mFlags |= 0x10;
+    }
+
+    /** @brief Sets the X position and marks the global matrix dirty. */
+    void SetPositionX(float x) {
+        mPositionX = x;
+        mFlags |= 0x10;
+    }
+
+    /** @brief Sets the Y position and marks the global matrix dirty. */
+    void SetPositionY(float y) {
+        mPositionY = y;
+        mFlags |= 0x10;
+    }
+
+    /** @brief Sets the width and marks the global matrix dirty. */
+    void SetSizeX(float width) {
+        mSizeX = width;
+        mFlags |= 0x10;
+    }
+
+    /** @brief Sets the height and marks the global matrix dirty. */
+    void SetSizeY(float height) {
+        mSizeY = height;
         mFlags |= 0x10;
     }
 

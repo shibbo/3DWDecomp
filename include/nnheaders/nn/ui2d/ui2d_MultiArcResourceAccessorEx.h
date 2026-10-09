@@ -3,6 +3,9 @@
 #include <nn/ui2d/ui2d_ShaderContainer.h>
 #include <nn/ui2d/ui2d_ArcExtractor.h>
 #include <nn/ui2d/ui2d_TextureContainer.h>
+namespace nn::gfx {
+class ResTextureFile;
+}  // namespace nn::gfx
 namespace nn::ui2d {
 class ArcResourceMgr;
 class FontMgr;
@@ -24,6 +27,7 @@ public:
     bool LoadShader(ShaderInfo*, nn::gfx::Device*, const char*) override;
     bool LoadArchiveShader(ShaderInfo*, nn::gfx::Device*, u32, size_t, const u32*) override;
     bool IsArchiveAttached(void* archive);
+    void AttachArchive(void* pArchive, nn::gfx::ResTextureFile* pTextureFile);
     struct ArchiveLink { nn::util::IntrusiveListNode link; ArcExtractor extractor; };
     struct TextureLink { nn::util::IntrusiveListNode link; ResourceTextureInfo texture; };
     using ArchiveList = nn::util::IntrusiveList<ArchiveLink, nn::util::IntrusiveListMemberNodeTraits<ArchiveLink, &ArchiveLink::link>>;

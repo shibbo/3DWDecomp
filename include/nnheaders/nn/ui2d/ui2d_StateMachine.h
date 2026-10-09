@@ -4,6 +4,7 @@
 #include <nn/types.h>
 #include <nn/util/util_BytePtr.h>
 #include <nn/util/util_IntrusiveList.h>
+#include <nn/util/util_MathTypes.h>
 
 #include <cstring>
 
@@ -930,7 +931,9 @@ public:
     bool m_IsPaused;
     bool m_HasPartsStateLayer;
     Pane* m_pTargetPane;
-    u8 _118[0x10];
+    /** @brief Hit box of the target pane, updated every frame. */
+    nn::util::Float2 m_HitBoxMin;
+    nn::util::Float2 m_HitBoxMax;
     int m_InitialStateIndex;
     FeatureParameterStoreSet m_StoreSet;
 };
@@ -959,6 +962,10 @@ public:
     void SetFloatValue(const char* pName, float value);
     void ApplayPostCalcActionToPane(Pane* pPane, u8 kind, float value);
     void SetupDecideButtons_();
+    void FirstTimeSetup(nn::gfx::Device* pDevice, StateMachine* pParent);
+    void Update(nn::gfx::Device* pDevice, float step, StateMachine* pParent);
+    void UpdateUserInput(const nn::util::Float2* pPosition, bool isDown, bool isRelease);
+    void UpdateStateLayer_(StateLayer* pStateLayer, StateMachine* pParent);
 
     Layout* m_pLayout;
     const char* m_pName;

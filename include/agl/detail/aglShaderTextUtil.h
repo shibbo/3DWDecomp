@@ -42,9 +42,9 @@ public:
                                                                 sead::Heap* pHeap);
     static void createUniformRegisterReplaceText(sead::SafeString** ppVertexText,
                                                  sead::SafeString** ppFragmentText,
-                                                 const sead::SafeString& rVertexDump,
-                                                 const sead::SafeString& rFragmentDump,
-                                                 const sead::SafeString& rText,
+                                                 const sead::SafeString& rVertexSource,
+                                                 const sead::SafeString& rFragmentSource,
+                                                 const sead::SafeString& rBlockName,
                                                  sead::Heap* pHeap);
     static void analyzeShaderDumpText(const sead::SafeString& rText,
                                       ShaderDumpTextAnalyzeResult* pResult);

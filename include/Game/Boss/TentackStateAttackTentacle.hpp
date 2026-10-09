@@ -65,6 +65,12 @@ public:
     void exeAttackEndWait();
     s32 calcSwingTentacleId(const TentackTentacle* pTentacle) const override;
 
+    /**
+     * @brief Sets the attack parameters used from the next attack on.
+     * @param pParam Attack parameters.
+     */
+    void setParam(const TentackStateAttackTentacleParam* pParam) { mParam = pParam; }
+
 private:
     bool isShotLevel() const;
     bool isOldGroupBack() const;

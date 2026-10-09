@@ -35,6 +35,8 @@ class GroupAnimator;
 class GroupContainer;
 class GroupArrayAnimator;
 struct BuildResultInformation {
+    void SetDefault();
+
     size_t requiredUi2dConstantBufferSize;
     u64 _8;
 };

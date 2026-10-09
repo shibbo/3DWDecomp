@@ -107,6 +107,8 @@ public:
 
     NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
+    AreaObj* getCurrentArea() const { return mCurrentArea; }
+
     bool isLerpPaused() const { return mIsLerpPaused; }
     void setLerpStep(s32 step) { mLerpStep = step; }
     void setLerpRate(f32 rate) { mLerpRate = rate; }

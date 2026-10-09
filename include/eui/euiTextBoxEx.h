@@ -9,6 +9,9 @@ class LetterAnimControl;
 class TextBoxEx : public nn::ui2d::TextBox {
 public:
     TextBoxEx();
+    TextBoxEx(const nn::ui2d::ResTextBox* pResource, const nn::ui2d::ResTextBox* pOverride,
+              const nn::ui2d::BuildArgSet& rArgs, InitializeStringParam* pParam);
+    TextBoxEx(const TextBoxEx& rOther, LayoutEx* pLayout);
     ~TextBoxEx() override = default;
     NN_RUNTIME_TYPEINFO(nn::ui2d::TextBox);
     void InitializeString(nn::ui2d::BuildResultInformation*, nn::gfx::Device*, const nn::ui2d::BuildArgSet&, const InitializeStringParam&) override;

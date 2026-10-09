@@ -12,6 +12,10 @@ public:
     virtual int getLevel() const = 0;
     virtual const sead::Vector3f& getTentackTrans() const = 0;
     virtual TentackRockBase* tryGetDeadRock() const = 0;
-    virtual void returnRockAppearPointPtr(const sead::Vector2f* pPoint);
+    /**
+     * @brief Gives a rock fall point back to the host's pool. Does nothing by default.
+     * @param pPoint Fall point.
+     */
+    virtual void returnRockAppearPointPtr(const sead::Vector2f* pPoint) {}
     virtual bool tryFindTransNearPlayer(sead::Vector3f* pPosition) = 0;
 };

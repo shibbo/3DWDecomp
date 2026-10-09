@@ -381,6 +381,8 @@ public:
         InitializeMaterialImpl(pResult, pDevice, pBaseRes, pOverrideRes, rArgs);
     }
 
+    int GetColorElement(int colorType) const;
+    nn::util::Unorm8x4 GetConstantColor(int index) const;
     void SetColorElement(int colorType, int value);
     void Initialize();
     bool ReserveMem(s32, s32, s32, s32, bool, s32, bool, s32, bool, bool, bool, s32, s32);
@@ -874,6 +876,11 @@ void CalculateQuadWithTexCoords(DrawInfo& rDrawInfo,
                                 Material::ConstantBufferForVertexShader* pConstantBuffer,
                                 const nn::util::Float2& rBasePos, const Size& rSize,
                                 int texCoordCount, const nn::util::Float2 (*pTexCoords)[4]);
+void CalculateQuadWithTexCoords(DrawInfo& rDrawInfo,
+                                Material::ConstantBufferForVertexShader* pConstantBuffer,
+                                const nn::util::Float2& rBasePos, const Size& rSize,
+                                int texCoordCount, const nn::util::Float2 (*pTexCoords)[4],
+                                float texCoordOffsetX, float texCoordOffsetY);
 }  // namespace detail
 }  // namespace ui2d
 }  // namespace nn

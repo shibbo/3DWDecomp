@@ -14,6 +14,13 @@ public:
         ~FileReader();
         bool readNext();
 
+        /** @return The file device reading the archive. */
+        const sead::ArchiveFileDevice& getFileDevice() const { return m_FileDevice; }
+        /** @return The index of the current entry. */
+        s32 getIndex() const { return mIndex; }
+        /** @return The current entry. */
+        const sead::DirectoryEntry& getEntry() const { return m_Entry; }
+
     private:
         friend class SharcArchive;
         sead::ArchiveFileDevice m_FileDevice;
@@ -27,6 +34,9 @@ public:
     void initialize(sead::Heap* pHeap, void* pData, u32 size);
     void finalize();
     sead::FileDevice* startFileReader(FileReader* pReader) const;
+
+    /** @return The archive resource. */
+    sead::SharcArchiveRes* getArchive() const { return m_pArchive; }
 
 private:
     sead::SharcArchiveRes* m_pArchive;

@@ -3,6 +3,7 @@
 #include <nn/font/font_TextureCache.h>
 #include <nn/gfx/gfx_Types.h>
 #include <nn/gfx/util/gfx_PrimitiveShape.h>
+#include <nn/ui2d/ui2d_AnimResource.h>
 #include <nn/util/util_MathTypes.h>
 #include <algorithm>
 
@@ -308,6 +309,8 @@ private:
 /** @brief Circle shape whose buffers can be copied from another circle. */
 class Ui2dCircleShape : public nn::gfx::util::CircleShape {
 public:
+    using nn::gfx::util::CircleShape::CircleShape;
+
     void CopyParams(const Ui2dCircleShape& rSource);
 };
 
@@ -334,6 +337,7 @@ size_t GetAlignedBufferSize(nn::gfx::Device* pDevice, nn::gfx::GpuAccess gpuAcce
 bool IsResShaderProgramInitialized(nn::gfx::ResShaderProgram*);
 
 class AnimTransform;
+class AnimTransformBasic;
 class AnimResource;
 class Group;
 class Layout;
@@ -440,9 +444,17 @@ int VSNPrintf(uint16_t* pBuffer, size_t bufferLength, const uint16_t* pFormat, .
 /** @brief Pane subtree whose animation contents are shared with other panes. */
 class AnimPaneTree {
 public:
+    /** @brief Maximum number of materials of the source pane whose contents are kept. */
+    static const int MaterialMax = 9;
+
+    AnimPaneTree();
     AnimPaneTree(Pane* pTargetPane, const AnimResource& rResource);
-    void Bind(nn::gfx::Device* pDevice, Layout* pLayout, Pane* pTargetPane,
-              ResourceAccessor* pResourceAccessor) const;
+    void Initialize();
+    void Set(Pane* pTargetPane, const AnimResource& rResource);
+    AnimTransformBasic* Bind(nn::gfx::Device* pDevice, Layout* pLayout, Pane* pTargetPane,
+                             ResourceAccessor* pResourceAccessor) const;
+    static const ResAnimationContent* FindAnimContent(const ResAnimationBlock* pAnimBlock,
+                                                      const char* pName, u8 contentType);
 
     /**
      * @brief Check whether the source pane tree has any animation contents.
@@ -450,9 +462,12 @@ public:
      */
     bool IsEnabled() const { return m_AnimCount != 0; }
 
-    unsigned char _00[0x70];
+    AnimResource m_AnimRes;
+    const ResAnimationContent* m_pPaneAnimContent;
+    const ResAnimationContent* m_pMatAnimContents[MaterialMax];
     u16 m_AnimCount;
-    unsigned char _72[0xe];
+    u8 m_AnimMatCount;
+    unsigned char _73[0xd];
 };
 }  // namespace detail
 

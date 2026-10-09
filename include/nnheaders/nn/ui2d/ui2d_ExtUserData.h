@@ -20,6 +20,9 @@ struct ResExtUserData {
         return nameOffset != 0 ? reinterpret_cast<const char*>(this) + nameOffset : nullptr;
     }
 
+    /** @return The data as a string. */
+    const char* GetString() const { return static_cast<const char*>(GetData()); }
+
     /** @return The data as an array of integers. */
     const s32* GetIntArray() const { return static_cast<const s32*>(GetData()); }
 

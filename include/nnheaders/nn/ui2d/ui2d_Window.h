@@ -171,6 +171,17 @@ public:
     /** @return The number of frame parts. */
     int GetFrameCount() const { return m_FrameCount; }
 
+    /** @return The sizes of the window frame. */
+    const WindowFrameSize GetFrameSize() const {
+        const WindowFrameSize frameSize = {
+            static_cast<float>(m_WindowSize.frameSize.left),
+            static_cast<float>(m_WindowSize.frameSize.right),
+            static_cast<float>(m_WindowSize.frameSize.top),
+            static_cast<float>(m_WindowSize.frameSize.bottom),
+        };
+        return frameSize;
+    }
+
     /** @return Whether every vertex color of the content area is opaque white. */
     bool IsContentVertexColorWhite() const {
         for (int i = 0; i < 4; ++i) {

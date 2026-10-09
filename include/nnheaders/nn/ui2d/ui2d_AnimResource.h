@@ -72,6 +72,8 @@ struct ResAnimationShareInfo {
     char targetGroupName[27];
 };
 class Group;
+class Material;
+class Pane;
 struct ResAnimationGroup { char name[0x24]; };
 class AnimResource {
 public:
@@ -86,6 +88,8 @@ public:
     const char* GetTagName() const;
     u16 GetGroupCount() const;
     const ResAnimationGroup* GetGroupArray() const;
+    int CalculateAnimationCount(Pane* pPane, bool isDescendingBind) const;
+    int CalculateAnimationCount(Material* pMaterial) const;
     int CalculateAnimationCount(Group* pGroup, bool isDescendingBind) const;
     const void* mFile;
     const ResAnimationBlock* mAnimation;
