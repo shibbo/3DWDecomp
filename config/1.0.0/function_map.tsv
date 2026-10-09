@@ -963,9 +963,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710002A5A0			FALSE	_ZNK12_GLOBAL__N_127KoopaChaseBattleLv1NrvThrow7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseBattleLv1NrvThrow::execute(al::NerveKeeper*) const	
 0x710002A5B0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseBattleLv1NrvFire7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseBattleLv1NrvFire::execute(al::NerveKeeper*) const	
 0x710002A5C0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseBattleLv1NrvJump7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseBattleLv1NrvJump::execute(al::NerveKeeper*) const	
-0x710002A5D0			FALSE	sub_710002A5D0	sub_710002A5D0	
-0x710002A650			FALSE	sub_710002A650	sub_710002A650	
-0x710002A6B0			FALSE	sub_710002A6B0	sub_710002A6B0	
+0x710002A5D0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseBattleLv1NrvWarp7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseBattleLv1NrvWarp::execute(al::NerveKeeper*) const	
+0x710002A650			FALSE	_ZNK12_GLOBAL__N_133KoopaChaseBattleLv1NrvProvocation7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseBattleLv1NrvProvocation::execute(al::NerveKeeper*) const	
+0x710002A6B0			FALSE	_ZNK12_GLOBAL__N_138KoopaChaseBattleLv1NrvProvocationFirst7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseBattleLv1NrvProvocationFirst::execute(al::NerveKeeper*) const	
 0x710002A710			FALSE	_ZNK12_GLOBAL__N_125KoopaChaseBattleLv1NrvRun7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseBattleLv1NrvRun::execute(al::NerveKeeper*) const	
 0x710002A720		KoopaChaseBattleLv2.o	FALSE	_ZNK4sead6hostio5CurveIfE18interpolateToVec2fEf	sead::hostio::Curve<float>::interpolateToVec2f(float) const	
 0x710002A740			FALSE	_ZN19KoopaChaseBattleLv2C1EP10KoopaChaseRKN2al13ActorInitInfoE	KoopaChaseBattleLv2::KoopaChaseBattleLv2(KoopaChase*, al::ActorInitInfo const&)	
@@ -8126,19 +8126,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100138C10			FALSE	_ZN4Peto11exeBlowDownEv	Peto::exeBlowDown()	
 0x7100138CD0			FALSE	_ZN4PetoD1Ev	Peto::~Peto()	
 0x7100138CE0			FALSE	_ZN4PetoD0Ev	Peto::~Peto()	
-0x7100138D10			FALSE	sub_7100138D10	sub_7100138D10	
-0x7100138D70			FALSE	sub_7100138D70	sub_7100138D70	
+0x7100138D10			FALSE	_ZNK12_GLOBAL__N_111PetoNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvWait::execute(al::NerveKeeper*) const	
+0x7100138D70			FALSE	_ZNK12_GLOBAL__N_114PetoNrvStandby7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvStandby::execute(al::NerveKeeper*) const	
 0x7100138DD0			FALSE	_ZNK12_GLOBAL__N_115PetoNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvBlowDown::execute(al::NerveKeeper*) const	
-0x7100138DE0			FALSE	sub_7100138DE0	sub_7100138DE0	
+0x7100138DE0			FALSE	_ZNK12_GLOBAL__N_120PetoNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x7100138E50			FALSE	_ZNK12_GLOBAL__N_120PetoNrvKeyMoveAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvKeyMoveAttack::execute(al::NerveKeeper*) const	
-0x7100138E60			FALSE	sub_7100138E60	sub_7100138E60	
+0x7100138E60			FALSE	_ZNK12_GLOBAL__N_116PetoNrvPressDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvPressDown::execute(al::NerveKeeper*) const	
 0x7100138EE0			FALSE	_ZNK12_GLOBAL__N_113PetoNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvAttack::execute(al::NerveKeeper*) const	
-0x7100138EF0			FALSE	sub_7100138EF0	sub_7100138EF0	
+0x7100138EF0			FALSE	_ZNK12_GLOBAL__N_117PetoNrvAttackOmen7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvAttackOmen::execute(al::NerveKeeper*) const	
 0x7100138F50			FALSE	_ZNK12_GLOBAL__N_118PetoNrvAttackStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvAttackStart::execute(al::NerveKeeper*) const	
 0x7100138F60			FALSE	_ZNK12_GLOBAL__N_116PetoNrvAttackEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::PetoNrvAttackEnd::execute(al::NerveKeeper*) const	
 0x7100138F70			FALSE	_ZNK2al10FunctorV0MIP4PetoMS1_FvvEEclEv	al::FunctorV0M<Peto*, void (Peto::*)()>::operator()() const	
 0x7100138F90			FALSE	_ZNK2al10FunctorV0MIP4PetoMS1_FvvEE5cloneEv	al::FunctorV0M<Peto*, void (Peto::*)()>::clone() const	
-0x7100138FE0			FALSE	sub_7100138FE0	sub_7100138FE0	
+0x7100138FE0			FALSE	_GLOBAL__sub_I_Peto.cpp	_GLOBAL__sub_I_Peto.cpp	
 0x7100139040		PipePackun.o	FALSE	_ZN10PipePackunC2EPKc	PipePackun::PipePackun(char const*)	
 0x7100139130			FALSE	_ZN10PipePackunC1EPKc	PipePackun::PipePackun(char const*)	
 0x7100139220			FALSE	_ZN10PipePackun4killEv	PipePackun::kill()	
@@ -8745,16 +8745,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001525A0			FALSE	_ZN7SwimmerD1Ev	Swimmer::~Swimmer()	
 0x71001525B0			FALSE	_ZN7SwimmerD0Ev	Swimmer::~Swimmer()	
 0x71001525E0			FALSE	_ZNK12_GLOBAL__N_114SwimmerNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvMove::execute(al::NerveKeeper*) const	
-0x71001525F0			FALSE	sub_71001525F0	sub_71001525F0	
-0x7100152650			FALSE	sub_7100152650	sub_7100152650	
-0x71001526B0			FALSE	sub_71001526B0	sub_71001526B0	
+0x71001525F0			FALSE	_ZNK12_GLOBAL__N_118SwimmerNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvBlowDown::execute(al::NerveKeeper*) const	
+0x7100152650			FALSE	_ZNK12_GLOBAL__N_125SwimmerNrvBlowDownBobsled7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvBlowDownBobsled::execute(al::NerveKeeper*) const	
+0x71001526B0			FALSE	_ZNK12_GLOBAL__N_123SwimmerNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x71001526C0			FALSE	_ZNK12_GLOBAL__N_119SwimmerNrvPressDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvPressDown::execute(al::NerveKeeper*) const	
 0x71001526D0			FALSE	_ZNK12_GLOBAL__N_116SwimmerNrvLockOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvLockOn::execute(al::NerveKeeper*) const	
 0x71001526E0			FALSE	_ZNK12_GLOBAL__N_114SwimmerNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvTurn::execute(al::NerveKeeper*) const	
-0x71001526F0			FALSE	sub_71001526F0	sub_71001526F0	
+0x71001526F0			FALSE	_ZNK12_GLOBAL__N_114SwimmerNrvFind7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvFind::execute(al::NerveKeeper*) const	
 0x7100152760			FALSE	_ZNK12_GLOBAL__N_115SwimmerNrvChase7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvChase::execute(al::NerveKeeper*) const	
-0x7100152770			FALSE	sub_7100152770	sub_7100152770	
-0x7100152810			FALSE	sub_7100152810	sub_7100152810	
+0x7100152770			FALSE	_ZNK12_GLOBAL__N_118SwimmerNrvChaseEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwimmerNrvChaseEnd::execute(al::NerveKeeper*) const	
+0x7100152810			FALSE	_GLOBAL__sub_I_Swimmer.cpp	_GLOBAL__sub_I_Swimmer.cpp	
 0x71001528E0		SyumockConveyer.o	FALSE	_ZN15SyumockConveyerC2EPKc	SyumockConveyer::SyumockConveyer(char const*)	
 0x7100152990			FALSE	_ZN15SyumockConveyerC1EPKc	SyumockConveyer::SyumockConveyer(char const*)	
 0x7100152A40			FALSE	_ZN15SyumockConveyer4initERKN2al13ActorInitInfoE	SyumockConveyer::init(al::ActorInitInfo const&)	
@@ -13031,11 +13031,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F6700			FALSE	_ZNK10StageTimer15getSceneObjNameEv	StageTimer::getSceneObjName() const	
 0x71001F6710			FALSE	_ZThn296_NK10StageTimer15getSceneObjNameEv	non-virtual thunk to StageTimer::getSceneObjName() const	
 0x71001F6720			FALSE	_ZNK12_GLOBAL__N_122StageTimerNrvCountDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageTimerNrvCountDown::execute(al::NerveKeeper*) const	
-0x71001F6730			FALSE	sub_71001F6730	sub_71001F6730	
-0x71001F67B0			FALSE	nullsub_137	nullsub_137	
-0x71001F67C0			FALSE	sub_71001F67C0	sub_71001F67C0	
+0x71001F6730			FALSE	_ZNK12_GLOBAL__N_124StageTimerNrvTimeUpDelay7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageTimerNrvTimeUpDelay::execute(al::NerveKeeper*) const	
+0x71001F67B0			FALSE	_ZNK12_GLOBAL__N_123StageTimerNrvClearStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageTimerNrvClearStage::execute(al::NerveKeeper*) const	
+0x71001F67C0			FALSE	_ZNK12_GLOBAL__N_119StageTimerNrvTimeUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageTimerNrvTimeUp::execute(al::NerveKeeper*) const	
 0x71001F6810			FALSE	_ZNK12_GLOBAL__N_121StageTimerNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageTimerNrvDeactive::execute(al::NerveKeeper*) const	
-0x71001F6820			FALSE	nullsub_138	nullsub_138	
+0x71001F6820			FALSE	_ZNK12_GLOBAL__N_117StageTimerNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageTimerNrvStop::execute(al::NerveKeeper*) const	
 0x71001F6830		StockBlurEffect.o	FALSE	_ZN15StockBlurEffectC1EP19ItemStockLayoutBasei	StockBlurEffect::StockBlurEffect(ItemStockLayoutBase*, int)	
 0x71001F6900			FALSE	_ZN15StockBlurEffect5startEN4sead7Vector3IfEES2_	StockBlurEffect::start(sead::Vector3<float>, sead::Vector3<float>)	
 0x71001F69A0			FALSE	_ZN15StockBlurEffect6updateEv	StockBlurEffect::update()	
@@ -16309,19 +16309,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710027FB00			FALSE	_ZN11CollectItemD0Ev	CollectItem::~CollectItem()	
 0x710027FB30			FALSE	_ZNK12_GLOBAL__N_120CollectItemNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvAppear::execute(al::NerveKeeper*) const	
 0x710027FB40			FALSE	_ZNK12_GLOBAL__N_121CollectItemNrvSpinDrc7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvSpinDrc::execute(al::NerveKeeper*) const	
-0x710027FB50			FALSE	sub_710027FB50	sub_710027FB50	
+0x710027FB50			FALSE	_ZNK12_GLOBAL__N_124CollectItemNrvPopUpFront7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvPopUpFront::execute(al::NerveKeeper*) const	
 0x710027FBA0			FALSE	_ZNK12_GLOBAL__N_124CollectItemNrvDemoAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvDemoAppear::execute(al::NerveKeeper*) const	
-0x710027FBB0			FALSE	sub_710027FBB0	sub_710027FBB0	
-0x710027FC30			FALSE	sub_710027FC30	sub_710027FC30	
-0x710027FCB0			FALSE	sub_710027FCB0	sub_710027FCB0	
-0x710027FD10			FALSE	sub_710027FD10	sub_710027FD10	
+0x710027FBB0			FALSE	_ZNK12_GLOBAL__N_122CollectItemNrvAttached7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvAttached::execute(al::NerveKeeper*) const	
+0x710027FC30			FALSE	_ZNK12_GLOBAL__N_126CollectItemNrvDirectAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvDirectAppear::execute(al::NerveKeeper*) const	
+0x710027FCB0			FALSE	_ZNK12_GLOBAL__N_118CollectItemNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvWait::execute(al::NerveKeeper*) const	
+0x710027FD10			FALSE	_ZNK12_GLOBAL__N_123CollectItemNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvDisappear::execute(al::NerveKeeper*) const	
 0x710027FD80			FALSE	_ZNK12_GLOBAL__N_117CollectItemNrvGot7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvGot::execute(al::NerveKeeper*) const	
-0x710027FD90			FALSE	sub_710027FD90	sub_710027FD90	
+0x710027FD90			FALSE	_ZNK12_GLOBAL__N_129CollectItemNrvDirectDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectItemNrvDirectDisappear::execute(al::NerveKeeper*) const	
 0x710027FE10			FALSE	_ZNK2al10FunctorV0MIPNS_9LiveActorEMS1_FvvEEclEv	al::FunctorV0M<al::LiveActor*, void (al::LiveActor::*)()>::operator()() const	
 0x710027FE30			FALSE	_ZNK2al10FunctorV0MIPNS_9LiveActorEMS1_FvvEE5cloneEv	al::FunctorV0M<al::LiveActor*, void (al::LiveActor::*)()>::clone() const	
 0x710027FE80			FALSE	_ZNK2al10FunctorV0MIP11CollectItemMS1_FvvEEclEv	al::FunctorV0M<CollectItem*, void (CollectItem::*)()>::operator()() const	
 0x710027FEA0			FALSE	_ZNK2al10FunctorV0MIP11CollectItemMS1_FvvEE5cloneEv	al::FunctorV0M<CollectItem*, void (CollectItem::*)()>::clone() const	
-0x710027FEF0			FALSE	sub_710027FEF0	sub_710027FEF0	
+0x710027FEF0			FALSE	_GLOBAL__sub_I_CollectItem.cpp	_GLOBAL__sub_I_CollectItem.cpp	
 0x710027FF20		CollectRing.o	FALSE	_ZN11CollectRingC2EPKc	CollectRing::CollectRing(char const*)	
 0x710027FFA0			FALSE	_ZN11CollectRingC1EPKc	CollectRing::CollectRing(char const*)	
 0x7100280030			FALSE	_ZN11CollectRing7setHostEP17CollectRingHolder	CollectRing::setHost(CollectRingHolder*)	
@@ -17620,11 +17620,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002B6EC0			FALSE	_ZN12GeneratorBox11removeChildEP17GeneratorBoxChild	GeneratorBox::removeChild(GeneratorBoxChild*)	
 0x71002B6FA0			FALSE	_ZN12GeneratorBoxD1Ev	GeneratorBox::~GeneratorBox()	
 0x71002B6FB0			FALSE	_ZN12GeneratorBoxD0Ev	GeneratorBox::~GeneratorBox()	
-0x71002B6FE0			FALSE	sub_71002B6FE0	sub_71002B6FE0	
+0x71002B6FE0			FALSE	_ZNK12_GLOBAL__N_119GeneratorBoxNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GeneratorBoxNrvWait::execute(al::NerveKeeper*) const	
 0x71002B7050			FALSE	_ZNK12_GLOBAL__N_124GeneratorBoxNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GeneratorBoxNrvDisappear::execute(al::NerveKeeper*) const	
-0x71002B7060			FALSE	sub_71002B7060	sub_71002B7060	
+0x71002B7060			FALSE	_ZNK12_GLOBAL__N_125GeneratorBoxNrvAppearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GeneratorBoxNrvAppearWait::execute(al::NerveKeeper*) const	
 0x71002B70B0			FALSE	_ZNK12_GLOBAL__N_123GeneratorBoxNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::GeneratorBoxNrvReaction::execute(al::NerveKeeper*) const	
-0x71002B70C0			FALSE	sub_71002B70C0	sub_71002B70C0	
+0x71002B70C0			FALSE	_ZNK12_GLOBAL__N_120GeneratorBoxNrvEmpty7executeEPN2al11NerveKeeperE	(anonymous namespace)::GeneratorBoxNrvEmpty::execute(al::NerveKeeper*) const	
 0x71002B70D0			FALSE	_ZNK2al10FunctorV0MIP12GeneratorBoxMS1_FvvEEclEv	al::FunctorV0M<GeneratorBox*, void (GeneratorBox::*)()>::operator()() const	
 0x71002B70F0			FALSE	_ZNK2al10FunctorV0MIP12GeneratorBoxMS1_FvvEE5cloneEv	al::FunctorV0M<GeneratorBox*, void (GeneratorBox::*)()>::clone() const	
 0x71002B7140		GeneratorBoxChild.o	FALSE	_ZN17GeneratorBoxChildC2EPKc	GeneratorBoxChild::GeneratorBoxChild(char const*)	
@@ -38016,7 +38016,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100598EA0			FALSE	_ZNK2nn4ui2d6detail23DynamicTextureShareInfo38GetVectorGraphicsTextureShareInfoCountEv	nn::ui2d::detail::DynamicTextureShareInfo::GetVectorGraphicsTextureShareInfoCount() const	
 0x7100598EB0			FALSE	_ZNK2nn4ui2d6detail23DynamicTextureShareInfo33GetCaptureTextureShareInfoByIndexEi	nn::ui2d::detail::DynamicTextureShareInfo::GetCaptureTextureShareInfoByIndex(int) const	
 0x7100598EF0			FALSE	_ZNK2nn4ui2d6detail23DynamicTextureShareInfo40GetVectorGraphicsTextureShareInfoByIndexEi	nn::ui2d::detail::DynamicTextureShareInfo::GetVectorGraphicsTextureShareInfoByIndex(int) const	
-0x7100598F30			FALSE	sub_7100598F30	sub_7100598F30	
+0x7100598F30			FALSE	_ZN2nn4ui2d12_GLOBAL__N_138CompareDynamicRenderingTexturePriorityEPKvS3_	nn::ui2d::(anonymous namespace)::CompareDynamicRenderingTexturePriority(void const*, void const*)	
 0x7100598F50			FALSE	_ZN2nn4ui2d6Layout22CopyLayoutInstanceImplEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEERKS1_PS1_PKc	nn::ui2d::Layout::CopyLayoutInstanceImpl(nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, nn::ui2d::Layout const&, nn::ui2d::Layout*, char const*)	
 0x7100599030			FALSE	_ZN2nn4ui2d6Layout22CopyLayoutInstanceImplEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEERKS1_PS1_PKcPNS0_6detail20BuildPaneTreeContextE	nn::ui2d::Layout::CopyLayoutInstanceImpl(nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, nn::ui2d::Layout const&, nn::ui2d::Layout*, char const*, nn::ui2d::detail::BuildPaneTreeContext*)	
 0x71005993A0			FALSE	_ZN2nn4ui2d6Layout21CalculateGlobalMatrixERNS0_8DrawInfoEb	nn::ui2d::Layout::CalculateGlobalMatrix(nn::ui2d::DrawInfo&, bool)	
@@ -38054,7 +38054,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710059ABE0			FALSE	_ZN2nn4ui2d6Layout25AnimateAndUpdateAnimFrameEf	nn::ui2d::Layout::AnimateAndUpdateAnimFrame(float)	
 0x710059AC80			FALSE	_ZNK2nn4ui2d6Layout13GetLayoutRectEv	nn::ui2d::Layout::GetLayoutRect() const	
 0x710059ACB0			FALSE	_ZN2nn4ui2d6Layout15SetTagProcessorEPNS_4font16TagProcessorBaseItEE	nn::ui2d::Layout::SetTagProcessor(nn::font::TagProcessorBase<unsigned short>*)	
-0x710059ACC0			FALSE	sub_710059ACC0	sub_710059ACC0	
+0x710059ACC0			FALSE	_ZN2nn4ui2d24SetTagProcessorRecursiveEPNS0_4PaneEPNS_4font16TagProcessorBaseItEE	nn::ui2d::SetTagProcessorRecursive(nn::ui2d::Pane*, nn::font::TagProcessorBase<unsigned short>*)	
 0x710059AE00			FALSE	_ZN2nn4ui2d6Layout19FindPartsPaneByNameEPKc	nn::ui2d::Layout::FindPartsPaneByName(char const*)	
 0x710059AE60			FALSE	_ZN2nn4ui2d6Layout27FindCaptureTextureByPanePtrEPKNS0_4PaneE	nn::ui2d::Layout::FindCaptureTextureByPanePtr(nn::ui2d::Pane const*)	
 0x710059B000			FALSE	_ZN2nn4ui2d6Layout33ResetFirstFrameCaptureUpdatedFlagEv	nn::ui2d::Layout::ResetFirstFrameCaptureUpdatedFlag()	
@@ -40436,29 +40436,29 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100618770			FALSE	_ZN2nn3g3d15SkeletalAnimObj9CalculateEv	nn::g3d::SkeletalAnimObj::Calculate()	
 0x71006187D0			FALSE	_ZNK2nn3g3d15SkeletalAnimObj7ApplyToEPNS0_8ModelObjE	nn::g3d::SkeletalAnimObj::ApplyTo(nn::g3d::ModelObj*) const	
 0x7100618800			FALSE	_ZNK2nn3g3d15SkeletalAnimObj7ApplyToEPNS0_11SkeletonObjE	nn::g3d::SkeletalAnimObj::ApplyTo(nn::g3d::SkeletonObj*) const	
-0x7100618830			FALSE	sub_7100618830	sub_7100618830	
-0x71006188D0			FALSE	sub_71006188D0	sub_71006188D0	
-0x7100618970			FALSE	sub_7100618970	sub_7100618970	
-0x7100618A10			FALSE	sub_7100618A10	sub_7100618A10	
-0x7100618AB0			FALSE	sub_7100618AB0	sub_7100618AB0	
-0x7100618B80			FALSE	sub_7100618B80	sub_7100618B80	
-0x7100618C50			FALSE	sub_7100618C50	sub_7100618C50	
-0x7100618D20			FALSE	sub_7100618D20	sub_7100618D20	
-0x7100618DF0			FALSE	sub_7100618DF0	sub_7100618DF0	
-0x7100619010			FALSE	sub_7100619010	sub_7100619010	
-0x71006192E0			FALSE	sub_71006192E0	sub_71006192E0	
-0x71006198C0			FALSE	sub_71006198C0	sub_71006198C0	
+0x7100618830			FALSE	_ZN2nn3g3d19SkeletalAnimBlender9BlendImplINS0_10QuatToAxesELb0EEEvPNS0_15SkeletalAnimObjEf	void nn::g3d::SkeletalAnimBlender::BlendImpl<nn::g3d::QuatToAxes, false>(nn::g3d::SkeletalAnimObj*, float)	
+0x71006188D0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender9BlendImplINS0_11EulerToAxesELb0EEEvPNS0_15SkeletalAnimObjEf	void nn::g3d::SkeletalAnimBlender::BlendImpl<nn::g3d::EulerToAxes, false>(nn::g3d::SkeletalAnimObj*, float)	
+0x7100618970			FALSE	_ZN2nn3g3d19SkeletalAnimBlender9BlendImplINS0_10QuatToQuatELb0EEEvPNS0_15SkeletalAnimObjEf	void nn::g3d::SkeletalAnimBlender::BlendImpl<nn::g3d::QuatToQuat, false>(nn::g3d::SkeletalAnimObj*, float)	
+0x7100618A10			FALSE	_ZN2nn3g3d19SkeletalAnimBlender9BlendImplINS0_11EulerToQuatELb0EEEvPNS0_15SkeletalAnimObjEf	void nn::g3d::SkeletalAnimBlender::BlendImpl<nn::g3d::EulerToQuat, false>(nn::g3d::SkeletalAnimObj*, float)	
+0x7100618AB0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender9BlendImplINS0_10QuatToAxesELb1EEEvPNS0_15SkeletalAnimObjEf	void nn::g3d::SkeletalAnimBlender::BlendImpl<nn::g3d::QuatToAxes, true>(nn::g3d::SkeletalAnimObj*, float)	
+0x7100618B80			FALSE	_ZN2nn3g3d19SkeletalAnimBlender9BlendImplINS0_11EulerToAxesELb1EEEvPNS0_15SkeletalAnimObjEf	void nn::g3d::SkeletalAnimBlender::BlendImpl<nn::g3d::EulerToAxes, true>(nn::g3d::SkeletalAnimObj*, float)	
+0x7100618C50			FALSE	_ZN2nn3g3d19SkeletalAnimBlender9BlendImplINS0_10QuatToQuatELb1EEEvPNS0_15SkeletalAnimObjEf	void nn::g3d::SkeletalAnimBlender::BlendImpl<nn::g3d::QuatToQuat, true>(nn::g3d::SkeletalAnimObj*, float)	
+0x7100618D20			FALSE	_ZN2nn3g3d19SkeletalAnimBlender9BlendImplINS0_11EulerToQuatELb1EEEvPNS0_15SkeletalAnimObjEf	void nn::g3d::SkeletalAnimBlender::BlendImpl<nn::g3d::EulerToQuat, true>(nn::g3d::SkeletalAnimObj*, float)	
+0x7100618DF0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender15BlendResultImplINS0_10QuatToAxesEEEvPNS0_19BoneAnimBlendResultEPKNS0_14BoneAnimResultEif	void nn::g3d::SkeletalAnimBlender::BlendResultImpl<nn::g3d::QuatToAxes>(nn::g3d::BoneAnimBlendResult*, nn::g3d::BoneAnimResult const*, int, float)	
+0x7100619010			FALSE	_ZN2nn3g3d19SkeletalAnimBlender15BlendResultImplINS0_11EulerToAxesEEEvPNS0_19BoneAnimBlendResultEPKNS0_14BoneAnimResultEif	void nn::g3d::SkeletalAnimBlender::BlendResultImpl<nn::g3d::EulerToAxes>(nn::g3d::BoneAnimBlendResult*, nn::g3d::BoneAnimResult const*, int, float)	
+0x71006192E0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender15BlendResultImplINS0_10QuatToQuatEEEvPNS0_19BoneAnimBlendResultEPKNS0_14BoneAnimResultEif	void nn::g3d::SkeletalAnimBlender::BlendResultImpl<nn::g3d::QuatToQuat>(nn::g3d::BoneAnimBlendResult*, nn::g3d::BoneAnimResult const*, int, float)	
+0x71006198C0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender15BlendResultImplINS0_11EulerToQuatEEEvPNS0_19BoneAnimBlendResultEPKNS0_14BoneAnimResultEif	void nn::g3d::SkeletalAnimBlender::BlendResultImpl<nn::g3d::EulerToQuat>(nn::g3d::BoneAnimBlendResult*, nn::g3d::BoneAnimResult const*, int, float)	
 0x710061A1E0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender18ConvertValidResultINS0_10AxesToQuatEEEvPNS0_14BoneAnimResultERKNS0_19BoneAnimBlendResultERKS4_	void nn::g3d::SkeletalAnimBlender::ConvertValidResult<nn::g3d::AxesToQuat>(nn::g3d::BoneAnimResult*, nn::g3d::BoneAnimBlendResult const&, nn::g3d::BoneAnimResult const&)	
-0x710061A2D0			FALSE	sub_710061A2D0	sub_710061A2D0	
+0x710061A2D0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender18ConvertValidResultINS0_10QuatToQuatEEEvPNS0_14BoneAnimResultERKNS0_19BoneAnimBlendResultERKS4_	void nn::g3d::SkeletalAnimBlender::ConvertValidResult<nn::g3d::QuatToQuat>(nn::g3d::BoneAnimResult*, nn::g3d::BoneAnimBlendResult const&, nn::g3d::BoneAnimResult const&)	
 0x710061A380			FALSE	_ZNK2nn3g3d19SkeletalAnimBlender11ApplyToImplINS0_9AxesToMtxELNS1_9BlendModeE0EEEvPNS0_11SkeletonObjE	void nn::g3d::SkeletalAnimBlender::ApplyToImpl<nn::g3d::AxesToMtx, (nn::g3d::SkeletalAnimBlender::BlendMode)0>(nn::g3d::SkeletonObj*) const	
 0x710061A610			FALSE	_ZNK2nn3g3d19SkeletalAnimBlender11ApplyToImplINS0_9AxesToMtxELNS1_9BlendModeE1EEEvPNS0_11SkeletonObjE	void nn::g3d::SkeletalAnimBlender::ApplyToImpl<nn::g3d::AxesToMtx, (nn::g3d::SkeletalAnimBlender::BlendMode)1>(nn::g3d::SkeletonObj*) const	
 0x710061A870			FALSE	_ZNK2nn3g3d19SkeletalAnimBlender11ApplyToImplINS0_9QuatToMtxELNS1_9BlendModeE0EEEvPNS0_11SkeletonObjE	void nn::g3d::SkeletalAnimBlender::ApplyToImpl<nn::g3d::QuatToMtx, (nn::g3d::SkeletalAnimBlender::BlendMode)0>(nn::g3d::SkeletonObj*) const	
 0x710061AA60			FALSE	_ZNK2nn3g3d19SkeletalAnimBlender11ApplyToImplINS0_9QuatToMtxELNS1_9BlendModeE1EEEvPNS0_11SkeletonObjE	void nn::g3d::SkeletalAnimBlender::ApplyToImpl<nn::g3d::QuatToMtx, (nn::g3d::SkeletalAnimBlender::BlendMode)1>(nn::g3d::SkeletonObj*) const	
 0x710061AC10			FALSE	_ZN2nn3g3d19SkeletalAnimBlender19ConvertResultRotateINS0_10AxesToQuatEEEvv	void nn::g3d::SkeletalAnimBlender::ConvertResultRotate<nn::g3d::AxesToQuat>()	
 0x710061AC90			FALSE	_ZN2nn3g3d19SkeletalAnimBlender19ConvertResultRotateINS0_10QuatToAxesEEEvv	void nn::g3d::SkeletalAnimBlender::ConvertResultRotate<nn::g3d::QuatToAxes>()	
-0x710061AD70			FALSE	sub_710061AD70	sub_710061AD70	
-0x710061AEE0			FALSE	sub_710061AEE0	sub_710061AEE0	
-0x710061B090			FALSE	sub_710061B090	sub_710061B090	
+0x710061AD70			FALSE	_ZN2nn3g3d19SkeletalAnimBlender25CalculateBoneAnimDiffImplINS0_10QuatToQuatES3_EEvPNS0_14BoneAnimResultERKS4_S7_	void nn::g3d::SkeletalAnimBlender::CalculateBoneAnimDiffImpl<nn::g3d::QuatToQuat, nn::g3d::QuatToQuat>(nn::g3d::BoneAnimResult*, nn::g3d::BoneAnimResult const&, nn::g3d::BoneAnimResult const&)	
+0x710061AEE0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender25CalculateBoneAnimDiffImplINS0_10QuatToQuatENS0_11EulerToQuatEEEvPNS0_14BoneAnimResultERKS5_S8_	void nn::g3d::SkeletalAnimBlender::CalculateBoneAnimDiffImpl<nn::g3d::QuatToQuat, nn::g3d::EulerToQuat>(nn::g3d::BoneAnimResult*, nn::g3d::BoneAnimResult const&, nn::g3d::BoneAnimResult const&)	
+0x710061B090			FALSE	_ZN2nn3g3d19SkeletalAnimBlender25CalculateBoneAnimDiffImplINS0_11EulerToQuatENS0_10QuatToQuatEEEvPNS0_14BoneAnimResultERKS5_S8_	void nn::g3d::SkeletalAnimBlender::CalculateBoneAnimDiffImpl<nn::g3d::EulerToQuat, nn::g3d::QuatToQuat>(nn::g3d::BoneAnimResult*, nn::g3d::BoneAnimResult const&, nn::g3d::BoneAnimResult const&)	
 0x710061B230			FALSE	_ZN2nn3g3d19SkeletalAnimBlender25CalculateBoneAnimDiffImplINS0_11EulerToQuatES3_EEvPNS0_14BoneAnimResultERKS4_S7_	void nn::g3d::SkeletalAnimBlender::CalculateBoneAnimDiffImpl<nn::g3d::EulerToQuat, nn::g3d::EulerToQuat>(nn::g3d::BoneAnimResult*, nn::g3d::BoneAnimResult const&, nn::g3d::BoneAnimResult const&)	
 0x710061B3E0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender18InitializeArgument19CalculateMemorySizeEv	nn::g3d::SkeletalAnimBlender::InitializeArgument::CalculateMemorySize()	
 0x710061B420			FALSE	_ZN2nn3g3d19SkeletalAnimBlender10InitializeERKNS1_18InitializeArgumentEPvm	nn::g3d::SkeletalAnimBlender::Initialize(nn::g3d::SkeletalAnimBlender::InitializeArgument const&, void*, unsigned long)	
@@ -40474,15 +40474,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710061BDA0			FALSE	_ZN2nn3g3d19SkeletalAnimBlender21CalculateBoneAnimDiffEPNS1_18BoneAnimDiffResultEiPNS0_15SkeletalAnimObjES5_	nn::g3d::SkeletalAnimBlender::CalculateBoneAnimDiff(nn::g3d::SkeletalAnimBlender::BoneAnimDiffResult*, int, nn::g3d::SkeletalAnimObj*, nn::g3d::SkeletalAnimObj*)	
 0x710061BF50			FALSE	_ZN2nn3g3d19SkeletalAnimBlender21CalculateBoneAnimDiffEPNS1_18BoneAnimDiffResultEiPNS0_15SkeletalAnimObjE	nn::g3d::SkeletalAnimBlender::CalculateBoneAnimDiff(nn::g3d::SkeletalAnimBlender::BoneAnimDiffResult*, int, nn::g3d::SkeletalAnimObj*)	
 0x710061C120			FALSE	_ZN2nn3g3d15SkeletalAnimObjD0Ev	nn::g3d::SkeletalAnimObj::~SkeletalAnimObj()	
-0x710061C130			FALSE	sub_710061C130	sub_710061C130	
-0x710061C170			FALSE	sub_710061C170	sub_710061C170	
-0x710061C1C0			FALSE	sub_710061C1C0	sub_710061C1C0	
-0x710061C250			FALSE	sub_710061C250	sub_710061C250	
-0x710061C2E0			FALSE	sub_710061C2E0	sub_710061C2E0	
-0x710061C340			FALSE	sub_710061C340	sub_710061C340	
-0x710061C410			FALSE	sub_710061C410	sub_710061C410	
-0x710061C4B0			FALSE	sub_710061C4B0	sub_710061C4B0	
-0x710061C510			FALSE	sub_710061C510	sub_710061C510	
+0x710061C130			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_119CalculateMirroringXILNS1_19SkeletalAnimObjUtil11TargetValueE1EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringX<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)1>(nn::g3d::BoneAnimResult*, unsigned int)	
+0x710061C170			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_119CalculateMirroringXILNS1_19SkeletalAnimObjUtil11TargetValueE2EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringX<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)2>(nn::g3d::BoneAnimResult*, unsigned int)	
+0x710061C1C0			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_119CalculateMirroringXILNS1_19SkeletalAnimObjUtil11TargetValueE3EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringX<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)3>(nn::g3d::BoneAnimResult*, unsigned int)	
+0x710061C250			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_120CalculateMirroringXYILNS1_19SkeletalAnimObjUtil11TargetValueE1EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringXY<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)1>(nn::g3d::BoneAnimResult*, unsigned int)	
+0x710061C2E0			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_120CalculateMirroringXYILNS1_19SkeletalAnimObjUtil11TargetValueE2EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringXY<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)2>(nn::g3d::BoneAnimResult*, unsigned int)	
+0x710061C340			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_120CalculateMirroringXYILNS1_19SkeletalAnimObjUtil11TargetValueE3EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringXY<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)3>(nn::g3d::BoneAnimResult*, unsigned int)	
+0x710061C410			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_120CalculateMirroringXZILNS1_19SkeletalAnimObjUtil11TargetValueE1EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringXZ<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)1>(nn::g3d::BoneAnimResult*, unsigned int)	
+0x710061C4B0			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_120CalculateMirroringXZILNS1_19SkeletalAnimObjUtil11TargetValueE2EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringXZ<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)2>(nn::g3d::BoneAnimResult*, unsigned int)	
+0x710061C510			FALSE	_ZN2nn3g3d6detail12_GLOBAL__N_120CalculateMirroringXZILNS1_19SkeletalAnimObjUtil11TargetValueE3EEEvPNS0_14BoneAnimResultEj	void nn::g3d::detail::(anonymous namespace)::CalculateMirroringXZ<(nn::g3d::detail::SkeletalAnimObjUtil::TargetValue)3>(nn::g3d::BoneAnimResult*, unsigned int)	
 0x710061C5D0			FALSE	_ZN2nn3g3d10AxesToQuat7ConvertEPNS_4util4neon12Vector4fTypeEPKNS0_19BoneAnimBlendResultE	nn::g3d::AxesToQuat::Convert(nn::util::neon::Vector4fType*, nn::g3d::BoneAnimBlendResult const*)	
 0x710061C8B0			FALSE	_ZN2nn3g3d11EulerToQuat7ConvertEPNS_4util4neon12Vector4fTypeEPKNS0_14BoneAnimResultE	nn::g3d::EulerToQuat::Convert(nn::util::neon::Vector4fType*, nn::g3d::BoneAnimResult const*)	
 0x710061CBC0		g3d_BoneVisibilityAnimObj.o	FALSE	_ZN2nn3g3d21BoneVisibilityAnimObj18InitializeArgument19CalculateMemorySizeEv	nn::g3d::BoneVisibilityAnimObj::InitializeArgument::CalculateMemorySize()	
@@ -54811,7 +54811,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008D2610			FALSE	_ZNK4sead10IDelegate1IiE5cloneEPNS_4HeapE	sead::IDelegate1<int>::clone(sead::Heap*) const	
 0x71008D2620			FALSE	_ZN2al13RequestInterpINS_15ShadowMaskParamEE12requestParamEiiRKS1_	al::RequestInterp<al::ShadowMaskParam>::requestParam(int, int, al::ShadowMaskParam const&)	
 0x71008D27E0			FALSE	_ZN2al13RequestInterpINS_15ShadowMaskParamEE12updateInterpEv	al::RequestInterp<al::ShadowMaskParam>::updateInterp()	
-0x71008D29C0			FALSE	sub_71008D29C0	sub_71008D29C0	
+0x71008D29C0			FALSE	_GLOBAL__sub_I_ShadowMaskDrawer.cpp	_GLOBAL__sub_I_ShadowMaskDrawer.cpp	
 0x71008D2A20			FALSE	_ZN2al16ShadowMaskDrawerC1EPNS_16ShadowMaskKeeperEiPNS_15ExecuteDirectorE	al::ShadowMaskDrawer::ShadowMaskDrawer(al::ShadowMaskKeeper*, int, al::ExecuteDirector*)	part of ShadowMaskDrawer.o
 0x71008D2A80			FALSE	_ZNK2al16ShadowMaskDrawer4drawEv	al::ShadowMaskDrawer::draw() const	
 0x71008D2B50			FALSE	_ZNK2al16ShadowMaskDrawer17drawToTextureDataEPKN3agl11TextureDataES4_NS1_10ShaderModeE	al::ShadowMaskDrawer::drawToTextureData(agl::TextureData const*, agl::TextureData const*, agl::ShaderMode) const	
