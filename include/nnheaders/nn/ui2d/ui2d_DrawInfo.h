@@ -72,16 +72,10 @@ public:
     const nn::gfx::DepthStencilState* m_pDepthStencilState;
     const nn::gfx::RasterizerState* m_pRasterizerState;
     unsigned char _168[0x20];
-    union {
-        unsigned char _188[3];
-        u8 m_TexCoordSrc[3];
-    };
+    u8 m_TexCoordSrc[3];
     bool mModelViewLoaded;
     bool mVertexBufferDirty;
-    union {
-        bool _18D;
-        s8 m_TexMapNum;
-    };
+    s8 m_TexMapNum;
     u8 mFlags;
     const ShaderInfo* m_pCurrentShader;
     u16 mCurrentShaderVariation;
