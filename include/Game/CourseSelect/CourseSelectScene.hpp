@@ -53,6 +53,7 @@ class SnapshotState;
  */
 class CourseSelectScene : public al::Scene {
     friend class CourseSelectDirector;
+    friend class CourseSelectStateClearDemo;
 
 public:
     explicit CourseSelectScene(bool isAfterEndingEvent);

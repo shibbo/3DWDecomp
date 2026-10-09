@@ -681,14 +681,7 @@ private:
 };
 static_assert(sizeof(CourseSelectWorldWarpDokan) == 0x158);
 
-class Crawler : public al::LiveActor {
-public:
-    explicit Crawler(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x54];
-};
-static_assert(sizeof(Crawler) == 0x198);
+#include "Enemy/Crawler.hpp"
 
 class CrawlerGenerator : public al::LiveActor {
 public:

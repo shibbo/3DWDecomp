@@ -27,6 +27,7 @@ public:
     u16 setMessageString(const MessageString& rText, void* pUserData);
     u16 setMessageStringWithPage(const MessageString& rText, bool* pHasNext, u32 page, bool flag, void* pUserData);
     u16 setStringWithPage(const char16_t* pText, u16 length, bool* pHasNext, u32 page, bool flag, void* pUserData);
+    float calcStringWidth_();
     LetterAnimControl* mLetterAnimControl;
 };
 

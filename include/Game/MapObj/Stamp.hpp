@@ -101,6 +101,10 @@ public:
 
     const sead::Vector2f& getCurrentTextureScale() const { return mTextureScale; }
 
+    f32 getRotation() const { return mRotation; }
+
+    const agl::TextureData& getTextureData() const { return mTextureData; }
+
     static nn::gfx::ResTextureFile* spTextureFile[100];
 
 private:

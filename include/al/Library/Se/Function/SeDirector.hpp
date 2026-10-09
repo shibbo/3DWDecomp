@@ -31,8 +31,8 @@ class SeDirector {
   public:
     SeDirector();
 
-    void init(AudioSystemInfo* pInfo, BgmRhythmCtrl* pRhythmCtrl, s32 requestNum, s32 holdRequestNum,
-              s32 unk1, s32 unk2, f32 volume);
+    void init(AudioSystemInfo* pInfo, BgmRhythmCtrl* pRhythmCtrl, s32 mainRequestNum, s32 subRequestNum,
+              s32 demoRequestNum, s32 playerRequestNum, f32 volume);
     void init3D(SeadAudio3DMgr* pMgr, const sead::Vector3f* pCameraPos, const sead::Matrix34f* pCameraMtx,
                 sead::PerspectiveProjection* pProjection, const sead::Vector3f* pCameraAt,
                 const char* pStageName, bool isUseListenerPoser);
@@ -94,16 +94,16 @@ class SeDirector {
             rCallback(mSubKeeper);
         }
     }
-    SeRequestKeeper* mMainKeeper;
-    SeRequestKeeper* mDemoKeeper;
-    SeRequestKeeper* mPlayerKeeper;
-    SeRequestKeeper* mSubKeeper;
-    SeListenerKeeper* mListenerKeeper;
-    MeInfoKeeper* mMeInfoKeeper;
-    SeMaterialInfoKeeper* mMaterialInfoKeeper;
-    bool mIsInDemo;
-    bool mIsDistancePauseEnabled;
-    SeCategoryParamsController* mCategoryParamsController;
+    SeRequestKeeper* mMainKeeper = nullptr;
+    SeRequestKeeper* mDemoKeeper = nullptr;
+    SeRequestKeeper* mPlayerKeeper = nullptr;
+    SeRequestKeeper* mSubKeeper = nullptr;
+    SeListenerKeeper* mListenerKeeper = nullptr;
+    MeInfoKeeper* mMeInfoKeeper = nullptr;
+    SeMaterialInfoKeeper* mMaterialInfoKeeper = nullptr;
+    bool mIsInDemo = false;
+    bool mIsDistancePauseEnabled = false;
+    SeCategoryParamsController* mCategoryParamsController = nullptr;
 };
 static_assert(sizeof(SeDirector) == 0x48);
 } // namespace al

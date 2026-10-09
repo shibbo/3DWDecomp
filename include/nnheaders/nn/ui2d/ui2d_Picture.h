@@ -19,6 +19,7 @@ public:
     }
     ~Picture() override;
     NN_RUNTIME_TYPEINFO(Pane);
+    bool CompareCopiedInstanceTest(const Picture& rOther) const;
     void Finalize(nn::gfx::Device*) override;
     nn::util::Unorm8x4 GetVertexColor(int) const override;
     void SetVertexColor(int, const nn::util::Unorm8x4&) override;

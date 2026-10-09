@@ -63,6 +63,8 @@ public:
     void setController(ICourseSelectActorController* pController) { mController = pController; }
     /** @brief Gets the controller of the object placed on the node. @return The controller. */
     ICourseSelectActorController* getController() const { return mController; }
+    /** @brief Gets whether the road reached this node. @return true if reached. */
+    bool isRoadReached() const { return mIsRoadReached; }
     /** @brief Gets the number of nodes linking to this one. @return The link count. */
     s32 getLinkNum() const { return mLinkedList.size(); }
     /** @brief Gets the director index of the first node linking to this one. @return The index. */

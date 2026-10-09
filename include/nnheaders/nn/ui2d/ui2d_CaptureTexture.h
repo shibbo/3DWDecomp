@@ -13,6 +13,7 @@ namespace nn::ui2d {
 class DrawInfo;
 class Layout;
 class Pane;
+class TextureInfo;
 struct ResCaptureTexture;
 
 namespace detail {
@@ -62,7 +63,9 @@ public:
      */
     bool IsInitialized() const { return m_pTexture != nullptr; }
 
-    unsigned char _20[0x18];
+    const TextureInfo* _20;
+    float _28;
+    unsigned char _2C[0xc];
     void* m_pTexture;
     unsigned char _40[0x20];
     u16 m_Flags;

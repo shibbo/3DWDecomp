@@ -19,6 +19,8 @@ public:
     void startOpenGateKeeperDemo(ICourseSelectActorController* pController);
     void startWarpToCourse(ICourseSelectActorController* pController);
     void startHidePlayerDemo();
+    void startOpenRoadDemo(ICourseSelectActorController* pController);
+    void endDemo();
     bool isPlayDemo(s32 userId) const;
     bool isPlayDemoAll() const;
     bool isPlayDemoAny() const;

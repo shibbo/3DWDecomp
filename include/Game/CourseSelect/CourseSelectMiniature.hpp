@@ -100,6 +100,12 @@ public:
 
     /** @brief Gets the fairy shown next to this miniature. @return The fairy, or nullptr. */
     CourseSelectFairy* getFairy() const { return mFairy; }
+    /** @brief Gets the clear flag of the miniature. @return The flag, or nullptr. */
+    CourseSelectFlag* getFlag() const { return mFlag; }
+    /** @brief Gets the route dokan opened by clearing the course. @return The dokan, or nullptr. */
+    CourseSelectRouteDokan* getRouteDokan() const { return mRouteDokan; }
+    /** @brief Gets the world clear demo of the miniature. @return The demo, or nullptr. */
+    DemoWorldClear* getDemoWorldClear() const { return mDemoWorldClear; }
     /** @brief Gets the branch node placed on the miniature. @return The node. */
     CourseSelectNode* getNode() const { return mNode; }
     /** @brief Gets the controller the puppeteers use. @return The controller. */

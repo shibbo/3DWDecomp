@@ -38,6 +38,9 @@ public:
     nn::ui2d::Pane* getRootPane() const { return mRootPane; }
     nn::ui2d::Pane* findPaneByName(const char* pName) const { return mRootPane->FindPaneByName(pName, true); }
 
+    /** @return Whether a parts pane using this layout is measured as a whole by an AlignPane. */
+    bool isAlignAsParts() const { return reinterpret_cast<const u8*>(&mFlags)[1] != 0; }
+
     nn::ui2d::GroupContainer* getGroupContainer() const { return static_cast<nn::ui2d::GroupContainer*>(_20); }
 
     const char* getLayoutName() const { return static_cast<const char*>(_30); }

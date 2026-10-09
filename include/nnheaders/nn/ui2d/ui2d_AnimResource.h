@@ -8,6 +8,13 @@ struct ResAnimationBlock {
     u16 textureCount, contentCount;
     u32 contentOffsets;
 };
+/** @brief Animated channels of one pane or material. */
+struct ResAnimationContent {
+    char name[28];
+    u8 count;
+    u8 type;
+    u8 padding[2];
+};
 struct ResAnimationTagBlock {
     u32 signature, size;
     u16 order, groupCount;

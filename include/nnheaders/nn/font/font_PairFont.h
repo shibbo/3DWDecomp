@@ -55,6 +55,12 @@ public:
     bool IsBorderEffectEnabled() const override;
     void GetAlternateCharGlyph(Glyph* pGlyph, uint32_t c) const override;
 
+    /** @return The font searched first. */
+    Font* GetFirstFont() const { return m_pFirstFont; }
+
+    /** @return The font searched when the first one has no glyph. */
+    Font* GetSecondFont() const { return m_pSecondFont; }
+
 private:
     Font* m_pFirstFont;
     Font* m_pSecondFont;

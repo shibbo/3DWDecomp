@@ -2,30 +2,60 @@
 #include <nn/gfx/gfx_Types.h>
 #include <nn/nn_SdkAssert.h>
 #include <nn/types.h>
+#include <nn/util/util_BytePtr.h>
 #include <nn/util/util_IntrusiveList.h>
 
 #include <cstring>
 
 namespace nn::ui2d {
+class Group;
 class Layout;
+class Material;
 class Pane;
+struct ResParameterizedAnimParameter;
+class FeatureParameterStoreSet;
 class State;
 class StateLayer;
 class StateMachine;
 class Transition;
 
-struct ResStateCalculatedVariables;
+struct ResStatePostCalculationActions;
 
-/** @brief Calculated variable entry of a state machine variable resource. */
-struct ResStateCalculatedVariableEntry {
-    u8 _00[0x20];
-    const ResStateCalculatedVariables* pCalculation;
-    u8 _28[8];
+/** @brief Calculated variable of a state machine variable resource. */
+struct ResStateCalculatedVariables {
+    u8 easingType;
+    bool isEasingEnabled;
+    bool isLinearScalingEnabled;
+    bool isRangeLimitEnabled;
+    u8 limitMode;
+    u8 _05[3];
+    float delay;
+    float duration;
+    float offset;
+    float scale;
+    float minimum;
+    float maximum;
+    const ResStatePostCalculationActions* pCalculation;
+    u16 postCalculationActionCount;
+    u8 _2A[6];
+};
+using ResStateCalculatedVariableEntry = ResStateCalculatedVariables;
+
+/** @brief Action applied to a pane or a variable after a calculated variable changed. */
+struct ResStatePostCalculationActions {
+    char targetName[32];
+    u8 kind;
+    u8 condition;
+    u8 _22[2];
 };
 
 /** @brief Variable of a state machine resource. */
 struct ResStateVariableDescriptions {
-    u8 _00[0x38];
+    char name[36];
+    float defaultValue;
+    float minimum;
+    float maximum;
+    u8 _30[8];
     ResStateCalculatedVariableEntry* pCalculatedVariables;
     u8 _40[4];
     u16 calculatedVariableCount;
@@ -42,7 +72,7 @@ struct ResStateFeatureParameter {
 
 /** @brief Parts state layer reference of a state resource. */
 struct ResStatePartsStateLayer {
-    u8 _00[0x80];
+    char variableNames[4][32];
 };
 
 /** @brief State of a state layer resource. */
@@ -73,8 +103,8 @@ struct ResStateTransitionKey {
 /** @brief Track of a transition resource. */
 struct ResStateTransitionTrack {
     u8 _00[0x20];
-    int offset;
-    int duration;
+    float offset;
+    float duration;
     int easingExtra;
     u8 easingType;
     u8 _2D[3];
@@ -95,7 +125,7 @@ struct ResStateTransitionTriggerData {
 /** @brief Transition of a state layer resource. */
 struct ResStateTransition {
     u8 _00[8];
-    int duration;
+    float duration;
     u8 _0C[4];
     u8 isCancelable;
     u8 isLoop;
@@ -141,32 +171,53 @@ struct ResStateMachine {
     u16 isRelocated;
 };
 
-struct ResStateCalculatedVariables {
-    u8 easingType;
-    u8 _01[3];
-    u8 limitMode;
-    u8 _05[3];
-    float duration, delay, offset, scale, minimum, maximum;
+/** @brief Type of a state machine variable. */
+enum StateMachineVariableType : int {
+    StateMachineVariableType_Bool = 0,
+    StateMachineVariableType_Float = 1,
 };
-struct StateMachineVariable {
+
+/** @brief Calculated variable derived from a state machine variable. */
+struct StateMachineCalclatedVariable {
     nn::util::IntrusiveListNode m_Link;
-    char name[0x1c];
+    const ResStateCalculatedVariables* resource;
+    Pane** ppTargetPanes;
+    int targetPaneCount;
+    float previousValue;
+    float nextValue;
+    float value;
+    float elapsed;
+    bool changed;
+    u8 _35[3];
+};
+
+/** @brief Variable of a state machine. */
+struct StateMachineVariable {
+    using CalculatedVariableList =
+        nn::util::IntrusiveList<StateMachineCalclatedVariable,
+                                nn::util::IntrusiveListMemberNodeTraits<StateMachineCalclatedVariable,
+                                                                        &StateMachineCalclatedVariable::m_Link>>;
+
+    nn::util::IntrusiveListNode m_Link;
+    char name[28];
     float defaultValue;
     float minimum;
     float maximum;
-    u8 _38[8];
+    u32 _38;
+    u32 _3C;
     float value;
-    u8 _44[0xc];
+    u32 _44;
+    StateMachineVariableType type = StateMachineVariableType_Bool;
+    u32 _4C;
     nn::util::IntrusiveListNode calculatedVariables;
-};
-struct StateMachineCalclatedVariable {
-    u8 _00[0x10];
-    const ResStateCalculatedVariables* resource;
-    u8 _18[0xc];
-    float previousValue, nextValue;
-    u32 _2C;
-    float elapsed;
-    bool changed;
+
+    /**
+     * @brief Access the calculated variables derived from this variable.
+     * @return Typed view of the calculated variable list.
+     */
+    CalculatedVariableList& GetCalculatedVariables() {
+        return *reinterpret_cast<CalculatedVariableList*>(&calculatedVariables);
+    }
 };
 
 /** @brief Event processed by the transitions of a state machine. */
@@ -181,7 +232,10 @@ struct StateMachineEvent {
     const char* pArgument0;
     const void* pArgument1;
     const char* pArgument2;
-    const void* _30;
+    union {
+        const void* _30;
+        int parameter;
+    };
 };
 
 /** @brief Fixed pool of events waiting to be processed by a state machine. */
@@ -195,28 +249,86 @@ public:
 
     void Initialize();
 
+    /**
+     * @brief Move a free event to the end of the queue.
+     * @param type Kind of the event.
+     * @param pArgument0 First argument of the event.
+     * @param pArgument1 Second argument of the event.
+     * @param pArgument2 Third argument of the event.
+     * @param parameter Integer argument of the event.
+     */
+    void Push(int type, const char* pArgument0, const void* pArgument1, const char* pArgument2, int parameter) {
+        if (m_FreeEvents.empty()) {
+            return;
+        }
+
+        StateMachineEvent& rEvent = m_FreeEvents.front();
+        m_FreeEvents.pop_front();
+        rEvent.type = type;
+        rEvent.pArgument0 = pArgument0;
+        rEvent.pArgument1 = pArgument1;
+        rEvent.pArgument2 = pArgument2;
+        rEvent.parameter = parameter;
+        m_QueuedEvents.push_back(rEvent);
+    }
+
     StateMachineEvent* m_pEvents;
     EventList m_QueuedEvents;
     EventList m_FreeEvents;
 };
 
+/** @brief Owns the variables of a state machine and the values derived from them. */
 class StateMachineVariableManager {
 public:
+    using VariableList = nn::util::IntrusiveList<
+        StateMachineVariable, nn::util::IntrusiveListMemberNodeTraits<StateMachineVariable, &StateMachineVariable::m_Link>>;
+
     /** @brief Construct a manager without variables. */
     StateMachineVariableManager() : m_pStateMachine(nullptr), m_pEventQueue(nullptr) {}
 
+    void InitialzieVariable_(StateMachineVariable* pVariable, const char* pName, StateMachineVariableType type,
+                             float defaultValue, float minimum, float maximum);
+    void Finalize();
+    bool RegisterNewVariableByResource(const ResStateVariableDescriptions* pResource);
+    StateMachineVariable* DoRegisterNewVariable_(const char* pName, StateMachineVariableType type, float defaultValue,
+                                                 float minimum, float maximum);
+    void InitialzieStateMachineCalclatedVariable_(StateMachineCalclatedVariable* pVariable,
+                                                  const ResStateCalculatedVariables* pResource);
+    void DoCalculateCalcVar(float step);
+    float DoCalculateCalcVar_(StateMachineCalclatedVariable* pVariable, float value, float step);
+    bool CheckIsMatchPostActionCondition_(const ResStatePostCalculationActions* pAction, float previous,
+                                          StateMachineCalclatedVariable* pVariable);
+    const StateMachineVariable* FindRefOnlyByName_(const char* pName) const;
     bool ResetToDefalut_(StateMachineVariable* variable);
+    float DoCalculateCalcVarEasing_(StateMachineCalclatedVariable* pVariable, float value, float step);
     float DoCalculateCalcVarLinearScaling_(const ResStateCalculatedVariables* resource, float value, float step);
     float DoCalculateCalcVarRangeLimit_(const ResStateCalculatedVariables* resource, float value, float step);
     void DoUpdateCalcVarOnValueChanged_(StateMachineCalclatedVariable* variable, float previous, float next);
-    void RegisterNewVariableByResource(const ResStateVariableDescriptions* pResource);
     StateMachineVariable* FindByName_(const char* pName);
-    const StateMachineVariable* FindRefOnlyByName_(const char* pName) const;
     void PushModifyEvent_(const char* pName, StateMachineVariable* pVariable);
+    bool SetFloatValue(const char* pName, float value);
+
+    /**
+     * @brief Access the registered variables.
+     * @return Typed view of the variable list.
+     */
+    VariableList& GetVariables() { return *reinterpret_cast<VariableList*>(&m_Variables); }
+
+    /**
+     * @brief Access the registered variables.
+     * @return Typed view of the variable list.
+     */
+    const VariableList& GetVariables() const { return *reinterpret_cast<const VariableList*>(&m_Variables); }
 
     StateMachine* m_pStateMachine;
     StateMachineEventQueue* m_pEventQueue;
     nn::util::IntrusiveListNode m_Variables;
+};
+
+/** @brief Kind of a user interface event reported to a state machine. */
+enum StateMachineUiEventKind : int {
+    StateMachineUiEventKind_None = 0,
+    StateMachineUiEventKind_Decided = 1,
 };
 
 /** @brief Receives the events of a state machine. */
@@ -227,7 +339,14 @@ public:
      * @param pStateMachine Owner of the handler.
      */
     explicit StateMachineEventHandler(StateMachine* pStateMachine) : m_pStateMachine(pStateMachine) {}
-    virtual ~StateMachineEventHandler();
+    /** @brief Destroy the handler. */
+    virtual ~StateMachineEventHandler() {}
+
+    virtual void OnStateChangeCompletedRaw(const char* pStateName, const char* pLayerName,
+                                           const char* pTransitionName);
+    virtual void OnStateChangeCompleted(const char* pPaneName, StateMachineUiEventKind kind);
+    virtual void OnVariablesChanged(const char* pStateMachineName, const char* pVariableName, float previous,
+                                    float current);
 
     StateMachine* m_pStateMachine;
 };
@@ -312,6 +431,7 @@ public:
     State() : m_pName(nullptr) {}
 
     void Initialzie(const char* pName, const FeatureParameterList& rFeatureParameters);
+    void Finalize();
 
     nn::util::IntrusiveListNode m_Link;
     const char* m_pName;
@@ -574,88 +694,117 @@ struct TransitionTimelineKey {
     const void* pCurve1;
     const void* pCurve2;
     bool isCurve;
+
+    /**
+     * @brief Access one of the easing parameters of the key.
+     * @param index Index of the parameter.
+     * @return Parameter value.
+     */
+    int GetParameter(int index) const { return (&parameter0)[index]; }
 };
 
-/** @brief Track of a transition timeline. */
-struct TransitionTimelineTrack {
+/** @brief Track of a transition timeline: the easing keys of one feature parameter. */
+class TransitionTimeLineTrack {
+public:
     /** @brief Construct a track without keys. */
-    TransitionTimelineTrack()
+    TransitionTimeLineTrack()
         : offset(0), duration(0), easingType(0), easingExtra(0), keyCount(0), pKeys(nullptr) {}
 
-    int offset;
-    int duration;
+    void SetupParametrizedAnimationEvent(ResParameterizedAnimParameter* pParameter, int keyIndex) const;
+    void SetupParametrizedAnimation(ResParameterizedAnimParameter* pParameter, int parameterIndex,
+                                    int keyIndex) const;
+
+    float offset;
+    float duration;
     u8 easingType;
     int easingExtra;
     int keyCount;
     TransitionTimelineKey* pKeys;
 };
+using TransitionTimelineTrack = TransitionTimeLineTrack;
 
 /** @brief Timing of a transition. */
-struct TransitionTimeline {
+class TransitionTimeLine {
+public:
     /** @brief Construct a timeline without tracks. */
-    TransitionTimeline() : duration(0), trackCount(0), pTracks(nullptr) {}
+    TransitionTimeLine() : duration(0), trackCount(0), pTracks(nullptr) {}
 
-    int duration;
+    void SetupParametrizedAnimationFromTime(ResParameterizedAnimParameter* pParameter, int trackIndex,
+                                            int infoIndex, int targetIndex, float time,
+                                            const FeatureParameterStoreSet& rFrom,
+                                            const FeatureParameterStoreSet& rTo) const;
+
+    /**
+     * @brief Get a track of the timeline.
+     * @param index Index of the track.
+     * @return Track, or nullptr when the timeline has no track with that index.
+     */
+    const TransitionTimeLineTrack* GetTrack(int index) const {
+        return index < trackCount ? &pTracks[index] : nullptr;
+    }
+
+    float duration;
     int trackCount;
-    TransitionTimelineTrack* pTracks;
+    TransitionTimeLineTrack* pTracks;
 };
+using TransitionTimeline = TransitionTimeLine;
 
-/** @brief Transition between two states of a layer. */
+/**
+ * @brief Transition between two states of a layer.
+ *
+ * The resource builder fills the members in resource order: m_pName holds the state the transition
+ * starts from, m_pSourceStateName the state it ends in and m_pDestinationStateName the animation name.
+ */
 class Transition {
 public:
     /** @brief Construct an unnamed, unlinked transition. */
     Transition()
-        : m_pName(nullptr), m_pSourceStateName(nullptr), m_pDestinationStateName(nullptr), m_IsCancelable(false), m_IsLoop(false), m_IsEnabled(false), m_pCondition(nullptr), m_pTimeline(nullptr) {}
+        : m_pName(nullptr), m_pSourceStateName(nullptr), m_pDestinationStateName(nullptr), m_IsCancelable(false),
+          m_IsLoop(false), m_IsEnabled(false), m_pCondition(nullptr), m_pTimeline(nullptr) {}
 
     void Initialzie(const char* pName, const char* pSourceStateName, const char* pDestinationStateName,
                     bool isCancelable, bool isLoop, bool isEnabled);
+    void Finalize();
+
+    /** @return Name of the state the transition starts from. */
+    const char* GetFromStateName() const { return m_pName; }
+    /** @return Name of the state the transition ends in. */
+    const char* GetToStateName() const { return m_pSourceStateName; }
+    /** @return Name of the animation played by the transition. */
+    const char* GetAnimationName() const { return m_pDestinationStateName; }
+    /** @return Whether the transition plays its animation backwards. */
+    bool IsReverse() const { return m_IsEnabled != 0; }
 
     nn::util::IntrusiveListNode m_Link;
     const char* m_pName;
     const char* m_pSourceStateName;
     const char* m_pDestinationStateName;
-    bool m_IsCancelable;
-    bool m_IsLoop;
-    bool m_IsEnabled;
+    u8 m_IsCancelable;
+    u8 m_IsLoop;
+    u8 m_IsEnabled;
     TransitionCondition* m_pCondition;
     TransitionTimeline* m_pTimeline;
 };
+
+class Animator;
 
 /** @brief Binds the animation generated by a state layer to its panes. */
 class AnimatorSlot {
 public:
     /** @brief Construct an unbound slot. */
-    AnimatorSlot() : _08(nullptr), _10(nullptr), _18(nullptr), _20(nullptr) {}
-    virtual ~AnimatorSlot();
+    AnimatorSlot() : m_pGroup(nullptr), m_pLayout(nullptr), m_pResource(nullptr), m_pAnimator(nullptr) {}
+
+    virtual Animator* ConstructAndInitialzieAnimator_();
 
     void Initialize(Layout* pLayout, const FeatureParameterList& rFeatureParameters);
+    void Finalzie();
+    void Bind(nn::gfx::Device* pDevice, const void* pResource);
     void* Unbind();
 
-    void* _08;
-    void* _10;
-    void* _18;
-    void* _20;
-};
-
-/** @brief Playback state of a transition. */
-struct TransitionPlayer {
-    /** @brief Construct an idle player. */
-    TransitionPlayer()
-        : m_pTransition(nullptr), _18(nullptr), _20(nullptr), _28(nullptr), m_IsCompleted(true), _31(false),
-          _32(false), _38(nullptr) {}
-
-    using TransitionList =
-        nn::util::IntrusiveList<Transition, nn::util::IntrusiveListMemberNodeTraits<Transition, &Transition::m_Link>>;
-
-    Transition* m_pTransition;
-    TransitionList m_Transitions;
-    void* _18;
-    void* _20;
-    void* _28;
-    bool m_IsCompleted;
-    bool _31;
-    bool _32;
-    void* _38;
+    Group* m_pGroup;
+    Layout* m_pLayout;
+    const void* m_pResource;
+    Animator* m_pAnimator;
 };
 
 /** @brief Layer of a state machine: one active state of a set of states. */
@@ -665,15 +814,52 @@ public:
     using TransitionList =
         nn::util::IntrusiveList<Transition, nn::util::IntrusiveListMemberNodeTraits<Transition, &Transition::m_Link>>;
 
+    /** @brief Kind of a layer. */
+    enum Mode : int {
+        Mode_Event = 0,
+        Mode_StateByVariable = 1,
+        Mode_FrameByVariable = 2,
+    };
+
     /** @brief Construct an empty layer. */
     StateLayer()
-        : m_pLayout(nullptr), m_pName(nullptr), m_pCurrentState(nullptr), _100(nullptr), _108(0), _10C(false),
-          m_IsPlaying(false), m_IsPaused(false), m_HasPartsStateLayer(false), m_pTargetPane(nullptr),
-          m_InitialStateIndex(0) {}
+        : m_pLayout(nullptr), m_pName(nullptr), m_pCurrentState(nullptr), m_pCurrentTransition(nullptr),
+          m_RuntimeTransitionIndex(0), m_IsTransitionLocked(false), m_IsPlaying(false), m_IsPaused(false),
+          m_HasPartsStateLayer(false), m_pTargetPane(nullptr), m_InitialStateIndex(0) {
+        m_RuntimeTransitions[0].m_IsCancelable = 1;
+        m_RuntimeTransitions[1].m_IsCancelable = 1;
+    }
 
     void Initialize(nn::gfx::Device* pDevice, Layout* pLayout, const char* pName);
+    void Finalize();
     void RestoreToInitialState();
+    static size_t CalculateAnimationResourceSize(const StateLayer& rStateLayer, const Transition& rTransition);
+    void UpdateStateLayerTransitions(nn::gfx::Device* pDevice, const StateMachineEvent& rEvent);
+    void ChangeCurrentState_(nn::gfx::Device* pDevice, const Transition& rTransition);
+    static void BuildAnimationResource(void* pBuffer, size_t size, const StateLayer& rStateLayer,
+                                       const Transition* pTransition, const Transition* pPrevTransition,
+                                       float frame);
+    void ApplyFeatureParameterToPaneSrt_(Pane* pPane, const FeatureParameter& rParameter,
+                                         const FeatureParameterStore& rStore, int index);
+    void ApplyFeatureParameterToPaneVisilility_(Pane* pPane, const FeatureParameter& rParameter,
+                                                const FeatureParameterStore& rStore, int index);
+    void ApplyFeatureParameterToPaneTransparancy_(Pane* pPane, const FeatureParameter& rParameter,
+                                                  const FeatureParameterStore& rStore, int index);
+    void ApplyFeatureParameterToPaneRoundRect_(Pane* pPane, const FeatureParameter& rParameter,
+                                               const FeatureParameterStore& rStore, int index);
+    void ApplyFeatureParameterToPanePerCharacterTransform_(Pane* pPane, const FeatureParameter& rParameter,
+                                                           const FeatureParameterStore& rStore, int index);
+    void ApplyFeatureParameterToPaneMaskTexSRT_(Pane* pPane, const FeatureParameter& rParameter,
+                                                const FeatureParameterStore& rStore, int index);
+    void ApplyFeatureParameterToMaterialColor_(Material* pMaterial, const FeatureParameter& rParameter,
+                                               const FeatureParameterStore& rStore, int index);
+    void ApplyFeatureParameterToTextureMatrix_(Material* pMaterial, const FeatureParameter& rParameter,
+                                               const FeatureParameterStore& rStore, int index);
+    void ApplyFeatureParameterToTarget_(const FeatureParameter& rParameter, const FeatureParameterStore& rStore);
     void ApplyFeatureParameterToTargetAll_(const State* pState);
+    void BindSlot_(nn::gfx::Device* pDevice, const Transition* pTransition, const Transition* pPrevTransition,
+                   float frame);
+
     /**
      * @brief Find a state of the layer by its name.
      * @param pName Name of the state.
@@ -689,6 +875,39 @@ public:
         return nullptr;
     }
 
+    /**
+     * @brief Find a state of the layer by its name.
+     * @param pName Name of the state.
+     * @return State, or nullptr when the layer has no state with that name.
+     */
+    const State* FindStateByName(const char* pName) const {
+        for (auto& rState : m_States) {
+            if (std::strcmp(rState.m_pName, pName) == 0) {
+                return &rState;
+            }
+        }
+
+        return nullptr;
+    }
+
+    /**
+     * @brief Get a state of the layer by its position.
+     * @param index Position of the state.
+     * @return State, or nullptr when the layer has fewer states.
+     */
+    State* GetStateByIndex(int index) {
+        int i = 0;
+        for (auto& rState : m_States) {
+            if (i == index) {
+                return &rState;
+            }
+
+            ++i;
+        }
+
+        return nullptr;
+    }
+
     nn::util::IntrusiveListNode m_Link;
     Layout* m_pLayout;
     const char* m_pName;
@@ -697,10 +916,16 @@ public:
     FeatureParameterList m_FeatureParameters;
     AnimatorSlot m_AnimatorSlot;
     TransitionList m_Transitions;
-    TransitionPlayer m_TransitionPlayers[2];
-    void* _100;
-    int _108;
-    bool _10C;
+    union {
+        const Transition* m_pCurrentTransition;
+        /** @brief Older view of m_pCurrentTransition. */
+        struct {
+            const Transition* m_pTransition;
+        } m_TransitionPlayers[1];
+    };
+    Transition m_RuntimeTransitions[2];
+    int m_RuntimeTransitionIndex;
+    bool m_IsTransitionLocked;
     bool m_IsPlaying;
     bool m_IsPaused;
     bool m_HasPartsStateLayer;
@@ -710,31 +935,66 @@ public:
     FeatureParameterStoreSet m_StoreSet;
 };
 
+/** @brief Variable forwarded from a state machine to the state machine of a parts pane. */
+struct ResStateVariableBinding {
+    char sourceName[64];
+    char targetName[32];
+    char variableName[32];
+};
+
 /** @brief State machine of a layout. */
 class StateMachine {
 public:
     using StateLayerList =
         nn::util::IntrusiveList<StateLayer, nn::util::IntrusiveListMemberNodeTraits<StateLayer, &StateLayer::m_Link>>;
 
+    static constexpr int DecideButtonCountMax = 8;
+
     /** @brief Construct an empty state machine. */
     StateMachine()
-        : m_pLayout(nullptr), m_pName(nullptr), _20(nullptr), _28(false), _70(0), _C0(nullptr), _C8(0),
-          m_pEventHandler(nullptr), m_pListener(nullptr), _E0(false) {}
+        : m_pLayout(nullptr), m_pName(nullptr), m_pDecideStateLayer(nullptr), m_IsDecideButton(false),
+          m_DecideButtonCount(0), _C0(nullptr), _C8(0), m_pEventHandler(nullptr), m_pListener(nullptr), _E0(false) {}
+
+    void Finalize();
+    void SetFloatValue(const char* pName, float value);
+    void ApplayPostCalcActionToPane(Pane* pPane, u8 kind, float value);
+    void SetupDecideButtons_();
 
     Layout* m_pLayout;
     const char* m_pName;
     StateLayerList m_StateLayers;
-    void* _20;
-    bool _28;
-    u8 _29[0x47];
-    int _70;
+    StateLayer* m_pDecideStateLayer;
+    bool m_IsDecideButton;
+    Pane* m_pDecideButtons[DecideButtonCountMax];
+    int m_DecideButtonCount;
     StateMachineEventQueue m_EventQueue;
     StateMachineVariableManager m_VariableManager;
-    const void* _C0;
-    int _C8;
+    union {
+        const void* _C0;
+        const ResStateVariableBinding* m_pVariableBindings;
+    };
+    union {
+        int _C8;
+        int m_VariableBindingCount;
+    };
     StateMachineEventHandler* m_pEventHandler;
     StateMachineListener* m_pListener;
     bool _E0;
+};
+
+/** @brief Writes the animation resource that plays a transition from the current values of a layer. */
+class RuntimeResAnimationBuilder {
+public:
+
+    size_t CalcAnimationBlockSize_(const StateLayer& rStateLayer, const Transition& rTransition);
+    void BuildFromCurrent(void* pBuffer, size_t size, const StateLayer& rStateLayer, const Transition* pTransition,
+                          const Transition* pPrevTransition, float frame);
+    void WriteContent_(const StateLayer& rStateLayer, const FeatureParameter& rParameter,
+                       const Transition* pTransition, const Transition* pPrevTransition, float frame,
+                       nn::util::BytePtr* pPtr, int subIndex);
+    void WriteResParameterizedAnim_(const StateLayer& rStateLayer, const FeatureParameter& rParameter, int count,
+                                    const Transition* pPrevTransition, float frame, const Transition* pTransition,
+                                    int trackIndex, int infoIndex, int targetIndex, nn::util::BytePtr* pPtr);
 };
 
 /** @brief Builds state machines from their layout resource. */

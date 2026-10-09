@@ -1,11 +1,21 @@
 #pragma once
 #include <nn/ui2d/ui2d_Pane.h>
 namespace nn::ui2d {
+/** @brief Serialized alignment pane: the pane block followed by the alignment settings. */
+struct ResAlignment {
+    u8 paneBlock[0x54];
+    u32 alignment;
+    float defaultMargin;
+    bool isExtendEdgeEnabled;
+    u8 alignmentFlags;
+};
+
 class Alignment : public Pane {
 public:
     Alignment();
     ~Alignment() override;
     NN_RUNTIME_TYPEINFO(Pane);
+    bool CompareCopiedInstanceTest(const Alignment& rOther) const;
     void Calculate(DrawInfo&, CalculateContext&, bool) override;
     void RequestAlignment();
     float GetDefaultMargin() const;

@@ -381,6 +381,7 @@ public:
         InitializeMaterialImpl(pResult, pDevice, pBaseRes, pOverrideRes, rArgs);
     }
 
+    void SetColorElement(int colorType, int value);
     void Initialize();
     bool ReserveMem(s32, s32, s32, s32, bool, s32, bool, s32, bool, bool, bool, s32, s32);
     void InitializeMaterialImpl(BuildResultInformation* pResult, nn::gfx::Device* pDevice,

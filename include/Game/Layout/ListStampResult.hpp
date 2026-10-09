@@ -6,6 +6,7 @@ class ListStampResult : public al::LayoutActor {
 public:
     ListStampResult(const al::LayoutInitInfo&, const GameDataHolder*);
     void startAppear(int);
+    void startAppearCharacterComplete(int);
     bool isEnd() const;
 private:
     u8 mUnreconstructed[0x17];

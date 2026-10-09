@@ -138,6 +138,12 @@ public:
      * @return Send level.
      */
     f32 GetOutputEffectSend(AuxBus bus) const { return m_FxSend[bus]; }
+    /**
+     * @brief Sets an aux bus send of the main output without a call.
+     * @param bus Aux bus.
+     * @param send Send level.
+     */
+    void SetOutputEffectSend(AuxBus bus, f32 send) { m_FxSend[bus] = send; }
 
     void detail_SortPriorityList(bool reverse);
     void detail_SortPriorityList(detail::BasicSound* pSound);

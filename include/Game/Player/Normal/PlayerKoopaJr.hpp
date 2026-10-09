@@ -32,6 +32,14 @@ public:
     bool tryStartAmiiboAttack();
     void startMysteryBox();
     void endMysteryBox();
+    bool tryTargetGraffiti(al::HitSensor* pSensor);
+    bool isTargettingGraffiti(const al::HitSensor* pSensor) const;
+
+    /**
+     * @brief Set the graffiti sensor Bowser Jr. is currently touching.
+     * @param pSensor The graffiti's sensor.
+     */
+    void setTouchGraffitiSensor(al::HitSensor* pSensor) { mTouchGraffitiSensor = pSensor; }
 
     /**
      * @brief Check whether Bowser Jr. is driven by the AI instead of a second player.
@@ -50,6 +58,8 @@ private:
     al::PadRumbleKeeper* mPadRumbleKeeper;  // 0x158
     u8 _160[0x170 - 0x160];
     PlayerProperty mProperty;  // 0x170
-    u8 _1ec[0x2dc - 0x1ec];
+    u8 _1f0[0x2c8 - 0x1f0];
+    al::HitSensor* mTouchGraffitiSensor;  // 0x2c8
+    u8 _2d0[0x2dc - 0x2d0];
     bool mIsUseAIMovement;  // 0x2dc
 };
