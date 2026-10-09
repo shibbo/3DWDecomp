@@ -36,7 +36,18 @@ public:
     bool isMoveBack();
 
 private:
-    unsigned char _148[0x38];
+    bool isFlying();
+    void updateAttachPose();
+    void stopForKill();
+    void killWithHitReaction(const char* pReaction, bool isAppearItem);
+    void killByHitReaction(const char* pReaction, bool isAppearItem);
+
+    const sead::Matrix34f* mHostMtx = nullptr;     ///< Joint matrix of the holder.
+    sead::Vector3f mTrans = sead::Vector3f::zero;  ///< Offset from the holder matrix.
+    sead::Vector3f mRotate = sead::Vector3f::zero; ///< Rotation (degrees) relative to the holder.
+    sead::Vector3f mFlyDir = {0.0f, 0.0f, 0.0f};   ///< Normalized throw direction.
+    f32 mFlySpeed = 0.0f;                          ///< Throw speed.
+    s32 mFlyStep = 0;                              ///< Steps flown before braking.
 };
 
 static_assert(sizeof(BoomerangBrosBoomerang) == 0x180);
