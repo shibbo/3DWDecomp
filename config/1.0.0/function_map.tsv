@@ -2257,11 +2257,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100065190			FALSE	_ZThn328_NK7Tentack8getLevelEv	non-virtual thunk to Tentack::getLevel() const	
 0x71000651A0			FALSE	_ZN11TentackBase24returnRockAppearPointPtrEPKN4sead7Vector2IfEE	TentackBase::returnRockAppearPointPtr(sead::Vector2<float> const*)	
 0x71000651B0			FALSE	_ZNK12_GLOBAL__N_119TentackNrvDemoStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackNrvDemoStart::execute(al::NerveKeeper*) const	
-0x71000651C0			FALSE	sub_71000651C0	sub_71000651C0	
-0x7100065240			FALSE	sub_7100065240	sub_7100065240	
+0x71000651C0			FALSE	_ZNK12_GLOBAL__N_118TentackNrvFallRock7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackNrvFallRock::execute(al::NerveKeeper*) const	
+0x7100065240			FALSE	_ZNK12_GLOBAL__N_124TentackNrvAttackTentacle7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackNrvAttackTentacle::execute(al::NerveKeeper*) const	
 0x7100065260			FALSE	_ZNK12_GLOBAL__N_117TentackNrvDemoEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackNrvDemoEnd::execute(al::NerveKeeper*) const	
-0x7100065270			FALSE	sub_7100065270	sub_7100065270	
-0x71000652C0			FALSE	sub_71000652C0	sub_71000652C0	
+0x7100065270			FALSE	_ZNK12_GLOBAL__N_116TentackNrvDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackNrvDamage::execute(al::NerveKeeper*) const	
+0x71000652C0			FALSE	_GLOBAL__sub_I_Tentack.cpp	_GLOBAL__sub_I_Tentack.cpp	
 0x7100065330		TentackAttachItem.o	FALSE	_ZN17TentackAttachItemC2EPKc22ETentackAttachItemType	TentackAttachItem::TentackAttachItem(char const*, ETentackAttachItemType)	
 0x7100065400			FALSE	_ZN17TentackAttachItemC1EPKc22ETentackAttachItemType	TentackAttachItem::TentackAttachItem(char const*, ETentackAttachItemType)	
 0x71000654D0			FALSE	_ZN17TentackAttachItem4initERKN2al13ActorInitInfoE	TentackAttachItem::init(al::ActorInitInfo const&)	
@@ -5521,10 +5521,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000D6920			FALSE	_ZN22BoomerangBrosBoomerangD1Ev	BoomerangBrosBoomerang::~BoomerangBrosBoomerang()	
 0x71000D6930			FALSE	_ZN22BoomerangBrosBoomerangD0Ev	BoomerangBrosBoomerang::~BoomerangBrosBoomerang()	
 0x71000D6960			FALSE	_ZNK12_GLOBAL__N_134BoomerangBrosBoomerangNrvMoveStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoomerangBrosBoomerangNrvMoveStart::execute(al::NerveKeeper*) const	
-0x71000D6970			FALSE	sub_71000D6970	sub_71000D6970	
+0x71000D6970			FALSE	_ZNK12_GLOBAL__N_129BoomerangBrosBoomerangNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoomerangBrosBoomerangNrvWait::execute(al::NerveKeeper*) const	
 0x71000D6BA0			FALSE	_ZNK12_GLOBAL__N_130BoomerangBrosBoomerangNrvCatch7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoomerangBrosBoomerangNrvCatch::execute(al::NerveKeeper*) const	
 0x71000D6BB0			FALSE	_ZNK12_GLOBAL__N_134BoomerangBrosBoomerangNrvMoveBrake7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoomerangBrosBoomerangNrvMoveBrake::execute(al::NerveKeeper*) const	
-0x71000D6BC0			FALSE	sub_71000D6BC0	sub_71000D6BC0	
+0x71000D6BC0			FALSE	_ZNK12_GLOBAL__N_133BoomerangBrosBoomerangNrvMoveStay7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoomerangBrosBoomerangNrvMoveStay::execute(al::NerveKeeper*) const	
 0x71000D6C10			FALSE	_ZNK12_GLOBAL__N_133BoomerangBrosBoomerangNrvMoveBack7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoomerangBrosBoomerangNrvMoveBack::execute(al::NerveKeeper*) const	
 0x71000D6C20		BossBunretsu.o	FALSE	_ZN12BossBunretsuC2EPKc	BossBunretsu::BossBunretsu(char const*)	
 0x71000D6CF0			FALSE	_ZN12BossBunretsuC1EPKc	BossBunretsu::BossBunretsu(char const*)	
@@ -7177,14 +7177,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100113BB0			FALSE	_ZNK12_GLOBAL__N_122KuriboClimbRailNrvWalk7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvWalk::execute(al::NerveKeeper*) const	
 0x7100113BC0			FALSE	_ZNK12_GLOBAL__N_128KuriboClimbRailNrvBodyAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvBodyAttack::execute(al::NerveKeeper*) const	
 0x7100113BD0			FALSE	_ZNK12_GLOBAL__N_126KuriboClimbRailNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvBlowDown::execute(al::NerveKeeper*) const	
-0x7100113BE0			FALSE	sub_7100113BE0	sub_7100113BE0	
+0x7100113BE0			FALSE	_ZNK12_GLOBAL__N_131KuriboClimbRailNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x7100113CA0			FALSE	_ZNK12_GLOBAL__N_127KuriboClimbRailNrvPressDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvPressDown::execute(al::NerveKeeper*) const	
-0x7100113CB0			FALSE	sub_7100113CB0	sub_7100113CB0	
-0x7100113CC0			FALSE	nullsub_66	nullsub_66	
-0x7100113CD0			FALSE	sub_7100113CD0	sub_7100113CD0	
+0x7100113CB0			FALSE	_ZNK12_GLOBAL__N_134KuriboClimbRailNrvTurnToBodyAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvTurnToBodyAttack::execute(al::NerveKeeper*) const	
+0x7100113CC0			FALSE	_ZNK12_GLOBAL__N_133KuriboClimbRailNrvBodyAttackReady7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvBodyAttackReady::execute(al::NerveKeeper*) const	
+0x7100113CD0			FALSE	_ZNK12_GLOBAL__N_122KuriboClimbRailNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvTurn::execute(al::NerveKeeper*) const	
 0x7100113CE0			FALSE	_ZNK12_GLOBAL__N_129KuriboClimbRailNrvRecoverTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvRecoverTurn::execute(al::NerveKeeper*) const	
 0x7100113CF0			FALSE	_ZNK12_GLOBAL__N_125KuriboClimbRailNrvRecover7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbRailNrvRecover::execute(al::NerveKeeper*) const	
-0x7100113D00			FALSE	sub_7100113D00	sub_7100113D00	
+0x7100113D00			FALSE	_GLOBAL__sub_I_KuriboClimbRail.cpp	_GLOBAL__sub_I_KuriboClimbRail.cpp	
 0x7100113D70		KuriboClimbStateBodyAttack.o	FALSE	_ZN26KuriboClimbStateBodyAttackC2EPN2al9LiveActorE	KuriboClimbStateBodyAttack::KuriboClimbStateBodyAttack(al::LiveActor*)	
 0x7100113DC0			FALSE	_ZN26KuriboClimbStateBodyAttack6appearEv	KuriboClimbStateBodyAttack::appear()	
 0x7100113E40			FALSE	_ZN26KuriboClimbStateBodyAttack4killEv	KuriboClimbStateBodyAttack::kill()	
@@ -22649,13 +22649,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100390180			FALSE	_ZN13TractorBubble14exeBurstBubbleEv	TractorBubble::exeBurstBubble()	
 0x7100390210			FALSE	_ZN13TractorBubbleD1Ev	TractorBubble::~TractorBubble()	
 0x7100390270			FALSE	_ZN13TractorBubbleD0Ev	TractorBubble::~TractorBubble()	
-0x71003902F0			FALSE	nullsub_241	nullsub_241	
+0x71003902F0			FALSE	_ZNK12_GLOBAL__N_120TractorBubbleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubbleNrvWait::execute(al::NerveKeeper*) const	
 0x7100390300			FALSE	_ZNK12_GLOBAL__N_122TractorBubbleNrvBubble7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubbleNrvBubble::execute(al::NerveKeeper*) const	
-0x7100390310			FALSE	sub_7100390310	sub_7100390310	
-0x7100390320			FALSE	nullsub_242	nullsub_242	
+0x7100390310			FALSE	_ZNK12_GLOBAL__N_132TractorBubbleNrvBurstBubblePunch7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubbleNrvBurstBubblePunch::execute(al::NerveKeeper*) const	
+0x7100390320			FALSE	_ZNK12_GLOBAL__N_132TractorBubbleNrvActivateBindWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubbleNrvActivateBindWait::execute(al::NerveKeeper*) const	
 0x7100390330			FALSE	_ZNK12_GLOBAL__N_128TractorBubbleNrvAppearBubble7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubbleNrvAppearBubble::execute(al::NerveKeeper*) const	
-0x7100390340			FALSE	nullsub_243	nullsub_243	
-0x7100390350			FALSE	sub_7100390350	sub_7100390350	
+0x7100390340			FALSE	_ZNK12_GLOBAL__N_124TractorBubbleNrvBindWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubbleNrvBindWait::execute(al::NerveKeeper*) const	
+0x7100390350			FALSE	_ZNK12_GLOBAL__N_127TractorBubbleNrvBurstBubble7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubbleNrvBurstBubble::execute(al::NerveKeeper*) const	
 0x7100390360			FALSE	sub_7100390360	sub_7100390360	
 0x71003903A0		TractorBubblePuppeteer.o	FALSE	_ZN22TractorBubblePuppeteerC1EP13TractorBubble	TractorBubblePuppeteer::TractorBubblePuppeteer(TractorBubble*)	
 0x71003903F0			FALSE	_ZN22TractorBubblePuppeteer24startBubbleWithScreenOutEPN2al9LiveActorE	TractorBubblePuppeteer::startBubbleWithScreenOut(al::LiveActor*)	
@@ -38882,10 +38882,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005C9F10			FALSE	_ZN2nn4ui2d9Alignment9CalculateERNS0_8DrawInfoERNS0_4Pane16CalculateContextEb	nn::ui2d::Alignment::Calculate(nn::ui2d::DrawInfo&, nn::ui2d::Pane::CalculateContext&, bool)	
 0x71005C9FC0			FALSE	_ZN2nn4ui2d9Alignment13MakeAlignmentEv	nn::ui2d::Alignment::MakeAlignment()	
 0x71005C9FF0			FALSE	_ZN2nn4ui2d9Alignment30MakeForwardHorizontalAlignmentEv	nn::ui2d::Alignment::MakeForwardHorizontalAlignment()	
-0x71005CA2A0			FALSE	sub_71005CA2A0	sub_71005CA2A0	
+0x71005CA2A0			FALSE	_ZN2nn4ui2d12_GLOBAL__N_126GetHorizontalAlignmentInfoEPNS0_4PaneEPNS1_17AlignmentPaneInfoE	nn::ui2d::(anonymous namespace)::GetHorizontalAlignmentInfo(nn::ui2d::Pane*, nn::ui2d::(anonymous namespace)::AlignmentPaneInfo*)	
 0x71005CAA80			FALSE	_ZN2nn4ui2d9Alignment30MakeReverseHorizontalAlignmentEv	nn::ui2d::Alignment::MakeReverseHorizontalAlignment()	
 0x71005CAC30			FALSE	_ZN2nn4ui2d9Alignment28MakeForwardVerticalAlignmentEv	nn::ui2d::Alignment::MakeForwardVerticalAlignment()	
-0x71005CAEF0			FALSE	sub_71005CAEF0	sub_71005CAEF0	
+0x71005CAEF0			FALSE	_ZN2nn4ui2d12_GLOBAL__N_124GetVerticalAlignmentInfoEPNS0_4PaneEPNS1_17AlignmentPaneInfoE	nn::ui2d::(anonymous namespace)::GetVerticalAlignmentInfo(nn::ui2d::Pane*, nn::ui2d::(anonymous namespace)::AlignmentPaneInfo*)	
 0x71005CB6F0			FALSE	_ZN2nn4ui2d9Alignment28MakeReverseVerticalAlignmentEv	nn::ui2d::Alignment::MakeReverseVerticalAlignment()	
 0x71005CB890			FALSE	_ZN2nn4ui2d9Alignment23MakeHorizontalAlignmentEv	nn::ui2d::Alignment::MakeHorizontalAlignment()	
 0x71005CB8B0			FALSE	_ZN2nn4ui2d9Alignment21MakeVerticalAlignmentEv	nn::ui2d::Alignment::MakeVerticalAlignment()	
@@ -38893,11 +38893,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005CB8E0			FALSE	_ZNK2nn4ui2d9Alignment25CompareCopiedInstanceTestERKS1_	nn::ui2d::Alignment::CompareCopiedInstanceTest(nn::ui2d::Alignment const&) const	
 0x71005CB930			FALSE	_ZNK2nn4ui2d9Alignment19IsVerticalAlignmentEv	nn::ui2d::Alignment::IsVerticalAlignment() const	
 0x71005CB940			FALSE	_ZNK2nn4ui2d9Alignment18GetRuntimeTypeInfoEv	nn::ui2d::Alignment::GetRuntimeTypeInfo() const	
-0x71005CB9F0			FALSE	sub_71005CB9F0	sub_71005CB9F0	
-0x71005CBF00			FALSE	sub_71005CBF00	sub_71005CBF00	
-0x71005CC0A0			FALSE	sub_71005CC0A0	sub_71005CC0A0	
-0x71005CC5B0			FALSE	sub_71005CC5B0	sub_71005CC5B0	
-0x71005CC820			FALSE	sub_71005CC820	sub_71005CC820	
+0x71005CB9F0			FALSE	_ZN2nn4ui2d12_GLOBAL__N_117CalculateTextRectEPNS_4font9RectangleEPNS0_4PaneENS0_4SizeENS_4util6Float2ES7_	nn::ui2d::(anonymous namespace)::CalculateTextRect(nn::font::Rectangle*, nn::ui2d::Pane*, nn::ui2d::Size, nn::util::Float2, nn::ui2d::Size)	
+0x71005CBF00			FALSE	_ZN2nn4ui2d12_GLOBAL__N_120CalculateLocalMatrixEPKNS0_4PaneE	nn::ui2d::(anonymous namespace)::CalculateLocalMatrix(nn::ui2d::Pane const*)	
+0x71005CC0A0			FALSE	_ZN2nn4ui2d12_GLOBAL__N_124CalculateHorizontalBoundEPNS0_4PaneEPfS4_PKNS_4util4neon25MatrixColumnMajor4x3fTypeE	nn::ui2d::(anonymous namespace)::CalculateHorizontalBound(nn::ui2d::Pane*, float*, float*, nn::util::neon::MatrixColumnMajor4x3fType const*)	
+0x71005CC5B0			FALSE	_ZN2nn4ui2d12_GLOBAL__N_117CalculatePaneRectEPNS_4font9RectangleEPKNS0_4PaneEPKNS_4util4neon25MatrixColumnMajor4x3fTypeENS0_4SizeENS8_6Float2E	nn::ui2d::(anonymous namespace)::CalculatePaneRect(nn::font::Rectangle*, nn::ui2d::Pane const*, nn::util::neon::MatrixColumnMajor4x3fType const*, nn::ui2d::Size, nn::util::Float2)	
+0x71005CC820			FALSE	_ZN2nn4ui2d12_GLOBAL__N_122CalculateVerticalBoundEPNS0_4PaneEPfS4_PKNS_4util4neon25MatrixColumnMajor4x3fTypeE	nn::ui2d::(anonymous namespace)::CalculateVerticalBound(nn::ui2d::Pane*, float*, float*, nn::util::neon::MatrixColumnMajor4x3fType const*)	
 0x71005CCD40		ui2d_StateMachine.o	FALSE	_ZN2nn4ui2d12AnimatorSlot10InitializeEPNS0_6LayoutERKNS_4util13IntrusiveListINS0_16FeatureParameterENS4_29IntrusiveListMemberNodeTraitsIS6_XadL_ZNS6_6m_LinkEEES6_Lm56EEEEE	nn::ui2d::AnimatorSlot::Initialize(nn::ui2d::Layout*, nn::util::IntrusiveList<nn::ui2d::FeatureParameter, nn::util::IntrusiveListMemberNodeTraits<nn::ui2d::FeatureParameter, &nn::ui2d::FeatureParameter::m_Link, nn::ui2d::FeatureParameter, 56ul> > const&)	
 0x71005CCE00			FALSE	_ZN2nn4ui2d12AnimatorSlot8FinalzieEv	nn::ui2d::AnimatorSlot::Finalzie()	
 0x71005CCE60			FALSE	_ZN2nn4ui2d12AnimatorSlot4BindEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEEPKv	nn::ui2d::AnimatorSlot::Bind(nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, void const*)	
@@ -39380,7 +39380,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005E43C0			FALSE	_ZN2nn4ui2d13ArchiveHandle10InitializeEPvPKcPNS_3gfx11TMemoryPoolINS5_12ApiVariationINS5_7ApiTypeILi4EEENS5_10ApiVersionILi8EEEEEEElm	nn::ui2d::ArchiveHandle::Initialize(void*, char const*, nn::gfx::TMemoryPool<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, long, unsigned long)	
 0x71005E4480			FALSE	_ZN2nn4ui2d13ArchiveHandle8FinalizeEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEE	nn::ui2d::ArchiveHandle::Finalize(nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*)	
 0x71005E44F0			FALSE	_ZN2nn4ui2d13ArchiveHandle22InitializeBntxIfNeededEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEE	nn::ui2d::ArchiveHandle::InitializeBntxIfNeeded(nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*)	
-0x71005E4660			FALSE	sub_71005E4660	sub_71005E4660	
+0x71005E4660			FALSE	_ZN2nn4ui2d12_GLOBAL__N_114GetResourceSubEPNS0_13ArchiveHandleEPKcjS5_Pm	nn::ui2d::(anonymous namespace)::GetResourceSub(nn::ui2d::ArchiveHandle*, char const*, unsigned int, char const*, unsigned long*)	
 0x71005E4750			FALSE	_ZNK2nn4ui2d13ArchiveHandle13GetResRootDirEv	nn::ui2d::ArchiveHandle::GetResRootDir() const	
 0x71005E4760			FALSE	_ZN2nn4ui2d13ArchiveHandle14LoadTextureAllEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEE	nn::ui2d::ArchiveHandle::LoadTextureAll(nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*)	
 0x71005E4800			FALSE	_ZN2nn4ui2d13ArchiveHandle13LoadShaderAllEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEE	nn::ui2d::ArchiveHandle::LoadShaderAll(nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*)	
@@ -39408,7 +39408,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005E56A0			FALSE	_ZN2nn4ui2d19ArcResourceAccessor6DetachEv	nn::ui2d::ArcResourceAccessor::Detach()	
 0x71005E56B0			FALSE	_ZN2nn4ui2d19ArcResourceAccessor18FindResourceByNameEPmjPKc	nn::ui2d::ArcResourceAccessor::FindResourceByName(unsigned long*, unsigned int, char const*)	
 0x71005E56D0			FALSE	_ZNK2nn4ui2d19ArcResourceAccessor18FindResourceByTypeEjPFvPKvmPKcPvES6_	nn::ui2d::ArcResourceAccessor::FindResourceByType(unsigned int, void (*)(void const*, unsigned long, char const*, void*), void*) const	
-0x71005E56F0			FALSE	sub_71005E56F0	sub_71005E56F0	
+0x71005E56F0			FALSE	_ZN2nn4ui2d12_GLOBAL__N_121FindResourceByTypeSubEPNS0_13ArchiveHandleEPKcjPFvPKvmS5_PvES8_	nn::ui2d::(anonymous namespace)::FindResourceByTypeSub(nn::ui2d::ArchiveHandle*, char const*, unsigned int, void (*)(void const*, unsigned long, char const*, void*), void*)	
 0x71005E5820			FALSE	_ZN2nn4ui2d19ArcResourceAccessor11LoadTextureEPNS0_19ResourceTextureInfoEPNS_3gfx7TDeviceINS4_12ApiVariationINS4_7ApiTypeILi4EEENS4_10ApiVersionILi8EEEEEEEPKc	nn::ui2d::ArcResourceAccessor::LoadTexture(nn::ui2d::ResourceTextureInfo*, nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, char const*)	
 0x71005E5830			FALSE	_ZN2nn4ui2d19ArcResourceAccessor8LoadFontEPNS_3gfx7TDeviceINS2_12ApiVariationINS2_7ApiTypeILi4EEENS2_10ApiVersionILi8EEEEEEEPKc	nn::ui2d::ArcResourceAccessor::LoadFont(nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, char const*)	
 0x71005E5840			FALSE	_ZN2nn4ui2d19ArcResourceAccessor10LoadShaderEPNS0_10ShaderInfoEPNS_3gfx7TDeviceINS4_12ApiVariationINS4_7ApiTypeILi4EEENS4_10ApiVersionILi8EEEEEEEPKc	nn::ui2d::ArcResourceAccessor::LoadShader(nn::ui2d::ShaderInfo*, nn::gfx::TDevice<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, char const*)	
@@ -45641,10 +45641,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100732510			FALSE	_ZN3agl6detail14ShaderTextUtil22skipFirstMatchedStringERKN4sead14SafeStringBaseIcEEPPKc	agl::detail::ShaderTextUtil::skipFirstMatchedString(sead::SafeStringBase<char> const&, char const**)	
 0x71007326E0			FALSE	_ZN3agl6detail14ShaderTextUtil11matchStringERKN4sead14SafeStringBaseIcEEPKc	agl::detail::ShaderTextUtil::matchString(sead::SafeStringBase<char> const&, char const*)	
 0x7100732850			FALSE	_ZN3agl6detail14ShaderTextUtil10skipStringERKN4sead14SafeStringBaseIcEEPPKc	agl::detail::ShaderTextUtil::skipString(sead::SafeStringBase<char> const&, char const**)	
-0x71007329C0			FALSE	sub_71007329C0	sub_71007329C0	
+0x71007329C0			FALSE	_ZN3agl6detail12_GLOBAL__N_112skipTypeNameEPKc	agl::detail::(anonymous namespace)::skipTypeName(char const*)	
 0x7100732F70			FALSE	_ZN4sead11TreeMapNodeINS_14SafeStringBaseIcEEED2Ev	sead::TreeMapNode<sead::SafeStringBase<char> >::~TreeMapNode()	
-0x7100732F80			FALSE	j__ZdlPv_0	j__ZdlPv_0	
-0x7100732F90			FALSE	sub_7100732F90	sub_7100732F90	
+0x7100732F80			FALSE	_ZN4sead10StrTreeMapILi64EN3agl6detail12_GLOBAL__N_111UniformInfoEE4NodeD0Ev	sead::StrTreeMap<64, agl::detail::(anonymous namespace)::UniformInfo>::Node::~Node()	
+0x7100732F90			FALSE	_ZN4sead10StrTreeMapILi64EN3agl6detail12_GLOBAL__N_111UniformInfoEE4Node6erase_Ev	sead::StrTreeMap<64, agl::detail::(anonymous namespace)::UniformInfo>::Node::erase_()	
 0x7100732FB0			FALSE	_ZN4sead11TreeMapImplINS_14SafeStringBaseIcEEE6insertEPNS_11TreeMapNodeIS2_EES6_	sead::TreeMapImpl<sead::SafeStringBase<char> >::insert(sead::TreeMapNode<sead::SafeStringBase<char> >*, sead::TreeMapNode<sead::SafeStringBase<char> >*)	
 0x71007331E0		aglTextureDataUtil.o	FALSE	_ZN3agl6detail15TextureDataUtil21convFormatDriverToAGLE9NVNformat	agl::detail::TextureDataUtil::convFormatDriverToAGL(NVNformat)	object (class)
 0x7100733240			FALSE	_ZN3agl6detail15TextureDataUtil21convFormatAGLToDriverENS_13TextureFormatE	agl::detail::TextureDataUtil::convFormatAGLToDriver(agl::TextureFormat)	
