@@ -6,6 +6,7 @@
 #include <nn/types.h>
 #include <nn/util/util_MathTypes.h>
 #include <algorithm>
+#include <attributes.h>
 
 namespace nn::g3d {
 class ResSkeleton;
@@ -15,6 +16,9 @@ struct EulerToMtx;
 struct AxesToMtx;
 struct AxesToQuat;
 struct QuatToAxes;
+struct QuatToQuat;
+struct EulerToQuat;
+struct EulerToAxes;
 
 class SkeletalAnimObj : public ModelAnimObj {
   public:
@@ -107,6 +111,33 @@ class SkeletalAnimObj : public ModelAnimObj {
      */
     const ResSkeletalAnim* GetResource() const { return mResource; }
 
+    /** @brief Query the number of bone animations in the selected resource.
+     * @return Number of entries in the result and binding arrays.
+     */
+    int GetBoneAnimCount() const { return mBindTable.mAnimCount; }
+
+    /**
+     * @brief Access a binding-table entry.
+     * @param index Animation or bone index within the binding table.
+     * @return Packed target index, animation index and bind flags.
+     */
+    u32 GetBindEntry(ptrdiff_t index) const { return mBindTable.mEntries[index]; }
+
+    /** @brief Access the calculated bone animation results.
+     * @return Result array indexed by bone animation.
+     */
+    BoneAnimResult* GetResultArray() const { return static_cast<BoneAnimResult*>(mResult); }
+
+    /** @brief Query how the selected resource stores rotations.
+     * @return Zero for quaternions, one for Euler angles.
+     */
+    u32 GetRotateMode() const { return (mResource->flags >> 12) & 7; }
+
+    /** @brief Access the skeleton used by the last binding.
+     * @return Bound skeleton, or nullptr before binding.
+     */
+    const ResSkeleton* GetBoundSkeleton() const { return m_pBoundSkeleton; }
+
   private:
     const ResSkeletalAnim* mResource = nullptr;
     struct Impl;
@@ -116,6 +147,27 @@ class SkeletalAnimObj : public ModelAnimObj {
     BindResult BindImpl(const ResSkeleton* pSkeleton);
     BindResult InitRetargeting(const ResSkeleton* pTarget, const ResSkeleton* pSource);
     void BindFastImpl(const ResSkeleton* pTarget);
+    void MirrorConstantResult(BoneAnimResult* pResult, const ResBoneAnim* pAnim, const ResBone* pBone) const;
+    template <bool retargeted, class Evaluator>
+    void CalculateMirroredBone(BoneAnimResult* pResults, int animIndex, const Evaluator& rEvaluate);
+
+    /**
+     * @brief Find the animation bound to a skeleton bone.
+     * @param boneIndex Bone index within the binding table.
+     * @return Animation index, or 0x7fff when no animation targets the bone.
+     */
+    u32 GetAnimIndex(ptrdiff_t boneIndex) const { return (mBindTable.mEntries[boneIndex] >> 15) & 0x7fff; }
+
+    /**
+     * @brief Find the bone that mirrors a skeleton bone.
+     * @param pSkeleton Skeleton with mirroring information.
+     * @param boneIndex Bone index within the skeleton.
+     * @return Mirrored bone index, or a negative value when the bone has no counterpart.
+     */
+    static int GetMirroringBoneIndex(const ResSkeleton* pSkeleton, int boneIndex) {
+        return pSkeleton->ToData().pMirroringBoneTable.Get()[boneIndex];
+    }
+
     const ResBoneAnim* m_pBoneAnims = nullptr;
     int m_BoneAnimCapacity = 0;
     u32 m_Flags = 0;
@@ -125,16 +177,35 @@ class SkeletalAnimObj : public ModelAnimObj {
 
 static_assert(sizeof(SkeletalAnimObj) == 0x90);
 
-struct SkeletalAnimBlendResult {
+/** @brief Weighted per-bone accumulator used while blending skeletal animations. */
+struct BoneAnimBlendResult {
     nn::util::Vector3fType scale;
     nn::util::Vector3fType translate;
-    u8 _20[0x20];
+    /** First two rotation matrix rows, or a quaternion in axisX when quaternion storage is active. */
+    nn::util::Vector3fType axisX;
+    nn::util::Vector3fType axisY;
     u32 flags;
     float weight;
     u8 _48[8];
 };
 
-static_assert(sizeof(SkeletalAnimBlendResult) == 0x50);
+static_assert(sizeof(BoneAnimBlendResult) == 0x50);
+
+using SkeletalAnimBlendResult = BoneAnimBlendResult;
+
+/** @brief Hook that can adjust each bone's weight before it is blended. */
+class ICalculateBlendCallback {
+  public:
+    struct CallbackArg {
+        const SkeletalAnimObj* pAnimObj;
+        int boneIndex;
+        float weight;
+    };
+
+    /** @brief Destroy the callback. */
+    virtual ~ICalculateBlendCallback() {}
+    virtual void Exec(CallbackArg* pArg) = 0;
+};
 
 class SkeletalAnimBlender {
   public:
@@ -174,7 +245,7 @@ class SkeletalAnimBlender {
     /** @brief Access the accumulated per-bone transforms.
      * @return Caller-owned result array, or
      * nullptr before initialization. */
-    SkeletalAnimBlendResult* GetResult() const { return mResult; }
+    BoneAnimBlendResult* GetResult() const { return mResult; }
     /** @brief Query the number of active bones.
      * @return Active bone count established during
      * initialization. */
@@ -184,17 +255,38 @@ class SkeletalAnimBlender {
      * workspace. */
     int GetMaxBoneCount() const { return mMaxBoneCount; }
 
+    /** @brief Per-bone difference between two animation results. */
+    struct BoneAnimDiffResult {
+        BoneAnimResult result;
+    };
+
+    void BlendResult(const BoneAnimResult& rResult, int boneIndex, float weight);
+    void BlendResult(const BoneAnimDiffResult& rResult, int boneIndex, float weight);
+    static void CalculateBoneAnimDiff(BoneAnimDiffResult* pResults, int count, SkeletalAnimObj* pAnimObj,
+                                      SkeletalAnimObj* pBaseAnimObj);
+    static void CalculateBoneAnimDiff(BoneAnimDiffResult* pResults, int count, SkeletalAnimObj* pAnimObj);
+
   private:
     struct Impl;
     template <class Converter, BlendMode mode> void ApplyToImpl(SkeletonObj* pSkeleton) const;
     template <class Converter> void ConvertResultRotate();
+    template <class Converter, bool useCallback> void BlendImpl(SkeletalAnimObj* pAnimObj, float weight);
+    template <class Converter>
+    NOINLINE void BlendResultImpl(BoneAnimBlendResult* pResults, const BoneAnimResult* pResult, int boneIndex,
+                         float weight);
+    template <class Converter>
+    void ConvertValidResult(BoneAnimResult* pOut, const BoneAnimBlendResult& rBlend,
+                            const BoneAnimResult& rResult);
+    template <class AnimConverter, class BaseConverter>
+    static void CalculateBoneAnimDiffImpl(BoneAnimResult* pOut, const BoneAnimResult& rAnim,
+                                          const BoneAnimResult& rBase);
     void BlendDiffAnim(SkeletalAnimObj* pAnimObj, SkeletalAnimObj* pBaseAnimObj, float weight);
-    SkeletalAnimBlendResult* mResult = nullptr;
+    BoneAnimBlendResult* mResult = nullptr;
     u16 mBoneCount = 0;
     u16 mMaxBoneCount = 0;
     mutable u32 m_Flags = 0;
     void* m_pWorkMemory = nullptr;
-    void* _18 = nullptr;
+    ICalculateBlendCallback* m_pCallback = nullptr;
 };
 
 static_assert(sizeof(SkeletalAnimBlender) == 0x20);

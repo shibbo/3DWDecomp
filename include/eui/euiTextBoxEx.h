@@ -14,7 +14,7 @@ public:
     void InitializeString(nn::ui2d::BuildResultInformation*, nn::gfx::Device*, const nn::ui2d::BuildArgSet&, const InitializeStringParam&) override;
     u16 SetString(const u16*, u16) override;
     u16 SetString(const u16*, u16, u16) override;
-    void InitializeStringWithTextSearcherInfo(nn::gfx::Device*, const nn::ui2d::BuildArgSet&, const nn::ui2d::TextSearcher::TextInfo&) override;
+    bool InitializeStringWithTextSearcherInfo(nn::gfx::Device*, const nn::ui2d::BuildArgSet&, const nn::ui2d::TextSearcher::TextInfo&) override;
     virtual u16 setStringNoPreproces(const char16_t*, u16);
     virtual u16 doSetString_(const char16_t*, u16, bool*, int, bool, void*);
     virtual void doPreprocess_(sead::WBufferedSafeString*, u32*, u32*, const char16_t*, u32, int, bool, void*);

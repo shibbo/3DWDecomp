@@ -8,6 +8,7 @@ class KoopaChaseStateThrow : public al::NerveStateBase {
 public:
     KoopaChaseStateThrow(KoopaChase* pHost, const al::ActorInitInfo& rInfo, f32 throwSpeed);
     bool tryStartThrow(bool isForce);
+    bool canThrow() const;
 
 private:
     // Remaining state members are not yet reconstructed.

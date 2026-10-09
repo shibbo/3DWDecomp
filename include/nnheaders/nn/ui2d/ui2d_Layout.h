@@ -8,6 +8,7 @@
 #include <nn/types.h>
 #include <nn/ui2d/ui2d_Animator.h>
 #include <nn/ui2d/ui2d_Parts.h>
+#include <nn/ui2d/ui2d_BuildArgSet.h>
 #include <new>
 #include <nn/font/font_Util.h>
 #include <nn/gfx/gfx_Types.h>
@@ -34,25 +35,102 @@ class GroupAnimator;
 class GroupContainer;
 class GroupArrayAnimator;
 struct BuildResultInformation {
-    u64 _0;
+    size_t requiredUi2dConstantBufferSize;
     u64 _8;
 };
 class ControlCreator;
 class TextSearcher;
 class ShaderInfo;
 struct BuildArgSet;
-struct BuildResSet;
 struct ResVectorGraphicsTextureList;
+struct ResCaptureTextureList;
+struct ResTextureList;
+struct ResFontList;
+struct ResMaterialList;
+struct ResShapeInfoList;
+struct ResExtUserDataList;
+struct ResVec2;
+class Parts;
+class CaptureTexture;
+class StateMachine;
+namespace detail {
+class BuildPaneTreeContext;
+struct DynamicTextureShareInfo;
+class DynamicRenderingTexture;
+}  // namespace detail
+
+/** @brief Layout block of a layout resource; the layout name follows it. */
+struct ResLayout {
+    u32 signature;
+    u32 blockSize;
+    u8 originType;
+    u8 padding[3];
+    nn::util::Float2 layoutSize;
+    nn::util::Float2 partsSize;
+
+    /**
+     * @brief Access the null-terminated layout name stored after the block.
+     * @return Layout name.
+     */
+    const char* GetName() const { return reinterpret_cast<const char*>(this + 1); }
+};
 
 class Layout {
   public:
-    struct PartsBuildDataSet;
+    /** @brief Read-only view of the property overrides stored in a parts pane resource. */
+    class PartsBuildDataAccessor {
+      public:
+        explicit PartsBuildDataAccessor(const ResParts* pResParts);
+        const ResPartsProperty* FindPartsPropertyFromName(const char* pName) const;
+        bool IsOverwriting() const;
+        const void* GetPropertyResBlock(const ResPartsProperty* pProperty) const;
+        const ResExtUserDataList* GetExtUserDataListResBlock(bool* pIsOverride,
+                                                             const ResPartsProperty* pProperty) const;
+        const ResExtUserDataList* GetExtUserDataListResBlockRaw(const ResPartsProperty* pProperty) const;
+        const void* GetPartsPaneBasicInfoResBlock(const ResPartsProperty* pProperty) const;
+
+        int m_PropertyCount;
+        const ResPartsProperty* m_pProperties;
+        const ResParts* m_pResParts;
+    };
+
+    /** @brief Parts pane overrides and scaling passed to the build of a parts layout. */
+    class PartsBuildDataSet : public PartsBuildDataAccessor {
+      public:
+        PartsBuildDataSet(Parts* pPartsPane, const ResParts* pResParts, const BuildResSet* pBuildResSet,
+                          const ResVec2* pOriginalSize);
+
+        Parts* m_pPartsPane;
+        const BuildResSet* m_pPropertyBuildResSet;
+        nn::util::Float2 m_Magnify;
+    };
+
+    /** @brief Cursor over the blocks of a layout resource while it is built. */
+    struct LayoutBuildContext {
+        BuildResSet buildResSet;
+        BuildArgSet buildArgSet;
+        int blockIndex;
+        const void* pBlock;
+        const ResExtUserDataList* pExtUserDataList;
+        u32 blockKind;
+        int nextBlockIndex;
+        const void* pNextBlock;
+        Pane* pLastBuiltPane;
+        int groupNestLevel;
+    };
 
     struct BuildOption {
         u64 _0 = 0;
         u64 _8 = 0;
         u64 _10 = 0;
         u64 _18 = 0;
+
+        /**
+         * @brief Read one option flag byte.
+         * @param offset Byte offset of the flag inside the option block.
+         * @return Stored flag.
+         */
+        bool GetFlag(int offset) const { return reinterpret_cast<const bool*>(this)[offset]; }
     };
     NN_RUNTIME_TYPEINFO_BASE();
     Layout();
@@ -65,7 +143,7 @@ class Layout {
     virtual void UnbindAnimation(Pane* pPane);
     virtual void UnbindAllAnimation();
 
-    virtual AnimTransform* BindAnimationAuto(nn::gfx::Device*, const AnimResource&);
+    virtual bool BindAnimationAuto(nn::gfx::Device*, const AnimResource&);
     virtual void Animate();
     virtual void UpdateAnimFrame(f32 frame);
     virtual void AnimateAndUpdateAnimFrame(f32 frame);
@@ -74,8 +152,8 @@ class Layout {
     virtual void SetTagProcessor(nn::font::TagProcessorBase<u16>* pProcessor);
     virtual bool BuildImpl(BuildResultInformation*, nn::gfx::Device*, const void*, ResourceAccessor*,
                            const BuildArgSet&, const PartsBuildDataSet*);
-    virtual bool BuildPartsImpl(BuildResultInformation*, nn::gfx::Device*, const void*,
-                                const PartsBuildDataSet*, BuildArgSet&, BuildResSet&, u32);
+    virtual Pane* BuildPartsImpl(BuildResultInformation*, nn::gfx::Device*, const void*,
+                                 const PartsBuildDataSet*, BuildArgSet&, BuildResSet&, u32);
     virtual Layout* DoCreatePartsLayout_(const char*, const PartsBuildDataSet&, const BuildArgSet&);
     virtual GroupAnimator* DoCreateAndSetupGroupAnimator_(nn::gfx::Device* pDevice, const char* pName,
                                                           const AnimResource& rResource, bool enabled);
@@ -92,6 +170,37 @@ class Layout {
                                                 const ResVectorGraphicsTextureList* pResources,
                                                 const char* pName);
     virtual void CalculateVectorGraphicsTexture(DrawInfo&);
+
+    int AcquireAnimTagNameCount() const;
+    const char* AcquireAnimTagNameByIndex(int index) const;
+    static void FindResPaneByName(const ResPane** ppResPane, const ResExtUserDataList** ppExtUserDataList,
+                                  const void* pLayoutResource, const char* pName, const ResPane* pSkipUntil);
+    void PrepareBuildArgSet(BuildArgSet& rArgSet, const BuildArgSet& rParentArgSet,
+                            const PartsBuildDataSet* pPartsBuildDataSet);
+    void SetByResLayout(LayoutBuildContext& rContext);
+    void BuildControl(LayoutBuildContext& rContext, nn::gfx::Device* pDevice);
+    void BuildPaneByResPane(LayoutBuildContext& rContext, BuildResultInformation* pResult,
+                            nn::gfx::Device* pDevice, const PartsBuildDataSet* pPartsBuildDataSet);
+    void BuildStateMachine(LayoutBuildContext& rContext, nn::gfx::Device* pDevice,
+                           const PartsBuildDataSet* pPartsBuildDataSet);
+    void BuildGroup(LayoutBuildContext& rContext);
+    void AggregateDynamicTextureList(detail::DynamicTextureShareInfo* pShareInfo);
+    void CopyLayoutInstanceImpl(nn::gfx::Device* pDevice, const Layout& rSource, Layout* pPartsLayout,
+                                const char* pRootPaneName);
+    void CopyLayoutInstanceImpl(nn::gfx::Device* pDevice, const Layout& rSource, Layout* pPartsLayout,
+                                const char* pRootPaneName, detail::BuildPaneTreeContext* pContext);
+    void DrawCaptureTexture(nn::gfx::Device* pDevice, DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands);
+    void DiscardDropShadowStaticCachedTexture(const char* pPaneName);
+    void DiscardPaneEffectStaticCachedTexture(const char* pPaneName);
+    void DiscardPaneEffectStaticCachedTextureImpl(detail::DynamicRenderingTexture* pTexture) const;
+    void DiscardPaneEffectStaticCachedTexture();
+    void DrawDropShadowStaticCache(nn::gfx::Device* pDevice, DrawInfo& rDrawInfo,
+                                   nn::gfx::CommandBuffer& rCommands);
+    void DrawPaneEffectStaticCache(nn::gfx::Device* pDevice, DrawInfo& rDrawInfo,
+                                   nn::gfx::CommandBuffer& rCommands);
+    CaptureTexture* FindCaptureTextureByPanePtr(const Pane* pPane);
+    void ResetFirstFrameCaptureUpdatedFlag();
+    bool CompareCopiedInstanceTest(const Layout& rOther) const;
 
     using AllocateFunction = void* (*)(size_t, size_t, void*);
     using FreeFunction = void (*)(void*, void*);
@@ -189,6 +298,35 @@ class Layout {
     }
 
     /**
+     * @brief Allocate and default-construct one object through the layout allocator.
+     * @tparam T Object type to construct.
+     * @param args Arguments forwarded to the constructor of T.
+     * @return Constructed object, or nullptr when allocation fails.
+     */
+    template <typename T, typename... Args>
+    static T* NewObj(Args&&... args) {
+        void* pMem = AllocateMemory(sizeof(T));
+        if (pMem == nullptr) {
+            return nullptr;
+        }
+
+        return new (pMem) T(static_cast<Args&&>(args)...);
+    }
+
+    /**
+     * @brief Destroy one object and release its layout allocation.
+     * @tparam T Object type to destroy.
+     * @param pObject Object returned by NewObj, or nullptr to do nothing.
+     */
+    template <typename T>
+    static void DeleteObj(T* pObject) {
+        if (pObject != nullptr) {
+            pObject->~T();
+            FreeMemory(pObject);
+        }
+    }
+
+    /**
      * @brief Access the layout's root pane.
      * @return Root pane, or nullptr for an empty layout.
      */
@@ -225,7 +363,13 @@ class Layout {
     struct DynamicTextureList {
         int captureCount;
         int vectorGraphicsCount;
-        void** pTextures;
+        detail::DynamicRenderingTexture** pTextures;
+
+        /**
+         * @brief Count every dynamic texture stored in the list.
+         * @return Number of capture and vector-graphics textures.
+         */
+        int GetTotalCount() const { return captureCount + vectorGraphicsCount; }
     };
     nn::util::IntrusiveListNode mAnimTransformList;
     Pane* mRootPane;

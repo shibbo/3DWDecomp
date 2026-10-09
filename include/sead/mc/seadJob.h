@@ -22,4 +22,20 @@ public:
 protected:
     Delegate<T> mDelegate;
 };
+
+template <typename T, typename A1>
+class Job1 : public Job
+{
+public:
+    Job1(T* instance, void (T::*fn)(A1), A1 arg) : mDelegate(instance, fn), mArg(arg) {}
+    void invoke() override
+    {
+        IDelegate1<A1>& delegate = mDelegate;
+        delegate(mArg);
+    }
+
+protected:
+    Delegate1<T, A1> mDelegate;
+    A1 mArg;
+};
 }  // namespace sead

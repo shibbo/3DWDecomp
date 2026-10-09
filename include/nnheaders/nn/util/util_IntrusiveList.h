@@ -96,6 +96,12 @@ public:
             return *this;
         }
 
+        const_iterator operator++(int) {
+            const_iterator temporary(*this);
+            ++(*this);
+            return temporary;
+        }
+
         const_iterator& operator--() {
             m_pNode = m_pNode->GetPrev();
             return *this;

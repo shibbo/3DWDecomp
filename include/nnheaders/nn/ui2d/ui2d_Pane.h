@@ -28,9 +28,14 @@ struct Size {
 };
 struct ResPane;
 struct ResExtUserData;
+/** @brief Kind of a system-defined extended user data entry attached to a pane. */
+enum PaneSystemDataType : int {
+    PaneSystemDataType_StateMachine = 19,
+};
 struct BuildArgSet;
 namespace detail {
 class BuildPaneTreeContext;
+class PaneEffect;
 class PaneBase {
 public:
     PaneBase();
@@ -55,6 +60,7 @@ public:
     };
     Pane();
     Pane(const Pane& rOther) { CopyImpl(rOther, nullptr, nullptr, nullptr); }
+    Pane(const Pane& rOther, nn::gfx::Device* pDevice, Layout* pLayout);
     Pane(const ResPane*, const BuildArgSet&);
     Pane(BuildResultInformation*, nn::gfx::Device*, const ResPane*, const BuildArgSet&);
     ~Pane() override = default;
@@ -99,7 +105,20 @@ public:
     void PrependChild(Pane*);
     void InsertChild(Pane*, Pane*);
     void RemoveChild(Pane*);
-    void GetVertexPos() const;
+    nn::util::Float2 GetVertexPos() const;
+    bool CheckInvisibleAndUpdateConstantBufferReady();
+    detail::PaneEffect* GetPaneEffectInstance() const;
+    const void* GetSystemExtDataByType(PaneSystemDataType type) const;
+    void AddDynamicSystemExtUserData(PaneSystemDataType type, const void* pData, int dataSize);
+    bool IsPaneEffectStaticCacheRenderingNeeded() const;
+    void UpdateMaterialConstantBufferForEffectCapture(const DrawInfo& rDrawInfo);
+    void CalculateCaptureProjectionMatrix(nn::util::MatrixT4x4fType& rMtx) const;
+    void CalculateCaptureRootMatrix(nn::util::MatrixT4x3fType& rMtx,
+                                    const DrawInfo& rDrawInfo) const;
+    void UpdateRenderStateForPaneEffectCapture(nn::gfx::CommandBuffer& rCommands,
+                                               const DrawInfo& rDrawInfo);
+    const ResExtUserData* GetExtUserDataArray() const;
+    int GetExtUserDataCount() const;
     const nn::font::Rectangle GetPaneRect() const;
 
     static Pane* FromLink(nn::util::IntrusiveListNode* node) {
@@ -113,6 +132,14 @@ public:
     Pane* GetParent() const { return mParent; }
     const char* GetName() const { return mPanelName; }
     const float* GetGlobalMtx() const { return mGlobalMtx; }
+    const nn::util::MatrixT4x3fType& GetGlobalMatrix() const {
+        return *reinterpret_cast<const nn::util::MatrixT4x3fType*>(mGlobalMtx);
+    }
+    const Size& GetSize() const { return *reinterpret_cast<const Size*>(&mSizeX); }
+    u8 GetGlobalAlpha() const { return mAlphaInfluence; }
+    bool IsPaneEffectEnabled() const { return (mSystemFlags & 2) != 0; }
+    /** @brief Marks the constant buffer of the pane as not yet built for this frame. */
+    void ResetConstantBufferReady() { mFlagEx &= ~0x10; }
     float GetPositionX() const { return mPositionX; }
     float GetPositionY() const { return mPositionY; }
     float GetSizeX() const { return mSizeX; }
@@ -135,6 +162,13 @@ public:
         } else {
             mFlags &= ~1;
         }
+    }
+
+    /** @brief Sets the pane size and marks the global matrix dirty. */
+    void SetSize(const Size& rSize) {
+        mSizeX = rSize.width;
+        mSizeY = rSize.height;
+        mFlags |= 0x10;
     }
 
     // Sets the X/Y position and marks the global matrix dirty.
@@ -160,8 +194,14 @@ public:
     u8 mAlpha;
     u8 mAlphaInfluence;
     u8 mOriginFlags;
-    u32 _5C;
-    u64 _60;
+    union {
+        u32 _5C;
+        u8 mFlagEx;
+    };
+    u16 _60;
+    u8 mSystemFlags;
+    u8 _63;
+    u32 _64;
     Layout* mLayout;
     float mGlobalMtx[12];
     u64 _A0;
@@ -169,4 +209,8 @@ public:
     char mPanelName[0x19];
     char mUserData[9];
 };
+
+namespace detail {
+void CalculateCaptureRootMatrix(nn::util::MatrixT4x3fType& rMtx, const DrawInfo& rDrawInfo);
+}  // namespace detail
 }  // namespace nn::ui2d

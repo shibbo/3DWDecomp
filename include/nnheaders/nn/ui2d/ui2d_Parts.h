@@ -6,11 +6,29 @@
 #pragma once
 
 #include <nn/ui2d/ui2d_Pane.h>
+#include <nn/ui2d/ui2d_Resources.h>
 
 namespace nn {
 namespace ui2d {
 struct BuildArgSet;
-struct ResParts;
+
+/** @brief Per-pane override entry of a parts pane resource. */
+struct ResPartsProperty {
+    char name[24];
+    u8 usageFlag;
+    u8 basicUsageFlag;
+    u8 materialUsageFlag;
+    u8 systemExtUserDataOverrideFlag;
+    u32 propertyOffset;
+    u32 extUserDataOffset;
+    u32 paneBasicInfoOffset;
+};
+
+/** @brief Parts pane block; ResPartsProperty entries and the layout name follow it. */
+struct ResParts : ResPane {
+    u32 propertyCount;
+    nn::util::Float2 magnify;
+};
 
 class Parts : public nn::ui2d::Pane {
 public:

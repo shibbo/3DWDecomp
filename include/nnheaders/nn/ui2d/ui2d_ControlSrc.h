@@ -11,6 +11,12 @@ struct ResExtUserDataList {
 class ControlSrc {
 public:
     ControlSrc();
+    /**
+     * @brief Construct a control description directly from a control block.
+     * @param pResource Control block of a layout resource.
+     * @param pExtData Extended user data following the block, or nullptr.
+     */
+    ControlSrc(const void* pResource, const ResExtUserDataList* pExtData) { Initialize(pResource, pExtData); }
     void Initialize(const void* pResource, const ResExtUserDataList* pExtData);
     const char* GetFunctionalPaneName(int index) const;
     const char* FindFunctionalPaneName(const char* pName) const;

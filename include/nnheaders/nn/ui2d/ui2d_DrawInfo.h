@@ -20,6 +20,21 @@ public:
     void SetProjectionMtx(const nn::util::MatrixT4x4fType& rProjection);
     void SetViewMtx(const nn::util::MatrixT4x3fType& rView) { m_ViewMtx = rView; }
     void SetGraphicsResource(const GraphicsResource* pResource) { m_pGraphicsResource = pResource; }
+    const GraphicsResource* GetGraphicsResource() const { return m_pGraphicsResource; }
+    nn::font::GpuBuffer* GetUi2dConstantBuffer() const { return m_pConstantBuffer; }
+
+    /** @brief Function called after a pane has calculated its constant buffers. */
+    using PostCalculateCallback = void (*)(DrawInfo& rDrawInfo, Pane* pPane, void* pUserData);
+
+    /** @return The callback stored in the first word of _168, or nullptr. */
+    PostCalculateCallback GetPostCalculateCallback() const {
+        return *reinterpret_cast<const PostCalculateCallback*>(&_168[0]);
+    }
+
+    /** @return The user data passed to the post-calculate callback. */
+    void* GetPostCalculateCallbackUserData() const {
+        return *reinterpret_cast<void* const*>(&_168[8]);
+    }
     void ConfigureBeforeDrawing(Layout* pLayout);
     void ConfigureAfterDrawing();
     void ResetCurrentShader();
@@ -57,10 +72,16 @@ public:
     const nn::gfx::DepthStencilState* m_pDepthStencilState;
     const nn::gfx::RasterizerState* m_pRasterizerState;
     unsigned char _168[0x20];
-    unsigned char _188[3];
+    union {
+        unsigned char _188[3];
+        u8 m_TexCoordSrc[3];
+    };
     bool mModelViewLoaded;
     bool mVertexBufferDirty;
-    bool _18D;
+    union {
+        bool _18D;
+        s8 m_TexMapNum;
+    };
     u8 mFlags;
     const ShaderInfo* m_pCurrentShader;
     u16 mCurrentShaderVariation;

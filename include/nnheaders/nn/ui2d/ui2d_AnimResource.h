@@ -20,7 +20,51 @@ struct ResAnimationShareBlock {
     u16 infoCount;
 };
 struct ResExtUserDataList;
-struct ResAnimationShareInfo;
+
+/** @brief Key of a hermite animation curve. */
+struct ResHermiteKey {
+    float frame;
+    float value;
+    float slope;
+};
+
+/** @brief One animated channel of an animation info block. */
+struct ResAnimationTarget {
+    u8 id;
+    u8 target;
+    u8 curveType;
+    u8 padding;
+    u16 keyCount;
+    u8 padding2[2];
+    u32 keysOffset;
+
+    /** @return The keys of the curve, stored relative to this target. */
+    const ResHermiteKey* GetKeys() const {
+        return reinterpret_cast<const ResHermiteKey*>(reinterpret_cast<const u8*>(this) + keysOffset);
+    }
+};
+
+/** @brief Animated channels of one animation kind. */
+struct ResAnimationInfo {
+    u32 kind;
+    u8 count;
+    u8 padding[3];
+    u32 targetOffsets[1];
+
+    /** @return The target at index, stored relative to this block. */
+    const ResAnimationTarget* GetTarget(int index) const {
+        return reinterpret_cast<const ResAnimationTarget*>(reinterpret_cast<const u8*>(this) +
+                                                           targetOffsets[index]);
+    }
+};
+
+float GetHermiteCurveValue(float frame, const ResHermiteKey* pKeys, int keyCount);
+/** @brief Animation sharing entry: a source pane's animation is copied to a group's panes. */
+struct ResAnimationShareInfo {
+    char srcPaneName[25];
+    char targetGroupName[27];
+};
+class Group;
 struct ResAnimationGroup { char name[0x24]; };
 class AnimResource {
 public:
@@ -35,6 +79,7 @@ public:
     const char* GetTagName() const;
     u16 GetGroupCount() const;
     const ResAnimationGroup* GetGroupArray() const;
+    int CalculateAnimationCount(Group* pGroup, bool isDescendingBind) const;
     const void* mFile;
     const ResAnimationBlock* mAnimation;
     const ResAnimationTagBlock* mTag;

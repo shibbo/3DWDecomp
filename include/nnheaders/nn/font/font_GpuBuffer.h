@@ -64,6 +64,20 @@ public:
         return offset;
     }
 
+    /**
+     * @brief Reserves @p size bytes without aligning them.
+     * @return Offset of the reserved range.
+     */
+    uint64_t AllocateWithoutAlignment(size_t size) {
+        if (m_Flags & Flag_AtomicAllocation) {
+            return reinterpret_cast<std::atomic<uint64_t>*>(m_pAtomicAllocatedSize)->fetch_add(size);
+        }
+
+        uint64_t offset = m_AllocatedSize;
+        m_AllocatedSize += size;
+        return offset;
+    }
+
     bool IsUnallocated() const { return (m_Flags & Flag_Unallocated) != 0; }
     size_t GetBufferAlignment() const { return m_BufferAlignment; }
     void* GetMappedPointer() const { return m_pMappedPointer; }

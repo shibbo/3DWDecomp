@@ -21,6 +21,18 @@ public:
     void exeWait();
     void setChild(GeneratorBoxChild*);
     void setParent(GeneratorBoxChild*);
+
+    /**
+     * @brief Set the generator box this block belongs to.
+     * @param pHost The owning generator box.
+     */
+    void setHost(GeneratorBox* pHost) { mHost = pHost; }
+
+    /**
+     * @brief Get the block stacked on top of this one.
+     * @return The next block in the column, or nullptr for the last one.
+     */
+    GeneratorBoxChild* getChild() const { return mChild; }
 private:
     GeneratorBox* mHost = nullptr;
     GeneratorBoxChild* mChild = nullptr;

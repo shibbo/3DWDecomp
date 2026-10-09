@@ -141,6 +141,12 @@ class StageDataHolder {
      */
     void setSkipStartDemo(bool isSkip) { mUnknown16 = isSkip; }
 
+    /**
+     * @brief Read the remaining stage timer frames.
+     * @return The remaining timer frames.
+     */
+    int getStageTimerFrame() const { return mTimerFrames; }
+
   private:
     /**
      * @brief Clamp the stage timer to its supported range.

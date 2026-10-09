@@ -49,7 +49,7 @@ public:
     void AcquireCommonSamplerSlot(AcquireSamplerSlot pAcquireSamplerSlot, void* pUserData);
     void ReleaseCommonSamplerSlot(ReleaseSamplerSlot pReleaseSamplerSlot, void* pUserData);
 
-    void Draw(nn::gfx::CommandBuffer& rCommandBuffer, const DispStringBuffer& rBuffer) const;
+    virtual void Draw(nn::gfx::CommandBuffer& rCommandBuffer, const DispStringBuffer& rBuffer) const;
 
     const nn::gfx::Shader* GetVertexShader(int variation) const;
     const nn::gfx::Shader* GetPixelShader(int variation) const;

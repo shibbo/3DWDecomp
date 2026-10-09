@@ -60,6 +60,7 @@ public:
     }
 
     f32 interpolateToF32(f32 t) override;
+    f32 interpolateToF32(f32 t) const;
     Vector2f interpolateToVec2f(f32 t) override;
 
     CurveType getCurveType() const { return CurveType(mInfo.curveType); }

@@ -35,6 +35,22 @@ public:
     void SetShader(nn::gfx::CommandBuffer&, int) const;
     int GetTextureSlotCount() const;
 
+    /**
+     * @param variation Shader variation.
+     * @return Constant buffer slot of the vertex shader of variation.
+     */
+    int GetVertexShaderSlot(int variation) const { return m_pVertexShaderSlots[variation]; }
+    /**
+     * @param variation Shader variation.
+     * @return Constant buffer slot of the geometry shader of variation.
+     */
+    int GetGeometryShaderSlot(int variation) const { return m_pGeometryShaderSlots[variation]; }
+    /**
+     * @param variation Shader variation.
+     * @return Constant buffer slot of the pixel shader of variation.
+     */
+    int GetPixelShaderSlot(int variation) const { return m_pPixelShaderSlots[variation]; }
+
     void InitializeWithVariationTable(nn::gfx::Device* pDevice, void* pShader,
                                       const void* pVariationTable) {
         InitializeWithVariationTable(pDevice, pShader, pVariationTable, nullptr, 0, 0);
