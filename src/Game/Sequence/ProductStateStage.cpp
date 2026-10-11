@@ -18,7 +18,12 @@
 #include "System/GameDataHolderWriter.hpp"
 #include <thread/seadThread.h>
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateStage, LoadStage);
 #define STAGE_END_NERVE(Name)                                                                      \
     class ProductStateStageNrv##Name : public al::Nerve {                                          \
@@ -152,8 +157,8 @@ void ProductStateStage::createAndStartInitStageScene() {
     al::StringTmp<256> command;
     mpStartParam->createCommandString(&command);
     mpScene = new StageScene(mpWipeKeeper);
-    al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, name, 1, command.cstr(),
-                                 nullptr);
+    al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit, name, 1,
+                                 command.cstr(), nullptr);
 }
 void ProductStateStage::exeStage() {
     if (al::isFirstStep(this)) {

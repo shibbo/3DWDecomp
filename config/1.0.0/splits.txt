@@ -3221,7 +3221,7 @@ src/Game/Sequence/ProductStateSingleModeEnding.cpp:
     .text   start:0x004E5770 end:0x004E63B0
 src/Game/Sequence/ProductStateSingleOpeningDemo.cpp:
     .text   start:0x004E63B0 end:0x004E6B00
-src/Game/Sequence/ProductStateStage.cpp:
+src/Game/Sequence/ProductStateStage.cpp: done
     .text   start:0x004E6B00 end:0x004E78F0
 src/Game/Sequence/ProductStateTitle.cpp:
     .text   start:0x004E78F0 end:0x004E8A70
