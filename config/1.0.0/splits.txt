@@ -5081,9 +5081,9 @@ src/al/Project/Screen/ScreenCapture.cpp: done
     .text   start:0x008A7EA0 end:0x008A841C
 src/al/Library/Screen/ScreenFunction.cpp:
     .text   start:0x008A8420 end:0x008AA454
-src/al/Library/Sequence/Sequence.cpp:
+src/al/Library/Sequence/Sequence.cpp: done
     .text   start:0x008AA460 end:0x008AAD5C
-src/al/Project/Scene/SceneCreator.cpp:
+src/al/Project/Scene/SceneCreator.cpp: done
     .text   start:0x008AAD60 end:0x008AB064
 src/al/Project/Scene/SceneInitInfo.cpp: done
     .text   start:0x008AB070 end:0x008AB180
