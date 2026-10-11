@@ -7,11 +7,16 @@
 #include "Library/File/FileUtil.hpp"
 #include "Library/Resource/ResourceFunction.hpp"
 #include "Library/Thread/AsyncFunctorThread.hpp"
-#include "Project/Base/StringUtil.hpp"
 #include "Project/Audio/System/AudioSystem.hpp"
+#include "Project/Base/StringUtil.hpp"
 
 namespace {
-const int cLoadThreadPriority = sead::Thread::cDefaultPriority + 5;
+struct ThreadPriorities {
+    int resourceLoad;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 5,
+                                            sead::Thread::cDefaultPriority};
 
 /**
  * @brief Load a pair of resident sound-effect and music banks.
@@ -26,19 +31,19 @@ inline void loadAudioBanks(const al::AudioSystemInfo* pInfo, const char* pSeFile
     alAudioSystemFunction::loadResourceFromUserManagementFile(
         pBgmFile, pInfo->getSeadAudioPlayerForBgm(), true);
 }
-}
+} // namespace
 
 /**
  * @brief Create the worker used to load resident sequence resources.
  * @param pAudioSystemInfo Audio players used by title resource loading.
  * @param pGameDataHolder Game-data holder retained by the loader.
  */
-ProductAsyncResourceLoader::ProductAsyncResourceLoader(
-    const al::AudioSystemInfo* pAudioSystemInfo, GameDataHolder* pGameDataHolder)
+ProductAsyncResourceLoader::ProductAsyncResourceLoader(const al::AudioSystemInfo* pAudioSystemInfo,
+                                                       GameDataHolder* pGameDataHolder)
     : mpAudioSystemInfo(pAudioSystemInfo), mpGameDataHolder(pGameDataHolder) {
-    mpThread = new al::AsyncFunctorThread("Async Resource Loader",
-                                         al::Functor(this, &ProductAsyncResourceLoader::threadFunc),
-                                         cLoadThreadPriority, 0x20000);
+    mpThread = new al::AsyncFunctorThread(
+        "Async Resource Loader", al::Functor(this, &ProductAsyncResourceLoader::threadFunc),
+        cThreadPriorities.resourceLoad, 0x20000);
 }
 
 /** @brief Load the requested resource category and record completion. */
@@ -100,6 +105,4 @@ void ProductAsyncResourceLoader::tryStartCourseSelectLoad() {
 }
 
 /** @brief Allow the course-select resource category to be loaded again. */
-void ProductAsyncResourceLoader::resetCourseSelectLoad() {
-    mIsCourseSelectLoaded = false;
-}
+void ProductAsyncResourceLoader::resetCourseSelectLoad() { mIsCourseSelectLoaded = false; }

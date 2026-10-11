@@ -31817,7 +31817,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004DFF20			FALSE	_ZN26ProductAsyncResourceLoader21resetCourseSelectLoadEv	ProductAsyncResourceLoader::resetCourseSelectLoad()	
 0x71004DFF30			FALSE	_ZNK2al10FunctorV0MIP26ProductAsyncResourceLoaderMS1_FvvEEclEv	al::FunctorV0M<ProductAsyncResourceLoader*, void (ProductAsyncResourceLoader::*)()>::operator()() const	
 0x71004DFF50			FALSE	_ZNK2al10FunctorV0MIP26ProductAsyncResourceLoaderMS1_FvvEE5cloneEv	al::FunctorV0M<ProductAsyncResourceLoader*, void (ProductAsyncResourceLoader::*)()>::clone() const	
-0x71004DFFA0			FALSE	sub_71004DFFA0	sub_71004DFFA0	
+0x71004DFFA0			FALSE	_GLOBAL__sub_I_ProductAsyncResourceLoader.cpp	_GLOBAL__sub_I_ProductAsyncResourceLoader.cpp	
 0x71004DFFC0		ProductSequence.o	FALSE	_ZN15ProductSequenceC1EPKc	ProductSequence::ProductSequence(char const*)	object (class)
 0x71004E0060			FALSE	_ZN15ProductSequence15adjustStageSizeEPKciPN2al26MemorySceneHeapCustomAllocE	ProductSequence::adjustStageSize(char const*, int, al::MemorySceneHeapCustomAlloc*)	
 0x71004E00F0			FALSE	_ZThn176_N15ProductSequence15adjustStageSizeEPKciPN2al26MemorySceneHeapCustomAllocE	non-virtual thunk to ProductSequence::adjustStageSize(char const*, int, al::MemorySceneHeapCustomAlloc*)	
