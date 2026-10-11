@@ -31899,7 +31899,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E22D0			FALSE	_ZNK12_GLOBAL__N_136ProductStateAfterEndingEventNrvEvent7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateAfterEndingEventNrvEvent::execute(al::NerveKeeper*) const	
 0x71004E2350			FALSE	_ZNK12_GLOBAL__N_138ProductStateAfterEndingEventNrvDestroy7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateAfterEndingEventNrvDestroy::execute(al::NerveKeeper*) const	
 0x71004E23F0			FALSE	_ZNK12_GLOBAL__N_134ProductStateAfterEndingEventNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateAfterEndingEventNrvEnd::execute(al::NerveKeeper*) const	
-0x71004E2400			FALSE	sub_71004E2400	sub_71004E2400	
+0x71004E2400			FALSE	_GLOBAL__sub_I_ProductStateAfterEndingEvent.cpp	_GLOBAL__sub_I_ProductStateAfterEndingEvent.cpp	
 0x71004E2420		ProductStateBoot.o	FALSE	_ZN16ProductStateBootC1EP15ProductSequenceRKN2al16SequenceInitInfoEP15StageWipeKeeperP26ProductAsyncResourceLoaderPNS2_21ScreenCaptureExecutorE	ProductStateBoot::ProductStateBoot(ProductSequence*, al::SequenceInitInfo const&, StageWipeKeeper*, ProductAsyncResourceLoader*, al::ScreenCaptureExecutor*)	object (class)
 0x71004E24B0			FALSE	_ZN16ProductStateBootD2Ev	ProductStateBoot::~ProductStateBoot()	
 0x71004E2530			FALSE	_ZThn32_N16ProductStateBootD1Ev	non-virtual thunk to ProductStateBoot::~ProductStateBoot()	

@@ -1,23 +1,29 @@
 #include "Sequence/ProductStateAfterEndingEvent.hpp"
 
-#include <thread/seadThread.h>
-#include "Scene/CourseSelectScene.hpp"
-#include "Sequence/ProductSequence.hpp"
-#include "System/GameDataHolder.hpp"
-#include "Stage/StateResultAndSceneInit.hpp"
 #include "Library/Memory/HeapUtil.hpp"
 #include "Library/Memory/SceneHeapSetter.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
+#include "Scene/CourseSelectScene.hpp"
+#include "Sequence/ProductSequence.hpp"
+#include "Stage/StateResultAndSceneInit.hpp"
+#include "System/GameDataHolder.hpp"
+#include <thread/seadThread.h>
 
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+// Keep both priorities together, as in the original sequence thread settings.
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateAfterEndingEvent, Load);
 NERVE_DECL(ProductStateAfterEndingEvent, Event);
 NERVE_DECL(ProductStateAfterEndingEvent, Destroy);
 NERVE_DECL(ProductStateAfterEndingEvent, End);
 NERVES_MAKE_NOSTRUCT(ProductStateAfterEndingEvent, Load, Event, Destroy, End)
-}
+} // namespace
 
 /**
  * @brief Create the post-ending event state and its result/loading substate.
@@ -29,17 +35,17 @@ NERVES_MAKE_NOSTRUCT(ProductStateAfterEndingEvent, Load, Event, Destroy, End)
  * @param pCapture Screen capture service.
  * @param pWipe Result curtain wipe.
  */
-ProductStateAfterEndingEvent::ProductStateAfterEndingEvent(ProductSequence* pSequence,
-    ProductStageStartParam* pStartParam, StageWipeKeeper* pWipeKeeper,
+ProductStateAfterEndingEvent::ProductStateAfterEndingEvent(
+    ProductSequence* pSequence, ProductStageStartParam* pStartParam, StageWipeKeeper* pWipeKeeper,
     const al::SequenceInitInfo& rInfo, const al::LayoutInitInfo& rLayoutInfo,
     al::ScreenCaptureExecutor* pCapture, WipeCurtainResult* pWipe)
     : al::HostStateBase<ProductSequence>("コース選択ステート", pSequence),
       mpStartParam(pStartParam), mpWipeKeeper(pWipeKeeper) {
-    al::initSceneCreator(this, rInfo,
-                         reinterpret_cast<al::GameDataHolderBase*>(pSequence->getGameDataHolderBase()),
-                         pSequence->getAudioDirector(), pCapture, nullptr);
-    mpResultState = new StateResultAndSceneInit(this, rInfo, rLayoutInfo,
-        pSequence->getGameDataHolder(), pWipe, nullptr, nullptr);
+    al::initSceneCreator(
+        this, rInfo, reinterpret_cast<al::GameDataHolderBase*>(pSequence->getGameDataHolderBase()),
+        pSequence->getAudioDirector(), pCapture, nullptr);
+    mpResultState = new StateResultAndSceneInit(
+        this, rInfo, rLayoutInfo, pSequence->getGameDataHolder(), pWipe, nullptr, nullptr);
 }
 
 /** @brief Detach and delete any post-ending event scene still owned by the state. */
@@ -71,8 +77,8 @@ void ProductStateAfterEndingEvent::exeLoad() {
         al::createSceneHeap("CourseSelectStage");
         al::SceneHeapSetter heapSetter;
         mpScene = new CourseSelectScene(true);
-        al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, "CourseSelectStage",
-                                    -1, "", nullptr);
+        al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit,
+                                     "CourseSelectStage", -1, "", nullptr);
     }
     if (al::updateNerveState(this)) {
         getHost()->offDrawScreenCapture();
@@ -115,12 +121,14 @@ void ProductStateAfterEndingEvent::exeDestroy() {
 /** @brief Remain idle after post-ending event teardown. */
 void ProductStateAfterEndingEvent::exeEnd() {}
 
-/** @brief Check whether the result/loading substate is active. @return Whether loading is active. */
+/** @brief Check whether the result/loading substate is active. @return Whether loading is active.
+ */
 bool ProductStateAfterEndingEvent::isResult() {
     return al::isNerve(this, &NrvProductStateAfterEndingEventLoad);
 }
 
-/** @brief Check whether result effects should be drawn. @return Whether loading has passed step one. */
+/** @brief Check whether result effects should be drawn. @return Whether loading has passed step
+ * one. */
 bool ProductStateAfterEndingEvent::isEffectDraw() {
     if (al::isNerve(this, &NrvProductStateAfterEndingEventLoad) && al::isGreaterStep(this, 1))
         return true;
