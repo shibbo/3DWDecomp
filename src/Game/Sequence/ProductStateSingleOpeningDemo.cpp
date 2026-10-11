@@ -1,31 +1,37 @@
 #include "Sequence/ProductStateSingleOpeningDemo.hpp"
 
-#include <thread/seadThread.h>
-#include "Scene/DemoSceneSingleMode.hpp"
-#include "Sequence/ProductSequence.hpp"
-#include "System/GameDataHolder.hpp"
-#include "System/GameDataHolderWriter.hpp"
-#include "System/SaveDataAccessFunction.hpp"
-#include "System/Data/SingleModeDataFunction.hpp"
-#include "Stage/StageWipeKeeper.hpp"
-#include "Library/System/GameSystemInfo.hpp"
-#include "Library/Controller/GamePadSystem.hpp"
 #include "Library/Bgm/BgmLineFunction.hpp"
-#include "Library/Se/Function/SeFunction.hpp"
+#include "Library/Controller/GamePadSystem.hpp"
 #include "Library/Memory/HeapUtil.hpp"
 #include "Library/Memory/SceneHeapSetter.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
+#include "Library/Se/Function/SeFunction.hpp"
+#include "Library/System/GameSystemInfo.hpp"
+#include "Scene/DemoSceneSingleMode.hpp"
+#include "Sequence/ProductSequence.hpp"
+#include "Stage/StageWipeKeeper.hpp"
+#include "System/Data/SingleModeDataFunction.hpp"
+#include "System/GameDataHolder.hpp"
+#include "System/GameDataHolderWriter.hpp"
+#include "System/SaveDataAccessFunction.hpp"
+#include <thread/seadThread.h>
 
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+// Keep both priorities together, as in the original sequence thread settings.
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateSingleOpeningDemo, Load);
 NERVE_DECL(ProductStateSingleOpeningDemo, Wait);
 NERVE_DECL(ProductStateSingleOpeningDemo, FadeOut);
 NERVE_DECL(ProductStateSingleOpeningDemo, Destroy);
 NERVE_DECL(ProductStateSingleOpeningDemo, End);
 NERVES_MAKE_NOSTRUCT(ProductStateSingleOpeningDemo, Load, Wait, FadeOut, Destroy, End)
-}
+} // namespace
 
 /**
  * @brief Create the Bowser's Fury opening state and scene creator.
@@ -35,8 +41,9 @@ NERVES_MAKE_NOSTRUCT(ProductStateSingleOpeningDemo, Load, Wait, FadeOut, Destroy
  * @param pChecker Controller connection checker to retain.
  */
 ProductStateSingleOpeningDemo::ProductStateSingleOpeningDemo(ProductSequence* pSequence,
-    StageWipeKeeper* pWipeKeeper, const al::SequenceInitInfo& rInfo,
-    ControllerConnectChecker* pChecker)
+                                                             StageWipeKeeper* pWipeKeeper,
+                                                             const al::SequenceInitInfo& rInfo,
+                                                             ControllerConnectChecker* pChecker)
     : al::HostStateBase<ProductSequence>("SingleModeOpening", pSequence),
       mpControllerChecker(pChecker), mpWipeKeeper(pWipeKeeper),
       mpGamePadSystem(rInfo.mGameSystemInfo->getGamePadSystem()) {
@@ -71,8 +78,8 @@ void ProductStateSingleOpeningDemo::exeLoad() {
         al::createSceneHeap(nullptr);
         al::SceneHeapSetter heapSetter;
         mpScene = new DemoSceneSingleMode(true, false);
-        al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, "DemoSingleModeOpeningStage",
-                                    -1, "", nullptr);
+        al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit,
+                                     "DemoSingleModeOpeningStage", -1, "", nullptr);
         getHost()->getGameDataHolder()->startOpening();
         SaveDataAccessFunction::startSaveDataWriteSync(getHost()->getGameDataHolder(), false);
     }
@@ -98,7 +105,8 @@ void ProductStateSingleOpeningDemo::exeWait() {
         al::setNerve(this, &NrvProductStateSingleOpeningDemoFadeOut);
     } else if (!mpScene->isAlive()) {
         if (mpScene->isSkipped()) {
-            SingleModeDataFunction::setDemoWasCancelled(GameDataHolderWriter(getHost()->getGameDataHolder()), true);
+            SingleModeDataFunction::setDemoWasCancelled(
+                GameDataHolderWriter(getHost()->getGameDataHolder()), true);
             al::stopBgm(mpScene, "Stage", 30, -1);
             alSeFunction::stopAllSe(mpScene->getAudioDirector(), 30, nullptr);
         }
