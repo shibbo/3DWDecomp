@@ -46,6 +46,8 @@ public:
     bool isDisposable() const override;
     void refreshDebugMenu();
     GameDataHolder* getGameDataHolderBase() const;
+    /** @brief Get the game data holder. @return Shared game data. */
+    GameDataHolder* getGameDataHolder() const { return mGameDataHolder; }
     void init(const al::SequenceInitInfo& rInfo) override;
     void update() override;
     void drawMain() const override;

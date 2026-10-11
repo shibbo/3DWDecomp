@@ -31996,9 +31996,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E4250			FALSE	_ZThn32_NK21ProductStateLuigiBros15getSceneCreatorEv	non-virtual thunk to ProductStateLuigiBros::getSceneCreator() const	
 0x71004E4260			FALSE	_ZThn32_N21ProductStateLuigiBros15setSceneCreatorEPN2al12SceneCreatorE	non-virtual thunk to ProductStateLuigiBros::setSceneCreator(al::SceneCreator*)	
 0x71004E4270			FALSE	_ZNK12_GLOBAL__N_133ProductStateLuigiBrosNrvLoadStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateLuigiBrosNrvLoadStage::execute(al::NerveKeeper*) const	
-0x71004E4280			FALSE	nullsub_285	nullsub_285	
-0x71004E4290			FALSE	sub_71004E4290	sub_71004E4290	
-0x71004E42B0			FALSE	sub_71004E42B0	sub_71004E42B0	
+0x71004E4280			FALSE	_ZNK12_GLOBAL__N_127ProductStateLuigiBrosNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateLuigiBrosNrvEnd::execute(al::NerveKeeper*) const	
+0x71004E4290			FALSE	_ZNK12_GLOBAL__N_129ProductStateLuigiBrosNrvStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateLuigiBrosNrvStage::execute(al::NerveKeeper*) const	
+0x71004E42B0			FALSE	_ZNK12_GLOBAL__N_136ProductStateLuigiBrosNrvDestroyStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateLuigiBrosNrvDestroyStage::execute(al::NerveKeeper*) const	
 0x71004E4310		ProductStateOpeningDemo.o	FALSE	_ZN23ProductStateOpeningDemoC2EP15ProductSequenceRKN2al16SequenceInitInfoE	ProductStateOpeningDemo::ProductStateOpeningDemo(ProductSequence*, al::SequenceInitInfo const&)	object (class)
 0x71004E4380			FALSE	_ZN23ProductStateOpeningDemoD2Ev	ProductStateOpeningDemo::~ProductStateOpeningDemo()	
 0x71004E4400			FALSE	_ZThn32_N23ProductStateOpeningDemoD1Ev	non-virtual thunk to ProductStateOpeningDemo::~ProductStateOpeningDemo()	
