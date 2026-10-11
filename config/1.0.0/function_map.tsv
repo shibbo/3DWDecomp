@@ -31917,10 +31917,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E2940			FALSE	_ZThn32_NK16ProductStateBoot15getSceneCreatorEv	non-virtual thunk to ProductStateBoot::getSceneCreator() const	
 0x71004E2950			FALSE	_ZThn32_N16ProductStateBoot15setSceneCreatorEPN2al12SceneCreatorE	non-virtual thunk to ProductStateBoot::setSceneCreator(al::SceneCreator*)	
 0x71004E2960			FALSE	_ZNK12_GLOBAL__N_123ProductStateBootNrvLoad7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateBootNrvLoad::execute(al::NerveKeeper*) const	
-0x71004E2970			FALSE	sub_71004E2970	sub_71004E2970	
-0x71004E29E0			FALSE	sub_71004E29E0	sub_71004E29E0	
-0x71004E2A30			FALSE	sub_71004E2A30	sub_71004E2A30	
-0x71004E2AD0			FALSE	nullsub_280	nullsub_280	
+0x71004E2970			FALSE	_ZNK12_GLOBAL__N_123ProductStateBootNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateBootNrvWait::execute(al::NerveKeeper*) const	
+0x71004E29E0			FALSE	_ZNK12_GLOBAL__N_135ProductStateBootNrvWaitEndBootScene7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateBootNrvWaitEndBootScene::execute(al::NerveKeeper*) const	
+0x71004E2A30			FALSE	_ZNK12_GLOBAL__N_126ProductStateBootNrvDestroy7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateBootNrvDestroy::execute(al::NerveKeeper*) const	
+0x71004E2AD0			FALSE	_ZNK12_GLOBAL__N_122ProductStateBootNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateBootNrvEnd::execute(al::NerveKeeper*) const	
 0x71004E2AE0			FALSE	sub_71004E2AE0	sub_71004E2AE0	
 0x71004E2B00		ProductStateCourseSelect.o	FALSE	_ZN24ProductStateCourseSelectC1EP15ProductSequenceP22ProductStageStartParamP15StageWipeKeeperRKN2al16SequenceInitInfoERKNS6_14LayoutInitInfoEP24ControllerConnectCheckerPNS6_21ScreenCaptureExecutorEP17WipeCurtainResult	ProductStateCourseSelect::ProductStateCourseSelect(ProductSequence*, ProductStageStartParam*, StageWipeKeeper*, al::SequenceInitInfo const&, al::LayoutInitInfo const&, ControllerConnectChecker*, al::ScreenCaptureExecutor*, WipeCurtainResult*)	object (class)
 0x71004E2C20			FALSE	_ZN24ProductStateCourseSelectD2Ev	ProductStateCourseSelect::~ProductStateCourseSelect()	

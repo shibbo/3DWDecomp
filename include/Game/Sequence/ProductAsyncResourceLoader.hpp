@@ -15,6 +15,8 @@ public:
     void tryStartTitleLoad();
     void tryStartCourseSelectLoad();
     void resetCourseSelectLoad();
+    /** @brief Check title resource availability. @return Whether title loading is complete. */
+    bool isTitleLoaded() const { return mIsTitleLoaded; }
 
 private:
     al::AsyncFunctorThread* mpThread = nullptr;
