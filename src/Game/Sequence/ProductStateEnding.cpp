@@ -1,29 +1,35 @@
 #include "Sequence/ProductStateEnding.hpp"
 
-#include <thread/seadThread.h>
-#include "Scene/DemoEndingScene.hpp"
-#include "Sequence/ProductSequence.hpp"
-#include "System/GameDataHolder.hpp"
-#include "System/GameDataHolderAccessor.hpp"
-#include "System/GameDataHolderWriter.hpp"
-#include "System/GameDataFlagFunction.hpp"
-#include "System/SaveDataAccessFunction.hpp"
-#include "Stage/StageWipeKeeper.hpp"
-#include "Sequence/SequenceWindowKeeper.hpp"
 #include "Layout/WindowMessage.hpp"
-#include "Util/ControlUserUtil.hpp"
-#include "Library/Play/Layout/WipeSimple.hpp"
 #include "Library/Layout/LayoutUtil.hpp"
 #include "Library/Memory/HeapUtil.hpp"
 #include "Library/Memory/SceneHeapSetter.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
+#include "Library/Play/Layout/WipeSimple.hpp"
+#include "Scene/DemoEndingScene.hpp"
+#include "Sequence/ProductSequence.hpp"
+#include "Sequence/SequenceWindowKeeper.hpp"
+#include "Stage/StageWipeKeeper.hpp"
+#include "System/GameDataFlagFunction.hpp"
+#include "System/GameDataHolder.hpp"
+#include "System/GameDataHolderAccessor.hpp"
+#include "System/GameDataHolderWriter.hpp"
+#include "System/SaveDataAccessFunction.hpp"
+#include "Util/ControlUserUtil.hpp"
+#include <thread/seadThread.h>
 
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+// Keep both priorities together, as in the original sequence thread settings.
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateEnding, Load);
 class ProductStateEndingNrvEndFirstTime : public al::Nerve {
-public:
+  public:
     /** @brief Execute the terminal state. @param pKeeper Host nerve keeper. */
     void execute(al::NerveKeeper* pKeeper) const override {
         pKeeper->getParent<ProductStateEnding>()->exeEnd();
@@ -36,7 +42,7 @@ NERVE_DECL(ProductStateEnding, Save);
 NERVE_DECL(ProductStateEnding, Destroy);
 NERVE_DECL(ProductStateEnding, End);
 NERVES_MAKE_NOSTRUCT(ProductStateEnding, Load, EndFirstTime, Wait, Wipe, Info, Save, Destroy, End)
-}
+} // namespace
 
 /**
  * @brief Create the ending state, scene creator, and ending fade.
@@ -47,8 +53,10 @@ NERVES_MAKE_NOSTRUCT(ProductStateEnding, Load, EndFirstTime, Wait, Wipe, Info, S
  * @param pCapture Screen capture service.
  */
 ProductStateEnding::ProductStateEnding(ProductSequence* pSequence,
-    const al::SequenceInitInfo& rInfo, const al::LayoutInitInfo& rLayoutInfo,
-    StageWipeKeeper* pWipeKeeper, al::ScreenCaptureExecutor* pCapture)
+                                       const al::SequenceInitInfo& rInfo,
+                                       const al::LayoutInitInfo& rLayoutInfo,
+                                       StageWipeKeeper* pWipeKeeper,
+                                       al::ScreenCaptureExecutor* pCapture)
     : al::HostStateBase<ProductSequence>("エンディングデモ", pSequence), mpWipeKeeper(pWipeKeeper) {
     al::initSceneCreator(this, rInfo,
                          reinterpret_cast<al::GameDataHolderBase*>(pSequence->getGameDataHolder()),
@@ -83,8 +91,8 @@ void ProductStateEnding::exeLoad() {
         al::createSceneHeap(nullptr);
         al::SceneHeapSetter heapSetter;
         mpScene = new DemoEndingScene();
-        al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, "DemoEndRollStage",
-                                    -1, "", nullptr);
+        al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit, "DemoEndRollStage",
+                                     -1, "", nullptr);
         getHost()->getGameDataHolder()->startEnding();
     }
     if (al::tryEndSceneInitThread(this) && mpWipeKeeper->isCloseEndEndingWipe() &&
@@ -131,8 +139,11 @@ void ProductStateEnding::exeInfo() {
             return;
         }
         getHost()->requestCaptureTopBottom();
-        getHost()->getSequenceWindowKeeper()->appearMessage(pLabel,
-            rc::calcPadPortByFirstActiveUser(GameDataHolderAccessor(getHost()->getGameDataHolder())), true);
+        getHost()->getSequenceWindowKeeper()->appearMessage(
+            pLabel,
+            rc::calcPadPortByFirstActiveUser(
+                GameDataHolderAccessor(getHost()->getGameDataHolder())),
+            true);
     }
     if (!getHost()->getSequenceWindowKeeper()->isMessageActive()) {
         GameDataFlagFunction::setFirstAlreadyOpenFlagByStageClear(
@@ -144,7 +155,8 @@ void ProductStateEnding::exeInfo() {
 /** @brief Save ending progress and capture the final screen. */
 void ProductStateEnding::exeSave() {
     if (al::isFirstStep(this)) {
-        SaveDataAccessFunction::startSaveDataWrite(getHost()->getGameDataHolder(), false, -1, false);
+        SaveDataAccessFunction::startSaveDataWrite(getHost()->getGameDataHolder(), false, -1,
+                                                   false);
         getHost()->requestCaptureTopBottom();
     }
     if (SaveDataAccessFunction::updateSaveDataAccess(getHost()->getGameDataHolder(), false)) {
@@ -179,7 +191,8 @@ void ProductStateEnding::exeDestroy() {
 /** @brief Remain idle after demo teardown. */
 void ProductStateEnding::exeEnd() {}
 
-/** @brief Check whether the first ending has completed. @return Whether the first-time terminal state is active. */
+/** @brief Check whether the first ending has completed. @return Whether the first-time terminal
+ * state is active. */
 bool ProductStateEnding::isEndFirstTime() {
     return al::isNerve(this, &NrvProductStateEndingEndFirstTime);
 }

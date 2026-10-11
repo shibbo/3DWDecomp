@@ -3209,7 +3209,7 @@ src/Game/Sequence/ProductStateBoot.cpp: done
     .text   start:0x004E2420 end:0x004E2B00
 src/Game/Sequence/ProductStateCourseSelect.cpp:
     .text   start:0x004E2B00 end:0x004E3620
-src/Game/Sequence/ProductStateEnding.cpp:
+src/Game/Sequence/ProductStateEnding.cpp: done
     .text   start:0x004E3620 end:0x004E3F70
 src/Game/Sequence/ProductStateLuigiBros.cpp: done
     .text   start:0x004E3F70 end:0x004E4304
