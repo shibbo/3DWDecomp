@@ -21,7 +21,23 @@
 #include "System/SelectedGameDataFlagFunction.hpp"
 #include <thread/seadThread.h>
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+/** @brief Shuffle the remaining demos while preserving the selected lead demo. */
+inline void shuffleTitleDemoIds(int* ids, int count) {
+    for (int n = count; n > 1; --n) {
+        int idx = al::getRandom(n - 1) + 1;
+        int value = ids[n - 1];
+        ids[n - 1] = ids[idx];
+        ids[idx] = value;
+    }
+}
+
+// Keep both priorities together, as in the original sequence thread settings.
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateTitle, Load);
 NERVE_DECL(ProductStateTitle, LoadWithResult);
 NERVE_DECL(ProductStateTitle, LoadWithWipe);
@@ -106,28 +122,24 @@ void ProductStateTitle::appear() {
                 ->getWorldId();
         bool rosettaCourse = GameDataFunction::calcRosettaAppearanceCourseId(
                                  GameDataHolderAccessor(holder)) == courseId;
-        if (rosetta && rosettaCourse) {
+        if (!(rosetta & rosettaCourse)) {
+            if (worldId > 8) {
+                mDemoCount = TitleSceneFunction::getTitleDemoNumIncludeSuperPlay();
+                int id = TitleSceneFunction::getTitleDemoIdSuperPlay();
+                mpDemoIds[0] = id;
+                mpDemoIds[id] = 0;
+            } else {
+                mDemoCount = TitleSceneFunction::getTitleDemoNumDefault();
+            }
+        } else {
             mDemoCount = TitleSceneFunction::getTitleDemoNumAll();
             int id = TitleSceneFunction::getTitleDemoIdRosetta();
             mpDemoIds[0] = id;
             mpDemoIds[id] = 0;
-        } else if (worldId > 8) {
-            mDemoCount = TitleSceneFunction::getTitleDemoNumIncludeSuperPlay();
-            int id = TitleSceneFunction::getTitleDemoIdSuperPlay();
-            mpDemoIds[0] = id;
-            mpDemoIds[id] = 0;
-        } else
-            mDemoCount = TitleSceneFunction::getTitleDemoNumDefault();
+        }
     } else
         mDemoCount = TitleSceneFunction::getTitleDemoNumDefault();
-    int count = mDemoCount;
-    int* ids = mpDemoIds;
-    for (int n = count; n > 1; --n) {
-        int idx = al::getRandom(n - 1) + 1;
-        int value = ids[n - 1];
-        ids[n - 1] = ids[idx];
-        ids[idx] = value;
-    }
+    shuffleTitleDemoIds(mpDemoIds, mDemoCount);
     mIsWaitResultWipe = false;
     if (mpWipeKeeper->isExistActiveClosedNoResultWipe())
         al::setNerve(this, &NrvProductStateTitleLoadWithWipe);
@@ -184,8 +196,8 @@ void ProductStateTitle::createTitleScene() {
     al::createSceneHeap(nullptr);
     al::SceneHeapSetter heapSetter;
     mpScene = new TitleScene(mpWipeKeeper, getDemoIdAndSetNextDemoId());
-    al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, mpScene->getDemoStageName(), -1,
-                                 "", nullptr);
+    al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit,
+                                 mpScene->getDemoStageName(), -1, "", nullptr);
 }
 /** @brief Load a title demo behind the normal return wipe. */
 void ProductStateTitle::exeLoadWithWipe() {
