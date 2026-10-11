@@ -56,6 +56,8 @@ public:
     void drawSub_() const override;
     bool isReturnToTopMenu() const;
     bool isAudioReady();
+    void setStartBgm() { mIsStartBgm = true; }
+    void setAppearWaitSkip(bool skip) { mIsAppearWaitSkip = skip; }
 
     void exeLoad();
     void exeAppearWait();

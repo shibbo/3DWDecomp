@@ -17,6 +17,8 @@ class StageWipeKeeper {
 public:
     StageWipeKeeper(const al::LayoutInitInfo& rInfo, al::NetworkSystem* pNetworkSystem);
 
+    bool isExistActiveClosedNoResultWipe() const;
+    void tryOpenNoResultWipeByCircle();
     void closeBootWipe();
     bool isCloseEndBootWipe() const;
     void tryOpenBootWipe();

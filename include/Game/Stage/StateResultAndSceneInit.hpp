@@ -13,7 +13,12 @@ public:
                             WipeCurtainResult* pWipe, StageWipeKeeper* pWipeKeeper,
                             ControllerConnectChecker* pChecker);
     bool tryOpenWipeForNextScene() const;
+    bool tryOpenWipeForTitleScene() const;
+    bool isOpenWipeForNextScene() const;
+    void setForTitleScene() { mIsForTitleScene = true; }
 private:
-    unsigned char mUnreconstructed18[0x48];
+    alignas(8) unsigned char mUnreconstructed18[0x38];
+    bool mIsForTitleScene;
+    unsigned char mUnreconstructed51[0xf];
 };
 static_assert(sizeof(StateResultAndSceneInit) == 0x60);

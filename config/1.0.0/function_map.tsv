@@ -32180,19 +32180,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E8790			FALSE	_ZThn32_NK17ProductStateTitle15getSceneCreatorEv	non-virtual thunk to ProductStateTitle::getSceneCreator() const	
 0x71004E87A0			FALSE	_ZThn32_N17ProductStateTitle15setSceneCreatorEPN2al12SceneCreatorE	non-virtual thunk to ProductStateTitle::setSceneCreator(al::SceneCreator*)	
 0x71004E87B0			FALSE	_ZNK12_GLOBAL__N_124ProductStateTitleNrvLoad7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvLoad::execute(al::NerveKeeper*) const	
-0x71004E87C0			FALSE	sub_71004E87C0	sub_71004E87C0	
-0x71004E8820			FALSE	sub_71004E8820	sub_71004E8820	
-0x71004E8890			FALSE	sub_71004E8890	sub_71004E8890	
-0x71004E8910			FALSE	sub_71004E8910	sub_71004E8910	
-0x71004E8960			FALSE	sub_71004E8960	sub_71004E8960	
-0x71004E8970			FALSE	sub_71004E8970	sub_71004E8970	
-0x71004E8980			FALSE	sub_71004E8980	sub_71004E8980	
-0x71004E8990			FALSE	sub_71004E8990	sub_71004E8990	
-0x71004E89A0			FALSE	sub_71004E89A0	sub_71004E89A0	
+0x71004E87C0			FALSE	_ZNK12_GLOBAL__N_134ProductStateTitleNrvLoadWithResult7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvLoadWithResult::execute(al::NerveKeeper*) const	
+0x71004E8820			FALSE	_ZNK12_GLOBAL__N_132ProductStateTitleNrvLoadWithWipe7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvLoadWithWipe::execute(al::NerveKeeper*) const	
+0x71004E8890			FALSE	_ZNK12_GLOBAL__N_139ProductStateTitleNrvLoadWithRestartWipe7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvLoadWithRestartWipe::execute(al::NerveKeeper*) const	
+0x71004E8910			FALSE	_ZNK12_GLOBAL__N_133ProductStateTitleNrvWaitWipeClose7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvWaitWipeClose::execute(al::NerveKeeper*) const	
+0x71004E8960			FALSE	_ZNK12_GLOBAL__N_128ProductStateTitleNrvWipeOpen7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvWipeOpen::execute(al::NerveKeeper*) const	
+0x71004E8970			FALSE	_ZNK12_GLOBAL__N_136ProductStateTitleNrvWipeOpenWithWipe7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvWipeOpenWithWipe::execute(al::NerveKeeper*) const	
+0x71004E8980			FALSE	_ZNK12_GLOBAL__N_138ProductStateTitleNrvWipeOpenWithResult7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvWipeOpenWithResult::execute(al::NerveKeeper*) const	
+0x71004E8990			FALSE	_ZNK12_GLOBAL__N_141ProductStateTitleNrvWipeOpenWithWhiteFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvWipeOpenWithWhiteFade::execute(al::NerveKeeper*) const	
+0x71004E89A0			FALSE	_ZNK12_GLOBAL__N_143ProductStateTitleNrvWipeOpenWithRestartWipe7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvWipeOpenWithRestartWipe::execute(al::NerveKeeper*) const	
 0x71004E89B0			FALSE	_ZNK12_GLOBAL__N_124ProductStateTitleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvWait::execute(al::NerveKeeper*) const	
 0x71004E89C0			FALSE	_ZNK12_GLOBAL__N_127ProductStateTitleNrvDestroy7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvDestroy::execute(al::NerveKeeper*) const	
-0x71004E89D0			FALSE	sub_71004E89D0	sub_71004E89D0	
-0x71004E8A40			FALSE	nullsub_304	nullsub_304	
+0x71004E89D0			FALSE	_ZNK12_GLOBAL__N_137ProductStateTitleNrvLoadWithWhiteFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvLoadWithWhiteFade::execute(al::NerveKeeper*) const	
+0x71004E8A40			FALSE	_ZNK12_GLOBAL__N_123ProductStateTitleNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateTitleNrvEnd::execute(al::NerveKeeper*) const	
 0x71004E8A50			FALSE	sub_71004E8A50	sub_71004E8A50	
 0x71004E8A70		ProductStateTitleSingleMode.o	FALSE	_ZN27ProductStateTitleSingleModeC2EP15ProductSequenceRKN2al16SequenceInitInfoERKNS2_14LayoutInitInfoEP15StageWipeKeeperP26ProductAsyncResourceLoaderPNS2_21ScreenCaptureExecutorEP17WipeCurtainResult	ProductStateTitleSingleMode::ProductStateTitleSingleMode(ProductSequence*, al::SequenceInitInfo const&, al::LayoutInitInfo const&, StageWipeKeeper*, ProductAsyncResourceLoader*, al::ScreenCaptureExecutor*, WipeCurtainResult*)	object (class)
 0x71004E8B20			FALSE	_ZN27ProductStateTitleSingleModeD2Ev	ProductStateTitleSingleMode::~ProductStateTitleSingleMode()	
