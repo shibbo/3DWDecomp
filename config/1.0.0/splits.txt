@@ -3199,7 +3199,7 @@ src/Game/Scene/TopMenuScene.cpp:
     .text   start:0x004DE770 end:0x004DFBE8
 src/Game/Sequence/ProductAsyncResourceLoader.cpp: done
     .text   start:0x004DFBF0 end:0x004DFFC0
-src/Game/Sequence/ProductSequence.cpp:
+src/Game/Sequence/ProductSequence.cpp: done
     .text   start:0x004DFFC0 end:0x004E1BA0
 src/Game/Sequence/ProductStageStartParam.cpp: done
     .text   start:0x004E1BA0 end:0x004E1C7C
