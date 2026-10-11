@@ -44,6 +44,7 @@ public:
     void tryOpenFadeBlack();
     void tryOpenStartOrRetryWipe();
     void tryOpenNoResultWipe();
+    void tryOpenNoResultWipeByFade();
 
     /** @brief Clear references to wipes owned by the scene being destroyed. */
     void resetSceneWipes() { mSceneWipes[0] = mSceneWipes[1] = mSceneWipes[2] = nullptr; }

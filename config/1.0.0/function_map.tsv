@@ -31945,11 +31945,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E3580			FALSE	_ZThn32_N24ProductStateCourseSelect15setSceneCreatorEPN2al12SceneCreatorE	non-virtual thunk to ProductStateCourseSelect::setSceneCreator(al::SceneCreator*)	
 0x71004E3590			FALSE	_ZNK12_GLOBAL__N_136ProductStateCourseSelectNrvLoadStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvLoadStage::execute(al::NerveKeeper*) const	
 0x71004E35A0			FALSE	_ZNK12_GLOBAL__N_146ProductStateCourseSelectNrvLoadStageWithResult7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvLoadStageWithResult::execute(al::NerveKeeper*) const	
-0x71004E35B0			FALSE	nullsub_281	nullsub_281	
+0x71004E35B0			FALSE	_ZNK12_GLOBAL__N_130ProductStateCourseSelectNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvEnd::execute(al::NerveKeeper*) const	
 0x71004E35C0			FALSE	_ZNK12_GLOBAL__N_139ProductStateCourseSelectNrvCourseSelect7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvCourseSelect::execute(al::NerveKeeper*) const	
 0x71004E35D0			FALSE	_ZNK12_GLOBAL__N_139ProductStateCourseSelectNrvDestroyStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvDestroyStage::execute(al::NerveKeeper*) const	
 0x71004E35E0			FALSE	_ZNK12_GLOBAL__N_131ProductStateCourseSelectNrvSave7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvSave::execute(al::NerveKeeper*) const	
-0x71004E35F0			FALSE	nullsub_282	nullsub_282	
+0x71004E35F0			FALSE	_ZNK12_GLOBAL__N_135ProductStateCourseSelectNrvLoadGame7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvLoadGame::execute(al::NerveKeeper*) const	
 0x71004E3600			FALSE	sub_71004E3600	sub_71004E3600	
 0x71004E3620		ProductStateEnding.o	FALSE	_ZN18ProductStateEndingC1EP15ProductSequenceRKN2al16SequenceInitInfoERKNS2_14LayoutInitInfoEP15StageWipeKeeperPNS2_21ScreenCaptureExecutorE	ProductStateEnding::ProductStateEnding(ProductSequence*, al::SequenceInitInfo const&, al::LayoutInitInfo const&, StageWipeKeeper*, al::ScreenCaptureExecutor*)	object (class)
 0x71004E36E0			FALSE	_ZN18ProductStateEndingD2Ev	ProductStateEnding::~ProductStateEnding()	
