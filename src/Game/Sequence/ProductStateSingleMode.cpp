@@ -23,7 +23,12 @@
 #include <nn/oe.h>
 #include <thread/seadThread.h>
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateSingleMode, LoadStage);
 #define SINGLE_END_NERVE(Name)                                                                     \
     class ProductStateSingleModeNrv##Name : public al::Nerve {                                     \
@@ -137,8 +142,8 @@ void ProductStateSingleMode::createAndStartInitStageScene() {
     debugName.format("X Stage=%s WorldId=%d StageId=%d", "stage_name", -1, -1);
     mpScene = rc::createPhaseScene(phase);
     mpScene->setSaveWindow(mpSaveWindow);
-    al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, name, 1, debugName.cstr(),
-                                 nullptr);
+    al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit, name, 1,
+                                 debugName.cstr(), nullptr);
 }
 void ProductStateSingleMode::exeEndLoad() {
     if (getHost()->isLoadLayoutEnd()) {

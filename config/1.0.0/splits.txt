@@ -3215,7 +3215,7 @@ src/Game/Sequence/ProductStateLuigiBros.cpp: done
     .text   start:0x004E3F70 end:0x004E4304
 src/Game/Sequence/ProductStateOpeningDemo.cpp:
     .text   start:0x004E4310 end:0x004E4930
-src/Game/Sequence/ProductStateSingleMode.cpp:
+src/Game/Sequence/ProductStateSingleMode.cpp: done
     .text   start:0x004E4930 end:0x004E5770
 src/Game/Sequence/ProductStateSingleModeEnding.cpp:
     .text   start:0x004E5770 end:0x004E63B0
