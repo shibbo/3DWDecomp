@@ -35,6 +35,8 @@ public:
     void control() override;
     void drawMain_() const override;
     bool isSelectAny();
+    bool isSelect3DWorld() const { return mMode == 1; }
+    bool isStartSingleMode() const { return mIsStartSingleMode; }
     void startSingleModeTitleMenu();
     void cancelSingleModeTitleMenu();
     void cancelSingleModeTitleMenuAudio(s32 fadeFrames);

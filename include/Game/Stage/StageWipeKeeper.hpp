@@ -27,6 +27,7 @@ public:
     void closeNoResultWipeGameOver();
     void closeNoResultWipeGameEnd();
     void closeNoResultWipeTitle();
+    void closeNoResultWipeRestartTitle();
     void closeNoResultWipeRestartTitleWhiteFade(bool isSkip);
     bool isCloseEndNoResultWipe() const;
     bool isActiveNoResultWipe() const;

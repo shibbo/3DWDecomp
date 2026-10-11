@@ -51,6 +51,7 @@ public:
     /** @brief Queue the next active scene. @param pScene Scene to activate. */
     void setNextScene(al::Scene* pScene) { mNextScene = pScene; }
     /** @brief Get sequence message windows. @return Shared window keeper. */
+    void setGotoTitleFromTopMenu(bool value) { mIsGotoTitleFromTopMenu = value; }
     SequenceWindowKeeper* getSequenceWindowKeeper() const { return mSequenceWindowKeeper; }
     void init(const al::SequenceInitInfo& rInfo) override;
     void update() override;
