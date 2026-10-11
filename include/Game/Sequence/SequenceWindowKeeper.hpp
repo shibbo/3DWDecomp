@@ -10,6 +10,8 @@ public:
     explicit SequenceWindowKeeper(const al::LayoutInitInfo& rInfo);
     void appearMessage(const char* pMessageId, int padPort, bool isSequence);
     bool isMessageActive() const;
+    /** @brief Get the sequence message layout. @return Sequence message window. */
+    WindowMessage* getSequenceMessage() const { return mpSequenceMessage; }
 
 private:
     bool mIsSequence = false;

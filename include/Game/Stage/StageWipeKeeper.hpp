@@ -19,6 +19,8 @@ public:
 
     void closeBootWipe();
     void closeEndingWipe();
+    bool isCloseEndEndingWipe() const;
+    void tryOpenEndingWipe();
     void closeNoResultWipe(const GameDataHolder* pHolder, bool isSkip);
     void closeNoResultWipeGameOver();
     void closeNoResultWipeGameEnd();

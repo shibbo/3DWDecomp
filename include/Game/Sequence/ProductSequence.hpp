@@ -50,6 +50,8 @@ public:
     GameDataHolder* getGameDataHolder() const { return mGameDataHolder; }
     /** @brief Queue the next active scene. @param pScene Scene to activate. */
     void setNextScene(al::Scene* pScene) { mNextScene = pScene; }
+    /** @brief Get sequence message windows. @return Shared window keeper. */
+    SequenceWindowKeeper* getSequenceWindowKeeper() const { return mSequenceWindowKeeper; }
     void init(const al::SequenceInitInfo& rInfo) override;
     void update() override;
     void drawMain() const override;
