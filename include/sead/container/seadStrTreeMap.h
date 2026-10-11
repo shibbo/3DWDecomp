@@ -197,4 +197,20 @@ inline void StrTreeMap<N, Value>::eraseNodeForClear_(typename MapImpl::Node* nod
     // Note: Nintendo does not call the destructor, which is dangerous...
     mFreeList.free(node);
 }
+
+template <s32 MaxKeyLength, typename Value, s32 N>
+class FixedStrTreeMap : public StrTreeMap<MaxKeyLength, Value>
+{
+public:
+    FixedStrTreeMap() { StrTreeMap<MaxKeyLength, Value>::setBuffer(N, mWork); }
+
+    void setBuffer(s32 node_max, void* buffer) = delete;
+    void allocBuffer(s32 node_max, Heap* heap, s32 alignment = sizeof(void*)) = delete;
+    void freeBuffer() = delete;
+
+private:
+    using NodeType = typename StrTreeMap<MaxKeyLength, Value>::Node;
+
+    alignas(NodeType) u8 mWork[N * sizeof(NodeType)];
+};
 }  // namespace sead

@@ -18,6 +18,12 @@ class AddonSoundArchiveContainer {
     const AddonSoundArchive* GetSoundArchive() const { return mArchive; }
     /** @brief Gets the archive resource manager. @return Manager pointer supplied at initialization. */
     const SoundDataManager* GetSoundDataManager() const { return mDataManager; }
+    /** @brief Checks whether the container holds an archive. @return True once initialized. */
+    bool IsActive() const { return mInitialized; }
+    /** @brief Gets the registered archive name. @return Name passed to Initialize. */
+    const char* GetSoundArchiveName() const { return mName; }
+    /** @brief Gets when the archive was added. @return Tick passed to SetAddTick. */
+    const nn::os::Tick& GetAddTick() const { return mAddTick; }
 
   private:
     friend class SoundArchiveManager;

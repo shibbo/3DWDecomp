@@ -143,6 +143,7 @@ public:
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
     bool isEnable() const { return *mEnable && isEnableContext(-1); }
+    bool isEnable(s32 context) const { return *mEnable && isEnableContext(context); }
 
 private:
     void drawCopy_(DrawContext* pDrawContext, const Tex& rDst, const Tex& rSrc, bool isReduce,

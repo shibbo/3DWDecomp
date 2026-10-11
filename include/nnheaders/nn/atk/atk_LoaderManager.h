@@ -14,6 +14,33 @@ template <typename Loader> class LoaderManager : public driver::SoundThread::Sou
     ~LoaderManager() override = default;
     void OnBeginSoundFrame() override;
 
+    /**
+     * @brief Takes the first idle loader off the free list.
+     * @return The loader, or nullptr when every loader is in use.
+     */
+    Loader* Alloc() {
+        if (!mFreeLoaders.IsLinked()) {
+            return nullptr;
+        }
+
+        using LinkTraits = util::IntrusiveListMemberNodeTraits<Loader, &Loader::mManagerLink>;
+        util::IntrusiveListNode* pNode = mFreeLoaders.GetNext();
+        pNode->Unlink();
+        return &LinkTraits::GetItem(*pNode);
+    }
+
+    /**
+     * @brief Returns a loader; one whose tasks still run is parked until they finish.
+     * @param pLoader Loader obtained from Alloc().
+     */
+    void Free(Loader* pLoader) {
+        if (pLoader->IsInUse()) {
+            mActiveLoaders.LinkPrev(&pLoader->mManagerLink);
+        } else {
+            mFreeLoaders.LinkPrev(&pLoader->mManagerLink);
+        }
+    }
+
   private:
     void* mMemory;
     size_t mSize;

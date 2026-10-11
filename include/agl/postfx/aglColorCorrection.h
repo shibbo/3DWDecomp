@@ -81,6 +81,8 @@ public:
     bool isEnable() const { return *mEnable; }
     s32 getVariationIndex() const { return mVariationIndex; }
     void setEnable(bool enable) { *mEnable = enable; }
+    const sead::Vector2f& getMapScaleOffset() const { return mMapScaleOffset; }
+    const TextureSampler& getMapSampler() const { return mMapSampler; }
 
 protected:
     void postRead_() override;

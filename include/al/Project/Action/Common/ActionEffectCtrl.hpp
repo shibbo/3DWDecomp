@@ -11,5 +11,6 @@ public:
 
     void startAction(const char* pActionName);
     void update(f32 frame, f32 frameRate);
+    void stopActionAndKillParticles();
 };
 }  // namespace al

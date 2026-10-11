@@ -437,6 +437,9 @@ void calcSphereMargeSpheres(sead::Vector3f*, f32*, const sead::Vector3f&, f32,
 bool calcCrossLinePoint(sead::Vector2f* crossPoint, const sead::Vector2f& point1A,
                         const sead::Vector2f& point1B, const sead::Vector2f& point2A,
                         const sead::Vector2f& point2B);
+f32 calcSquaredDistanceHitSegmentToSegment(const sead::Vector3f&, const sead::Vector3f&,
+                                          const sead::Vector3f&, const sead::Vector3f&,
+                                          sead::Vector3f*, sead::Vector3f*);
 f32 calcSquaredDistanceSegmentToSegment(const sead::Vector3f&, const sead::Vector3f&,
                                         const sead::Vector3f&, const sead::Vector3f&,
                                         sead::Vector3f*, sead::Vector3f*);

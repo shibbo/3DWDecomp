@@ -25,6 +25,11 @@ class BankFileReader {
     DISABLE_TAIL_CALLS const WaveIdTable* GetWaveIdTable() const;
     bool ReadVelocityRegionInfo(VelocityRegionInfo* pInfo, int program, int key, int velocity) const;
 
+    /** @brief Tests whether a bank file is attached. @return Whether Initialize() accepted a file. */
+    bool IsInitialized() const { return mInitialized; }
+    /** @brief Gets the attached bank file. @return Start of the bank file, or nullptr. */
+    const void* GetBankFileAddress() const { return mHeader; }
+
   private:
     const BankFile::FileHeader* mHeader;
     const BankFile::InfoBlockBody* mInfo;

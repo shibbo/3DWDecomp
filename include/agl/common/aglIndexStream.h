@@ -38,6 +38,7 @@ public:
         setUpStream_(addr, cIndexStreamFormat_u32, count);
     }
     void setPrimitiveType(NVNdrawPrimitive primitiveType) { mPrimitiveType = primitiveType; }
+    void setCount(u32 count) { mCount = count; }
     const NVNbuffer* getNvnBuffer() const { return &mNvnBuffer; }
 
 protected:

@@ -43,6 +43,11 @@ public:
     void setSphereHolder(const IUseRigidBodyCollisionSphereList* pSphereHolder);
     void impact(const sead::Vector3f& rPos, const sead::Vector3f& rNormal, f32 overlap);
 
+    void setMaxSpeed(f32 speed) { mMaxSpeed = speed; }
+    void setRepulsion(f32 repulsion) { mRepulsion = repulsion; }
+    void setRotDamping(f32 damping) { mRotDamping = damping; }
+    void setPosCorrection(f32 correction) { mPosCorrection = correction; }
+    void setFriction(f32 friction) { mFriction = friction; }
     void setRadius(f32 radius) { mRadius = radius; }
     void setCenterOffset(sead::Vector3f offset) { mCenterOffset = offset; }
 

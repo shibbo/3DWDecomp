@@ -19,6 +19,9 @@ public:
     bool ReadDspAdpcmChannelInfo(DspAdpcmParam* param, DspAdpcmLoopParam* loop, int channel) const;
     bool ReadPrefetchDataInfo(PrefetchDataInfo* info, int index) const;
     virtual bool ReadRegionInfo(StreamSoundFile::RegionInfo* info, u32 index) const;
+
+    /** @brief Gets the number of channels in the file. @return Channel count. */
+    u32 GetChannelCount() const { return mInfo->GetChannelInfoTable()->count; }
 private:
     const StreamSoundPrefetchFile::FileHeader* mHeader;
     const StreamSoundFile::InfoBlockBody* mInfo;

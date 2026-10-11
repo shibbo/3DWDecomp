@@ -28,6 +28,7 @@ public:
     static size_t getManagementAreaSize(s32 alignment);
 
     void restoreState(const State& rState);
+    const State& getState() const { return mState; }
     void freeHead();
     void freeTail();
 

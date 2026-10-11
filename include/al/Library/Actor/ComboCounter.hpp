@@ -15,6 +15,8 @@ namespace al {
             mCounter++;
         }
 
+        void reset() { mCounter = 0; }
+
         int mCounter = 0;
     };
 };  // namespace al

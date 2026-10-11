@@ -3,6 +3,15 @@
 namespace nn {
 namespace util {
 template <typename T>
+int Strnlen(const T* pStr, int count) {
+    int length = 0;
+    for (; length < count && pStr[length]; ++length) {
+    }
+
+    return length;
+}
+
+template <typename T>
 int Strlcpy(T* pOutDst, const T* pSrc, int count) {
     auto pSrcEnd = pSrc;
 

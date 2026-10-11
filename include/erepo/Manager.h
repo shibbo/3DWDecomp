@@ -90,6 +90,9 @@ public:
     bool requestSend_(SendDataBase* pData);
 
     sead::Heap* getHeap() const { return mHeap; }
+    bool isLoadRequested() const { return mSaveLoadState == cSaveLoadState_Load; }
+    bool isSaveRequested() const { return mSaveLoadState == cSaveLoadState_Save; }
+    void setUid(const nn::account::Uid& rUid) { mUid = rUid; }
     const nn::account::Uid& getUid() const { return mUid; }
     bool isFlagOn(EFlag flag) const { return mFlags.isOn(flag); }
     SaveDataInfo& getSaveDataInfo() { return mSaveDataInfo; }

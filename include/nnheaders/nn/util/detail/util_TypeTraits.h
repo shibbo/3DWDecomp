@@ -8,6 +8,21 @@ template <int N>
 struct SizedInt;
 
 template <>
+struct SizedInt<1> {
+    typedef uint8_t Unsigned;
+};
+
+template <>
+struct SizedInt<2> {
+    typedef uint16_t Unsigned;
+};
+
+template <>
+struct SizedInt<4> {
+    typedef uint32_t Unsigned;
+};
+
+template <>
 struct SizedInt<8> {
     typedef uint64_t Unsigned;
 };

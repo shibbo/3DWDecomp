@@ -17,6 +17,8 @@ enum PlayerReleaseEquipmentGoalType : unsigned long {};
 /// The items the player has equipped (propeller box, cannon box, crown, ...).
 class PlayerEquipmentDirector : public IUsePlayerEquipment {
 public:
+    PlayerEquipmentDirector();
+
     bool isEquipped(EPlayerEquipmentType type) const override;
     bool isEquippedSomething() const override;
     bool isEquipmentAction(EPlayerEquipmentAction action) const override;
@@ -31,4 +33,7 @@ public:
     void showCrown();
     void hideHeadgear();
     void showHeadgear();
+
+private:
+    unsigned char _8[0x28 - 0x8];
 };

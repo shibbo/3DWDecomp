@@ -30,6 +30,7 @@ public:
                   size_t loadBlockSize);
     bool detail_LoadWaveArchiveByWaveSoundFile(const void* pWaveSoundFile, int index,
                                               SoundMemoryAllocatable* pAllocator);
+    bool detail_LoadWaveArchiveByBankFile(const void* pBankFile, SoundMemoryAllocatable* pAllocator);
     const void* detail_GetFileAddressByItemId(SoundArchive::ItemId id) const;
     const void* GetFileAddressFromSoundArchive(SoundArchive::FileId id) const;
     void SetSoundArchive(const SoundArchive* pArchive);
@@ -44,6 +45,15 @@ protected:
 private:
     const SoundArchive* mArchive;
     u8 _10[0x218 - 0x10];
+};
+
+/** @brief An archive item to load, and where it ended up once loaded. */
+struct LoadItemInfo {
+    /** @brief Creates an entry naming no item. */
+    LoadItemInfo() : itemId(SoundArchive::InvalidId), address(nullptr) {}
+
+    SoundArchive::ItemId itemId;
+    const void* address;
 };
 }  // namespace detail
 

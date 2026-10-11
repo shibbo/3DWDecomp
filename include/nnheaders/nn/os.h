@@ -185,6 +185,7 @@ bool TimedWaitEvent(EventType*, nn::TimeSpan);
 
 // SYSTEM EVENT
 void DestroySystemEvent(SystemEventType*);
+void WaitSystemEvent(SystemEventType*);
 bool TimedWaitSystemEvent(SystemEventType*, nn::TimeSpan);
 bool TryWaitSystemEvent(SystemEventType*);
 

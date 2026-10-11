@@ -17,7 +17,8 @@ public:
     f32 _30;
     s32 _34;
     bool mIsInhibitWall;  // 0x38
-    unsigned char _39[0x48 - 0x39];
+    unsigned char _39[0x44 - 0x39];
+    f32 _44;
 };
 
 static_assert(sizeof(PlayerBindEndParam) == 0x48);

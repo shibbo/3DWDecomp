@@ -39,13 +39,13 @@ struct AudioRendererConfig {
 };
 
 enum AudioRendererRenderingDevice : u32 {
-    AudioRendererRenderingDevice_Cpu,
-    AudioRendererRenderingDevice_Dsp
+    AudioRendererRenderingDevice_AudioCoprocessor,
+    AudioRendererRenderingDevice_Cpu
 };
 
 enum AudioRendererExecutionMode : u32 {
-    AudioRendererExecutionMode_Manual,
-    AudioRendererExecutionMode_Auto,
+    AudioRendererExecutionMode_AutoExecution,
+    AudioRendererExecutionMode_ManualExecution,
 };
 
 enum SampleFormat : u32 {
@@ -58,14 +58,12 @@ enum SampleFormat : u32 {
     SampleFormat_Adpcm,
 };
 
+// Client-side memory pool state, as returned by GetMemoryPoolState.
 enum MemoryPoolState : u32 {
-    MemoryPoolState_Invalid,
-    MemoryPoolState_New,
-    MemoryPoolState_RequestDetach,
-    MemoryPoolState_Detached,
     MemoryPoolState_RequestAttach,
     MemoryPoolState_Attached,
-    MemoryPoolState_Released,
+    MemoryPoolState_RequestDetach,
+    MemoryPoolState_Detached,
 };
 
 struct AudioRendererParameter {
@@ -82,11 +80,10 @@ struct AudioRendererParameter {
     u32 splitterSendChannelCount;
     AudioRendererRenderingDevice renderingDevice;
     AudioRendererExecutionMode executionMode;
-    u32 _34;
     u32 revision;
 };
 
-static_assert(sizeof(AudioRendererParameter) == 0x3C);
+static_assert(sizeof(AudioRendererParameter) == 0x38);
 
 struct BiquadFilterParameter {
     bool enabled;
@@ -150,6 +147,10 @@ struct VoiceType {
 
 struct DeviceSinkType {
     u64* _0;
+
+    struct DownMixParameter {
+        float coefficient[16];
+    };
 };
 
 // Audio Renderer base APIs
@@ -163,7 +164,14 @@ Result InitializeAudioRendererConfig(nn::audio::AudioRendererConfig* outConfig,
 Result OpenAudioRenderer(nn::audio::AudioRendererHandle* outHandle,
                          nn::audio::AudioRendererParameter const& inParameter, void* workBuffer,
                          size_t workBufferSize);
+Result OpenAudioRenderer(nn::audio::AudioRendererHandle* outHandle, nn::os::SystemEvent* outEvent,
+                         nn::audio::AudioRendererParameter const& inParameter, void* workBuffer,
+                         size_t workBufferSize);
 void CloseAudioRenderer(nn::audio::AudioRendererHandle handle);
+Result ExecuteAudioRendererRendering(nn::audio::AudioRendererHandle handle);
+Result SetAudioRendererRenderingTimeLimit(nn::audio::AudioRendererHandle handle, int limitPercent);
+int GetAudioRendererRenderingTimeLimit(nn::audio::AudioRendererHandle handle);
+s64 GetAudioRendererElapsedFrameCount(nn::audio::AudioRendererConfig const* config);
 Result StartAudioRenderer(nn::audio::AudioRendererHandle handle);
 Result StopAudioRenderer(nn::audio::AudioRendererHandle handle);
 Result RequestUpdateAudioRenderer(nn::audio::AudioRendererHandle handle,
@@ -282,6 +290,9 @@ Result AddDeviceSink(nn::audio::AudioRendererConfig* config, nn::audio::DeviceSi
 void RemoveDeviceSink(nn::audio::AudioRendererConfig* config, nn::audio::DeviceSinkType* sink,
                       nn::audio::FinalMixType* mix);
 u32 GetSinkNodeId(nn::audio::DeviceSinkType const* sink);
+void SetDownMixParameter(nn::audio::DeviceSinkType* sink,
+                         nn::audio::DeviceSinkType::DownMixParameter const* parameter);
+void SetDownMixParameterEnabled(nn::audio::DeviceSinkType* sink, bool enabled);
 
 Result AddCircularBufferSink(nn::audio::AudioRendererConfig* config,
                              nn::audio::CircularBufferSinkType* sink, nn::audio::FinalMixType* mix,

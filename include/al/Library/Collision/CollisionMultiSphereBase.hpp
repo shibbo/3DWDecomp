@@ -35,6 +35,12 @@ public:
 
     using ResultRingBuffer = sead::RingBuffer<Result>;
 
+    CollisionMultiSphereBase(LiveActor* pActor, const Sphere* pSpheres, s32 sphereNum,
+                             s32 sphereStride, SphereWork* pSphereWorks)
+        : mActor(pActor), mSpheres(pSpheres), mSphereNum(sphereNum), mSphereStride(sphereStride),
+          mSphereWorks(pSphereWorks), mBaseMtx(nullptr), mTrans(nullptr), mLocalScale(1.0f),
+          mKCollisionServer(nullptr), mUpdatedHitNum(0) {}
+
     virtual ResultRingBuffer* getResultRingBuffer() = 0;
     virtual const ResultRingBuffer* getResultRingBuffer() const = 0;
 

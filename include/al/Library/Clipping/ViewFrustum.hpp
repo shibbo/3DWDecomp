@@ -18,6 +18,11 @@ public:
         bool mIsIntersectEdge[4];
     };
 
+    ViewFrustum()
+        : mPlanes{{sead::Vector3f::ex, 0.0f}, {sead::Vector3f::ex, 0.0f},
+                  {sead::Vector3f::ex, 0.0f}, {sead::Vector3f::ex, 0.0f},
+                  {sead::Vector3f::ex, 0.0f}, {sead::Vector3f::ex, 0.0f}} {}
+
     void calcFrustumFromViewMtx(const sead::Matrix34f& rViewMtx, f32 fovy, f32 aspect, f32 near,
                                 f32 far);
     void makePlanesFromMtx(const sead::Matrix34f& rPoseMtx, f32 fovy, f32 aspect, f32 near,

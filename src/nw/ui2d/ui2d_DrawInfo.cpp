@@ -12,7 +12,7 @@ DrawInfo::DrawInfo()
       mFramebufferWidth(0), mFramebufferHeight(0), m_pFramebufferTextureSlot(nullptr),
       m_pFramebufferSamplerSlot(nullptr), m_pColorTarget(nullptr), m_pDepthTarget(nullptr),
       m_pDepthStencilState(nullptr), m_pRasterizerState(nullptr), _168{},
-      mModelViewLoaded(false), mVertexBufferDirty(false), _18D(false),
+      mModelViewLoaded(false), mVertexBufferDirty(false), m_TexMapNum(0),
       m_pCurrentShader(nullptr), mCurrentShaderVariation(0) {
     m_LocationAdjustScale = {1, 1};
     mViewport.SetDefault();

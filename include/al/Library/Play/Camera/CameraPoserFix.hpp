@@ -36,6 +36,8 @@ public:
 
     void setOwnerObject(void* pOwner) { _1c8 = pOwner; }
 
+    bool isReturnDone() const { return mIsReturnDone; }
+
 private:
     sead::Vector3f mLookAtPos = sead::Vector3f::zero;
     sead::Vector3f mReturnStartCameraPos = sead::Vector3f::zero;

@@ -27,6 +27,8 @@ namespace al {
         virtual void control() {
         }
 
+        bool isDead() const { return mIsDead; }
+
         bool mIsDead = true;
     };
 

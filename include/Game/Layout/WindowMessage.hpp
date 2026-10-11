@@ -1,28 +1,18 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include "Library/Layout/LayoutActor.hpp"
 
-namespace al {
-class LayoutInitInfo;
-}
+namespace al { class LayoutInitInfo; }
 
-// Partial layout: the layout actor and unreconstructed window state remain opaque.
-class alignas(8) WindowMessage {
+/** @brief System-message window with player input handling. */
+class WindowMessage : public al::LayoutActor {
 public:
-    WindowMessage(const al::LayoutInitInfo& rInfo, const char* pLayoutName,
-                  const char* pActorName, const char* pGroupName);
-    void appearWithSystemMessage(const char* pSystemName, const char* pMessageId, int padPort);
-
-    /**
-     * @brief Check whether the message window is active.
-     * @return Whether the underlying layout actor is alive.
-     */
-    bool isAlive() const { return mIsAlive; }
+    WindowMessage(const al::LayoutInitInfo& rInfo, const char* pName,
+                  const char* pLayoutName, const char* pGroupName);
+    void appearWithSystemMessage(const char* pFile, const char* pMessage, int port);
 
 private:
-    u8 mLayoutActor[0x120];
-    bool mIsAlive;
-    u8 mUnreconstructed121[0x1f];
+    u8 _121[0x1f];
 };
 
 static_assert(sizeof(WindowMessage) == 0x140);

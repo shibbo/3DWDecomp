@@ -19,6 +19,9 @@ class CurveAdshr {
     static float CalcRelease(int release);
     static const s16 DecibelSquareTable[128];
 
+    /** @brief Tests whether the envelope reached its release phase. @return Whether releasing. */
+    bool IsRelease() const { return mState == Release; }
+
   private:
     enum State { Attack, Hold, Decay, Sustain, Release };
     State mState;

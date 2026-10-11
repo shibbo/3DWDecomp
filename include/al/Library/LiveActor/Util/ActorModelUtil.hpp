@@ -96,6 +96,7 @@ namespace al {
     void resetPosition(LiveActor* pActor, const sead::Vector3f& rTrans, bool isSkipCalcAnim);
     void resetPosition(LiveActor* pActor, const sead::Vector3f& rTrans, const sead::Vector3f& rRotate);
     void resetEnvTexture(LiveActor* pActor);
+    void changeEnvTextureStamp(LiveActor* pActor);
     void setEnvTextureMirror(LiveActor* pActor, s32 textureId);
     void enableUpdateModelBounding(LiveActor* pActor);
     void disableUpdateModelBounding(LiveActor* pActor);

@@ -29,6 +29,10 @@ public:
         mIsInvalidThroughPassCollision = isInvalid;
     }
 
+    void setIsInvalidSearchCollisionParts(bool isInvalid) {
+        mIsInvalidSearchCollisionParts = isInvalid;
+    }
+
 private:
     class HitResultBuffer;
 

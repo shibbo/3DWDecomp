@@ -11,8 +11,20 @@ class MemorySceneHeapCustomAlloc;
 
 class StageSizeAdjuster {
 public:
-    virtual s32 adjustSceneResourceSize(const char* pStageName, s32 size,
-                                        MemorySceneHeapCustomAlloc* pAlloc) = 0;
+    virtual s32 adjustStageSize(const char* pStageName, s32 size,
+                                MemorySceneHeapCustomAlloc* pAlloc) = 0;
+
+    /**
+     * @brief Former name of adjustStageSize, kept for existing callers.
+     * @param pStageName Name of the stage whose resource heap is created.
+     * @param size Default resource heap size.
+     * @param pAlloc Custom scene heap allocator, or nullptr.
+     * @return The adjusted resource heap size.
+     */
+    s32 adjustSceneResourceSize(const char* pStageName, s32 size,
+                                MemorySceneHeapCustomAlloc* pAlloc) {
+        return adjustStageSize(pStageName, size, pAlloc);
+    }
 };
 
 class MemorySceneHeapCustomAlloc {
@@ -20,7 +32,7 @@ public:
     virtual void createSceneHeap(bool isCreatedResourceHeap) = 0;
     virtual bool isFreeSceneResource(bool isRemoveCategory) = 0;
     virtual bool isReallyFreeSceneResource() const = 0;
-    virtual void unk18() = 0;
+    virtual s64 adjustStageResourceSize(s64 size) = 0;
     virtual void setForceSceneHeapResourceDestroy() = 0;
 };
 

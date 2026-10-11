@@ -116,6 +116,15 @@ public:
 
     void insert(s32 pos, const T& item) { PtrArrayImpl::insert(pos, alloc(item)); }
 
+    /// Allocates and value-initializes a new element at the given position.
+    void birthInsert(s32 pos)
+    {
+        if (!PtrArrayImpl::checkInsert(pos, 1))
+            return;
+
+        PtrArrayImpl::insert(pos, new (mFreeList.alloc()) T());
+    }
+
     s32 indexOf(const T* ptr) const { return PtrArrayImpl::indexOf(ptr); }
 
     void erase(int index) { erase(index, 1); }

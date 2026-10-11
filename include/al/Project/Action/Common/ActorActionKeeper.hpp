@@ -37,6 +37,7 @@ public:
     void init();
 
     ActionAnimCtrl* getAnimCtrl() const { return mAnimCtrl; }
+    ActionEffectCtrl* getEffectCtrl() const { return mEffectCtrl; }
     ActionSeCtrl* getSeCtrl() const { return mSeCtrl; }
     ActionBgmCtrl* getBgmCtrl() const { return mBgmCtrl; }
     ActionPadAndCameraCtrl* getPadAndCameraCtrl() const { return mPadAndCameraCtrl; }

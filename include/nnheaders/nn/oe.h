@@ -51,6 +51,7 @@ enum CpuBoostMode {
 };
 
 void Initialize();
+[[noreturn]] void ExitApplicationAndGoBackToInStoreDemoMenu();
 void FinishStartupLogo();
 void EnableGamePlayRecording(void*, u64);
 void SetExpectedVolumeBalance(f32, f32);

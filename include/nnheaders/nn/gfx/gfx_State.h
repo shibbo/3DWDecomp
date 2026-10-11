@@ -29,11 +29,17 @@ public:
     static size_t GetRequiredMemorySize(const InfoType&);
 
     TBlendState() {}
-    void SetMemory(void*, size_t);
-    void* GetMemory();
-    const void* GetMemory() const;
-    void Initialize(TDevice<TTarget>*, const InfoType&);
-    void Finalize(TDevice<TTarget>*);
+    void SetMemory(void* pMemory, size_t size) {
+        return detail::BlendStateImpl<TTarget>::SetMemory(pMemory, size);
+    }
+    void* GetMemory() { return detail::BlendStateImpl<TTarget>::GetMemory(); }
+    const void* GetMemory() const { return detail::BlendStateImpl<TTarget>::GetMemory(); }
+    void Initialize(TDevice<TTarget>* pDevice, const InfoType& info) {
+        return detail::BlendStateImpl<TTarget>::Initialize(pDevice, info);
+    }
+    void Finalize(TDevice<TTarget>* pDevice) {
+        return detail::BlendStateImpl<TTarget>::Finalize(pDevice);
+    }
 };
 
 template <class TTarget>

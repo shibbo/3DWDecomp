@@ -21,6 +21,7 @@ public:
     bool isNowJustFlashed() const;
     bool isFastFlashing() const;
     bool isNowOn() const;
+    bool isEnded() const { return mIsEnded; }
 
 private:
     LiveActor* mActor;

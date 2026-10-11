@@ -18,6 +18,7 @@ public:
     void update(s32 frame, s32 measure);
     void updateSceneStop();
     void stopAll();
+    void setBeatCount(bool enabled) { mIsBeatCount = enabled; }
 
     AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 

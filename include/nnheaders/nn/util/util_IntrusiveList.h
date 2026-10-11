@@ -96,6 +96,12 @@ public:
             return *this;
         }
 
+        const_iterator operator++(int) {
+            const_iterator temporary(*this);
+            ++(*this);
+            return temporary;
+        }
+
         const_iterator& operator--() {
             m_pNode = m_pNode->GetPrev();
             return *this;
@@ -156,6 +162,16 @@ public:
     void push_back(T& rValue) { m_Root.LinkPrev(&NodeTraits::GetNode(rValue)); }
     void push_front(T& rValue) { m_Root.LinkNext(&NodeTraits::GetNode(rValue)); }
     void pop_front() { m_Root.GetNext()->Unlink(); }
+    void pop_back() { m_Root.GetPrev()->Unlink(); }
+
+    T& front() { return NodeTraits::GetItem(*m_Root.GetNext()); }
+    const T& front() const { return NodeTraits::GetItem(*m_Root.GetNext()); }
+
+    iterator insert(iterator position, T& rValue) {
+        IntrusiveListNode* pNode = &NodeTraits::GetNode(rValue);
+        position.GetNode()->LinkPrev(pNode);
+        return iterator(pNode);
+    }
 
     T& back() { return NodeTraits::GetItem(*m_Root.GetPrev()); }
     const T& back() const { return NodeTraits::GetItem(*m_Root.GetPrev()); }

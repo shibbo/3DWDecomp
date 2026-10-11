@@ -26,6 +26,10 @@ public:
     bool isPlaying() const;
     bool isLoop() const;
 
+    bool isPaused() const { return mPaused; }
+
+    bool isPauseLocked() const { return mPauseLocked; }
+
 private:
     nn::hid::VibrationPlayer* mPlayer = nullptr;
     nn::hid::VibrationNodeConnection* mLeft = nullptr;

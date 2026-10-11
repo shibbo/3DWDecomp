@@ -14,8 +14,9 @@ public:
     void exeWait();
     void onConnectRailBlock();
 
-    s16 _144 = 0;
-    s32 _148 = 0;
-    sead::Vector3f _14C = sead::Vector3f::zero;
-    const char* _158 = nullptr;
+    bool mIsConnectedRailBlock = false;
+    bool mPreventGiantBreak = false;
+    s32 mHitCooldown = 0;
+    sead::Vector3f mClippingOffset = sead::Vector3f::zero;
+    const char* mArchiveName = nullptr;
 };

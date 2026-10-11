@@ -93,6 +93,7 @@ public:
 
     bool isInitialized() const { return mFlags.isOn(EFlag::cInitialized); }
     const StringId& getReporterId() const { return mReporterId; }
+    bool isSaved() const { return mFlags.isOn(EFlag::cSaved); }
 
 protected:
     virtual bool isValid_() const { return false; }

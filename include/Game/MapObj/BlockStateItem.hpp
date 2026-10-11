@@ -1,9 +1,13 @@
 #pragma once
 
+#include <container/seadBuffer.h>
+#include <math/seadVector.h>
+
 #include "Library/Nerve/NerveStateBase.hpp"
 
 namespace al {
     class ActorInitInfo;
+    class ComboCounter;
     class HitSensor;
     class SensorMsg;
     class ScreenPointer;
@@ -14,6 +18,12 @@ class BlockEmpty;
 class BlockStateHeadgear;
 class BlockStateCoinTen;
 
+/**
+ * @brief Item state shared by item blocks (? blocks, bricks, transparent and assist blocks).
+ *
+ * Handles the punch reaction of the host block, the item that pops out of it (a normal item,
+ * one per player, ten coins or a headgear box) and the empty block left behind.
+ */
 class BlockStateItem : public al::ActorStateBase {
 public:
     BlockStateItem(al::LiveActor*, const al::ActorInitInfo&, bool, bool, bool, bool, bool);
@@ -30,14 +40,14 @@ public:
     bool trySendMsgToUpperLowerObj(al::HitSensor*, al::HitSensor*);
     bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
     bool receiveMsgAndAppearItem(const al::SensorMsg*, al::HitSensor*);
-    void validateHitSensorsForBlockPowerPunch();
+    void validateHitSensorsForBlockLowerPunch();
     void validateHitSensorsForBlockUpperPunch();
     bool receiveMsgScreenPoint(const al::SensorMsg*, al::ScreenPointer*);
     void validateHitSensorsForBlockDrcPunch();
     bool tryAppearItem(const al::SensorMsg*, al::HitSensor*, bool);
-    bool isValidAppearItmem() const;
-    void colectAppearItemTiming(al::HitSensor*);
-    bool tryExecAppearItemLong(const al::HitSensor*);
+    bool isValidAppearItem() const;
+    const char* collectAppearItemTiming(al::HitSensor*);
+    void tryExecAppearItemLong(const al::HitSensor*);
     BlockEmpty* getBlockEmpty() const;
     BlockEmpty* tryGetBlockEmpty() const;
     BlockStateCoinTen* tryGetBlockStateCoinTen() const;
@@ -49,37 +59,29 @@ public:
     void exeEnd();
 
     bool isLong() const { return mIsLong; }
-    void setConnectedRailBlock() { _77 = 1; }
+    void setConnectedRailBlock() { mIsConnectedRailBlock = true; }
 
-    int mItemType;  // 0x20
-    u32 _24;
-    BlockEmpty* mBlockEmpty;             // 0x28
-    SnowCover* mSnowCover;               // 0x30
-    BlockStateCoinTen* mStateCoinTen;    // 0x38
-    BlockStateHeadgear* mStateHeadGear;  // 0x40
-    u32 _48;
-    u32 _4C;
-    u32 _50;
-    u8 _54;
-    u8 _55;
-    u8 _56;
-    u8 _57;
-    u32 _58;
-    u32 _5C;
-    u32 _60;
-    u32 _64;
-    u32 _68;
-    s32 _6C;
-    u32 _70;
-    bool mIsLong;  // 0x74
-    u8 _75;
-    u8 _76;
-    u8 _77;
-    u64 _78;
-    u64 _80;
-    u32 _88;
-    u8 _8C;
-    u8 _8D;
-    u32 _90;
-    u32 _94;
+    s32 mItemType = 0;                                // 0x20
+    BlockEmpty* mBlockEmpty = nullptr;                // 0x28
+    SnowCover* mSnowCover = nullptr;                  // 0x30
+    BlockStateCoinTen* mStateCoinTen = nullptr;       // 0x38
+    BlockStateHeadgear* mStateHeadgear = nullptr;     // 0x40
+    sead::Vector3f mAppearDir = sead::Vector3f::ez;   // 0x48
+    bool mIsPopUp = false;                            // 0x54
+    bool mIsItemPerPlayer = false;                    // 0x55
+    sead::Buffer<bool> mIsUserItemAppeared;           // 0x58
+    bool mIsAppearEnd = false;                        // 0x68
+    s32 mPlayerNum = 0;                               // 0x6C
+    s32 mAppearCount = 0;                             // 0x70
+    bool mIsLong;                                     // 0x74
+    bool mIsTransparent;                              // 0x75
+    bool mIsAssist;                                   // 0x76
+    bool mIsConnectedRailBlock = false;               // 0x77
+    s32 mReactionStep = 0;                            // 0x78
+    al::HitSensor* mAppearSensor = nullptr;           // 0x80
+    s32 mControlUserId = -1;                          // 0x88
+    bool mIsForceChangeItem = false;                  // 0x8C
+    bool mIsWallSide = false;                         // 0x8D
+    bool mIsDrcPunch = false;                         // 0x8E
+    al::ComboCounter* mComboCounter = nullptr;        // 0x90
 };

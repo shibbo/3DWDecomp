@@ -10,6 +10,8 @@ class RailMoveMovement : public HostStateBase<LiveActor> {
 public:
     RailMoveMovement(LiveActor* pHost, const ActorInitInfo& rInfo);
 
+    float getSpeed() const { return mSpeed; }
+    void setSpeed(float speed) { mSpeed = speed; }
     void exeMove();
     void exeStandby();
 

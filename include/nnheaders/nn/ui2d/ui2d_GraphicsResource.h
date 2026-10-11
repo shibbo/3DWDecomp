@@ -13,6 +13,10 @@
 
 namespace nn {
 
+namespace gfx {
+class BlendTargetStateInfo;
+}
+
 namespace font {
 class RectDrawer;
 };
@@ -91,7 +95,13 @@ public:
     void ActivateVertexBuffer(nn::gfx::CommandBuffer*) const;
 
     static PresetBlendStateId GetPresetBlendStateId(const ResBlendMode*, const ResBlendMode*);
+    static size_t SetupBlendStateInfo(nn::gfx::BlendStateInfo* pBlendStateInfo,
+                                      nn::gfx::BlendTargetStateInfo* pBlendTargetStateInfo,
+                                      const ResBlendMode* pBlendMode,
+                                      const ResBlendMode* pBlendModeAlpha);
     nn::gfx::BlendState* GetPresetBlendState(PresetBlendStateId id);
+
+    static const PresetBlendStateId DefalutPresetBlendStateId;
 
     ShaderInfo m_CommonShaderInfo;
     void* m_pUi2dBuildinShader;

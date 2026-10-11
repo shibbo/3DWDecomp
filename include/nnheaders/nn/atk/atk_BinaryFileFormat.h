@@ -11,5 +11,9 @@ struct BinaryFileHeader {
     u16 blockCount, reserved;
 };
 static_assert(sizeof(BinaryFileHeader) == 0x14, "BinaryFileHeader size");
+struct BinaryBlockHeader {
+    u32 kind;
+    u32 size;
+};
 static_assert(sizeof(ReferenceWithSize) == 0xc, "ReferenceWithSize size");
 }

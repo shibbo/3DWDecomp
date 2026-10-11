@@ -114,6 +114,11 @@ public:
     }
     void setStencilWriteMask(u32 mask) { mStencilWriteMask = mask; }
     void setPolygonOffsetBackEnable(bool enable) { mPolygonOffsetBackEnable = enable; }
+    void setPolygonMode(u8 front, u8 back)
+    {
+        mPolygonModeFront = front;
+        mPolygonModeBack = back;
+    }
 
 private:
     bool mDepthTestEnable;

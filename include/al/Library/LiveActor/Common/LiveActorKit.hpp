@@ -64,6 +64,7 @@ public:
     DemoDirector* getDemoDirector() const { return mDemoDirector; }
     PadRumbleDirector* getPadRumbleDirector() const { return mRumbleDirector; }
     void setItemDirector(ItemDirectorBase* pDirector) { mItemDirector = pDirector; }
+    void setDemoDirector(DemoDirector* pDirector) { mDemoDirector = pDirector; }
 
     s32 _0;
     s32 _4;

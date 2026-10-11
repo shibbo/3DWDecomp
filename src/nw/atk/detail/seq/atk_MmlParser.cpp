@@ -292,7 +292,7 @@ void MmlParser::CommandProc(MmlSequenceTrack* track, u32 command, int first, int
             break;
         }
     } else if (command <= 0xffff) {
-        s16* variable = nullptr;
+        vs16* variable = nullptr;
 
         if ((command & 0xf0) == 0x80 || (command & 0xf0) == 0x90) {
             variable = GetVariablePtr(player, track, first);
@@ -410,7 +410,7 @@ u32 MmlParser::ReadVar(const u8** position) const {
 
 // index selects player variables 0-31 or track variables 32-47. player and track
 // own those respective banks; out-of-range positive indices return null.
-s16* MmlParser::GetVariablePtr(SequenceSoundPlayer* player, SequenceTrack* track, int index) const {
+vs16* MmlParser::GetVariablePtr(SequenceSoundPlayer* player, SequenceTrack* track, int index) const {
     if (index < 32) return player->GetVariablePtr(index);
 
     if (index < 48) return track->GetVariablePtr(index - 32);
@@ -435,7 +435,7 @@ int MmlParser::ReadArg(const u8** position, SequenceSoundPlayer* player, Sequenc
         return low + ((int(Util::CalcRandom() & 0xffff) * (high - low + 1)) >> 16);
     }
     case SeqArgType_Variable: {
-        s16* variable = GetVariablePtr(player, track, *(*position)++);
+        vs16* variable = GetVariablePtr(player, track, *(*position)++);
         return variable ? *variable : 0;
     }
     default: return 0;

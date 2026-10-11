@@ -78,6 +78,8 @@ public:
 
     bool isLoadedBloomParam() const { return mIsLoadedBloomParam; }
 
+    void setForceBloomParam(const BloomNamedParam* pParam) { mForceBloomParam = pParam; }
+
 private:
     GraphicsAreaDirector* mGraphicsAreaDirector = nullptr;
     s32 mParamNum = 0;

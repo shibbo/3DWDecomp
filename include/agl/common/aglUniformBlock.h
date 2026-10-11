@@ -115,7 +115,7 @@ public:
         mCurrentBufferIndex = bufferIndex;
         mCurrentBuffer = getBlockPtr_(-1, 0);
     }
-    void setUniform(DrawContext* pDrawContext, const u64& rAddress, const ShaderLocation& rLocation,
+    bool setUniform(DrawContext* pDrawContext, const u64& rAddress, const ShaderLocation& rLocation,
                     u32 offset, u64 size) const;  // inline, defined below
     void activate(DrawContext* pDrawContext, const ShaderLocation& rLocation) const
     {
@@ -125,8 +125,10 @@ public:
     }
     void flushCurrentBuffer() const
     {
-        GPUMemVoidAddr(mBuffer, mCurrentBufferIndex * mBlockNum * mAlignedBlockSize)
-            .flushCPUCache(mBlockSize);
+        u32 offset = mCurrentBufferIndex * mBlockNum * mAlignedBlockSize;
+        GPUMemVoidAddr address;
+        address = GPUMemVoidAddr(mBuffer, offset);
+        address.flushCPUCache(mBlockSize);
     }
 
 protected:
@@ -187,12 +189,13 @@ class ShaderStorageBlock : public UniformBlock {};
 
 namespace agl {
 
-inline void UniformBlock::setUniform(DrawContext* pDrawContext, const u64& rAddress,
+inline bool UniformBlock::setUniform(DrawContext* pDrawContext, const u64& rAddress,
                                      const ShaderLocation& rLocation, u32 offset, u64 size) const
 {
     if (!rLocation.isValid())
-        return;
+        return false;
 
+    u64 address = rAddress + offset;
     NVNcommandBuffer* commandBuffer = pDrawContext->getNvnCommandBuffer();
     for (s32 i = 0; i < cShaderType_Num; i++)
     {
@@ -200,9 +203,10 @@ inline void UniformBlock::setUniform(DrawContext* pDrawContext, const u64& rAddr
         if (rLocation.getLocation(type) != -1)
         {
             bindBufferNVN_(commandBuffer, driver::NVNMgr::getNVNshaderStage(type),
-                           rLocation.getLocation(type), rAddress + offset, size);
+                           rLocation.getLocation(type), address, size);
         }
     }
+    return true;
 }
 
 }  // namespace agl

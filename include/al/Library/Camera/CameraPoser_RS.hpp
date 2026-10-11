@@ -214,6 +214,8 @@ public:
 
     f32 getFarClipDistance() const { return mFarClipDistance; }
 
+    bool is140() const { return _140; }
+
     bool is141() const { return _141; }
 
     bool isCalcEndAfterInterpole() const { return _9c; }

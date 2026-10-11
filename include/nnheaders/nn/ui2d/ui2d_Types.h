@@ -17,6 +17,20 @@ typedef void (*ReleaseSamplerSlot)(nn::gfx::DescriptorSlot*, const nn::gfx::Samp
 
 enum TexWrap { TexWrap_Clamp, TexWrap_Repeat, TexWrap_Mirror, TexWrap_MaxTexWrap };
 enum TexFilter { TexFilter_Near, TexFilter_Linear, TexFilter_MaxTexFilter };
+/** @brief Horizontal base position of a pane or text. */
+enum HorizontalPosition {
+    HorizontalPosition_Center,
+    HorizontalPosition_Left,
+    HorizontalPosition_Right,
+    HorizontalPosition_MaxHorizontalPosition
+};
+/** @brief Vertical base position of a pane or text. */
+enum VerticalPosition {
+    VerticalPosition_Center,
+    VerticalPosition_Top,
+    VerticalPosition_Bottom,
+    VerticalPosition_MaxVerticalPosition
+};
 
 enum BlendOp {
     BlendOp_Disable,

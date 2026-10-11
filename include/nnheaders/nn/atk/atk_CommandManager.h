@@ -48,6 +48,8 @@ public:
     bool IsFinishCommand(u32 sequence) const;
     /** @brief Checks whether driver command storage is initialized. @return True when commands may be submitted. */
     bool IsInitialized() const { return mInitialized; }
+    /** @brief Reads the number of pushed commands not yet processed. @return Pending command count. */
+    int GetPendingCommandCount() const { return mPendingCount.load(); }
     size_t GetCommandBufferSize() const;
     size_t GetAllocatableCommandSize() const;
     size_t GetAllocatedCommandBufferSize() const;

@@ -32,6 +32,7 @@ public:
     s32 calcPathTimeFromHorizontalSpeed(f32 frames) const;
 
     const sead::Vector3f& getStart() const { return mStart; }
+    const sead::Vector3f& getHorizontalDirection() const { return mHorizontalDirection; }
 
 private:
     sead::Vector3f mStart = {0.0f, 0.0f, 0.0f};

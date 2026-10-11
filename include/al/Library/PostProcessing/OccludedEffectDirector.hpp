@@ -16,6 +16,7 @@ class Viewport;
 
 namespace al {
 class GraphicsSystemInfo;
+class OccludedEffectRequestInfo;
 
 /**
  * Keeps the occluded effects (lens flares) and their occlusion queries.
@@ -25,6 +26,7 @@ public:
     OccludedEffectDirector(GraphicsSystemInfo* pInfo, s32 viewNum);
     ~OccludedEffectDirector();
 
+    OccludedEffectRequestInfo* createInfoByPresetName(const char*);
     void clear();
     void movement();
     void calcView(s32 viewIndex, const sead::Camera* pCamera, const sead::Projection* pProjection);

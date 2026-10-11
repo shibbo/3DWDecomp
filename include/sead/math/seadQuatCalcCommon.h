@@ -1,5 +1,7 @@
 #pragma once
 
+#include <attributes.h>
+
 #include <basis/seadTypes.h>
 #include <math/seadMathPolicies.h>
 
@@ -25,6 +27,7 @@ public:
     static void slerpTo(Base& out, const Base& q1, const Base& q2, f32 t);
     static void makeUnit(Base& q);
     static bool makeVectorRotation(Base& q, const Vec3& from, const Vec3& to);
+    NOINLINE static bool makeVectorRotationLimit(Base& q, const Vec3& from, const Vec3& to, T limit);
     static void set(Base& q, const Base& other);
     static void set(Base& q, T w, T x, T y, T z);
     static void setRPY(Base& q, T roll, T pitch, T yaw);

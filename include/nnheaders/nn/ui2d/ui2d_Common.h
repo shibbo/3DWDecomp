@@ -28,6 +28,13 @@ public:
     void Copy(void const*, s32);
     bool CompareCopiedInstanceTest(nn::ui2d::detail::TexCoordArray const&) const;
 
+    /** @return The number of coordinate sets the array can hold. */
+    u8 GetCapacity() const { return mCapacity; }
+    /** @return The number of coordinate sets in use. */
+    u8 GetSize() const { return mSize; }
+    /** @return The coordinate sets, four corners each. */
+    const nn::util::Float2 (*GetArray() const)[4] { return mCoords; }
+
     u8 mCapacity;
     u8 mSize;
     nn::util::Float2 (*mCoords)[4];

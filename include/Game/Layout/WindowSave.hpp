@@ -1,31 +1,23 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include "Library/Layout/LayoutActor.hpp"
 
 namespace al {
 class LayoutInitInfo;
-} // namespace al
+}
+class ButtonGroup;
 
-/**
- * @brief Save-result window.
- *
- * Only the parts used by already-decompiled code are modelled; the al::LayoutActor base
- * (with its virtual bases) is kept opaque.
- */
-class WindowSave {
-  public:
-    WindowSave(const al::LayoutInitInfo& rInfo);
+/** @brief Save-result window with an acknowledgement button. */
+class WindowSave : public al::LayoutActor {
+public:
+    explicit WindowSave(const al::LayoutInitInfo& rInfo);
     void appearWindow(int padPort);
+    void exeAppear();
+    void exeWait();
+    void exeEnd();
 
-    /**
-     * @brief Check whether the window layout is currently shown.
-     * @return True while the window is alive.
-     */
-    bool isAlive() const { return mIsAlive; }
-
-  private:
-    u8 mLayoutActor[0x120]; // al::LayoutActor base (opaque).
-    bool mIsAlive;
-    u8 mUnreconstructed121[0x17];
+private:
+    ButtonGroup* mButtonGroup = nullptr;
+    s32 mPadPort = -1;
 };
 static_assert(sizeof(WindowSave) == 0x138);

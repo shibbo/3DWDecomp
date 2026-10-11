@@ -73,6 +73,34 @@ public:
     void executeCommandDelayStart();
     void startDelayed(s32 delayCount);
 
+    /**
+     * @brief Get the npad id the next scan is requested for.
+     * @return The requested npad id.
+     */
+    s32 getRequestNpadId() const { return mRequestNpadId; }
+
+    /**
+     * @brief Find the device bound to an npad.
+     * @param npadId Npad id of the device.
+     * @return Index of the device, or -1 if no device is bound to the npad.
+     */
+    s32 findDeviceIndex(u32 npadId) const {
+        for (s32 i = 0; i < mDeviceInfos.size(); i++) {
+            if (mDeviceInfos(i).npadId == npadId) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * @brief Get the scan result of a device.
+     * @param index Index of the device.
+     * @return The scan result, or nullptr for an invalid index.
+     */
+    NfpInfo* getNfpInfo(s32 index) const { return mNfpInfos[index]; }
+
 private:
     void setState(NfpDirectorState state) {
         mCriticalSection.lock();

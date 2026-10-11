@@ -251,6 +251,12 @@ class GameDataFile : public GameDataFileBase {
     StockItemList* getStockItemList() const { return mpStockItems; }
 
     /**
+     * @brief Read the green star total recorded at the last save.
+     * @return The saved green star total.
+     */
+    s32 getTotalAcquireGreenStarNumSaved() const { return mTotalAcquireGreenStarNumSaved; }
+
+    /**
      * @brief Count a stage restart chosen from the pause menu.
      */
     void incMenuRestartCount() { mUnknown98++; }
@@ -288,6 +294,12 @@ class GameDataFile : public GameDataFileBase {
      * @brief Forget that the ending was started.
      */
     void resetAfterEnding() { mIsStartEnding = false; }
+
+    /** @brief Requests a return to the world map when the current stage is left. */
+    void requestReturnToMap() { mUnknownF3 = true; }
+
+    /** @brief Requests a restart of the current stage when it is left. */
+    void requestRestartStage() { mUnknownF4 = true; }
 
   private:
     friend inline void GameDataFileInternal::resetKinopioHouse(GameDataFile* pFile);

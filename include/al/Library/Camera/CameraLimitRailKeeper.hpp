@@ -23,6 +23,24 @@ public:
 
     f32 getActivateDistance() const { return mActivateDistance; }
 
+    f32 getDegreeMargin() const { return mDegreeMargin; }
+
+    f32 getAngleElevation() const { return mAngleElevation; }
+
+    f32 getAngleElevation2() const { return mAngleElevation2; }
+
+    s32 getAngleElevationIterpStep() const { return mAngleElevationIterpStep; }
+
+    s32 getAngleElevationResetStep() const { return mAngleElevationResetStep; }
+
+    bool isApplyAngleElevation() const { return mIsApplyAngleElevation; }
+
+    bool isResetAngleElevation() const { return mIsResetAngleElevation; }
+
+    bool isFixedAngle() const { return mIsFixedAngle; }
+
+    bool isInvalidCheckCollision() const { return mIsInvalidCheckCollision; }
+
 private:
     Rail* mRail = nullptr;
     RailRider** mRiders = nullptr;

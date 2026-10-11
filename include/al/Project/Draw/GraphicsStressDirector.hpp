@@ -50,6 +50,8 @@ public:
 
     bool isFullResolution() const { return mIsFullResolution; }
 
+    void setFullResolution(bool isFullResolution) { mIsFullResolution = isFullResolution; }
+
 private:
     s32 mPseudoAAFrame = 0;
     sead::Vector2f mPseudoAAOffset = sead::Vector2f::zero;

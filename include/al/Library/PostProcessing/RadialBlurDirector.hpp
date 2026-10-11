@@ -40,4 +40,6 @@ static_assert(sizeof(RadialBlurDirector) == 0x18);
 
 void emitRadialBlur(const LiveActor* pActor, const sead::Vector3f& rPos, f32 radiusBegin,
                     f32 radiusEnd, s32 frame, s32 viewIndex);
+void emitRadialBlur(const LiveActor* pActor, const sead::Vector3f* pPos, f32 radiusBegin,
+                    f32 radiusEnd, s32 frame, s32 viewIndex);
 }  // namespace al

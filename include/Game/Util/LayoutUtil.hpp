@@ -8,6 +8,7 @@ namespace al {
 class IUseCamera;
 class IUseLayout;
 class IUseMessageSystem;
+class IUseSceneObjHolder;
 class LayoutActor;
 class LiveActor;
 } // namespace al
@@ -35,6 +36,10 @@ void replacePaneMsgNumber2(al::IUseMessageSystem* pMsgSystem, al::IUseLayout* pL
 void replacePaneMsgNumber3(al::IUseMessageSystem* pMsgSystem, al::IUseLayout* pLayout,
                            const char* pPaneName, const char* pFileName, const char* pLabel,
                            s32 number1, s32 number2, s32 number3);
+void appearCameraChangeLayout(const al::IUseSceneObjHolder* pHolder);
+void disappearCameraChangeLayout(const al::IUseSceneObjHolder* pHolder);
+void disappearCameraChangeLayoutAndResetCameraMode(const al::IUseSceneObjHolder* pHolder);
+void disappearGyroIconInKinopioBrigade(const al::IUseSceneObjHolder* pHolder);
 void convertPlayerLifeToText(sead::WBufferedSafeString* pOut, s32 life);
 void setPaneDecideIconFont(al::IUseLayout* pLayout, const char* pPaneName, s32 port);
 void hideButton(ButtonGroup* pButtonGroup, const char* pButtonName);

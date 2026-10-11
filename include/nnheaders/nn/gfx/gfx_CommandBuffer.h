@@ -32,9 +32,15 @@ public:
     void Begin();
     void End();
     void Dispatch(int, int, int);
-    void Draw(PrimitiveTopology, int, int);
+    void Draw(PrimitiveTopology primitiveTopology, int vertexCount, int vertexOffset) {
+        return Impl::Draw(primitiveTopology, vertexCount, vertexOffset);
+    }
     void Draw(PrimitiveTopology, int, int, int, int);
-    void DrawIndexed(PrimitiveTopology, IndexFormat, const GpuAddress&, int, int);
+    void DrawIndexed(PrimitiveTopology primitiveTopology, IndexFormat indexFormat,
+                     const GpuAddress& indexBufferAddress, int indexCount, int baseVertex) {
+        return Impl::DrawIndexed(primitiveTopology, indexFormat, indexBufferAddress, indexCount,
+                                 baseVertex);
+    }
     void DrawIndexed(PrimitiveTopology primitiveTopology, IndexFormat indexFormat,
                      const GpuAddress& indexBufferAddress, int indexCount, int baseVertex,
                      int instanceCount, int baseInstance) {
@@ -74,8 +80,8 @@ public:
                            const TextureArrayRange*);
     void Resolve(TTexture<TTarget>*, int, int, const TColorTargetView<TTarget>*,
                  const TextureArrayRange*);
-    void FlushMemory(int);
-    void InvalidateMemory(int);
+    void FlushMemory(int gpuAccessFlags) { return Impl::FlushMemory(gpuAccessFlags); }
+    void InvalidateMemory(int gpuAccessFlags) { return Impl::InvalidateMemory(gpuAccessFlags); }
     void CallCommandBuffer(const TCommandBuffer<TTarget>*);
     void CopyCommandBuffer(const TCommandBuffer<TTarget>*);
     void SetBufferStateTransition(TBuffer<TTarget>*, int, int, int, int);
@@ -126,7 +132,9 @@ public:
     }
 
     void SetRasterizerState(const TRasterizerState<TTarget>*);
-    void SetBlendState(const TBlendState<TTarget>*);
+    void SetBlendState(const TBlendState<TTarget>* pBlendState) {
+        return Impl::SetBlendState(pBlendState);
+    }
     void SetDepthStencilState(const TDepthStencilState<TTarget>*);
 
     void SetVertexState(const TVertexState<Target>* pVertexState) {

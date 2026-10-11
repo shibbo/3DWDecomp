@@ -11,7 +11,12 @@ public:
         int bufferLength;
         int bufferLengthOverride;
     };
-    struct TextInfoUtf8;
+    struct TextInfoUtf8 {
+        const char* pText;
+        u32 length;
+        int bufferLength;
+        int bufferLengthOverride;
+    };
     virtual ~TextSearcher() {}
     virtual void SearchText(TextInfo* pInfo, const char* pId, Layout* pLayout,
                             TextBox* pTextBox, Layout* pRootLayout) = 0;

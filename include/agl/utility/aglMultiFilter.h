@@ -52,6 +52,7 @@ public:
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
     const TextureData* getResultTexture() const { return mDrawContext.mResultTexture; }
+    void setUnknownBaa(bool value) { _baa = value; }
 
 protected:
     bool preWrite_() const override;

@@ -10,6 +10,6 @@ class PhaseScene : public SingleModeScene {
     PhaseScene();
 
   private:
-    u8 mUnknown378[8]; // Unreconstructed phase state.
+    u8 mUnknown379[7]; // Unreconstructed phase state (after SingleModeScene's tail byte).
 };
 static_assert(sizeof(PhaseScene) == 0x380);

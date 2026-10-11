@@ -28,6 +28,8 @@ public:
 
     const sead::Vector3f& getDirection() const { return mDirection; }
 
+    void setDirection(const sead::Vector3f& rDir) { mDirection = rDir; }
+
 protected:
     agl::utl::Parameter<sead::Vector2f>* mCoordinate = nullptr;
     sead::Vector3f mDirection = -sead::Vector3f::ey;

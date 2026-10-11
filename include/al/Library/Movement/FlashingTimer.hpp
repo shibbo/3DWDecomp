@@ -14,6 +14,9 @@ public:
     s32 getLastTime() const;
 
     s32 getTime() const { return mLastTime; }
+    void start() { mLastTime = mDuration; }
+    bool isVisible() const { return mIsVisible; }
+    bool wasVisible() const { return mIsPrevVisible; }
 
 private:
     s32 mLastTime = -1;

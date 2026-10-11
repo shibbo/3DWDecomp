@@ -19,11 +19,21 @@ public:
     const sead::Vector3f* _10;
     const sead::Vector3f* _18;
     u64 _20;
-    u64 _28;
-    u64 _30;
+    u32 _28;
+    sead::Vector3f mCameraOffset;  // 0x2c
 };
+
+static_assert(sizeof(ActorStateDemoCameraParam) == 0x38);
 
 class ActorStateDemoCamera : public al::ActorStateBase {
 public:
     ActorStateDemoCamera(al::LiveActor*, const al::ActorInitInfo&, const char*, const ActorStateDemoCameraParam*, bool);
+    bool tryStart(const al::Nerve*);
+    int getPlayStep() const;
+    bool isGreaterEqualPlayStep(int step) const;
+
+private:
+    u8 mUnreconstructed20[0xa0];
 };
+
+static_assert(sizeof(ActorStateDemoCamera) == 0xc0);

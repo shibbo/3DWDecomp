@@ -89,10 +89,28 @@ class SoundArchive {
         s32 waveSoundCount;
         s32 waveTrackCount;
         u32 streamBufferTimes;
-        s32 advancedWaveSoundCount;
-        s32 advancedWaveTrackCount;
+        bool isAdvancedWaveSoundEnabled;
+        s32 _24;
     };
     bool ReadSoundArchivePlayerInfo(SoundArchivePlayerInfo* pInfo) const;
+
+    struct PlayerInfo {
+        /** @brief Initializes a player with no playable sounds and no player heap. */
+        PlayerInfo() : playableSoundMax(0), playerHeapSize(0) {}
+
+        int playableSoundMax;
+        u32 playerHeapSize;
+    };
+
+    struct WaveSoundInfo {
+        /** @brief Initializes a wave sound with default track and priority settings. */
+        WaveSoundInfo() : allocateTrackCount(0), channelPriority(0), isReleasePriorityFix(false) {}
+
+        u32 index;
+        u32 allocateTrackCount;
+        u8 channelPriority;
+        bool isReleasePriorityFix;
+    };
 
     struct WaveArchiveInfo {
         /** @brief Initializes an unresolved wave archive with individual loading disabled. */
@@ -204,6 +222,18 @@ class SoundArchive {
      * @param pHook Override provider, or nullptr to clear the hook.
      */
     void SetParametersHook(detail::SoundArchiveParametersHook* pHook) const { mParametersHook = pHook; }
+    /** @brief Gets the archive parameter override hook. @return Installed hook, or nullptr. */
+    detail::SoundArchiveParametersHook* GetParametersHook() const { return mParametersHook; }
+    u32 GetPlayerCount() const;
+    bool ReadPlayerInfo(PlayerInfo* pInfo, ItemId id) const;
+    bool detail_ReadWaveSoundInfo(ItemId id, WaveSoundInfo* pInfo) const;
+    bool ReadStreamSoundFilePath(char* pBuffer, size_t bufferSize, ItemId id) const;
+    /**
+     * @brief Converts a player index into a player item id.
+     * @param index Zero-based player index.
+     * @return Player item id.
+     */
+    static ItemId GetPlayerIdFromIndex(u32 index) { return index | 0x4000000; }
     bool IsAvailable() const;
     u32 GetSoundCount() const;
     u32 GetGroupCount() const;
@@ -224,6 +254,8 @@ class SoundArchive {
     virtual size_t detail_GetRequiredStreamBufferSize() const = 0;
 
   protected:
+    friend class SoundArchivePlayer;
+
     void Initialize(detail::SoundArchiveFileReader* pReader);
     void Finalize();
     virtual void FileAccessBegin() const {}

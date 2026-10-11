@@ -13,6 +13,17 @@ class MeInfo {
 };
 class SePlayParamList;
 struct MeInfoEntry {
+    MeInfoEntry() = default;
+    /**
+     * @brief Creates one musical-effect entry.
+     * @param variable Sequence local-variable index receiving the note.
+     * @param chord Chord degree, or a negative value for none.
+     * @param scale Scale-degree offset.
+     * @param pitch Pitch offset in semitones.
+     */
+    MeInfoEntry(s32 variable, s32 chord, s32 scale, s32 pitch)
+        : mVariable(variable), mChord(chord), mScale(scale), mPitch(pitch) {}
+
     s32 mVariable = 0;
     s32 mChord = 0;
     s32 mScale = 0;
@@ -22,6 +33,16 @@ static_assert(sizeof(MeInfoEntry) == 0x10);
 
 class MeInfoList {
   public:
+    MeInfoList() = default;
+    /**
+     * @brief Creates a named list; MeInfoKeeper::init() resolves the sound ID.
+     * @param pName Sound name.
+     * @param pEntries Entry array.
+     * @param entryNum Number of entries.
+     */
+    MeInfoList(const char* pName, MeInfoEntry* pEntries, s32 entryNum)
+        : mName(pName), mEntries(pEntries), mEntryNum(entryNum) {}
+
     const char* mName = nullptr;
     u32 mSoundId = AudioConst::SOUND_ID_INVALID;
     MeInfoEntry* mEntries = nullptr;

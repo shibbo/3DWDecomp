@@ -172,6 +172,42 @@ inline bool QuatCalcCommon<T>::makeVectorRotation(Base& q, const Vec3& from, con
 }
 
 template <typename T>
+bool QuatCalcCommon<T>::makeVectorRotationLimit(Base& q, const Vec3& from, const Vec3& to,
+                                                T limit)
+{
+    const T cosAngle = Vector3CalcCommon<T>::dot(from, to);
+    const T dot = cosAngle + 1;
+
+    if (dot <= MathCalcCommon<T>::epsilon())
+    {
+        set(q, 1, 0, 0, 0);
+        return false;
+    }
+
+    Vec3 cross;
+    Vector3CalcCommon<T>::cross(cross, from, to);
+    T w;
+    T scale;
+    const T cosLimit = MathCalcCommon<T>::cos(limit);
+    if (cosLimit > cosAngle)
+    {
+        T s = MathCalcCommon<T>::sqrt(2 * (cosLimit + 1));
+        scale = (1 / s) *
+                (MathCalcCommon<T>::sin(limit) / MathCalcCommon<T>::sqrt(1 - cosAngle * cosAngle));
+        w = s * 0.5f;
+    }
+    else
+    {
+        T s = MathCalcCommon<T>::sqrt(2 * dot);
+        scale = 1 / s;
+        w = s * 0.5f;
+    }
+
+    set(q, w, cross.x * scale, cross.y * scale, cross.z * scale);
+    return true;
+}
+
+template <typename T>
 inline void QuatCalcCommon<T>::set(Base& q, const Base& other)
 {
     q = other;

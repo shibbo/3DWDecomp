@@ -17,13 +17,13 @@ public:
     virtual void hide();
     virtual void show();
     void execute() override;
-    virtual void createWave(const LiveActor* pActor, const OceanWaveInfo* pInfo);
+    virtual bool createWave(const LiveActor* pActor, const OceanWaveInfo* pInfo);
     void kill() override;
     virtual f32 getY(const sead::Vector3f& rPos);
     virtual s32 getRenderType() const = 0;
     virtual bool isInInk(const sead::Vector3f& rPos);
     virtual void initFromYaml(const ByamlIter& rIter, const char* pName) = 0;
     virtual void setStageName(const char* pStageName) = 0;
-    ~OceanWaveDirector() override;
+    ~OceanWaveDirector() override = default;
 };
 }  // namespace al

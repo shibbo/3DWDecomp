@@ -156,6 +156,7 @@ public:
     static void checkCurrentThreadStackPointerOverFlow(const char* source_file, s32 source_line);
 
     CriticalSection* getListCS() { return &mListCS; }
+    const ThreadList& getThreadList() const { return mList; }
 
     bool tryRemoveFromFindContainHeapCache(Heap* heap)
     {

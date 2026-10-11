@@ -68,6 +68,8 @@ public:
 
     void setPadRumbleKeeper(const PadRumbleKeeper* pKeeper) { mPadRumbleKeeper = pKeeper; }
 
+    const PadRumbleKeeper* getPadRumbleKeeper() const { return mPadRumbleKeeper; }
+
 private:
     const LiveActor* mParentActor;
     const sead::Vector3f* mPos;

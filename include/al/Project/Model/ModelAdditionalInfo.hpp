@@ -25,6 +25,7 @@ public:
     void activateModelLightTexture(s32 index);
 
     const GraphicsSystemInfo* getGraphicsSystemInfo() const { return mGraphicsSystemInfo; }
+    void setGraphicsSystemInfo(const GraphicsSystemInfo* info) { mGraphicsSystemInfo = info; }
     const void* getLightInfo() const { return mLightInfo; }
     EnvTexId* getEnvTexId() { return &mEnvTexId; }
     s32 getCategory() const { return mCategory; }

@@ -17,7 +17,7 @@ struct GameDataPlayReportCommonValues {
     u32 mCounts0[5];
     u32 mCounts1[5];
     u32 mCounts2[5];
-    u32 mCounts3[4];
+    f32 mCounts3[4];
 };
 static_assert(sizeof(GameDataPlayReportCommonValues) == 0x5c);
 
@@ -30,6 +30,8 @@ class GameDataPlayReportCommon {
     void writeToStream(sead::WriteStream* pStream) const;
 
   private:
+    friend class PlayReport;
+
     GameDataPlayReportCommonValues mValues;
 };
 static_assert(sizeof(GameDataPlayReportCommon) == 0x5c);
