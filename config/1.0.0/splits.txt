@@ -3217,7 +3217,7 @@ src/Game/Sequence/ProductStateOpeningDemo.cpp: done
     .text   start:0x004E4310 end:0x004E4930
 src/Game/Sequence/ProductStateSingleMode.cpp: done
     .text   start:0x004E4930 end:0x004E5770
-src/Game/Sequence/ProductStateSingleModeEnding.cpp:
+src/Game/Sequence/ProductStateSingleModeEnding.cpp: done
     .text   start:0x004E5770 end:0x004E63B0
 src/Game/Sequence/ProductStateSingleOpeningDemo.cpp: done
     .text   start:0x004E63B0 end:0x004E6B00

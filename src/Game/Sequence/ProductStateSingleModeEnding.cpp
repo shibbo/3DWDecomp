@@ -1,31 +1,37 @@
 #include "Sequence/ProductStateSingleModeEnding.hpp"
 
-#include <thread/seadThread.h>
-#include "Scene/DemoSceneSingleMode.hpp"
-#include "Sequence/ProductSequence.hpp"
-#include "System/GameDataHolder.hpp"
-#include "System/GameDataHolderAccessor.hpp"
-#include "System/GameDataHolderWriter.hpp"
-#include "System/Data/SingleModeDataFunction.hpp"
-#include "Scene/DemoSingleModeEndingScene.hpp"
-#include "Library/Bgm/BgmLineFunction.hpp"
-#include "System/SaveDataAccessFunction.hpp"
-#include "Stage/StageWipeKeeper.hpp"
-#include "Sequence/SequenceWindowKeeper.hpp"
 #include "Layout/WindowMessage.hpp"
-#include "Util/ControlUserUtil.hpp"
-#include "Library/Play/Layout/WipeSimple.hpp"
+#include "Library/Bgm/BgmLineFunction.hpp"
 #include "Library/Layout/LayoutUtil.hpp"
 #include "Library/Memory/HeapUtil.hpp"
 #include "Library/Memory/SceneHeapSetter.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
+#include "Library/Play/Layout/WipeSimple.hpp"
+#include "Scene/DemoSceneSingleMode.hpp"
+#include "Scene/DemoSingleModeEndingScene.hpp"
+#include "Sequence/ProductSequence.hpp"
+#include "Sequence/SequenceWindowKeeper.hpp"
+#include "Stage/StageWipeKeeper.hpp"
+#include "System/Data/SingleModeDataFunction.hpp"
+#include "System/GameDataHolder.hpp"
+#include "System/GameDataHolderAccessor.hpp"
+#include "System/GameDataHolderWriter.hpp"
+#include "System/SaveDataAccessFunction.hpp"
+#include "Util/ControlUserUtil.hpp"
+#include <thread/seadThread.h>
 
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+// Keep both priorities together, as in the original sequence thread settings.
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateSingleModeEnding, LoadEnding);
 class ProductStateSingleModeEndingNrvEndFirstTime : public al::Nerve {
-public:
+  public:
     /** @brief Execute the terminal state. @param pKeeper Host nerve keeper. */
     void execute(al::NerveKeeper* pKeeper) const override {
         pKeeper->getParent<ProductStateSingleModeEnding>()->exeEnd();
@@ -39,8 +45,9 @@ NERVE_DECL(ProductStateSingleModeEnding, WipeCredits);
 NERVE_DECL(ProductStateSingleModeEnding, Save);
 NERVE_DECL(ProductStateSingleModeEnding, Destroy);
 NERVE_DECL(ProductStateSingleModeEnding, End);
-NERVES_MAKE_NOSTRUCT(ProductStateSingleModeEnding, LoadEnding, EndFirstTime, Ending, WipeEnding, LoadCredits, Credits, WipeCredits, Save, Destroy, End)
-}
+NERVES_MAKE_NOSTRUCT(ProductStateSingleModeEnding, LoadEnding, EndFirstTime, Ending, WipeEnding,
+                     LoadCredits, Credits, WipeCredits, Save, Destroy, End)
+} // namespace
 
 /**
  * @brief Create the ending state, scene creator, and ending fade.
@@ -51,9 +58,12 @@ NERVES_MAKE_NOSTRUCT(ProductStateSingleModeEnding, LoadEnding, EndFirstTime, End
  * @param pCapture Screen capture service.
  */
 ProductStateSingleModeEnding::ProductStateSingleModeEnding(ProductSequence* pSequence,
-    const al::SequenceInitInfo& rInfo, const al::LayoutInitInfo& rLayoutInfo,
-    StageWipeKeeper* pWipeKeeper, al::ScreenCaptureExecutor* pCapture)
-    : al::HostStateBase<ProductSequence>("SingleModeEndingState", pSequence), mpWipeKeeper(pWipeKeeper) {
+                                                           const al::SequenceInitInfo& rInfo,
+                                                           const al::LayoutInitInfo& rLayoutInfo,
+                                                           StageWipeKeeper* pWipeKeeper,
+                                                           al::ScreenCaptureExecutor* pCapture)
+    : al::HostStateBase<ProductSequence>("SingleModeEndingState", pSequence),
+      mpWipeKeeper(pWipeKeeper) {
     al::initSceneCreator(this, rInfo,
                          reinterpret_cast<al::GameDataHolderBase*>(pSequence->getGameDataHolder()),
                          pSequence->getAudioDirector(), pCapture, nullptr);
@@ -79,7 +89,9 @@ ProductStateSingleModeEnding::~ProductStateSingleModeEnding() {
 }
 
 /** @brief Initialize the ending load step. */
-void ProductStateSingleModeEnding::init() { initNerve(&NrvProductStateSingleModeEndingLoadEnding, 0); }
+void ProductStateSingleModeEnding::init() {
+    initNerve(&NrvProductStateSingleModeEndingLoadEnding, 0);
+}
 
 /** @brief Activate the state and restart demo loading. */
 void ProductStateSingleModeEnding::appear() {
@@ -94,8 +106,8 @@ void ProductStateSingleModeEnding::exeLoadEnding() {
         al::SceneHeapSetter heapSetter;
         mpScene = new DemoSceneSingleMode(true, true);
         mpScene->enableCancelAudioOnSkip();
-        al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, "DemoSingleModeEndingStage",
-                                    -1, "", nullptr);
+        al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit,
+                                     "DemoSingleModeEndingStage", -1, "", nullptr);
     }
     if (al::tryEndSceneInitThread(this) && mpWipeKeeper->isCloseEndEndingWipe() &&
         al::isGreaterEqualStep(this, 240)) {
@@ -140,8 +152,8 @@ void ProductStateSingleModeEnding::exeLoadCredits() {
         al::createSceneHeap(nullptr);
         al::SceneHeapSetter heapSetter;
         mpCreditsScene = new DemoSingleModeEndingScene();
-        al::setSceneAndUseInitThread(this, mpCreditsScene, cSceneInitPriority,
-                                    "DemoSingleModeEndRollStage", -1, "", nullptr);
+        al::setSceneAndUseInitThread(this, mpCreditsScene, cThreadPriorities.sceneInit,
+                                     "DemoSingleModeEndRollStage", -1, "", nullptr);
     }
     if (al::tryEndSceneInitThread(this) && al::isGreaterEqualStep(this, 240)) {
         getHost()->offDrawScreenCapture();
@@ -173,7 +185,8 @@ void ProductStateSingleModeEnding::exeWipeCredits() {
 void ProductStateSingleModeEnding::exeSave() {
     if (al::isFirstStep(this)) {
         getHost()->requestCaptureTopBottom();
-        SaveDataAccessFunction::startSaveDataWrite(getHost()->getGameDataHolder(), false, -1, false);
+        SaveDataAccessFunction::startSaveDataWrite(getHost()->getGameDataHolder(), false, -1,
+                                                   false);
     }
     if (SaveDataAccessFunction::updateSaveDataAccess(getHost()->getGameDataHolder(), false)) {
         getHost()->requestCaptureTopBottom();
@@ -208,7 +221,8 @@ void ProductStateSingleModeEnding::exeDestroy() {
 /** @brief Remain idle after demo teardown. */
 void ProductStateSingleModeEnding::exeEnd() {}
 
-/** @brief Check whether the first ending has completed. @return Whether the first-time terminal state is active. */
+/** @brief Check whether the first ending has completed. @return Whether the first-time terminal
+ * state is active. */
 bool ProductStateSingleModeEnding::isEndFirstTime() {
     return al::isNerve(this, &NrvProductStateSingleModeEndingEndFirstTime);
 }
