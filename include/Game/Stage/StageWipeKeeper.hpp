@@ -41,6 +41,11 @@ public:
     void closeRetryWipe(bool isSkip);
     bool isCloseEndRetryWipe() const;
     void openRetryWipe();
+    void appearStartWipe(const GameDataHolder* pHolder);
+    bool isWaitStartWipe() const;
+    bool isEnableEndStartWipe() const;
+    void closeEndRetryWipe();
+    void closeRetryWipeMysteryTimeUp();
     void tryOpenFadeBlack();
     bool tryOpenStartOrRetryWipe();
     void tryOpenNoResultWipe();

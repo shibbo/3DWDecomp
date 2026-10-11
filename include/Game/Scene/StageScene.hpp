@@ -92,6 +92,7 @@ public:
     bool isRestartCheck() const override;
     void prepareDestroy() override;
     void recordClearData() override;
+    void setInvalidateInputFrames(int frames) { mInvalidateInputFrame = frames; }
     void invalidatePlayerInput();
     bool isEnableOpenStartWipe() const;
     void exeStartEvent();
