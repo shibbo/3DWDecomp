@@ -32043,17 +32043,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E55E0			FALSE	_ZThn32_NK22ProductStateSingleMode15getSceneCreatorEv	non-virtual thunk to ProductStateSingleMode::getSceneCreator() const	
 0x71004E55F0			FALSE	_ZThn32_N22ProductStateSingleMode15setSceneCreatorEPN2al12SceneCreatorE	non-virtual thunk to ProductStateSingleMode::setSceneCreator(al::SceneCreator*)	
 0x71004E5600			FALSE	_ZNK12_GLOBAL__N_134ProductStateSingleModeNrvLoadStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvLoadStage::execute(al::NerveKeeper*) const	
-0x71004E5610			FALSE	nullsub_287	nullsub_287	
-0x71004E5620			FALSE	nullsub_288	nullsub_288	
-0x71004E5630			FALSE	nullsub_289	nullsub_289	
-0x71004E5640			FALSE	sub_71004E5640	sub_71004E5640	
+0x71004E5610			FALSE	_ZNK12_GLOBAL__N_129ProductStateSingleModeNrvGoal7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvGoal::execute(al::NerveKeeper*) const	
+0x71004E5620			FALSE	_ZNK12_GLOBAL__N_129ProductStateSingleModeNrvQuit7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvQuit::execute(al::NerveKeeper*) const	
+0x71004E5630			FALSE	_ZNK12_GLOBAL__N_132ProductStateSingleModeNrvGameEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvGameEnd::execute(al::NerveKeeper*) const	
+0x71004E5640			FALSE	_ZNK12_GLOBAL__N_132ProductStateSingleModeNrvEndLoad7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvEndLoad::execute(al::NerveKeeper*) const	
 0x71004E56B0			FALSE	_ZNK12_GLOBAL__N_130ProductStateSingleModeNrvStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvStage::execute(al::NerveKeeper*) const	
 0x71004E56C0			FALSE	_ZNK12_GLOBAL__N_137ProductStateSingleModeNrvDestroyStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvDestroyStage::execute(al::NerveKeeper*) const	
-0x71004E56D0			FALSE	sub_71004E56D0	sub_71004E56D0	
-0x71004E5710			FALSE	nullsub_290	nullsub_290	
+0x71004E56D0			FALSE	_ZNK12_GLOBAL__N_142ProductStateSingleModeNrvWaitLoadScreenEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvWaitLoadScreenEnd::execute(al::NerveKeeper*) const	
+0x71004E5710			FALSE	_ZNK12_GLOBAL__N_133ProductStateSingleModeNrvLoadGame7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvLoadGame::execute(al::NerveKeeper*) const	
 0x71004E5720			FALSE	_ZNK12_GLOBAL__N_135ProductStateSingleModeNrvRetryStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvRetryStage::execute(al::NerveKeeper*) const	
 0x71004E5730			FALSE	_ZNK12_GLOBAL__N_136ProductStateSingleModeNrvSaveAndQuit7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvSaveAndQuit::execute(al::NerveKeeper*) const	
-0x71004E5740			FALSE	nullsub_291	nullsub_291	
+0x71004E5740			FALSE	_ZNK12_GLOBAL__N_135ProductStateSingleModeNrvGameChange7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleModeNrvGameChange::execute(al::NerveKeeper*) const	
 0x71004E5750			FALSE	sub_71004E5750	sub_71004E5750	
 0x71004E5770		ProductStateSingleModeEnding.o	FALSE	_ZN28ProductStateSingleModeEndingC1EP15ProductSequenceRKN2al16SequenceInitInfoERKNS2_14LayoutInitInfoEP15StageWipeKeeperPNS2_21ScreenCaptureExecutorE	ProductStateSingleModeEnding::ProductStateSingleModeEnding(ProductSequence*, al::SequenceInitInfo const&, al::LayoutInitInfo const&, StageWipeKeeper*, al::ScreenCaptureExecutor*)	object (class)
 0x71004E5830			FALSE	_ZN28ProductStateSingleModeEndingD2Ev	ProductStateSingleModeEnding::~ProductStateSingleModeEnding()	

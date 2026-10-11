@@ -42,7 +42,7 @@ public:
     bool isCloseEndRetryWipe() const;
     void openRetryWipe();
     void tryOpenFadeBlack();
-    void tryOpenStartOrRetryWipe();
+    bool tryOpenStartOrRetryWipe();
     void tryOpenNoResultWipe();
     void tryOpenNoResultWipeByFade();
 
