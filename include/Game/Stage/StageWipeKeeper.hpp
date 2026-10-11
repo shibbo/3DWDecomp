@@ -18,6 +18,8 @@ public:
     StageWipeKeeper(const al::LayoutInitInfo& rInfo, al::NetworkSystem* pNetworkSystem);
 
     void closeBootWipe();
+    bool isCloseEndBootWipe() const;
+    void tryOpenBootWipe();
     void closeEndingWipe();
     bool isCloseEndEndingWipe() const;
     void tryOpenEndingWipe();
