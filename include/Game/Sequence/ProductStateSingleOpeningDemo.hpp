@@ -1,28 +1,43 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include "Library/Nerve/NerveStateBase.hpp"
+#include "Library/Scene/IUseSceneCreator.hpp"
 
-class ControllerConnectChecker;
 class ProductSequence;
+class DemoSceneSingleMode;
 class StageWipeKeeper;
+class ControllerConnectChecker;
+namespace al { struct SequenceInitInfo; class GamePadSystem; }
 
-namespace al {
-struct SequenceInitInfo;
-}  // namespace al
-
-/**
- * @brief Sequence state of the Bowser's Fury opening demo.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
-class ProductStateSingleOpeningDemo : public al::HostStateBase<ProductSequence> {
+class ProductStateSingleOpeningDemo : public al::HostStateBase<ProductSequence>, public al::IUseSceneCreator {
 public:
     ProductStateSingleOpeningDemo(ProductSequence* pSequence, StageWipeKeeper* pWipeKeeper,
-                                  const al::SequenceInitInfo& rInfo,
-                                  ControllerConnectChecker* pConnectChecker);
+                                  const al::SequenceInitInfo& rInfo, ControllerConnectChecker* pChecker);
+    ~ProductStateSingleOpeningDemo() override;
+    void init() override;
+    void appear() override;
+    void exeLoad();
+    void exeWait();
+    void exeFadeOut();
+    void exeDestroy();
+    void exeEnd();
+
+    /**
+     * @brief Get the opening-demo scene creator.
+     * @return Scene creator installed during initialization.
+     */
+    al::SceneCreator* getSceneCreator() const override { return mpSceneCreator; }
+    /**
+     * @brief Store the opening-demo scene creator.
+     * @param pCreator Scene creator to retain.
+     */
+    void setSceneCreator(al::SceneCreator* pCreator) override { mpSceneCreator = pCreator; }
 
 private:
-    u8 _20[0x30];  ///< Not reconstructed yet.
+    DemoSceneSingleMode* mpScene = nullptr;
+    al::SceneCreator* mpSceneCreator = nullptr;
+    ControllerConnectChecker* mpControllerChecker;
+    StageWipeKeeper* mpWipeKeeper;
+    al::GamePadSystem* mpGamePadSystem;
 };
-
 static_assert(sizeof(ProductStateSingleOpeningDemo) == 0x50);

@@ -32105,9 +32105,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E69B0			FALSE	_ZThn32_N29ProductStateSingleOpeningDemo15setSceneCreatorEPN2al12SceneCreatorE	non-virtual thunk to ProductStateSingleOpeningDemo::setSceneCreator(al::SceneCreator*)	
 0x71004E69C0			FALSE	_ZNK12_GLOBAL__N_136ProductStateSingleOpeningDemoNrvLoad7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleOpeningDemoNrvLoad::execute(al::NerveKeeper*) const	
 0x71004E69D0			FALSE	_ZNK12_GLOBAL__N_136ProductStateSingleOpeningDemoNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleOpeningDemoNrvWait::execute(al::NerveKeeper*) const	
-0x71004E69E0			FALSE	sub_71004E69E0	sub_71004E69E0	
-0x71004E6A30			FALSE	sub_71004E6A30	sub_71004E6A30	
-0x71004E6AD0			FALSE	nullsub_294	nullsub_294	
+0x71004E69E0			FALSE	_ZNK12_GLOBAL__N_139ProductStateSingleOpeningDemoNrvFadeOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleOpeningDemoNrvFadeOut::execute(al::NerveKeeper*) const	
+0x71004E6A30			FALSE	_ZNK12_GLOBAL__N_139ProductStateSingleOpeningDemoNrvDestroy7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleOpeningDemoNrvDestroy::execute(al::NerveKeeper*) const	
+0x71004E6AD0			FALSE	_ZNK12_GLOBAL__N_135ProductStateSingleOpeningDemoNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateSingleOpeningDemoNrvEnd::execute(al::NerveKeeper*) const	
 0x71004E6AE0			FALSE	sub_71004E6AE0	sub_71004E6AE0	
 0x71004E6B00		ProductStateStage.o	FALSE	_ZN17ProductStateStageC1EP15ProductSequenceP22ProductStageStartParamP15StageWipeKeeperRKN2al16SequenceInitInfoERKNS6_14LayoutInitInfoEP14GameDataHolderP24ControllerConnectCheckerPNS6_21ScreenCaptureExecutorE	ProductStateStage::ProductStateStage(ProductSequence*, ProductStageStartParam*, StageWipeKeeper*, al::SequenceInitInfo const&, al::LayoutInitInfo const&, GameDataHolder*, ControllerConnectChecker*, al::ScreenCaptureExecutor*)	object (class)
 0x71004E6C00			FALSE	_ZN17ProductStateStageD2Ev	ProductStateStage::~ProductStateStage()	
