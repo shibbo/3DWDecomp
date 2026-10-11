@@ -32246,7 +32246,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E9C80			FALSE	nullsub_306	nullsub_306	
 0x71004E9C90			FALSE	sub_71004E9C90	sub_71004E9C90	
 0x71004E9CB0		SequenceFactory.o	FALSE	_ZN15SequenceFactory14createSequenceEPKc	SequenceFactory::createSequence(char const*)	object (class)
-0x71004E9CF0			FALSE	sub_71004E9CF0	sub_71004E9CF0	
+0x71004E9CF0			FALSE	_ZN12_GLOBAL__N_114createSequenceI15ProductSequenceEEPN2al8SequenceEPKc	al::Sequence* (anonymous namespace)::createSequence<ProductSequence>(char const*)	
 0x71004E9D30		SequenceWindowKeeper.o	FALSE	_ZN20SequenceWindowKeeperC2ERKN2al14LayoutInitInfoE	SequenceWindowKeeper::SequenceWindowKeeper(al::LayoutInitInfo const&)	object (class)
 0x71004E9DD0			FALSE	_ZN20SequenceWindowKeeper13appearMessageEPKcib	SequenceWindowKeeper::appearMessage(char const*, int, bool)	
 0x71004E9E10			FALSE	_ZNK20SequenceWindowKeeper15isMessageActiveEv	SequenceWindowKeeper::isMessageActive() const	
