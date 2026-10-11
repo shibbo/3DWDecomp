@@ -8,7 +8,8 @@
  */
 SequenceWindowKeeper::SequenceWindowKeeper(const al::LayoutInitInfo& rInfo) {
     mpMessage = new WindowMessage(rInfo, "WindowMessage", "メッセージウインドウ", nullptr);
-    mpSequenceMessage = new WindowMessage(rInfo, "WindowMessage", "メッセージウインドウ", "Sequence");
+    mpSequenceMessage =
+        new WindowMessage(rInfo, "WindowMessage", "メッセージウインドウ", "Sequence");
 }
 
 /**
@@ -28,5 +29,5 @@ void SequenceWindowKeeper::appearMessage(const char* pMessageId, int padPort, bo
  * @return Whether that window's layout actor is alive.
  */
 bool SequenceWindowKeeper::isMessageActive() const {
-    return (mIsSequence ? mpSequenceMessage : mpMessage)->isAlive();
+    return (!mIsSequence ? mpMessage : mpSequenceMessage)->isAlive();
 }

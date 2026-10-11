@@ -3231,7 +3231,7 @@ src/Game/Sequence/ProductStateTopMenu.cpp: done
     .text   start:0x004E9270 end:0x004E9CB0
 src/Game/Sequence/SequenceFactory.cpp: done
     .text   start:0x004E9CB0 end:0x004E9D24
-src/Game/Sequence/SequenceWindowKeeper.cpp:
+src/Game/Sequence/SequenceWindowKeeper.cpp: done
     .text   start:0x004E9D30 end:0x004E9E2C
 src/Game/Stage/StageWipeKeeper.cpp:
     .text   start:0x004E9E30 end:0x004EA888
