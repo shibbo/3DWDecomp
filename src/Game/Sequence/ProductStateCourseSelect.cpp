@@ -17,7 +17,13 @@
 #include <heap/seadHeapMgr.h>
 #include <thread/seadThread.h>
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+// Keep both priorities together, as in the original sequence thread settings.
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateCourseSelect, LoadStage);
 NERVE_DECL(ProductStateCourseSelect, LoadStageWithResult);
 class ProductStateCourseSelectNrvLoadGame : public al::Nerve {
@@ -30,8 +36,11 @@ NERVE_DECL(ProductStateCourseSelect, CourseSelect);
 NERVE_DECL(ProductStateCourseSelect, DestroyStage);
 NERVE_DECL(ProductStateCourseSelect, Save);
 NERVE_DECL(ProductStateCourseSelect, End);
-NERVES_MAKE_NOSTRUCT(ProductStateCourseSelect, LoadStage, LoadStageWithResult, LoadGame,
-                     CourseSelect, DestroyStage, Save, End)
+const struct {
+    ProductStateCourseSelectNrvLoadStage Main;
+    ProductStateCourseSelectNrvLoadStageWithResult Result;
+} NrvProductStateCourseSelectLoadStage;
+NERVES_MAKE_NOSTRUCT(ProductStateCourseSelect, LoadGame, CourseSelect, DestroyStage, Save, End)
 } // namespace
 /** @brief Create course-selection, result and save-window services. */
 ProductStateCourseSelect::ProductStateCourseSelect(
@@ -60,8 +69,8 @@ ProductStateCourseSelect::~ProductStateCourseSelect() {
 }
 /** @brief Initialize loading and its result-screen child state. */
 void ProductStateCourseSelect::init() {
-    initNerve(&NrvProductStateCourseSelectLoadStage, 1);
-    al::initNerveState(this, mpResultState, &NrvProductStateCourseSelectLoadStageWithResult,
+    initNerve(&NrvProductStateCourseSelectLoadStage.Main, 1);
+    al::initNerveState(this, mpResultState, &NrvProductStateCourseSelectLoadStage.Result,
                        "LoadWithResult");
 }
 /** @brief Disable controller connection while loading the course selection. */
@@ -70,15 +79,15 @@ void ProductStateCourseSelect::appear() {
     mIsGotoTitle = false;
     rc::setControllerConnectDisabled(true);
     if (getHost()->isShowResult())
-        al::setNerve(this, &NrvProductStateCourseSelectLoadStageWithResult);
+        al::setNerve(this, &NrvProductStateCourseSelectLoadStage.Result);
     else
-        al::setNerve(this, &NrvProductStateCourseSelectLoadStage);
+        al::setNerve(this, &NrvProductStateCourseSelectLoadStage.Main);
 }
 /** @brief Check whether the completed state returns to the title. */
 bool ProductStateCourseSelect::isGotoTitle() const { return isDead() && mIsGotoTitle; }
 /** @brief Check whether loading is showing stage results. */
 bool ProductStateCourseSelect::isResult() const {
-    return al::isNerve(this, &NrvProductStateCourseSelectLoadStageWithResult);
+    return al::isNerve(this, &NrvProductStateCourseSelectLoadStage.Result);
 }
 /** @brief Enable result effects after the first step. */
 bool ProductStateCourseSelect::isEffectDraw() const {
@@ -96,8 +105,8 @@ void ProductStateCourseSelect::exeLoadStage() {
         al::createCourseSelectHeap();
         sead::ScopedCurrentHeapSetter heapSetter(al::getCourseSelectHeap());
         mpScene = new CourseSelectScene(false);
-        al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, "CourseSelectStage", -1, "",
-                                     al::getCourseSelectHeap());
+        al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit,
+                                     "CourseSelectStage", -1, "", al::getCourseSelectHeap());
     }
     if (al::tryEndSceneInitThread(this) &&
         (mpWipeKeeper->isCloseEndNoResultWipe() ||
@@ -115,8 +124,8 @@ void ProductStateCourseSelect::exeLoadStageWithResult() {
         al::createCourseSelectHeap();
         sead::ScopedCurrentHeapSetter heapSetter(al::getCourseSelectHeap());
         mpScene = new CourseSelectScene(false);
-        al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, "CourseSelectStage", -1, "",
-                                     al::getCourseSelectHeap());
+        al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit,
+                                     "CourseSelectStage", -1, "", al::getCourseSelectHeap());
     }
     if (al::updateNerveState(this)) {
         getHost()->offDrawScreenCapture();

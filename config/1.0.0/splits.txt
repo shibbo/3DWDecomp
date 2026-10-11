@@ -3207,7 +3207,7 @@ src/Game/Sequence/ProductStateAfterEndingEvent.cpp: done
     .text   start:0x004E1C80 end:0x004E2420
 src/Game/Sequence/ProductStateBoot.cpp: done
     .text   start:0x004E2420 end:0x004E2B00
-src/Game/Sequence/ProductStateCourseSelect.cpp:
+src/Game/Sequence/ProductStateCourseSelect.cpp: done
     .text   start:0x004E2B00 end:0x004E3620
 src/Game/Sequence/ProductStateEnding.cpp: done
     .text   start:0x004E3620 end:0x004E3F70

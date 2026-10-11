@@ -31950,7 +31950,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004E35D0			FALSE	_ZNK12_GLOBAL__N_139ProductStateCourseSelectNrvDestroyStage7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvDestroyStage::execute(al::NerveKeeper*) const	
 0x71004E35E0			FALSE	_ZNK12_GLOBAL__N_131ProductStateCourseSelectNrvSave7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvSave::execute(al::NerveKeeper*) const	
 0x71004E35F0			FALSE	_ZNK12_GLOBAL__N_135ProductStateCourseSelectNrvLoadGame7executeEPN2al11NerveKeeperE	(anonymous namespace)::ProductStateCourseSelectNrvLoadGame::execute(al::NerveKeeper*) const	
-0x71004E3600			FALSE	sub_71004E3600	sub_71004E3600	
+0x71004E3600			FALSE	_GLOBAL__sub_I_ProductStateCourseSelect.cpp	_GLOBAL__sub_I_ProductStateCourseSelect.cpp	
 0x71004E3620		ProductStateEnding.o	FALSE	_ZN18ProductStateEndingC1EP15ProductSequenceRKN2al16SequenceInitInfoERKNS2_14LayoutInitInfoEP15StageWipeKeeperPNS2_21ScreenCaptureExecutorE	ProductStateEnding::ProductStateEnding(ProductSequence*, al::SequenceInitInfo const&, al::LayoutInitInfo const&, StageWipeKeeper*, al::ScreenCaptureExecutor*)	object (class)
 0x71004E36E0			FALSE	_ZN18ProductStateEndingD2Ev	ProductStateEnding::~ProductStateEnding()	
 0x71004E3760			FALSE	_ZThn32_N18ProductStateEndingD1Ev	non-virtual thunk to ProductStateEnding::~ProductStateEnding()	
