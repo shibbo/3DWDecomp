@@ -40,8 +40,12 @@ public:
     void tryOpenStartOrRetryWipe();
     void tryOpenNoResultWipe();
 
+    /** @brief Clear references to wipes owned by the scene being destroyed. */
+    void resetSceneWipes() { mSceneWipes[0] = mSceneWipes[1] = mSceneWipes[2] = nullptr; }
 private:
-    u8 _0[0x80];  ///< Not reconstructed yet.
+    u8 _0[0x60];  ///< Not reconstructed yet.
+    void* mSceneWipes[3];
+    u8 _78[8];  ///< Not reconstructed yet.
 };
 
 static_assert(sizeof(StageWipeKeeper) == 0x80);
