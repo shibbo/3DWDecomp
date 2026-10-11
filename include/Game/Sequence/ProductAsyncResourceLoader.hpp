@@ -1,25 +1,31 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
+namespace al {
+class AsyncFunctorThread;
+class AudioSystemInfo;
+}
 class GameDataHolder;
 
-namespace al {
-class AudioSystemInfo;
-}  // namespace al
-
-/**
- * @brief Loads the resources of the next sequence state in the background.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
 class ProductAsyncResourceLoader {
 public:
     ProductAsyncResourceLoader(const al::AudioSystemInfo* pAudioSystemInfo,
-                               GameDataHolder* pHolder);
+                               GameDataHolder* pGameDataHolder);
     ~ProductAsyncResourceLoader();
+    void threadFunc();
+    void tryStartTitleLoad();
+    void tryStartCourseSelectLoad();
+    void resetCourseSelectLoad();
 
 private:
-    u8 _0[0x38];  ///< Not reconstructed yet.
+    al::AsyncFunctorThread* mpThread = nullptr;
+    const char* mpCategoryName = nullptr;
+    const char* mpLoadName = nullptr;
+    bool mIsLoading = false;
+    bool mIsTitleLoaded = false;
+    bool mIsCourseSelectLoaded = false;
+    const al::AudioSystemInfo* mpAudioSystemInfo;
+    GameDataHolder* mpGameDataHolder;
+    void* mUnreconstructed30 = nullptr;
 };
 
 static_assert(sizeof(ProductAsyncResourceLoader) == 0x38);
