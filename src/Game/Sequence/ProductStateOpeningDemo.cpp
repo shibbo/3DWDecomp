@@ -1,22 +1,28 @@
 #include "Sequence/ProductStateOpeningDemo.hpp"
 
-#include <thread/seadThread.h>
-#include "Scene/DemoScene.hpp"
-#include "Sequence/ProductSequence.hpp"
-#include "System/GameDataHolder.hpp"
 #include "Library/Memory/HeapUtil.hpp"
 #include "Library/Memory/SceneHeapSetter.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
+#include "Scene/DemoScene.hpp"
+#include "Sequence/ProductSequence.hpp"
+#include "System/GameDataHolder.hpp"
+#include <thread/seadThread.h>
 
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+// Keep both priorities together, as in the original sequence thread settings.
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateOpeningDemo, Load);
 NERVE_DECL(ProductStateOpeningDemo, Wait);
 NERVE_DECL(ProductStateOpeningDemo, Destroy);
 NERVE_DECL(ProductStateOpeningDemo, End);
 NERVES_MAKE_NOSTRUCT(ProductStateOpeningDemo, Load, Wait, Destroy, End)
-}
+} // namespace
 
 /**
  * @brief Create the opening-demo state and its scene creator.
@@ -57,8 +63,8 @@ void ProductStateOpeningDemo::exeLoad() {
         al::createSceneHeap(nullptr);
         al::SceneHeapSetter heapSetter;
         mpScene = new DemoScene(false, false);
-        al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, "DemoOpeningStage",
-                                    -1, "", nullptr);
+        al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit, "DemoOpeningStage",
+                                     -1, "", nullptr);
         getHost()->getGameDataHolder()->startOpening();
     }
     if (al::tryEndSceneInitThread(this)) {
