@@ -1,24 +1,30 @@
 #include "Sequence/ProductStateBoot.hpp"
 
-#include <thread/seadThread.h>
-#include "Scene/BootScene.hpp"
-#include "Sequence/ProductSequence.hpp"
-#include "System/GameDataHolder.hpp"
-#include "Sequence/ProductAsyncResourceLoader.hpp"
 #include "Library/Memory/HeapUtil.hpp"
 #include "Library/Memory/SceneHeapSetter.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
+#include "Scene/BootScene.hpp"
+#include "Sequence/ProductAsyncResourceLoader.hpp"
+#include "Sequence/ProductSequence.hpp"
+#include "System/GameDataHolder.hpp"
+#include <thread/seadThread.h>
 
 namespace {
-const int cSceneInitPriority = sead::Thread::cDefaultPriority + 3;
+// Keep both priorities together, as in the original sequence thread settings.
+struct ThreadPriorities {
+    int sceneInit;
+    int normal;
+};
+const ThreadPriorities cThreadPriorities = {sead::Thread::cDefaultPriority + 3,
+                                            sead::Thread::cDefaultPriority};
 NERVE_DECL(ProductStateBoot, Load);
 NERVE_DECL(ProductStateBoot, Wait);
 NERVE_DECL(ProductStateBoot, WaitEndBootScene);
 NERVE_DECL(ProductStateBoot, Destroy);
 NERVE_DECL(ProductStateBoot, End);
 NERVES_MAKE_NOSTRUCT(ProductStateBoot, Load, Wait, WaitEndBootScene, Destroy, End)
-}
+} // namespace
 
 /**
  * @brief Create the boot state and its scene creator.
@@ -28,15 +34,14 @@ NERVES_MAKE_NOSTRUCT(ProductStateBoot, Load, Wait, WaitEndBootScene, Destroy, En
  * @param pLoader Loader for the title resources.
  * @param pCapture Screen capture service.
  */
-ProductStateBoot::ProductStateBoot(ProductSequence* pSequence,
-                                   const al::SequenceInitInfo& rInfo,
+ProductStateBoot::ProductStateBoot(ProductSequence* pSequence, const al::SequenceInitInfo& rInfo,
                                    StageWipeKeeper* pWipeKeeper,
                                    ProductAsyncResourceLoader* pLoader,
                                    al::ScreenCaptureExecutor* pCapture)
     : al::HostStateBase<ProductSequence>("タイトル", pSequence), mpResourceLoader(pLoader) {
-    al::initSceneCreator(this, rInfo,
-                         reinterpret_cast<al::GameDataHolderBase*>(pSequence->getGameDataHolderBase()),
-                         pSequence->getAudioDirector(), pCapture, nullptr);
+    al::initSceneCreator(
+        this, rInfo, reinterpret_cast<al::GameDataHolderBase*>(pSequence->getGameDataHolderBase()),
+        pSequence->getAudioDirector(), pCapture, nullptr);
 }
 
 /** @brief Detach and delete any boot scene still owned by the state. */
@@ -65,8 +70,8 @@ void ProductStateBoot::exeLoad() {
         al::createSceneHeap(nullptr);
         al::SceneHeapSetter heapSetter;
         mpScene = new BootScene();
-        al::setSceneAndUseInitThread(this, mpScene, cSceneInitPriority, nullptr,
-                                    -1, "", nullptr);
+        al::setSceneAndUseInitThread(this, mpScene, cThreadPriorities.sceneInit, nullptr, -1, "",
+                                     nullptr);
     }
     if (al::tryEndSceneInitThread(this)) {
         getHost()->offDrawScreenCapture();
