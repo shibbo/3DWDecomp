@@ -148,7 +148,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         }
 
         if (!isNearZero(mSafeLookAtOffset - mLookAtOffset, 0.5f)) {
-            mSafeLookAtOffset.set(mLookAtOffset);
+            mSafeLookAtOffset = mLookAtOffset;
         }
 
         sead::Vector3f move = {0.0f, 0.0f, 0.0f};
@@ -300,15 +300,15 @@ void SnapShotCameraCtrl::exeReset() {
     if (isFirstStep(this)) {
         mRollTarget = mRollDegree;
         mFovyDegreeTarget = mFovyDegree;
-        mLookAtOffsetTarget = mLookAtOffset;
+        mLookAtOffsetTarget.set(mLookAtOffset);
     }
 
     mFovyDegree = calcNerveValue(this, mResetStep, mFovyDegreeTarget, mDefaultFovyDegree);
     f32 rate = 1.0f - calcNerveRate(this, mResetStep);
     mRollDegree = mRollTarget * rate;
     mSafeLookAtOffsetTarget.set(mLookAtOffsetTarget);
-    mLookAtOffset = rate * mSafeLookAtOffsetTarget;
-    mSafeLookAtOffset.set(mLookAtOffset);
+    mLookAtOffset = rate * mLookAtOffsetTarget;
+    mSafeLookAtOffset = mLookAtOffset;
 
     if (isGreaterEqualStep(this, mResetStep)) {
         mRollDegree = 0.0f;
