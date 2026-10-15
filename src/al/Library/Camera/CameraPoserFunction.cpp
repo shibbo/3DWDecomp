@@ -299,6 +299,10 @@ f32 calcPreCameraAngleV(const al::CameraPoser_RS* pPoser) {
     return sead::Mathf::rad2deg(sead::Mathf::asin(cameraDir.length()));
 }
 
+/**
+ * @brief Places the look-at point at the current camera target.
+ * @param pPoser Camera poser whose target supplies the position.
+ */
 void setLookAtPosToTarget(al::CameraPoser_RS* pPoser) {
     sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
     calcTargetTrans(&targetTrans, pPoser);
@@ -315,6 +319,10 @@ void setLookAtPosToTargetAddOffset(al::CameraPoser_RS* pPoser, const sead::Vecto
     pPoser->setAt(targetTrans + offset);
 }
 
+/**
+ * @brief Places the camera eye at the current camera target.
+ * @param pPoser Camera poser whose target supplies the position.
+ */
 void setCameraPosToTarget(al::CameraPoser_RS* pPoser) {
     sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
     calcTargetTrans(&targetTrans, pPoser);

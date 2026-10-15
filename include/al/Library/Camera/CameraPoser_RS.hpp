@@ -240,11 +240,11 @@ public:
 
     SnapShotCameraCtrl* getSnapShotCtrl() const { return mSnapShotCtrl; }
 
-    void setEye(const sead::Vector3f& rPos) { mEye = rPos; }
+    void setEye(const sead::Vector3f& rPos) { mEye.set(rPos); }
 
     void addEyeOffset(const sead::Vector3f& rOffset) { mEye += rOffset; }
 
-    void setAt(const sead::Vector3f& rPos) { mAt = rPos; }
+    void setAt(const sead::Vector3f& rPos) { mAt.set(rPos); }
 
     void setCameraUp(const sead::Vector3f& rDir) { mUp = rDir; }
 
