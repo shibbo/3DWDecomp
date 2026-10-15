@@ -107,7 +107,7 @@ const CameraDistanceCurve* CameraDistanceCurve::findOrDefaultCurve(const ByamlIt
         }
     }
 
-    for (s32 i = 1; i < 13; i++) {
+    for (s32 i = 0; i < 13; i++) {
         if (isEqualString(sExtraCurves[i].getName(), name)) {
             return &sExtraCurves[i];
         }
