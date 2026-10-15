@@ -414,14 +414,14 @@ void CameraPoser_RS::appear(const CameraStartInfo& rInfo) {
     }
 
     if (mLookAtInterpole) {
-        mLookAtInterpole->target = mAt;
+        mLookAtInterpole->target.set(mAt);
     }
 }
 
 static void updateLookAtInterpole(CameraPoser_RS::LookAtInterpole* pInterpole,
                                   CameraPoser_RS* pPoser, sead::Vector3f prevAt) {
     lerpVec(pPoser->getAtPtr(), pInterpole->target, pPoser->getAt(), pInterpole->lerp);
-    pInterpole->target = pPoser->getAt();
+    pInterpole->target.set(pPoser->getAt());
     pPoser->addEyeOffset(pPoser->getAt() - prevAt);
 }
 
@@ -434,7 +434,7 @@ static void updateLookAtInterpoleWithVerticalAbsorb(CameraPoser_RS::LookAtInterp
     parallelizeVec(&offsetV, rGravity, offset);
     sead::Vector3f offsetH = offset - offsetV;
     pPoser->setAt(pInterpole->target + offsetV + offsetH * pInterpole->lerp);
-    pInterpole->target = pPoser->getAt();
+    pInterpole->target.set(pPoser->getAt());
     pPoser->addEyeOffset(pPoser->getAt() - prevAt);
 }
 
@@ -443,8 +443,8 @@ static void updateLocalInterpole(CameraPoser_RS::LocalInterpole* pInterpole,
     if (alCameraPoserFunction::isChangeTarget(pPoser)) {
         pInterpole->step = 0;
         pInterpole->end = 30;
-        pInterpole->prevCameraPos = alCameraPoserFunction::getPreCameraPos(pPoser);
-        pInterpole->prevLookAtPos = alCameraPoserFunction::getPreLookAtPos(pPoser);
+        pInterpole->prevCameraPos.set(alCameraPoserFunction::getPreCameraPos(pPoser));
+        pInterpole->prevLookAtPos.set(alCameraPoserFunction::getPreLookAtPos(pPoser));
     }
 }
 

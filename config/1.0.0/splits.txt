@@ -5513,7 +5513,7 @@ src/al/Library/Play/Camera/CameraVerticalAbsorber.cpp: done
     .text   start:0x00938720 end:0x0093A078
 src/al/Library/Camera/CameraPoserSceneInfo_RS.cpp: done
     .text   start:0x0093A080 end:0x0093A0FC
-src/al/Library/Camera/CameraPoser_RS.cpp:
+src/al/Library/Camera/CameraPoser_RS.cpp: done
     .text   start:0x0093A100 end:0x0093B34C
 src/al/Library/Camera/CameraPoserFlag.cpp:
     .text   start:0x0093B350 end:0x0093B5F8
