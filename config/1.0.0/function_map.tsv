@@ -57267,7 +57267,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100933300			FALSE	_ZN2al19CameraDistanceCurve18getKoopaShellCurveEv	al::CameraDistanceCurve::getKoopaShellCurve()	
 0x7100933310			FALSE	_ZN2al19CameraDistanceCurve18getTRexPatrolCurveEv	al::CameraDistanceCurve::getTRexPatrolCurve()	
 0x7100933320			FALSE	_ZNK2al19CameraDistanceCurve12calcDistanceEf	al::CameraDistanceCurve::calcDistance(float) const	
-0x7100933430			FALSE	_ZN2al14CameraFlagCtrlC2Ev	al::CameraFlagCtrl::CameraFlagCtrl()	
+0x7100933430		CameraFlagCtrl.o	FALSE	_ZN2al14CameraFlagCtrlC2Ev	al::CameraFlagCtrl::CameraFlagCtrl()	object start set by hand
 0x7100933440		CameraInputHolder.o	FALSE	_ZN2al17CameraInputHolderC2Ei	al::CameraInputHolder::CameraInputHolder(int)	object (smo)
 0x71009334B0			FALSE	_ZN2al17CameraInputHolder18initAfterPlacementEv	al::CameraInputHolder::initAfterPlacement()	
 0x71009334F0			FALSE	_ZN2al17CameraInputHolder8setInputEPKNS_12ICameraInputEi	al::CameraInputHolder::setInput(al::ICameraInput const*, int)	
@@ -57515,8 +57515,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100937930			FALSE	_ZN21alCameraPoserFunction11isOnRideObjEPKN2al14CameraPoser_RSE	alCameraPoserFunction::isOnRideObj(al::CameraPoser_RS const*)	
 0x7100937960			FALSE	_ZN21alCameraPoserFunction16isPlayerClimbingEPKN2al14CameraPoser_RSE	alCameraPoserFunction::isPlayerClimbing(al::CameraPoser_RS const*)	
 0x71009379A0			FALSE	sub_71009379A0	sub_71009379A0	
-0x7100937A00			FALSE	_ZN2al20CameraAngleSwingInfoC2Ev	al::CameraAngleSwingInfo::CameraAngleSwingInfo()	
-0x7100937A30	Project/Camera	CameraAngleSwingInfo.o	FALSE	_ZN2al20CameraAngleSwingInfo4loadERKNS_9ByamlIterE	al::CameraAngleSwingInfo::load(al::ByamlIter const&)	object/folder from OdysseyDecomp file list
+0x7100937A00	Project/Camera	CameraAngleSwingInfo.o	FALSE	_ZN2al20CameraAngleSwingInfoC2Ev	al::CameraAngleSwingInfo::CameraAngleSwingInfo()	object start fixed by hand
+0x7100937A30			FALSE	_ZN2al20CameraAngleSwingInfo4loadERKNS_9ByamlIterE	al::CameraAngleSwingInfo::load(al::ByamlIter const&)	object/folder from OdysseyDecomp file list
 0x7100937AA0			FALSE	_ZN2al20CameraAngleSwingInfo6updateERKN4sead7Vector2IfEEf	al::CameraAngleSwingInfo::update(sead::Vector2<float> const&, float)	
 0x7100937B30			FALSE	_ZNK2al20CameraAngleSwingInfo16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraAngleSwingInfo::makeLookAtCamera(sead::LookAtCamera*) const	
 0x7100937C80			FALSE	_ZN2al20CameraParamMoveLimit6createEPKNS_14CameraPoser_RSE	al::CameraParamMoveLimit::create(al::CameraPoser_RS const*)	
@@ -57610,10 +57610,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710093B350		CameraPoserFlag.o	FALSE	_ZN2al15CameraPoserFlagC2Ev	al::CameraPoserFlag::CameraPoserFlag()	
 0x710093B370			FALSE	_ZN2al15CameraPoserFlag4loadERKNS_9ByamlIterE	al::CameraPoserFlag::load(al::ByamlIter const&)	object/folder from OdysseyDecomp file list
 0x710093B3E0			FALSE	_ZNK2al15CameraPoserFlag32isValidKeepPreSelfPoseNextCameraEv	al::CameraPoserFlag::isValidKeepPreSelfPoseNextCamera() const	
-0x710093B410			FALSE	_ZN2al17CameraPoseUpdaterC1EPNS_15SceneCameraInfoEi	al::CameraPoseUpdater::CameraPoseUpdater(al::SceneCameraInfo*, int)	
+0x710093B410	Library/Camera	CameraPoseUpdater.o	FALSE	_ZN2al17CameraPoseUpdaterC1EPNS_15SceneCameraInfoEi	al::CameraPoseUpdater::CameraPoseUpdater(al::SceneCameraInfo*, int)	object start fixed by hand
 0x710093B5A0			FALSE	_ZN2al17CameraPoseUpdater19setClippingDirectorEPNS_20ClippingDirectorBaseE	al::CameraPoseUpdater::setClippingDirector(al::ClippingDirectorBase*)	
 0x710093B5B0			FALSE	_ZN2al17CameraPoseUpdaterD2Ev	al::CameraPoseUpdater::~CameraPoseUpdater()	
-0x710093B600	Library/Camera	CameraPoseUpdater.o	FALSE	_ZN2al17CameraPoseUpdaterD0Ev	al::CameraPoseUpdater::~CameraPoseUpdater()	object/folder from OdysseyDecomp file list
+0x710093B600			FALSE	_ZN2al17CameraPoseUpdaterD0Ev	al::CameraPoseUpdater::~CameraPoseUpdater()	object/folder from OdysseyDecomp file list
 0x710093B650			FALSE	_ZN2al17CameraPoseUpdater13getProjectionEv	al::CameraPoseUpdater::getProjection()	
 0x710093B660			FALSE	_ZN2al17CameraPoseUpdater4initEPKNS_19CameraParamTransferEPKNS_15CameraStopJudgeEPNS_20CameraStartParamCtrlE	al::CameraPoseUpdater::init(al::CameraParamTransfer const*, al::CameraStopJudge const*, al::CameraStartParamCtrl*)	
 0x710093B700			FALSE	_ZNK2al17CameraPoseUpdater19getNearClipDistanceEv	al::CameraPoseUpdater::getNearClipDistance() const	
@@ -57814,9 +57814,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100942AA0		CameraTriangleFilter.o	FALSE	_ZNK2al20CameraTriangleFilter17isInvalidTriangleERKNS_8TriangleE	al::CameraTriangleFilter::isInvalidTriangle(al::Triangle const&) const	object (smo)
 0x7100942B40			FALSE	_ZNK2al31CameraTriangleFilterOnlyCeiling17isInvalidTriangleERKNS_8TriangleE	al::CameraTriangleFilterOnlyCeiling::isInvalidTriangle(al::Triangle const&) const	
 0x7100942C00			FALSE	_ZNK2al30SubjectiveCameraTriangleFilter17isInvalidTriangleERKNS_8TriangleE	al::SubjectiveCameraTriangleFilter::isInvalidTriangle(al::Triangle const&) const	
-0x7100942CF0			FALSE	_ZN2al18getSceneCameraInfoEPKNS_13IUseCamera_RSE	al::getSceneCameraInfo(al::IUseCamera_RS const*)	
+0x7100942CF0		CameraUtil_RS.o	FALSE	_ZN2al18getSceneCameraInfoEPKNS_13IUseCamera_RSE	al::getSceneCameraInfo(al::IUseCamera_RS const*)	object start fixed by hand
 0x7100942D20			FALSE	_ZN2al13getViewNumMaxEPKNS_13IUseCamera_RSE	al::getViewNumMax(al::IUseCamera_RS const*)	
-0x7100942D50		CameraUtil_RS.o	FALSE	_ZN2al13getViewNumMaxEPKNS_15SceneCameraInfoE	al::getViewNumMax(al::SceneCameraInfo const*)	object/folder from OdysseyDecomp file list
+0x7100942D50			FALSE	_ZN2al13getViewNumMaxEPKNS_15SceneCameraInfoE	al::getViewNumMax(al::SceneCameraInfo const*)	object/folder from OdysseyDecomp file list
 0x7100942D60			FALSE	_ZN2al11isValidViewEPKNS_13IUseCamera_RSEi	al::isValidView(al::IUseCamera_RS const*, int)	
 0x7100942DA0			FALSE	_ZN2al11isValidViewEPKNS_15SceneCameraInfoEi	al::isValidView(al::SceneCameraInfo const*, int)	
 0x7100942DB0			FALSE	_ZN2al11getViewNameEPKNS_13IUseCamera_RSEi	al::getViewName(al::IUseCamera_RS const*, int)	

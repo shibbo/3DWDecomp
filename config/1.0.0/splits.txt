@@ -5489,8 +5489,10 @@ src/al/Project/Camera/Area/AreaCameraSwitchInfo.cpp: done
     .text   start:0x00932DB0 end:0x00932E28
 src/al/Project/Camera/Area/CameraAngleVerticalRequester.cpp: done
     .text   start:0x00932E30 end:0x00932F08
-src/al/Library/Camera/CameraDistanceCurve.cpp:
-    .text   start:0x00932F10 end:0x0093343C
+src/al/Library/Camera/CameraDistanceCurve.cpp: done
+    .text   start:0x00932F10 end:0x00933428
+src/al/Library/Camera/CameraFlagCtrl.cpp: done
+    .text   start:0x00933430 end:0x0093343C
 src/al/Library/Camera/CameraInputHolder.cpp: done
     .text   start:0x00933440 end:0x0093358C
 src/al/Library/Camera/CameraInSwitchOnAreaDirector.cpp: done
@@ -5504,9 +5506,9 @@ src/al/Library/Camera/CameraParamTransfer.cpp: done
 src/al/Library/Camera/CameraPoserFactory_RS.cpp: done
     .text   start:0x00934040 end:0x0093418C
 src/al/Library/Camera/CameraPoserFunction.cpp:
-    .text   start:0x00934190 end:0x00937A2C
+    .text   start:0x00934190 end:0x009379F8
 src/al/Project/Camera/CameraAngleSwingInfo.cpp:
-    .text   start:0x00937A30 end:0x00938688
+    .text   start:0x00937A00 end:0x00938688
 src/al/Project/Camera/CameraOffsetCtrlPreset.cpp: done
     .text   start:0x00938690 end:0x00938718
 src/al/Library/Play/Camera/CameraVerticalAbsorber.cpp: done
@@ -5515,10 +5517,10 @@ src/al/Library/Camera/CameraPoserSceneInfo_RS.cpp: done
     .text   start:0x0093A080 end:0x0093A0FC
 src/al/Library/Camera/CameraPoser_RS.cpp: done
     .text   start:0x0093A100 end:0x0093B34C
-src/al/Library/Camera/CameraPoserFlag.cpp:
-    .text   start:0x0093B350 end:0x0093B5F8
+src/al/Library/Camera/CameraPoserFlag.cpp: done
+    .text   start:0x0093B350 end:0x0093B408
 src/al/Library/Camera/CameraPoseUpdater.cpp:
-    .text   start:0x0093B600 end:0x0093C788
+    .text   start:0x0093B410 end:0x0093C788
 src/al/Project/Camera/Holder/CameraInterpole_RS.cpp:
     .text   start:0x0093C790 end:0x0093E5E8
 src/al/Project/Camera/Holder/CameraRequestParamHolder.cpp: done
@@ -5553,10 +5555,10 @@ src/al/Library/Camera/CameraTicketHolder.cpp: done
     .text   start:0x009425D0 end:0x009427B0
 src/al/Library/Camera/CameraTicketId.cpp: done
     .text   start:0x009427B0 end:0x00942A98
-src/al/Library/Camera/CameraTriangleFilter.cpp:
-    .text   start:0x00942AA0 end:0x00942D4C
+src/al/Library/Camera/CameraTriangleFilter.cpp: done
+    .text   start:0x00942AA0 end:0x00942CE4
 src/al/Library/Camera/CameraUtil_RS.cpp:
-    .text   start:0x00942D50 end:0x0094711C
+    .text   start:0x00942CF0 end:0x0094711C
 src/al/Library/Play/Camera/CameraPoserFixLock.cpp: done
     .text   start:0x00947120 end:0x00947254
 src/al/Library/Play/Camera/ActorCameraSubTarget.cpp: done
