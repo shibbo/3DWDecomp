@@ -5,7 +5,7 @@ class Sequence;
 } // namespace al
 
 /**
- * @brief Creates game sequences by class name (partially reconstructed).
+ * @brief Creates game sequences by class name.
  */
 class SequenceFactory {
   public:

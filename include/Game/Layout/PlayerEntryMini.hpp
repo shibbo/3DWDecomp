@@ -29,6 +29,7 @@ public:
     PlayerEntryMini(const al::LayoutInitInfo& rInfo, GameDataHolder* pHolder,
                     al::PlayerHolder* pPlayerHolder, s32 sceneType);
 
+    void setSceneType(SceneType type) { mSceneType = type; }
     void appear() override;
     void movement() override;
 

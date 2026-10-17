@@ -17,12 +17,19 @@ class StageWipeKeeper {
 public:
     StageWipeKeeper(const al::LayoutInitInfo& rInfo, al::NetworkSystem* pNetworkSystem);
 
+    bool isExistActiveClosedNoResultWipe() const;
+    void tryOpenNoResultWipeByCircle();
     void closeBootWipe();
+    bool isCloseEndBootWipe() const;
+    void tryOpenBootWipe();
     void closeEndingWipe();
+    bool isCloseEndEndingWipe() const;
+    void tryOpenEndingWipe();
     void closeNoResultWipe(const GameDataHolder* pHolder, bool isSkip);
     void closeNoResultWipeGameOver();
     void closeNoResultWipeGameEnd();
     void closeNoResultWipeTitle();
+    void closeNoResultWipeRestartTitle();
     void closeNoResultWipeRestartTitleWhiteFade(bool isSkip);
     bool isCloseEndNoResultWipe() const;
     bool isActiveNoResultWipe() const;
@@ -34,12 +41,22 @@ public:
     void closeRetryWipe(bool isSkip);
     bool isCloseEndRetryWipe() const;
     void openRetryWipe();
+    void appearStartWipe(const GameDataHolder* pHolder);
+    bool isWaitStartWipe() const;
+    bool isEnableEndStartWipe() const;
+    void closeEndRetryWipe();
+    void closeRetryWipeMysteryTimeUp();
     void tryOpenFadeBlack();
-    void tryOpenStartOrRetryWipe();
+    bool tryOpenStartOrRetryWipe();
     void tryOpenNoResultWipe();
+    void tryOpenNoResultWipeByFade();
 
+    /** @brief Clear references to wipes owned by the scene being destroyed. */
+    void resetSceneWipes() { mSceneWipes[0] = mSceneWipes[1] = mSceneWipes[2] = nullptr; }
 private:
-    u8 _0[0x80];  ///< Not reconstructed yet.
+    u8 _0[0x60];  ///< Not reconstructed yet.
+    void* mSceneWipes[3];
+    u8 _78[8];  ///< Not reconstructed yet.
 };
 
 static_assert(sizeof(StageWipeKeeper) == 0x80);

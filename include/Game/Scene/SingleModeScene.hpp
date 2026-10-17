@@ -135,6 +135,8 @@ class SingleModeScene : public InGameSceneBase,
     bool isTriggerItemSpawn(s32 port) const;
     void invalidatePlayerInput();
     bool isEnableOpenStartWipe() const;
+    void setSaveWindow(WindowProcessing* pWindow) { mWindowProcessing = pWindow; }
+    void setInvalidateInputFrames(int frames) { mInvalidateInputFrames = frames; }
     void exeStartPhase0Demo();
     void updatePlay();
     void exeStartEvent();

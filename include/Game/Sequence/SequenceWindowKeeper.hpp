@@ -1,21 +1,22 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 namespace al {
 class LayoutInitInfo;
-}  // namespace al
+}
+class WindowMessage;
 
-/**
- * @brief Keeps the message windows shown by the product sequence.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
 class SequenceWindowKeeper {
 public:
-    SequenceWindowKeeper(const al::LayoutInitInfo& rInfo);
+    explicit SequenceWindowKeeper(const al::LayoutInitInfo& rInfo);
+    void appearMessage(const char* pMessageId, int padPort, bool isSequence);
+    bool isMessageActive() const;
+    /** @brief Get the sequence message layout. @return Sequence message window. */
+    WindowMessage* getSequenceMessage() const { return mpSequenceMessage; }
 
 private:
-    u8 _0[0x18];  ///< Not reconstructed yet.
+    bool mIsSequence = false;
+    WindowMessage* mpMessage = nullptr;
+    WindowMessage* mpSequenceMessage = nullptr;
 };
 
 static_assert(sizeof(SequenceWindowKeeper) == 0x18);

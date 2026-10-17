@@ -3198,41 +3198,41 @@ src/Game/Scene/TitleStateFileSelect.cpp: done
     .text   start:0x004DE020 end:0x004DE770
 src/Game/Scene/TopMenuScene.cpp:
     .text   start:0x004DE770 end:0x004DFBE8
-src/Game/Sequence/ProductAsyncResourceLoader.cpp:
+src/Game/Sequence/ProductAsyncResourceLoader.cpp: done
     .text   start:0x004DFBF0 end:0x004DFFC0
-src/Game/Sequence/ProductSequence.cpp:
+src/Game/Sequence/ProductSequence.cpp: done
     .text   start:0x004DFFC0 end:0x004E1BA0
-src/Game/Sequence/ProductStageStartParam.cpp:
+src/Game/Sequence/ProductStageStartParam.cpp: done
     .text   start:0x004E1BA0 end:0x004E1C7C
-src/Game/Sequence/ProductStateAfterEndingEvent.cpp:
+src/Game/Sequence/ProductStateAfterEndingEvent.cpp: done
     .text   start:0x004E1C80 end:0x004E2420
-src/Game/Sequence/ProductStateBoot.cpp:
+src/Game/Sequence/ProductStateBoot.cpp: done
     .text   start:0x004E2420 end:0x004E2B00
-src/Game/Sequence/ProductStateCourseSelect.cpp:
+src/Game/Sequence/ProductStateCourseSelect.cpp: done
     .text   start:0x004E2B00 end:0x004E3620
-src/Game/Sequence/ProductStateEnding.cpp:
+src/Game/Sequence/ProductStateEnding.cpp: done
     .text   start:0x004E3620 end:0x004E3F70
-src/Game/Sequence/ProductStateLuigiBros.cpp:
+src/Game/Sequence/ProductStateLuigiBros.cpp: done
     .text   start:0x004E3F70 end:0x004E4304
-src/Game/Sequence/ProductStateOpeningDemo.cpp:
+src/Game/Sequence/ProductStateOpeningDemo.cpp: done
     .text   start:0x004E4310 end:0x004E4930
-src/Game/Sequence/ProductStateSingleMode.cpp:
+src/Game/Sequence/ProductStateSingleMode.cpp: done
     .text   start:0x004E4930 end:0x004E5770
-src/Game/Sequence/ProductStateSingleModeEnding.cpp:
+src/Game/Sequence/ProductStateSingleModeEnding.cpp: done
     .text   start:0x004E5770 end:0x004E63B0
-src/Game/Sequence/ProductStateSingleOpeningDemo.cpp:
+src/Game/Sequence/ProductStateSingleOpeningDemo.cpp: done
     .text   start:0x004E63B0 end:0x004E6B00
-src/Game/Sequence/ProductStateStage.cpp:
+src/Game/Sequence/ProductStateStage.cpp: done
     .text   start:0x004E6B00 end:0x004E78F0
 src/Game/Sequence/ProductStateTitle.cpp:
     .text   start:0x004E78F0 end:0x004E8A70
-src/Game/Sequence/ProductStateTitleSingleMode.cpp:
+src/Game/Sequence/ProductStateTitleSingleMode.cpp: done
     .text   start:0x004E8A70 end:0x004E9270
-src/Game/Sequence/ProductStateTopMenu.cpp:
+src/Game/Sequence/ProductStateTopMenu.cpp: done
     .text   start:0x004E9270 end:0x004E9CB0
-src/Game/Sequence/SequenceFactory.cpp:
+src/Game/Sequence/SequenceFactory.cpp: done
     .text   start:0x004E9CB0 end:0x004E9D24
-src/Game/Sequence/SequenceWindowKeeper.cpp:
+src/Game/Sequence/SequenceWindowKeeper.cpp: done
     .text   start:0x004E9D30 end:0x004E9E2C
 src/Game/Stage/StageWipeKeeper.cpp:
     .text   start:0x004E9E30 end:0x004EA888
@@ -5082,9 +5082,9 @@ src/al/Project/Screen/ScreenCapture.cpp: done
     .text   start:0x008A7EA0 end:0x008A841C
 src/al/Library/Screen/ScreenFunction.cpp:
     .text   start:0x008A8420 end:0x008AA454
-src/al/Library/Sequence/Sequence.cpp:
+src/al/Library/Sequence/Sequence.cpp: done
     .text   start:0x008AA460 end:0x008AAD5C
-src/al/Project/Scene/SceneCreator.cpp:
+src/al/Project/Scene/SceneCreator.cpp: done
     .text   start:0x008AAD60 end:0x008AB064
 src/al/Project/Scene/SceneInitInfo.cpp: done
     .text   start:0x008AB070 end:0x008AB180

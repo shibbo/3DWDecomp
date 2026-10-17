@@ -44,6 +44,8 @@ public:
 
     /** @brief Whether the demo was skipped by the player. @return The flag. */
     bool isSkipped() const { return mIsSkipped; }
+    /** @brief Enable audio cancellation on skip. */
+    void enableCancelAudioOnSkip() { mIsCancelAudioOnSkip = true; }
 
 protected:
     sead::FixedSafeString<64> mStageName;

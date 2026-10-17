@@ -15,6 +15,8 @@ public:
     void control() override;
     void drawMain_() const override;
     void drawSub_() const override;
+    /** @brief Check whether save data has finished loading. @return Whether loading is complete. */
+    bool isSaveDataLoaded() const { return mIsSaveDataLoaded; }
     bool tryEnd();
     void updateGuide();
     void exeInit();

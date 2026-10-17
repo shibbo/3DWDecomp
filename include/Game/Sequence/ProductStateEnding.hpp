@@ -1,31 +1,45 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include "Library/Nerve/NerveStateBase.hpp"
+#include "Library/Scene/IUseSceneCreator.hpp"
 
 class ProductSequence;
+class DemoEndingScene;
 class StageWipeKeeper;
+namespace al { struct SequenceInitInfo; class LayoutInitInfo; class ScreenCaptureExecutor; class WipeSimple; }
 
-namespace al {
-class LayoutInitInfo;
-class ScreenCaptureExecutor;
-struct SequenceInitInfo;
-}  // namespace al
-
-/**
- * @brief Sequence state of the Super Mario 3D World ending.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
-class ProductStateEnding : public al::HostStateBase<ProductSequence> {
+class ProductStateEnding : public al::HostStateBase<ProductSequence>, public al::IUseSceneCreator {
 public:
     ProductStateEnding(ProductSequence* pSequence, const al::SequenceInitInfo& rInfo,
                        const al::LayoutInitInfo& rLayoutInfo, StageWipeKeeper* pWipeKeeper,
-                       al::ScreenCaptureExecutor* pScreenCaptureExecutor);
-
+                       al::ScreenCaptureExecutor* pCapture);
+    ~ProductStateEnding() override;
+    void init() override;
+    void appear() override;
+    void exeLoad();
+    void exeWait();
+    void exeWipe();
+    void exeInfo();
+    void exeSave();
     bool isEndFirstTime();
+    void exeDestroy();
+    void exeEnd();
+
+    /**
+     * @brief Get the ending scene creator.
+     * @return Scene creator installed during initialization.
+     */
+    al::SceneCreator* getSceneCreator() const override { return mpSceneCreator; }
+    /**
+     * @brief Store the ending scene creator.
+     * @param pCreator Scene creator to retain.
+     */
+    void setSceneCreator(al::SceneCreator* pCreator) override { mpSceneCreator = pCreator; }
 
 private:
-    u8 _20[0x28];  ///< Not reconstructed yet.
+    DemoEndingScene* mpScene = nullptr;
+    al::SceneCreator* mpSceneCreator = nullptr;
+    StageWipeKeeper* mpWipeKeeper;
+    al::WipeSimple* mpWipe = nullptr;
 };
-
 static_assert(sizeof(ProductStateEnding) == 0x48);

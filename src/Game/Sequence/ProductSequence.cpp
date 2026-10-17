@@ -139,11 +139,11 @@ ProductSequence::~ProductSequence() {
     al::setStageSizeAdjuster(nullptr);
 
     rc::AssetLoadingThread* thread = rc::AssetLoadingThread::sInstance;
-    bool isDeletedAssets = false;
+    int isDeletedAssets = 0;
 
     if (thread != nullptr && !thread->isAllLoadingDone()) {
         deleteStationedAssets();
-        isDeletedAssets = true;
+        isDeletedAssets = 1;
     }
 
     delete mStateTopMenu;

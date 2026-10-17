@@ -1,23 +1,24 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
 
 class GameDataHolder;
 
-/**
- * @brief Parameters of the stage the sequence starts next.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
 class ProductStageStartParam {
 public:
-    ProductStageStartParam(GameDataHolder* pHolder);
-
+    explicit ProductStageStartParam(GameDataHolder* pGameDataHolder);
     void init();
-    void setWorldId(s32 worldId);
-    void setStageId(s32 stageId);
+    const char* getStageDataName() const;
+    int getWorldId() const;
+    int getStageId() const;
+    void setWorldId(int worldId);
+    void setStageId(int stageId);
+    void createCommandString(sead::BufferedSafeString* pCommand);
 
 private:
-    u8 _0[0x10];  ///< Not reconstructed yet.
+    int mWorldId = 0;
+    int mStageId = 0;
+    GameDataHolder* mpGameDataHolder;
 };
 
 static_assert(sizeof(ProductStageStartParam) == 0x10);
