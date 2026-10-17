@@ -81,7 +81,7 @@ src/Game/AreaObj/PlayerCollisionYPlaneArea.cpp: done
     .text   start:0x00001100 end:0x000012E4
 src/Game/AreaObj/ProjectAreaObjFactory.cpp:
     .text   start:0x000012F0 end:0x000016C4
-src/Game/AreaObj/TorpedoSpikeRestrictionArea.cpp:
+src/Game/AreaObj/TorpedoSpikeRestrictionArea.cpp: done
     .text   start:0x000016D0 end:0x000017D8
 src/Game/AreaObj/WorldClipArea.cpp:
     .text   start:0x000017E0 end:0x00001954
