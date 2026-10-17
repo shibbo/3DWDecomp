@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+
+# Check the pending commit, including when other work is still unstaged.
+python tools/report_snapshot.py --staged
