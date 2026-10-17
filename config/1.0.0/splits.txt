@@ -71,7 +71,7 @@ src/Game/AreaObj/InkArea.cpp: done
     .text   start:0x00000CE0 end:0x00000E1C
 src/Game/AreaObj/IslandArea.cpp: done
     .text   start:0x00000E20 end:0x00000F50
-src/Game/AreaObj/NeonAreaWatcher.cpp:
+src/Game/AreaObj/NeonAreaWatcher.cpp: done
     .text   start:0x00000F50 end:0x00000F88
 src/Game/AreaObj/NoRainArea.cpp:
     .text   start:0x00000F90 end:0x00001064
