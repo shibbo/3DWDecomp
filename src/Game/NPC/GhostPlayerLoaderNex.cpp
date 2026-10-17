@@ -49,8 +49,8 @@ struct Header {
 bool isValidGhostPlayerDataVersion(const void* data) {
     return static_cast<const Header*>(data)->version - 1 < 2;
 }
-const WarpObjData* getWarpObjData(const void* data, int index) {
-    return reinterpret_cast<const WarpObjData*>(reinterpret_cast<const u8*>(static_cast<const Header*>(data)->warpOffset + reinterpret_cast<uintptr_t>(data))) + index;
+const GhostWarpObjData* getWarpObjData(const void* data, int index) {
+    return reinterpret_cast<const GhostWarpObjData*>(reinterpret_cast<const u8*>(static_cast<const Header*>(data)->warpOffset + reinterpret_cast<uintptr_t>(data))) + index;
 }
 int getWarpObjDataNum(const void* data) { return static_cast<const Header*>(data)->warpCount; }
 const char* getGhostPlayActionData(const void* data, int frame) {
@@ -72,13 +72,13 @@ const char* getGhostPlayActionDataRewind(const void* data, int frame) {
     return names + actions[header->poseCount * 11ull + index] * 32;
 }
 int getGhostPlayActionDataNum(const void* data) { return static_cast<const Header*>(data)->actionCount; }
-const GhostRecorderPoseData* getGhostPlayData(const void* data, int index) {
-    return reinterpret_cast<const GhostRecorderPoseData*>(reinterpret_cast<const u8*>(static_cast<const Header*>(data)->poseOffset + reinterpret_cast<uintptr_t>(data))) + index;
+const GhostPlayData* getGhostPlayData(const void* data, int index) {
+    return reinterpret_cast<const GhostPlayData*>(reinterpret_cast<const u8*>(static_cast<const Header*>(data)->poseOffset + reinterpret_cast<uintptr_t>(data))) + index;
 }
-const GhostRecorderMarkerData* getMarkerData(const void* data, int index) {
+const GhostMarkerData* getMarkerData(const void* data, int index) {
     const Header* header = static_cast<const Header*>(data);
     if (header->version != 2) return nullptr;
-    return reinterpret_cast<const GhostRecorderMarkerData*>(reinterpret_cast<const u8*>(header->markerOffset + reinterpret_cast<uintptr_t>(data))) + index;
+    return reinterpret_cast<const GhostMarkerData*>(reinterpret_cast<const u8*>(header->markerOffset + reinterpret_cast<uintptr_t>(data))) + index;
 }
 int getMarkerDataNum(const void* data) {
     const Header* header = static_cast<const Header*>(data);

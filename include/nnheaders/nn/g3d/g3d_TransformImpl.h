@@ -130,7 +130,7 @@ inline util::Matrix4x3fType MakeQuaternionRotation(float32x4_t quaternion) {
     float32x4_t yxx = PermuteTransformLanes<1, 0, 0, 3>(xyz);
     float32x4_t zzy = PermuteTransformLanes<2, 2, 1, 3>(xyz);
     float32x4_t products = vmulq_f32(PermuteTransformLanes<1, 2, 0, 3>(xyz), xyz);
-    float32x4_t wProducts = vmulq_laneq_f32(PermuteTransformLanes<2, 0, 1, 3>(xyz), quaternion, 3);
+    float32x4_t wProducts = vmulq_laneq_f32((PermuteTransformLanes<2, 0, 1, 3>(xyz)), quaternion, 3);
     yxx = vmulq_f32(yxx, yxx);
     zzy = vmulq_f32(zzy, zzy);
     yxx = vaddq_f32(yxx, yxx);
