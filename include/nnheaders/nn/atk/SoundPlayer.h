@@ -6,13 +6,10 @@
 #pragma once
 
 #include <nn/types.h>
+#include <nn/atk/atk_Global.h>
 
 namespace nn {
 namespace atk {
-enum PauseMode {
-
-};
-
 class SoundPlayer {
 public:
     SoundPlayer();

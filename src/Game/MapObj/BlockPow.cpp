@@ -13,6 +13,8 @@
 #include "Util/AreaObjUtil.hpp"
 #include "Util/ControlUserUtil.hpp"
 #include "Util/ItemUtil.hpp"
+#include "Util/ProjectMsgUtil.hpp"
+#include "Project/Base/StringUtil.hpp"
 #include "Util/ScoreUtil.hpp"
 #include "heap/seadMemBlock.h"
 
@@ -122,14 +124,43 @@ void BlockPow::attackSensor(al::HitSensor* pSender, al::HitSensor* pReceiver) {
     }
 }
 
-// BlockPow::receiveMsg
+bool BlockPow::receiveMsg(const al::SensorMsg* msg, al::HitSensor* sender, al::HitSensor* receiver) {
+    if (rc::isMsgAskControlUserId(msg, mControlUserId))
+        return true;
+    if (!al::isNerve(this, &NrvBlockPowWait))
+        return false;
+
+    bool isAttack = rc::isMsgForBlockAll(msg, sender, receiver, 100.0f);
+    if (GameDataFunction::isSingleMode(GameDataHolderAccessor(this)) && al::isMsgEnemyAttackFire(msg)) {
+        const char* name = al::getSensorHost(sender)->getName();
+        isAttack = al::isEqualString(name, "KoopaFireBall") || al::isEqualString(name, "KoopaFireBallGiant") || isAttack;
+    }
+    if (!isAttack)
+        return false;
+
+    mControlUserId = rc::tryFindRelativeControlUserId(sender);
+    if (al::isMsgExplosion(msg) || al::isMsgExplosionCollide(msg))
+        mComboCounter = rc::tryGetMsgComboCount(msg);
+    if (!mComboCounter)
+        mComboCounter = rc::getExplosionComboCounterAndNextIndex(this);
+    if (mSnowCover)
+        mSnowCover->tryBreak();
+
+    if (al::isMsgPlayerUpperPunch(msg) || al::isMsgPlayerHipDropAll(msg) ||
+        al::isMsgPlayerClimbAttack(msg) || al::isMsgPlayerTailAttack(msg) ||
+        al::isMsgPlayerSpinAttack(msg) || al::isMsgPlayerStatueDrop(msg))
+        _174 = 1;
+    rc::addScoreByFactor(this, sender, "壊れ", 0.0f, 0);
+    startExplosion(al::isMsgPlayerHipDropAll(msg));
+    return rc::getMsgReturnValueForBlock(msg);
+}
 
 void BlockPow::startExplosion(bool a1) {
     al::startAction(this, a1 ? "ReactionHipDrop" : "Reaction");
     al::invalidateHitSensors(this);
     al::invalidateClipping(this);
     al::setNerve(this, &NrvBlockPowReaction);
-    al::onStageSwitch(this, "SwitchKnockOn");
+    al::onStageSwitch(this, "SwitchKockOn");
 }
 
 bool BlockPow::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointer* pPointer, al::ScreenPointTarget* pTarget) {
@@ -205,11 +236,31 @@ void BlockPow::exeReaction() {
             mEmptyBlock->appear();
         }
 
-        al::setNerve(this, &NrvBlockPowEmpty);
+        al::setNerve(this, &NrvBlockPowWaitEnd);
     }
 }
 
-// BlockPow::exeWaitEnd
+void BlockPow::exeWaitEnd() {
+    if (al::isFirstStep(this)) {
+        al::hideModel(this);
+        al::offCollide(this);
+    }
+    if (al::isStep(this, 0)) {
+        if (_174)
+            al::startHitReaction(this, "爆発振動");
+        else
+            al::startHitReaction(this, "爆発振動[タッチ]");
+    }
+    if (_170 && mIsAppearEmpty)
+        al::copyPose(mEmptyBlock, this);
+    requestLightExplosion();
+    if (!updateSensor()) {
+        if (_170 && mIsAppearEmpty)
+            al::setNerve(this, &NrvBlockPowEmpty);
+        else
+            kill();
+    }
+}
 
 void BlockPow::exeEmpty() {
     if (al::isFirstStep(this)) {

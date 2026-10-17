@@ -2946,15 +2946,18 @@ void calcFittingBoxPose(sead::Quatf* pOutQuat, const sead::BoundBox3f& rBox,
  * @param rPos point to project
  * @param rLineStart start of the segment
  * @param rLineEnd end of the segment
+ * @return Clamped fraction along the line segment.
  */
-void calcPerpendicFootToLineInside(sead::Vector3f* pOut, const sead::Vector3f& rPos,
+f32 calcPerpendicFootToLineInside(sead::Vector3f* pOut, const sead::Vector3f& rPos,
                                    const sead::Vector3f& rLineStart,
                                    const sead::Vector3f& rLineEnd) {
-    sead::Vector3f dir = rLineEnd - rLineStart;
+    sead::Vector3f dir = rLineEnd;
+    dir -= rLineStart;
     f32 rate = (dir.dot(rPos) - rLineStart.dot(dir)) / dir.squaredLength();
     rate = sead::Mathf::clamp(rate, 0.0f, 1.0f);
     pOut->e = rLineStart.e;
     pOut->setScaleAdd(rate, dir, *pOut);
+    return rate;
 }
 
 bool calcReflectionVector(sead::Vector3f* vec, const sead::Vector3f& normal, f32 reboundRate,

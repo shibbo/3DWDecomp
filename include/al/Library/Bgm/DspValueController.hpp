@@ -12,6 +12,7 @@ public:
     void changeTarget(f32 target, s32 frames);
 
     f32 getValue() const { return mValue; }
+    f32 getTarget() const { return mTarget; }
 
 private:
     f32 mValue;

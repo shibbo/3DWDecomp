@@ -12,6 +12,8 @@ class KeyMoveMovement : public HostStateBase<LiveActor> {
 public:
     KeyMoveMovement(LiveActor* pHost, const ActorInitInfo& rInfo);
 
+    const sead::Vector3f& getMoveTrans() const { return mTrans; }
+
     void exeWait();
     void exeMove();
     void exeStop();

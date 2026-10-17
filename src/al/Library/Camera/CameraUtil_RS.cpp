@@ -929,7 +929,7 @@ CameraTicket* initParallelCamera(const IUseCamera_RS* pUser, const ActorInitInfo
 }
 
 void setParallelCameraLookAtOffset(const CameraTicket* pTicket, const sead::Vector3f& rOffset) {
-    static_cast<CameraPoserParallelSimple*>(pTicket->getPoser())->mLookAtOffset = rOffset;
+    static_cast<CameraPoserParallelSimple*>(pTicket->getPoser())->mLookAtOffset.set(rOffset);
 }
 
 void setParallelCameraDistance(const CameraTicket* pTicket, f32 distance) {

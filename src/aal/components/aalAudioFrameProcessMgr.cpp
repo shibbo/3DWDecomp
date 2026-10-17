@@ -103,7 +103,7 @@ void AudioFrameProcessMgr::audioFrameProcess_() {
     mCriticalSection.lock();
 
     for (auto& process : mProcessList) {
-        process.audioFrameProcess();
+        process.audioFrameProcess_();
     }
 
     mCriticalSection.unlock();

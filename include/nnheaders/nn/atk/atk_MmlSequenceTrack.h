@@ -1,13 +1,45 @@
 #pragma once
+#include <nn/atk/atk_Channel.h>
+#include <nn/atk/atk_CurveLfo.h>
 #include <nn/atk/atk_InstancePool.h>
+#include <nn/atk/atk_OutputParam.h>
 
-namespace nn::atk { enum SequenceMute : int; }
+namespace nn::atk {
+class OutputReceiver;
+enum SequenceMute : int {
+    SequenceMute_Off,
+    SequenceMute_NoStop,
+    SequenceMute_Release,
+    SequenceMute_Stop,
+};
+}  // namespace nn::atk
+namespace nn::atk::detail {
+class OutputAdditionalParam;
+}  // namespace nn::atk::detail
 namespace nn::atk::detail::driver {
 class SequenceTrack;
 class Channel;
+struct NoteOnInfo;
 template <typename T> struct MmlMoveValue {
     T origin, target;
     s16 frame, counter;
+    /** @brief Creates a zeroed, finished transition. */
+    MmlMoveValue() : origin(0), target(0), frame(0), counter(0) {}
+    /** @brief Creates a finished transition resting at a value. @param value Origin and target. */
+    explicit MmlMoveValue(T value) : origin(value), target(value), frame(0), counter(0) {}
+    /** @brief Jumps to a value with no transition. @param value Value used as origin and target. */
+    void InitValue(T value) {
+        origin = value;
+        target = value;
+        frame = 0;
+        counter = 0;
+    }
+    /** @brief Advances the transition by one tick, saturating at its end. */
+    void Update() {
+        if (counter < frame) {
+            ++counter;
+        }
+    }
     T GetValue() const {
         return counter >= frame ? target : static_cast<T>(origin + (target - origin) * counter / frame);
     }
@@ -16,18 +48,7 @@ template <typename T> struct MmlMoveValue {
         origin = GetValue(); target = value; frame = frames; counter = 0;
     }
 };
-class SequenceSoundPlayer {
-public:
-    s16* GetVariablePtr(int index);
-    SequenceTrack* GetPlayerTrack(int index);
-    void CallSequenceUserprocCallback(u16 id, SequenceTrack* track);
-private:
-    friend class MmlParser;
-    u8 _0[0x111];
-    u8 mParamB0;
-    u16 mTempo;
-    MmlMoveValue<u8> mVolume;
-};
+class SequenceSoundPlayer;
 class MmlSequenceTrack;
 class MmlParser {
 public:
@@ -42,7 +63,7 @@ public:
     u32 Read24(const u8** position) const;
     u16 Read16(const u8** position) const;
     u32 ReadVar(const u8** position) const;
-    s16* GetVariablePtr(SequenceSoundPlayer* player, SequenceTrack* track, int index) const;
+    vs16* GetVariablePtr(SequenceSoundPlayer* player, SequenceTrack* track, int index) const;
     static u32 ParseAllocTrack(const void* data, u32 offset, u32* trackMask);
 };
 class SequenceTrack {
@@ -60,9 +81,60 @@ public:
     void SetMute(SequenceMute mute);
     // player owns the track; null detaches it before returning its storage to the pool.
     void SetPlayer(SequenceSoundPlayer* player) { mPlayer = player; }
+    void SetPlayerTrackNo(int playerTrackNo);
+    void InitParam();
+    void UpdateChannelLength();
+    void UpdateChannelRelease(Channel* pChannel);
+    int ParseNextTick(bool doNoteOn);
+    void StopAllChannel();
+    void UpdateChannelParam();
+    void PauseAllChannel(bool isPause);
+    void AddChannel(Channel* pChannel);
+    int GetChannelCount() const;
+    static void ChannelCallbackFunc(Channel* pDropChannel, Channel::ChannelCallbackStatus status,
+                                    void* pUserData);
+    void ForceMute();
+    void SetSilence(bool isSilence, int fadeTimes);
+    void SetBiquadFilter(int type, float value);
+    void SetBankIndex(int bankIndex);
+    void SetTranspose(s8 transpose);
+    void SetVelocityRange(u8 velocityRange);
+    void SetOutputLine(int outputLine);
+    void SetTvMixParameter(u32 srcChannel, int dstChannel, float param);
+    s16 GetTrackVariable(int index) const;
+    void SetTrackVariable(int index, s16 value);
+
+    /** @brief Tests whether the track is still playing its sequence. @return Whether the track is open. */
+    bool IsOpened() const { return mOpenFlag; }
+    /** @brief Sets the volume applied on top of the sequence's own. @param volume Linear gain. */
+    void SetExtVolume(float volume) { mExtVolume = volume; }
+    /** @brief Sets the pitch applied on top of the sequence's own. @param pitch Frequency ratio. */
+    void SetExtPitch(float pitch) { mExtPitch = pitch; }
+    /** @brief Sets the low-pass filter cutoff. @param lpfFreq Relative cutoff. */
+    void SetLpfFreq(float lpfFreq) { mParamD8 = lpfFreq; }
+    /** @brief Gets the TV output parameters. @return Mutable TV output parameters. */
+    OutputParam& GetTvParam() { return mTvParam; }
+    /** @brief Gets the start of the sequence data being parsed. @return Sequence data, or nullptr. */
+    const u8* GetSequenceData() const { return mContext.mSequenceData; }
+    /** @brief Gets the compare flag set by sequence conditionals. @return Compare flag. */
+    bool GetCmpFlag() const { return mContext.mCondition; }
+    /** @brief Sets the compare flag tested by sequence conditionals. @param flag Compare flag. */
+    void SetCmpFlag(bool flag) { mContext.mCondition = flag; }
+    /** @brief Gets the first channel the track is playing. @return Channel list head, or nullptr. */
+    Channel* GetChannelList() const { return mChannelList; }
+
+    static const int VariableCount = 16;
+    static const int LfoCount = 4;
 private:
     friend class MmlParser;
-    u8 _8[0x68 - 8];
+    u8 mPlayerTrackNo;
+    bool mOpenFlag;
+    bool mForceMute;
+    u8 _b;
+    float mExtVolume;
+    float mExtPitch;
+    float mPanRange;
+    OutputParam mTvParam;
     struct SequenceContext {
         const u8* mSequenceData;
         const u8* mPosition;
@@ -76,7 +148,7 @@ private:
         u8 mStackDepth;
         bool mParamBF;
         bool mMuted;
-        u8 _123;
+        bool mSilence;
         int mWait;
         // Push the current cursor as a return address for a sequence subroutine.
         void PushCall() {
@@ -104,6 +176,14 @@ private:
         int delay;
         u8 type, target, range, reserved;
 
+        /** @brief Creates the parameters with the curve LFO defaults. */
+        LfoParam() { AsCurveParam().Initialize(); }
+        /** @brief Views these parameters as the curve LFO block they mirror. @return Curve view. */
+        CurveLfoParam& AsCurveParam() { return *reinterpret_cast<CurveLfoParam*>(this); }
+        /** @brief Views these parameters as the curve LFO block they mirror. @return Curve view. */
+        const CurveLfoParam& AsCurveParam() const {
+            return *reinterpret_cast<const CurveLfoParam*>(this);
+        }
     };
     LfoParam mLfo[4];
     u8 mLfoShape[4];
@@ -116,7 +196,7 @@ private:
     u8 mPortamentoKey;
     u8 mPortamentoTime;
     s8 mAttack, mDecay, mSustain, mRelease;
-    u16 mHold;
+    s16 mHold;
     u8 mParamB4;
     u8 mParamDB;
     u8 mParamD9;
@@ -125,9 +205,10 @@ private:
     u8 _1ab;
     float mParamD8;
     float mParamB5;
-    u8 _1b4[0x1d8 - 0x1b4];
+    int mOutputLine;
+    s16 mTrackVariable[VariableCount];
     SequenceSoundPlayer* mPlayer;
-    u8 _1e0[8];
+    Channel* mChannelList;
 };
 class MmlSequenceTrack : public SequenceTrack {
 public:
@@ -160,3 +241,6 @@ static_assert(sizeof(SequenceTrack) == 0x1e8, "Sequence track size");
 static_assert(sizeof(MmlSequenceTrack) == 0x1f0, "MML sequence track size");
 static_assert(sizeof(MmlSequenceTrackAllocator) == 0x28, "MML track allocator size");
 }
+
+// SequenceSoundPlayer needs MmlMoveValue and SequenceTrackAllocator from this header.
+#include <nn/atk/detail/seq/atk_SequenceSoundPlayer.h>

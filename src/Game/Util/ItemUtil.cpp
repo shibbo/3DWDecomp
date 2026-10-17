@@ -1,4 +1,6 @@
 #include "Util/ItemUtil.hpp"
+#include "MapObj/ItemBubble.hpp"
+#include "MapObj/GreenStar.hpp"
 #include "Library/Item/ItemUtil.hpp"
 #include "Library/Light/PrePassLightFunction.hpp"
 #include "Library/LiveActor/ActorAreaFunction.hpp"
@@ -24,16 +26,7 @@
 // Attachable item actors created by tryCreateAttachedItem(). Their own units are not decompiled
 // yet, so only the constructors and object sizes used by this unit are declared here.
 
-/**
- * @brief Bubble that carries an attached item.
- */
-class ItemBubble : public al::LiveActor {
-public:
-    ItemBubble(const char* pName, s32 itemType);
 
-private:
-    u8 _148[0x168 - 0x148];
-};
 
 /**
  * @brief Coin attached to another object.
@@ -132,17 +125,6 @@ public:
 
 private:
     u8 _148[0x1A0 - 0x148];
-};
-
-/**
- * @brief Green star.
- */
-class GreenStar : public al::LiveActor {
-public:
-    GreenStar(const char* pName, ItemBubble* pBubble, bool isAttached);
-
-private:
-    u8 _148[0x1D8 - 0x148];
 };
 
 /**

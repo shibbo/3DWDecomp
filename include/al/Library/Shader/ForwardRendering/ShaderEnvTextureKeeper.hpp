@@ -109,6 +109,14 @@ public:
 
     void setIndirectTexture(const agl::TextureData* pTexture) { mIndirectTexture = pTexture; }
 
+    const agl::TextureData* getIndirectTexture() const { return mIndirectTexture; }
+
+    const agl::TextureData* getCopiedColorTexture() const {
+        return static_cast<const agl::TextureData*>(_38);
+    }
+
+    void setCopiedDepthTarget(void* pTarget) { _40 = pTarget; }
+
 private:
     GraphicsSystemInfo* mGraphicsSystemInfo;
     bool mIsEnable = false;

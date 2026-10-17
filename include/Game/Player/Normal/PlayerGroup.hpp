@@ -1,5 +1,6 @@
 #pragma once
 
+#include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 
 #include "Player/PlayerDef.hpp"
@@ -11,9 +12,11 @@ class HitSensor;
 class IUsePlayerActorAccessor;
 class PlayerActor;
 
-/// The players of a scene, including the copies of double cherries.
+/// The players of a scene, including the copies of double cherries, grouped by character.
 class PlayerGroup {
 public:
+    typedef sead::PtrArray<PlayerActor> PlayerArray;
+
     PlayerGroup();
 
     void init(int playerNum, IUsePlayerActorAccessor* pAccessor);
@@ -28,4 +31,8 @@ public:
     void killAllExceptWithScore(al::HitSensor* pSensor);
     void removeAllEquipOfAllDoubleMarioExceptWithScore(al::HitSensor* pSensor);
     int calcDoubleMarioTotalNum() const;
+
+private:
+    PlayerArray* mCharaPlayers;                  // 0x0, one array per EPlayerChara
+    IUsePlayerActorAccessor* mAccessor;          // 0x8
 };

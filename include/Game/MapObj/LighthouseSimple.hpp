@@ -1,19 +1,15 @@
 #pragma once
-
 #include "Library/LiveActor/LiveActor.hpp"
-
 class LighthouseSimple : public al::LiveActor {
 public:
-    LighthouseSimple(const char*);
-
-    virtual ~LighthouseSimple();
-    virtual void init(const al::ActorInitInfo&);
-    virtual void initAfterPlacement();
-    virtual bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
-
+    explicit LighthouseSimple(const char*);
+    void init(const al::ActorInitInfo&) override;
+    void initAfterPlacement() override;
     void setPhaseColor();
-
-    al::LiveActor* mInkActor = nullptr;        // 0x148
-    al::LiveActor* mFlingPoleActor = nullptr;  // 0x150
-    int _158 = -1;
+    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+private:
+    al::LiveActor* mInk = nullptr;
+    al::LiveActor* mFlag = nullptr;
+    int mIslandId = -1;
 };
+static_assert(sizeof(LighthouseSimple) == 0x160);

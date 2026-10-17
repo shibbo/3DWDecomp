@@ -48,6 +48,16 @@ public:
     bool registerGlyphs_(const char16_t* pText, u32 length, const nn::font::ScalableFont* pFont, int lockGroup, bool checkOnly);
     ScalableFontTextBoxEx* reserveRegisterGlyphs(ScalableFontTextBoxEx* pTextBox);
     void update();
+    /**
+     * @brief Returns the generation of the glyph texture cache.
+     * @return Number of completed cache updates.
+     */
+    u32 getUpdateCount() const { return _58; }
+    /**
+     * @brief Reports whether the texture cache is being updated asynchronously.
+     * @return True while a cache update is pending.
+     */
+    bool isCacheUpdatePending() const { return _5d != 0; }
     nn::font::ScalableFont* getFont(const sead::SafeString& rName);
     const nn::font::ScalableFont* getFont(const sead::SafeString& rName) const;
     const char* findFontName(const nn::font::ScalableFont* pFont) const;

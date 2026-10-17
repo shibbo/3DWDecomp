@@ -420,7 +420,7 @@ void SingleModeData::setBossPlayTime() {
  * @brief Accumulate the boss-fight play time.
  * @return The accumulated boss-fight play time in seconds.
  */
-s64 SingleModeData::getBossPlayTime() {
+s32 SingleModeData::getBossPlayTime() {
     mBossPlayTime += calcElapsedSeconds(mBossPlayStartTime);
     return mBossPlayTime;
 }

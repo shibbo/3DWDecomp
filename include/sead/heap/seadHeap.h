@@ -108,6 +108,7 @@ public:
     bool isDebugFillUserEnabled() const { return mFlag.isOnBit(Flag::cEnableDebugFillUser); }
 
     sead::CriticalSection& getCriticalSection() { return mCS; }
+    HeapDirection getDirection() const { return mDirection; }
 
     using ScopedHeapLock = ConditionalScopedLock<CriticalSection>;
 

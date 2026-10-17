@@ -1443,7 +1443,7 @@ void SingleModeDataFunction::setBossPlayTime(GameDataHolderWriter writer) {
  * @param writer Writer to an initialized single-mode game-data holder.
  * @return The boss-battle play time.
  */
-s64 SingleModeDataFunction::getBossPlayTime(GameDataHolderWriter writer) {
+s32 SingleModeDataFunction::getBossPlayTime(GameDataHolderWriter writer) {
     return writer.getHolder()->getSingleFile()->getBossPlayTime();
 }
 

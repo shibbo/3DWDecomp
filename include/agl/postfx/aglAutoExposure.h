@@ -123,6 +123,16 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    const Context& getContext(s32 context) const { return mContexts[context]; }
+    void setBlendRateUp(f32 rate) { *mBlendRateUp = rate; }
+    void setBlendRateDown(f32 rate) { *mBlendRateDown = rate; }
+    void setExposureMid(f32 mid) { *mExposureMid = mid; }
+    void setRangeMin(f32 range) { *mRangeMin = range; }
+    void setRangeMax(f32 range) { *mRangeMax = range; }
+    void setLuminanceScale(f32 scale) { mLuminanceScale = scale; }
+    void setLuminanceMax(f32 luminance) { mLuminanceMax = luminance; }
+    void setLuminanceMin(f32 luminance) { mLuminanceMin = luminance; }
+
 private:
     Context& getContext_(s32 context) const { return const_cast<Context&>(mContexts[context]); }
 

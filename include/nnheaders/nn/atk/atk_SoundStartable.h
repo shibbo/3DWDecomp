@@ -52,6 +52,13 @@ public:
     public:
         enum ResultCode {
             ResultCode_Success = 0,
+            ResultCode_ErrorLowPriority = 1,
+            ResultCode_ErrorInvalidLabelString = 2,
+            ResultCode_ErrorInvalidSoundId = 3,
+            ResultCode_CanceledForSinglePlay = 4,
+            ResultCode_ErrorNotAvailable = 12,
+            ResultCode_ErrorNotEnoughInstance = 14,
+            ResultCode_ErrorInvalidParameter = 15,
             ResultCode_ErrorInvalidStreamFilePath = 21,
             ResultCode_ErrorUser = 128,
             ResultCode_ErrorUnknown = 255

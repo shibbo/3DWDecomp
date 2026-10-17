@@ -81,6 +81,8 @@ namespace rc {
     void acquirerItemSuperLeaf(const al::LiveActor*, al::HitSensor*);
     void acquirerItemBoomerangFlower(const al::LiveActor*, al::HitSensor*);
     void acquirerItemOneUp(const al::LiveActor*, al::HitSensor*);
+    float getCoinRotateYByFrame(const al::LiveActor* pActor);
+    float getCoinRotateY(const al::LiveActor* pActor);
     void acquirerItemCoin(const al::LiveActor*, al::HitSensor*);
     void acquirerItemCoin3(const al::LiveActor*, al::HitSensor*);
     void acquirerItemCoin50(const al::LiveActor*, al::HitSensor*);

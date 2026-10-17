@@ -25,7 +25,11 @@ class OceanScenarioList;
 class IslandDataList;
 class CourseInfo;
 class ControlUserDataHolder;
-enum GameMode : int;
+/// Game whose data was played last.
+enum GameMode : int {
+    GameMode_3DWorld = 0,  ///< Super Mario 3D World.
+    GameMode_Single = 1,   ///< Bowser's Fury.
+};
 class GameDataHolder : public al::ISceneObj {
   public:
     explicit GameDataHolder(al::NetworkSystem* pNetworkSystem);
@@ -104,10 +108,22 @@ class GameDataHolder : public al::ISceneObj {
     bool isSingleMode() const { return mSingleMode; }
 
     /**
+     * @brief Switch between the Super Mario 3D World and Bowser's Fury modes.
+     * @param isSingleMode True for Bowser's Fury.
+     */
+    void setSingleMode(bool isSingleMode) { mSingleMode = isSingleMode; }
+
+    /**
      * @brief Access the common play-log storage.
      * @return The allocated play-log storage.
      */
     PlayLogData* getPlayLog() const { return mpCommon->mpPlayLog; }
+
+    /**
+     * @brief Access the data shared by every save file.
+     * @return The common save data.
+     */
+    GameDataCommon* getCommon() const { return mpCommon; }
 
     /**
      * @brief Access the active 3D World save file.
@@ -216,7 +232,93 @@ class GameDataHolder : public al::ISceneObj {
      */
     preport::PlayReportManager* getPlayReportManager() const { return mpPlayReportManager; }
 
+    /**
+     * @brief Set the play-report manager.
+     * @param pManager The play-report manager.
+     */
+    void setPlayReportManager(preport::PlayReportManager* pManager) {
+        mpPlayReportManager = pManager;
+    }
+
+    bool isSaveDataRead() const { return mIsSaveDataRead; }
+
+    void setSaveDataRead(bool isRead) { mIsSaveDataRead = isRead; }
+
+    bool isCourseSelectVisited() const { return mUnknown6A; }
+
+    void setCourseSelectVisited(bool isVisited) { mUnknown6A = isVisited; }
+
+    bool isNeedCourseSelectPlayReport() const { return mUnknown6B; }
+
+    void setNeedCourseSelectPlayReport(bool isNeed) { mUnknown6B = isNeed; }
+
+    /**
+     * @brief Set the ocean-quadrant scenario lists.
+     * @param pList The ocean scenario lists.
+     */
+    void setOceanScenarioList(OceanScenarioList* pList) { mpOceanScenarioList = pList; }
+
+    /**
+     * @brief Set the Bowser's Fury island database.
+     * @param pList The island list.
+     */
+    void setIslandDataList(IslandDataList* pList) { mpIslandDataList = pList; }
+
+    /**
+     * @brief Set the players of the current scene.
+     * @param pHolder The player holder, or nullptr when the scene ends.
+     */
+    void setPlayerHolder(al::PlayerHolder* pHolder) { mpPlayerHolder = pHolder; }
+
+    /**
+     * @brief Set the two unknown flags at 0x61 and 0x62 (cleared by the single mode scene).
+     * @param is61 Value of the flag at 0x61.
+     * @param is62 Value of the flag at 0x62.
+     */
+    void setUnknownFlags61And62(bool is61, bool is62) {
+        mUnknown62 = is62;
+        mUnknown61 = is61;
+    }
+
+    /**
+     * @brief Set whether the scene update is frozen (flag at 0x61).
+     * @param isFreeze Whether the scene update is frozen.
+     */
+    void setFreezeMode(bool isFreeze) { mUnknown61 = isFreeze; }
+
+    /**
+     * @brief Set the unknown flag at 0x62 (players are not updated while frozen when set).
+     * @param isSet The flag value.
+     */
+    void setUnknown62(bool isSet) { mUnknown62 = isSet; }
+
+    /**
+     * @brief Check whether the players are frozen (flag at 0x61, single mode).
+     * @return True while the freeze mode is on.
+     */
+    bool isFreezeMode() const { return mUnknown61; }
+
+    /**
+     * @brief Check the unknown flag at 0x62 (players are not updated while frozen when set).
+     * @return The flag value.
+     */
+    bool isUnknown62() const { return mUnknown62; }
+
+    /**
+     * @brief Check whether the play start report is still to be sent (flag at 0x6c).
+     * @return True when the report is pending.
+     */
+    bool isNeedPlayStartReport() const { return mUnknown6C; }
+
+    /**
+     * @brief Set whether the play start report is still to be sent.
+     * @param isNeed True when the report is pending.
+     */
+    void setNeedPlayStartReport(bool isNeed) { mUnknown6C = isNeed; }
+
   private:
+    friend class PlayReport;
+
     GameDataCommon* mpCommon;
     GameDataPlayReportCommon* mpPlayReportCommon;
     GameDataFile** mppFiles;

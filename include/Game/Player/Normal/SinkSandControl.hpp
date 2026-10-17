@@ -21,6 +21,7 @@ public:
     bool isInInk() const;
 
     bool isInSinkSand() const { return mIsInSinkSand; }
+    f32 getSurfaceHeight() const { return mSurfaceHeight; }
 
 private:
     const IUsePlayerCheckArea* mCheckArea;  // 0x0
@@ -29,5 +30,6 @@ private:
     const PlayerProperty* mProperty;        // 0x18
     bool mIsInSinkSand;                     // 0x20
     bool _21;
-    s32 _24;
+    f32 mSurfaceHeight;  // 0x24, height the player sinks towards
+    u8 _28[0x30 - 0x28];
 };

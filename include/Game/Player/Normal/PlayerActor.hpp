@@ -10,15 +10,26 @@
 
 namespace al {
 class ComboCounter;
+class DemoDirector;
+class LayoutInitInfo;
+class PadRumbleKeeper;
 }  // namespace al
 
 class IUsePlayerKeyConfig;
+class IUsePlayerRetargettingInfoCreator;
+class IUsePlayerRetargettingSelector;
+class IUsePlayerActionGraphBuilder;
+class PlayerBigBgmController;
+class PlayerInvincibleBgmController;
 class IUsePlayerModelVisibility;
+class IUsePlayerFlagSwitch;
 class IUsePlayerPuppet;
 class Player;
 class PlayerActionObserver;
 class PlayerAmiiboDirector;
+class PlayerAmiiboDirectorWatcher;
 class PlayerAudio;
+class PlayerGigaDirector;
 class PlayerConstParam;
 class PlayerInput;
 class PlayerModelHolder;
@@ -27,6 +38,18 @@ struct PlayerProperty;
 /// The actor of a playable character (Mario, Luigi, ...).
 class PlayerActor : public al::LiveActor {
 public:
+    explicit PlayerActor(const sead::Matrix34f* pViewMtx);
+    void initSpecial(const al::ActorInitInfo& rInfo, s32 port, const char* pCharacterName,
+                     IUsePlayerRetargettingInfoCreator* pCreator,
+                     IUsePlayerRetargettingSelector* pSelector,
+                     IUsePlayerActionGraphBuilder* pBuilder, const char* pName,
+                     u32 playerType, s32 index, const char* pSuffix);
+    void initNameplate(const al::LayoutInitInfo& rInfo);
+    void setInvincibleBgmController(PlayerInvincibleBgmController* pController) {
+        mInvincibleBgmController = pController;
+    }
+    al::PadRumbleKeeper* getPadRumbleKeeper() const { return mPadRumbleKeeper; }
+    void setBigBgmController(PlayerBigBgmController* pController);
     virtual void permitBind();
     virtual void clearBindable();
     virtual void cancelBind();
@@ -120,16 +143,35 @@ public:
     bool isManekinekoAlive() const;
     void requestRelease();
     PlayerProperty* getProperty();
+    bool startDemo();
+    void endDemo();
+    void restartOnGround(const sead::Vector3f& rTrans);
+    void killManekineko();
     const PlayerProperty* getProperty() const;
     void updatePosture();
+    IUsePlayerFlagSwitch* createInterfaceSilhouetteHiddenFlag();
+
+    /**
+     * @brief Sets whether the title scene plays a change demo with this player.
+     * @param isChange True while the change demo plays.
+     */
+    void setTitleDemoChange(bool isChange) { mIsTitleDemoChange = isChange; }
+    void copyNameplate(al::LiveActor* pActor);
+    void setNameplateVisible(bool isVisible, bool isForce);
+    void setEnableSingleJoyCamera(bool isEnable);
     s32 getInputPort() const;
     void replaceInputPort(s32 port);
+    void appearSingleMode(bool isDemo);
+    void setSingleModeInput(bool isEnable);
+    void doIslandWarp();
+    void cancelAndRelease(bool isForce);
     const IUsePlayerKeyConfig* getKeyConfig() const;
     IUsePlayerPuppet* getPlayerPuppet();
     void requestBind(al::HitSensor* pSensor, f32 priority, s32 type);
     void cancelRequestBind(al::HitSensor* pSensor);
     void cancelBindForDemo();
     void cancelForDemo();
+    void addToDemo(al::DemoDirector* pDemoDirector);
     void cancelDeathAnim();
     void forceKill();
     void pauseInvincible(bool isPauseBgm);
@@ -139,6 +181,7 @@ public:
     bool isInDokanNotRouteDokan() const;
     bool isInInkLimiter() const;
     bool isInKoura() const;
+    void logGetItem(const al::HitSensor* pItemSensor);
     bool isTreeClimbing() const;
     bool isOnFloor(const al::LiveActor* pFloorActor) const;
     bool isHoldingAnotherPlayer() const;
@@ -160,9 +203,16 @@ public:
     PlayerAmiiboDirector* getAmiiboDirector();
     void pausePlayerAmiiboDirector(bool isPause);
     void endPausePlayerAmiiboDirector();
+    void setAmiiboDirector(PlayerAmiiboDirector* pDirector);
+    void createPlayerAmiiboDirector(PlayerAmiiboDirectorWatcher* pWatcher,
+                                    const al::ActorInitInfo& rInfo);
+    bool isValidCircleShadow() const;
+    void validateCircleShadow();
+    void invalidateCircleShadow();
 
     PlayerConstParam* getConstParam() const { return mConstParam; }
     Player* getPlayer() const { return mPlayer; }
+    PlayerGigaDirector* getPlayerGigaDirector() const;
     PlayerAudio* getAudio() const { return mAudio; }
     void setViewMtx(const sead::Matrix34f* pViewMtx) { mViewMtx = pViewMtx; }
     void setUseInputForHold(bool isUseInput) { mIsUseInputForHold = isUseInput; }
@@ -176,6 +226,7 @@ public:
     al::HitSensor* getHoldingSensor() const { return mHoldingSensor; }
     al::HitSensor* getHoldedSensor() const { return mHoldedSensor; }
     al::LiveActor* getKoopaJr() const { return mKoopaJr; }
+    void setKoopaJr(al::LiveActor* pKoopaJr) { mKoopaJr = pKoopaJr; }
     bool isInvincibleModelAppear() const { return mIsInvincibleModelAppear; }
     const sead::Color4f& getInvincibleColor() const { return mInvincibleColor; }
     void setValidGetItem(bool isValid) { mIsValidGetItem = isValid; }
@@ -201,10 +252,14 @@ private:
     PlayerModelHolder* mModelHolder;  // 0x240
     u8 _248[0x330 - 0x248];
     IUsePlayerModelVisibility* mModelVisibility;  // 0x330
-    u8 _338[0x382 - 0x338];
+    u8 _338[0x380 - 0x338];
+    bool mIsTitleDemoChange;  // 0x380, set by the title scene while a change demo plays
+    u8 _381[0x382 - 0x381];
     bool mIsDamageTrigOn;  // 0x382
     bool mIsValidGetItem;  // 0x383
-    u8 _384[0x3e8 - 0x384];
+    u8 _384[0x398 - 0x384];
+    al::PadRumbleKeeper* mPadRumbleKeeper; // 0x398
+    u8 _3a0[0x3e8 - 0x3a0];
     al::HitSensor* mHoldingSensor;  // 0x3e8
     u8 _3f0[0x418 - 0x3f0];
     al::HitSensor* mHoldedSensor;  // 0x418
@@ -213,11 +268,16 @@ private:
     u8 _4ca[0x4d4 - 0x4ca];
     sead::Color4f mInvincibleColor;  // 0x4d4
     bool mIsGiantLanding;  // 0x4e4
-    u8 _4e5[0x5d8 - 0x4e5];
+    u8 _4e5[0x530 - 0x4e5];
+    PlayerInvincibleBgmController* mInvincibleBgmController; // 0x530
+    u8 _538[0x5d8 - 0x538];
     al::LiveActor* mKoopaJr;  // 0x5d8
     u8 _5e0[0x610 - 0x5e0];
     bool mIsSingleMode;  // 0x610
     bool mIsRaidonExist;  // 0x611
     u8 _612[0x63c - 0x612];
     bool mIsUseInputForHold;  // 0x63c
+    u8 _63d[0x648 - 0x63d];
 };
+
+static_assert(sizeof(PlayerActor) == 0x648);

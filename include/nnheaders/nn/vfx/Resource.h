@@ -100,7 +100,10 @@ public:
     u8 _50[0x58 - 0x50];
     EmitterSetResource* m_EmitterSetResArray;
     EmitterSetResource** m_BindEmitterSetResArray;
+    u8 _68[0x540 - 0x68];
 };
+
+static_assert(sizeof(Resource) == 0x540);
 
 }  // namespace vfx
 }  // namespace nn

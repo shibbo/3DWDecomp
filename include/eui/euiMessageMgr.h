@@ -4,7 +4,9 @@
 #include <container/seadOffsetList.h>
 #include <container/seadBuffer.h>
 #include <gfx/seadColor.h>
+#include <prim/seadSafeString.h>
 namespace eui {
+class MessageSet;
 class MessageMgr {
     SEAD_SINGLETON_DISPOSER(MessageMgr);
 public:
@@ -18,6 +20,7 @@ public:
     virtual void unloadArchive(void* pData);
     void setGradationColor(u32 index, sead::Color4u8 top, sead::Color4u8 bottom);
     void dumpLastGotMessageSetInfo();
+    const MessageSet* getLayoutMessageSet(const sead::SafeString& rName) const;
     sead::OffsetList<Archive> mArchives;
     sead::Buffer<GradationColor> mGradationColors;
     bool mTextBoxWidthSizeOverColorEnabled;

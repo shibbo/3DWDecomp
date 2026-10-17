@@ -187,7 +187,12 @@ protected:
     void heapSort(CompareCallbackImpl cmp);
 
 public:
-    /// Bidirectional bubble (shaker) sort with a statically known comparer (inlined).
+    /**
+     * @brief Sorts pointers with a stable bidirectional bubble sort and an inline comparer.
+     * @tparam T Type of object stored in the pointer array.
+     * @tparam Compare Callable accepting two T pointers and returning their ordering.
+     * @param cmp Comparer returning a negative, zero, or positive value for less, equal, or greater.
+     */
     template <typename T, typename Compare>
     void shakerSort_(Compare&& cmp)
     {
@@ -404,10 +409,13 @@ public:
 
     T* find(const T* ptr) const
     {
-        return PtrArrayImpl::find(ptr,
-                                  [](const void* a, const void* b) { return a == b ? 0 : -1; });
+        return static_cast<T*>(PtrArrayImpl::find(
+            ptr, [](const void* a, const void* b) { return a == b ? 0 : -1; }));
     }
-    T* find(const T* ptr, CompareCallback cmp) const { return PtrArrayImpl::find(ptr, cmp); }
+    T* find(const T* ptr, CompareCallback cmp) const
+    {
+        return static_cast<T*>(PtrArrayImpl::find(ptr, cmp));
+    }
     s32 search(const T* ptr) const
     {
         return PtrArrayImpl::search(ptr,

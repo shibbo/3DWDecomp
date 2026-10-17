@@ -107,6 +107,8 @@ public:
             return *this;
         }
 
+        TListNode<T>* getNode() const { return mPtr; }
+
         T& operator*() const { return mPtr->mData; }
         T* operator->() const { return &mPtr->mData; }
 

@@ -27,6 +27,8 @@ namespace al {
         virtual void control() {
         }
 
+        bool isDead() const { return mIsDead; }
+
         bool mIsDead = true;
     };
 
@@ -34,7 +36,7 @@ namespace al {
     public:
         ActorStateBase(const char*, LiveActor*);
 
-        virtual ~ActorStateBase();
+        ~ActorStateBase() override = default;
 
         LiveActor* mHostActor;  // 0x18
     };

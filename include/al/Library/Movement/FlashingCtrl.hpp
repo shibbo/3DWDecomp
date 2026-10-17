@@ -21,6 +21,10 @@ public:
     bool isNowJustFlashed() const;
     bool isFastFlashing() const;
     bool isNowOn() const;
+    void setActor(LiveActor* actor) { mActor = actor; }
+    void setAudioKeeper(IUseAudioKeeper* keeper) { mAudioKeeper = keeper; }
+    void setPlaySe(bool play) { mIsPlaySe = play; }
+    bool isEnded() const { return mIsEnded; }
 
 private:
     LiveActor* mActor;

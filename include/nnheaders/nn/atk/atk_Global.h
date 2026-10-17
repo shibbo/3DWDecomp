@@ -3,6 +3,23 @@
 #include <nn/types.h>
 
 namespace nn::atk {
+
+/** @brief Sequence variable storage, which NW4F declares volatile. */
+typedef volatile s16 vs16;
+
+/** @brief Pause policy shared by sound players and individual sounds. */
+enum PauseMode {
+    PauseMode_Default,
+    PauseMode_PauseImmediately,
+};
+
+/** @brief Encoding of wave and stream sample data. */
+enum SampleFormat : int {
+    SampleFormat_PcmS8,
+    SampleFormat_PcmS16,
+    SampleFormat_DspAdpcm,
+};
+
 enum OutputMode {
     OutputMode_Monaural,
     OutputMode_Stereo,
@@ -21,6 +38,13 @@ enum AuxBus {
 enum OutputDevice {
     OutputDevice_Main,
     OutputDevice_Count
+};
+
+enum SampleRateConverterType {
+    SampleRateConverterType_None,
+    SampleRateConverterType_Linear,
+    SampleRateConverterType_4Tap,
+    SampleRateConverterType_Count
 };
 
 enum ChannelIndex {

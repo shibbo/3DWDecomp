@@ -13,8 +13,8 @@ TorpedoSpikeRestrictionArea::TorpedoSpikeRestrictionArea(const char* pName) : al
  */
 void TorpedoSpikeRestrictionArea::init(const al::AreaInitInfo& rInfo) {
     al::AreaObj::init(rInfo);
-    al::tryGetArg(&mExplode, rInfo.mPlacementInfo, "Explode");
-    al::tryGetArg(&mSink, rInfo.mPlacementInfo, "Sink");
+    al::tryGetArg(&mIsExplode, rInfo.mPlacementInfo, "Explode");
+    al::tryGetArg(&mIsSink, rInfo.mPlacementInfo, "Sink");
 }
 
 /**
@@ -22,7 +22,7 @@ void TorpedoSpikeRestrictionArea::init(const al::AreaInitInfo& rInfo) {
  * @return Whether spikes should explode in this area.
  */
 bool TorpedoSpikeRestrictionArea::isExplode() const {
-    return mExplode;
+    return mIsExplode;
 }
 
 /**
@@ -30,5 +30,5 @@ bool TorpedoSpikeRestrictionArea::isExplode() const {
  * @return Whether spikes should sink in this area.
  */
 bool TorpedoSpikeRestrictionArea::isSink() const {
-    return mSink;
+    return mIsSink;
 }

@@ -12,6 +12,12 @@ public:
 
     void calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx) override;
 
+    /**
+     * @brief Set the axis the joint is rotated around.
+     * @param rAxis The new axis.
+     */
+    void setAxis(const sead::Vector3f& rAxis) { mAxis.set(rAxis); }
+
 private:
     sead::Vector3f mAxis;
     f32* mDegree;

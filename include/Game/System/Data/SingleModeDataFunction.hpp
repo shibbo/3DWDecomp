@@ -144,7 +144,7 @@ class SingleModeDataFunction {
                                   int num);
     static void resetBossPlayTime(GameDataHolderWriter writer);
     static void setBossPlayTime(GameDataHolderWriter writer);
-    static s64 getBossPlayTime(GameDataHolderWriter writer);
+    static s32 getBossPlayTime(GameDataHolderWriter writer);
     static void resetIslandPlayTime(GameDataHolderWriter writer);
     static void setIslandPlayTime(GameDataHolderWriter writer);
     static void setPhasePlayTime(GameDataHolderWriter writer);

@@ -14,12 +14,16 @@ public:
     void declare();
     void acquire();
 
+    bool isDeclared() const { return mDeclared; }
+
 private:
     al::SceneObjHolder* mSceneObjHolder = nullptr;
     bool mDeclared = false;
     bool mAcquired = false;
     bool mAcquiredThisStage = false;
 };
+
+static_assert(sizeof(IllustItemKeeper) == 0x20);
 
 namespace rc {
 void declareIllustItem(const al::LiveActor* pActor);

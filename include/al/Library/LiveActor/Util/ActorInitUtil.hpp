@@ -57,6 +57,7 @@ namespace al {
     void initActorSuffix(LiveActor*, const ActorInitInfo&, const char*);
 
     void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&);
+    void initCreateActorWithPlacementInfo(LiveActor*, const ActorInitInfo&, const PlacementInfo&);
 
     void initCreateActorNoPlacementInfo(LiveActor*, const ActorInitInfo&);
 

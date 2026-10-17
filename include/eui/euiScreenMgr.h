@@ -2,6 +2,7 @@
 #include <heap/seadDisposer.h>
 #include <hostio/seadHostIONode.h>
 #include <container/seadBuffer.h>
+#include <container/seadSafeArray.h>
 #include <nn/ui2d/ui2d_GraphicsResource.h>
 #include <nn/ui2d/ui2d_ControlCreator.h>
 #include <eui/euiSharcArchive.h>
@@ -15,6 +16,7 @@ class FontMgr;
 class BoxCursorNode;
 class MessageMgr;
 class ScreenFactory;
+class ScreenViewer;
 class ScreenMgr : public sead::hostio::Node {
     SEAD_SINGLETON_DISPOSER(ScreenMgr);
 public:
@@ -45,12 +47,20 @@ public:
     void resetScreenId(int index);
     void eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode);
     Screen* findScreenByName(const char* pName);
+    const void* getMultiFilterParameterData(const sead::SafeString& rName) const;
 
     BoxCursorMgr* getBoxCursorMgr() const { return mBoxCursorMgr; }
     FontMgr* getFontMgr() const { return mFontMgr; }
     MessageMgr* getMessageMgr() const { return static_cast<MessageMgr*>(_430); }
     float getAnimationStep() const { return mAnimationStep; }
     ConstantBuffer* getConstantBuffer() const { return static_cast<ConstantBuffer*>(_448); }
+    ScreenViewer* getViewer() const { return static_cast<ScreenViewer*>(_48); }
+    ArcResourceMgr* getArcResourceMgr() const { return mArcResourceMgr; }
+
+    /** @return Per-display flags that allow screens to receive pointer hits. */
+    sead::SafeArray<bool, 2>& getHitEnableFlags() {
+        return *reinterpret_cast<sead::SafeArray<bool, 2>*>(&_440);
+    }
 
     sead::Buffer<Screen*> mScreens;
     sead::Buffer<s8> mScreenLayers;

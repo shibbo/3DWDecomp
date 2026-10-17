@@ -107,7 +107,18 @@ public:
 
     NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
 
+    AreaObj* getCurrentArea() const { return mCurrentArea; }
+
     bool isLerpPaused() const { return mIsLerpPaused; }
+    void setLerpStep(s32 step) { mLerpStep = step; }
+    void setLerpRate(f32 rate) { mLerpRate = rate; }
+    void setLerpPaused(bool paused) { mIsLerpPaused = paused; }
+
+    /**
+     * @brief Locks the current graphics area (used when the player dies).
+     */
+    void lockArea() { mIsLockArea = true; }
+    void unlockArea() { mIsLockArea = false; }
 
 private:
     const GraphicsSystemInfo* mSystemInfo;

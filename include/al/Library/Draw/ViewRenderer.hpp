@@ -39,6 +39,17 @@ public:
 };
 
 /**
+ * Interface of the extra pass stored in ViewRenderer::mGBufferDrawer, as implemented by
+ * DemoSingleModeEndingScene (the override's mangled name proves this signature).
+ * @note ViewRendererGBufferDrawer is presumably the same interface with a guessed signature.
+ */
+class IUseFrameBufferDrawer {
+public:
+    virtual void drawToFrameBuffer(const agl::RenderBuffer* pRenderBuffer,
+                                   const sead::Viewport* pViewport) = 0;
+};
+
+/**
  * Renders the views of a scene: deferred/forward 3D passes, mirrors, HDR post effects and the
  * system passes (depth shadow, cube maps).
  */
@@ -67,6 +78,11 @@ public:
     void enableSSR();
 
     SimpleModelEnv* getSimpleModelEnv() const { return mSimpleModelEnv; }
+    void setForceFilterAA(bool isForce) { mIsForceFilterAA = isForce; }
+
+    void setFrameBufferDrawer(IUseFrameBufferDrawer* pDrawer) {
+        mGBufferDrawer = reinterpret_cast<ViewRendererGBufferDrawer*>(pDrawer);
+    }
 
 protected:
     GraphicsSystemInfo* mGraphicsSystemInfo;

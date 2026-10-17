@@ -1449,7 +1449,7 @@ bool isPlayerOnRaidonGround(const al::LiveActor* pActor) {
     }
 
     al::LiveActor* raidon = al::getSensorHost(toPlayerActor(pActor)->getBindSensor());
-    return static_cast<RaidonActor*>(raidon)->isOnGroundRaidon();
+    return static_cast<RaidonBase*>(raidon)->isOnGroundRaidon();
 }
 
 /**

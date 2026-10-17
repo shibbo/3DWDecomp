@@ -31,9 +31,11 @@ public:
     void setStyle(sead::NinJoyNpadDevice::Style style);
 
     sead::NinJoyNpadDevice::Style getStyle() const { return mStyle; }
+    s32 getVibrationDeviceNum() const { return _18c; }
     s32 getSixAxisSensorNum() const { return mSixAxisSensorNum; }
     s32 getAccelerometerWaitCount() const { return mAccelerometerWaitCount; }
     bool isWaitingConnect() const { return mIsWaitingConnect; }
+    s32 getControllerModeIndex() const { return mControllerModeIndex; }
     void setUnknown184(s32 value) { _184 = value; }
 
 private:

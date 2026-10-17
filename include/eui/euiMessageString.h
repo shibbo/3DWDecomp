@@ -27,7 +27,6 @@ public:
     const char16_t* getText() const { return m_pText; }
     u32 getLength() const { return mLength; }
 
-private:
     /** @brief Reads a control tag and returns the character following it. */
     static const char16_t* readTag_(const char16_t* pCurrent, const char16_t** ppTag) {
         if (*pCurrent == 0xe) {
@@ -44,6 +43,8 @@ private:
         *ppTag = nullptr;
         return pCurrent;
     }
+
+private:
 
     const char16_t* m_pText;
     u32 mLength;

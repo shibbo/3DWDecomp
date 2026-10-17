@@ -76,6 +76,13 @@ public:
 
     void ClearActions() { mActions.count = 0; }
 
+    /** @return Sound type passed to the screen's sound link when the button is pressed. */
+    u8 GetSoundType() const { return _39; }
+    /** @return User tag used to look up the button's box cursor node. */
+    int GetTag() const { return _44; }
+    /** @return Whether the button is a parts control that owns its whole layout. */
+    bool IsPartsControl() const { return (mFlags & 0x2000) != 0; }
+
 protected:
     friend class ButtonGroup;
     friend class BoxCursorNode;

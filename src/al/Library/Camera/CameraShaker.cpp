@@ -46,7 +46,7 @@ void CameraShaker::update() {
     }
 
     f32 shakeSpeed = (param.speed * 360.0f) / steps;
-    f32 wave = sead::Mathf::cos(sead::Mathf::deg2rad(shakeSpeed * mStep));
+    f32 wave = cosf(sead::Mathf::deg2rad(shakeSpeed * mStep));
     f32 offset = wave * (param.power * 0.001f * (steps - mStep) / steps);
     mOffset = {offset, offset};
     mProjection->setOffset(mOffset);

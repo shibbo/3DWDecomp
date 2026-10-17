@@ -727,7 +727,9 @@ public:
 
     const ResMaterial* GetResource() const { return m_pRes; }
     // name selects a shader parameter in the material's resource dictionary.
-    int FindShaderParamIndex(const char* name) const;
+    int FindShaderParamIndex(const char* name) const {
+        return m_pRes->FindShaderParamIndex(name);
+    }
     // paramIndex selects a shader parameter whose source value is returned.
     template <typename T>
     const T* GetShaderParam(int paramIndex) const

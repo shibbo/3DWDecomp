@@ -124,6 +124,7 @@ class Plane3
 public:
     Plane3() = default;
     Plane3(const Vector3<T>& rNormal, T d) : mNormal(rNormal), mD(d) {}
+    Plane3(const Vector3<T>& rNormal, const Vector3<T>& rPoint) { mNormal = rNormal; mD = rPoint.dot(Vector3<T>(rNormal)); }
 
     const Vector3<T>& getNormal() const { return mNormal; }
     T getD() const { return mD; }

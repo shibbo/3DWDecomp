@@ -106,6 +106,19 @@ public:
         return &item->item;
     }
 
+    template <class... Args>
+    T* emplaceFront(Args&&... args)
+    {
+        if (isFull())
+        {
+            SEAD_ASSERT_MSG(false, "buffer full.");
+            return nullptr;
+        }
+        Node* item = new (mFreeList.alloc()) Node{T{std::forward<Args>(args)...}, {}};
+        ListImpl::pushFront(&item->node);
+        return &item->item;
+    }
+
     T* birthBack()
     {
         Node* item = new (mFreeList.alloc()) Node{T{}, {}};

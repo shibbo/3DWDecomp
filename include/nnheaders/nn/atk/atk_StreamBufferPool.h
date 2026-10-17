@@ -11,6 +11,9 @@ public:
     void* Alloc();
     void Free(void* buffer);
 
+    /** @brief Gets the size of one pool buffer. @return Size in bytes. */
+    size_t GetBlockSize() const { return mBlockSize; }
+
 private:
     u8* mMemory;
     size_t mSize;

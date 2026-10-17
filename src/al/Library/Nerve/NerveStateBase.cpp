@@ -17,6 +17,4 @@ namespace al {
         mHostActor = pActor;
     }
 
-
-    ActorStateBase::~ActorStateBase() {}
 };

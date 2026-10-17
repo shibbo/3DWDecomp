@@ -79,6 +79,12 @@ public:
 
     void setIsEnableAutoHandheld(bool isEnable) { mIsEnableAutoHandheld = isEnable; }
 
+    /**
+     * @brief Sets the flag at 0x40 (cleared by the title scene, meaning unknown).
+     * @param isOn The new value.
+     */
+    void set40(bool isOn) { _40 = isOn; }
+
 private:
     s32 mMaxPlayerNum = 1;
     s32 mMinPlayerNum = 1;

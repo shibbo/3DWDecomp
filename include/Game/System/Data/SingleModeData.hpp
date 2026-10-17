@@ -152,7 +152,7 @@ class SingleModeData : public GameDataFileBase {
     sead::SafeString& getPhaseNameForPhaseClearPR(int phase);
     void resetBossPlayTime();
     void setBossPlayTime();
-    s64 getBossPlayTime();
+    s32 getBossPlayTime();
     void resetIslandPlayTime();
     void setIslandPlayTime();
     s32 getIslandPlayTime();

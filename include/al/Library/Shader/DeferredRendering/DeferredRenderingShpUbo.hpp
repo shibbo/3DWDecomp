@@ -22,11 +22,10 @@ public:
     DeferredRenderingShpUbo(const DeferredRenderingShader* pShader, s32 uboNum);
     DeferredRenderingShpUbo(const nn::g3d::ResShadingModel* pShadingModel,
                             const nn::g3d::ResShaderProgram* pShaderProgram, s32 uboNum);
-    virtual ~DeferredRenderingShpUbo() = default;
 
     void setMtx(const sead::Matrix34f* pMtx);
     void setWeightNum(s32 weightNum);
-    void swap();
+    virtual void swap();
     void activate();
 
 private:

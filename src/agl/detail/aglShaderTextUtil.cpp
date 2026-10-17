@@ -1,6 +1,11 @@
 #include "detail/aglShaderTextUtil.h"
 
+#include <cstring>
+
+#include <attributes.h>
+
 #include <basis/seadNew.h>
+#include <container/seadStrTreeMap.h>
 #include <prim/seadMemUtil.h>
 
 namespace agl::detail {
@@ -30,6 +35,88 @@ inline const char* skipSpace(const char* p) {
 
     return *p == '\0' ? nullptr : p;
 }
+
+/**
+ * Checks whether a character is an ASCII letter.
+ * @param c character to check
+ * @return whether the character is a letter
+ */
+inline bool isAlphabet(char c) {
+    return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
+}
+
+/**
+ * Checks whether a character can start a GLSL identifier.
+ * @param c character to check
+ * @return whether the character is a letter or an underscore
+ */
+inline bool isIdentifierHead(char c) {
+    return isAlphabet(c) || c == '_';
+}
+
+/**
+ * Checks whether a character can be part of a GLSL identifier.
+ * @param c character to check
+ * @return whether the character is a digit, a letter or an underscore
+ */
+inline bool isIdentifierChar(char c) {
+    return ('0' <= c && c <= '9') || isIdentifierHead(c);
+}
+
+/**
+ * Checks whether a character is a valid GLSL vector size.
+ * @param c character to check
+ * @return whether the character is 2, 3 or 4
+ */
+inline bool isVectorSize(char c) {
+    return '2' <= c && c <= '4';
+}
+
+/**
+ * Checks whether a character is a valid GLSL matrix dimension.
+ * @param c character to check
+ * @return whether the character is 1, 2, 3 or 4
+ */
+inline bool isMatrixSize(char c) {
+    return '1' <= c && c <= '4';
+}
+
+/**
+ * Gets the part of a string after an offset, or an empty string if the offset is out of range.
+ * @param rStr string to get the part of
+ * @param at offset of the part
+ * @return part of the string
+ */
+inline sead::SafeString getRest(const sead::SafeString& rStr, s32 at) {
+    const s32 length = rStr.calcLength();
+
+    return sead::SafeString(at < 0 || at > length ? &sead::SafeString::cNullChar :
+                                                    rStr.getStringTop() + at);
+}
+
+const char* skipTypeName(const char* p);
+
+/**
+ * Uniform declaration found in a shader source.
+ */
+struct UniformInfo {
+    const char* mTypeBegin;
+    const char* mTypeEnd;
+    const char* mNameBegin;
+    const char* mNameEnd;
+};
+
+typedef sead::FixedStrTreeMap<64, UniformInfo, 256> UniformMap;
+
+/**
+ * Shader source processed by createUniformRegisterReplaceText.
+ */
+struct UniformSource {
+    sead::SafeString mText;
+    sead::BufferedSafeString* mOutput;
+    s64 mInsertPos;
+    sead::SafeString** mppResult;
+};
 
 }  // namespace
 
@@ -304,11 +391,340 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
 }
 
 /**
+ * Expands every uniform block of a shader source into plain uniform declarations: the members of
+ * `uniform Name { ... };` are each prefixed with "uniform " (nested struct declarations included)
+ * and the block braces are dropped.
+ * @param rText shader source to convert
+ * @param pHeap heap to allocate the work buffers and the result from
+ * @return converted shader source
+ */
+// NON_MATCHING: block layout of the member loop and stack slot assignment
+sead::HeapSafeString* ShaderTextUtil::createUniformBufferReplaceText(const sead::SafeString& rText,
+                                                                     sead::Heap* pHeap) {
+    auto* text = new (pHeap, -4) sead::BufferedSafeString(
+        new (pHeap, -4) char[rText.calcLength() * 2], rText.calcLength() * 2);
+    sead::SafeString pending = rText;
+    sead::SafeString line = rText;
+    text->clear();
+
+    s64 offset = 0;
+
+    while (!line.isEmpty()) {
+        s32 lineFeedLength = 0;
+        const s32 lineFeedPos = findLineFeedCode(line.cstr(), &lineFeedLength);
+        u32 lineLength = lineFeedPos == -1 ? line.calcLength() : lineFeedPos + lineFeedLength;
+
+        const char* comment = line.cstr();
+        bool hasComment = false;
+
+        for (const char* end = comment + lineLength; comment < end; comment++) {
+            if (comment[0] == '/' && comment[1] == '*') {
+                lineLength = comment - line.cstr();
+                hasComment = true;
+                break;
+            }
+        }
+
+        if (!hasComment) {
+            comment = nullptr;
+        }
+
+        const char* lineTop = line.cstr();
+        const char* p = lineTop;
+
+        while (isSpace(*p)) {
+            p++;
+        }
+
+        if (p == nullptr || *p == '\0' || *p == '#' || (p[0] == '/' && p[1] == '/')) {
+            goto skip;
+        }
+
+        for (;;) {
+            if (p > lineTop + lineLength) {
+                goto skip;
+            }
+
+            if (isAlphabet(*p)) {
+                if (sead::SafeString("uniform").comparen(p, 7) == 0) {
+                    break;
+                }
+
+                do {
+                    p++;
+                } while (isIdentifierChar(*p));
+            } else {
+                const char c = *p++;
+
+                if (c == '/' && (*p == '*' || *p == '/')) {
+                    goto skip;
+                }
+            }
+
+            while (isSpace(*p)) {
+                p++;
+            }
+
+            if (*p == '\0') {
+                goto skip;
+            }
+        }
+
+        goto found;
+
+    skip:
+        offset += lineLength;
+        line = getRest(line, lineLength);
+        goto next;
+
+    found: {
+            const char* name = skipSpace(p + 7);
+
+            if (name == nullptr) {
+                goto skip;
+            }
+
+            for (const char* q = name;; q++) {
+                const char c = *q;
+
+                if (c == '\0' || c == ';') {
+                    goto skip;
+                }
+
+                if (c == '\n' || c == '\r' || (c == '/' && q[1] == '/')) {
+                    break;
+                }
+            }
+
+            const char* brace = name;
+
+            while (*brace != '{') {
+                if (*brace == '\0') {
+                    goto skip;
+                }
+
+                brace++;
+            }
+
+            const char* q = brace;
+            s32 depth = 0;
+
+            for (;;) {
+                char c = *++q;
+
+                if (c == '/' && q[1] == '/') {
+                    do {
+                        c = *++q;
+
+                        if (c == '\0') {
+                            goto skip;
+                        }
+                    } while (c != '\r' && c != '\n');
+                } else if (c == '\0') {
+                    goto skip;
+                }
+
+                if (c == '{') {
+                    depth++;
+                } else if (c == '}') {
+                    if (depth == 0) {
+                        break;
+                    }
+
+                    depth--;
+                }
+            }
+
+            bool hasInstanceName = false;
+            const char* end = q + 1;
+
+            for (; *end != ';'; end++) {
+                if (*end == '\0') {
+                    goto skip;
+                }
+
+                hasInstanceName = hasInstanceName || isIdentifierHead(*end);
+            }
+
+            end++;
+
+            text->append(pending, offset);
+            pending = getRest(pending, end + offset - line.cstr());
+            line = sead::SafeString(end);
+
+            s32 semicolonNum = 0;
+
+            for (const char* r = brace; r != end; r++) {
+                if (*r == ';') {
+                    semicolonNum++;
+                }
+            }
+
+            const u32 size = s32(end - brace) + semicolonNum * 9 + text->calcLength() +
+                             line.calcLength() + 1;
+            char* work = new (pHeap, -4) char[size];
+            u32 pos = sead::BufferedSafeString(work, size).copy(*text);
+
+            const char* const stop = hasInstanceName ? end : end - 1;
+            bool isLineHead = true;
+
+            for (const char* r = brace + 1; r < stop; r++) {
+                if (r[0] == '/' && r[1] == '/') {
+                    const char* e = r;
+
+                    while (*e != '\r' && *e != '\n') {
+                        e++;
+                    }
+
+                    pos += sead::BufferedSafeString(work + pos, size - pos)
+                               .append(sead::SafeString(r), e - r);
+                    r = e;
+                }
+
+                if (r[0] == '/' && r[1] == '*') {
+                    char prev = r[1];
+                    const char* e = r + 2;
+
+                    for (;;) {
+                        const char cur = *e++;
+
+                        if (prev == '*' && cur == '/') {
+                            break;
+                        }
+
+                        prev = cur;
+                    }
+
+                    e++;
+
+                    pos += sead::BufferedSafeString(work + pos, size - pos)
+                               .append(sead::SafeString(r), e - r);
+                    r = e;
+                }
+
+                const char c = *r;
+
+                if (c == '{' || c == '}') {
+                    continue;
+                }
+
+                bool keepLineHead = false;
+
+                if (isLineHead) {
+                    if (strncmp(r, "struct", 6) == 0) {
+                        pos += sead::BufferedSafeString(work + pos, size - pos).append("uniform ");
+
+                        while (*r != '{') {
+                            if (*r == '\0') {
+                                goto structEnd;
+                            }
+
+                            pos += sead::BufferedSafeString(work + pos, size - pos).append(*r++);
+                        }
+
+                        {
+                            s32 structDepth = -1;
+
+                            do {
+                                pos += sead::BufferedSafeString(work + pos, size - pos).append(*r);
+
+                                if (*r == '{') {
+                                    structDepth++;
+                                } else if (*r == '}') {
+                                    if (structDepth == 0) {
+                                        break;
+                                    }
+
+                                    structDepth--;
+                                }
+                            } while (*++r != '\0');
+                        }
+
+                    structEnd:
+                        isLineHead = false;
+                        continue;
+                    }
+
+                    keepLineHead = true;
+
+                    if (isIdentifierHead(c)) {
+                        const char* type = r;
+
+                        if (sead::SafeString("uniform").comparen(r, 7) == 0 &&
+                            IsDelimiter(r[7])) {
+                            type = r + 7;
+
+                            while (isSpace(*type)) {
+                                type++;
+                            }
+                        }
+
+                        if (skipTypeName(type) != nullptr) {
+                            const char* s = type;
+                            char next;
+
+                            do {
+                                next = *s++;
+                            } while (isIdentifierChar(next));
+
+                            while (isSpace(next)) {
+                                next = *s++;
+                            }
+
+                            if (isIdentifierHead(next)) {
+                                if (!(sead::SafeString("uniform").comparen(r, 7) == 0 &&
+                                      IsDelimiter(r[7]))) {
+                                    pos += sead::BufferedSafeString(work + pos, size - pos)
+                                               .append("uniform ");
+                                }
+
+                                keepLineHead = false;
+                            }
+                        }
+                    }
+                }
+
+                isLineHead = keepLineHead | (*r == ';');
+                pos += sead::BufferedSafeString(work + pos, size - pos).append(*r);
+            }
+
+            delete[] text->cstr();
+            delete text;
+            text = new (pHeap, -4) sead::BufferedSafeString(work, size);
+            offset = 0;
+        }
+
+    next:
+        if (hasComment) {
+            const char* q = comment;
+
+            for (; *q != '\0'; q++) {
+                if (*q == '*' && *++q == '/') {
+                    q++;
+                    break;
+                }
+            }
+
+            offset += q - comment;
+            line = sead::SafeString(q);
+        }
+    }
+
+    text->append(pending, offset);
+
+    auto* result = new (pHeap) sead::HeapSafeString(pHeap, text->cstr());
+    delete[] text->cstr();
+    delete text;
+
+    return result;
+}
+
+/**
  * Checks whether a character separates tokens in shader source.
  * @param c character to check
  * @return whether the character is a delimiter
  */
-bool IsDelimiter(char c) {
+WEAK bool IsDelimiter(char c) {
     switch (c) {
     case '\0':
     case '\t':
@@ -350,6 +766,227 @@ bool IsDelimiter(char c) {
     default:
         return false;
     }
+}
+
+/**
+ * Moves the plain uniform declarations of a vertex and a fragment shader into one shared
+ * std140 uniform block, inserted where each shader declared its first uniform.
+ * @param ppVertexText receives the converted vertex shader source
+ * @param ppFragmentText receives the converted fragment shader source
+ * @param rVertexSource vertex shader source
+ * @param rFragmentSource fragment shader source
+ * @param rBlockName name of the generated uniform block
+ * @param pHeap heap to allocate the work buffers and the results from
+ */
+// NON_MATCHING: block layout of the comment handling and register allocation
+void ShaderTextUtil::createUniformRegisterReplaceText(sead::SafeString** ppVertexText,
+                                                      sead::SafeString** ppFragmentText,
+                                                      const sead::SafeString& rVertexSource,
+                                                      const sead::SafeString& rFragmentSource,
+                                                      const sead::SafeString& rBlockName,
+                                                      sead::Heap* pHeap) {
+    UniformSource sources[2] = {{rVertexSource, nullptr, -1, ppVertexText},
+                                {rFragmentSource, nullptr, -1, ppFragmentText}};
+
+    const s32 vertexLength = rVertexSource.calcLength();
+    const s32 fragmentLength = rFragmentSource.calcLength();
+    const s32 maxLength = vertexLength > fragmentLength ? vertexLength : fragmentLength;
+
+    auto* uniformText = new (pHeap, -4)
+        sead::BufferedSafeString(new (pHeap, -4) char[maxLength * 2], maxLength * 2);
+    auto* map = new (pHeap, -4) UniformMap;
+    uniformText->clear();
+
+    for (s32 i = 0; i < 2; i++) {
+        UniformSource& source = sources[i];
+        sead::SafeString line = source.mText;
+        sead::SafeString pending = source.mText;
+        const s32 length = source.mText.calcLength();
+
+        source.mOutput = new (pHeap, -4)
+            sead::BufferedSafeString(new (pHeap, -4) char[length * 2], length * 2);
+        source.mOutput->clear();
+
+        s64 offset = 0;
+
+        while (!line.isEmpty()) {
+            s32 lineFeedLength = 0;
+            const s32 lineFeedPos = findLineFeedCode(line.cstr(), &lineFeedLength);
+            const char* top = line.cstr();
+            u32 lineLength = lineFeedPos == -1 ? line.calcLength() : lineFeedPos + lineFeedLength;
+
+            const char* comment = line.cstr();
+            bool hasComment = false;
+
+            for (const char* end = comment + lineLength; comment < end; comment++) {
+                if (comment[0] == '/' && comment[1] == '*') {
+                    lineLength = comment - line.cstr();
+                    hasComment = true;
+                    break;
+                }
+            }
+
+            if (!hasComment) {
+                comment = nullptr;
+            }
+
+            const char* lineTop = line.cstr();
+            const char* p = lineTop;
+
+            while (isSpace(*p)) {
+                p++;
+            }
+
+            if (p == nullptr || *p == '\0' || *p == '#' || (p[0] == '/' && p[1] == '/')) {
+                goto skip;
+            }
+
+            for (;;) {
+                if (p >= lineTop + lineLength) {
+                    goto skip;
+                }
+
+                if (isAlphabet(*p)) {
+                    if (sead::SafeString("uniform").comparen(p, 7) == 0) {
+                        break;
+                    }
+
+                    do {
+                        p++;
+                    } while (isIdentifierChar(*p));
+                } else {
+                    const char c = *p++;
+
+                    if (c == '/' && (*p == '*' || *p == '/')) {
+                        goto skip;
+                    }
+                }
+
+                while (isSpace(*p)) {
+                    p++;
+                }
+
+                if (*p == '\0') {
+                    goto skip;
+                }
+            }
+
+            goto found;
+
+        skip:
+            offset += lineLength;
+            line = getRest(line, lineLength);
+            goto next;
+
+        found: {
+                const char* type = skipSpace(p + 7);
+
+                if (type == nullptr) {
+                    goto skip;
+                }
+
+                for (const char* q = type;; q++) {
+                    const char c = *q;
+
+                    if (c == '\0' || c == '\n' || c == '\r' || (c == '/' && q[1] == '/')) {
+                        goto skip;
+                    }
+
+                    if (c == ';') {
+                        break;
+                    }
+                }
+
+                const char* typeEnd = skipTypeName(type);
+
+                if (typeEnd == nullptr) {
+                    goto skip;
+                }
+
+                const char* nameBegin = typeEnd;
+
+                while (isSpace(*nameBegin)) {
+                    nameBegin++;
+                }
+
+                if (*nameBegin == '\0') {
+                    goto skip;
+                }
+
+                const char* nameEnd = nameBegin;
+
+                while (isIdentifierChar(*nameEnd)) {
+                    nameEnd++;
+                }
+
+                source.mOutput->append(pending, offset);
+
+                if (source.mInsertPos == -1) {
+                    source.mInsertPos = source.mOutput->calcLength();
+                }
+
+                sead::FixedSafeString<64> name;
+                name.copy(sead::SafeString(nameBegin), nameEnd - nameBegin);
+
+                if (map->find(name) == nullptr) {
+                    sead::FixedSafeString<256> declaration;
+                    declaration.copy(sead::SafeString(type), top + lineLength - type);
+
+                    UniformInfo info = {type, typeEnd, nameBegin, nameEnd};
+                    map->insert(name, info);
+                    uniformText->appendWithFormat("\t%s", declaration.cstr());
+                }
+
+                line = getRest(line, lineLength);
+                pending = line;
+                offset = 0;
+            }
+
+        next:
+            if (hasComment) {
+                const char* q = comment;
+
+                for (; *q != '\0'; q++) {
+                    if (*q == '*' && *++q == '/') {
+                        q++;
+                        break;
+                    }
+                }
+
+                line = sead::SafeString(q);
+                offset += line.cstr() - comment;
+            }
+        }
+
+        source.mOutput->append(pending, offset);
+    }
+
+    auto* blockText = new (pHeap, -4)
+        sead::BufferedSafeString(new (pHeap, -4) char[maxLength * 2], maxLength * 2);
+    blockText->format("layout( std140 ) uniform %s\r\n{\r\n%s};", rBlockName.cstr(),
+                      uniformText->cstr());
+
+    for (s32 i = 0; i < 2; i++) {
+        UniformSource& source = sources[i];
+
+        if (source.mInsertPos != -1) {
+            uniformText->copy(*source.mOutput, source.mInsertPos);
+            uniformText->appendWithFormat("\r\n%s\r\n%s", blockText->cstr(),
+                                          source.mOutput->getPart(source.mInsertPos).cstr());
+            *source.mppResult = new (pHeap) sead::HeapSafeString(pHeap, uniformText->cstr());
+        } else {
+            *source.mppResult = new (pHeap) sead::HeapSafeString(pHeap, source.mOutput->cstr());
+        }
+
+        delete source.mOutput->cstr();
+        delete source.mOutput;
+    }
+
+    delete blockText->cstr();
+    delete blockText;
+    delete uniformText->cstr();
+    delete uniformText;
+    delete map;
 }
 
 /**
@@ -601,5 +1238,119 @@ bool ShaderTextUtil::skipString(const sead::SafeString& rStr, const char** ppTex
 
     return false;
 }
+
+namespace {
+
+/**
+ * Skips a GLSL scalar, vector or matrix type name.
+ * @param p text starting with the type name
+ * @return end of the type name if it is followed by a space, otherwise nullptr
+ */
+const char* skipTypeName(const char* p) {
+    const char* end = p;
+
+    switch (*p) {
+    case 'b':
+        if (sead::SafeString(p + 1).comparen("vec", 3) == 0) {
+            if (!isVectorSize(p[4])) {
+                return nullptr;
+            }
+
+            end = p + 5;
+        } else if (sead::SafeString(p).comparen("bool", 4) == 0) {
+            end = p + 4;
+        }
+
+        break;
+    case 'd':
+        if (sead::SafeString(p + 1).comparen("vec", 3) == 0) {
+            if (!isVectorSize(p[4])) {
+                return nullptr;
+            }
+
+            end = p + 5;
+        } else if (sead::SafeString(p + 1).comparen("mat", 3) == 0) {
+            if (!isMatrixSize(p[4])) {
+                return nullptr;
+            }
+
+            end = p + 5;
+
+            if (*end == 'x') {
+                if (!isMatrixSize(p[6])) {
+                    return nullptr;
+                }
+
+                end = p + 7;
+            }
+        } else if (sead::SafeString(p).comparen("double", 6) == 0) {
+            end = p + 6;
+        }
+
+        break;
+    case 'f':
+        if (sead::SafeString(p).comparen("float", 5) == 0) {
+            end = p + 5;
+        }
+
+        break;
+    case 'i':
+        if (sead::SafeString(p + 1).comparen("vec", 3) == 0) {
+            if (!isVectorSize(p[4])) {
+                return nullptr;
+            }
+
+            end = p + 5;
+        } else if (sead::SafeString(p).comparen("int", 3) == 0) {
+            end = p + 3;
+        }
+
+        break;
+    case 'm':
+        if (sead::SafeString(p).comparen("mat", 3) == 0) {
+            if (!isMatrixSize(p[3])) {
+                return nullptr;
+            }
+
+            end = p + 4;
+
+            if (*end == 'x') {
+                if (!isMatrixSize(p[5])) {
+                    return nullptr;
+                }
+
+                end = p + 6;
+            }
+        }
+
+        break;
+    case 'u':
+        if (sead::SafeString(p + 1).comparen("vec", 3) == 0) {
+            if (!isVectorSize(p[4])) {
+                return nullptr;
+            }
+
+            end = p + 5;
+        } else if (sead::SafeString(p + 1).comparen("int", 3) == 0) {
+            end = p + 4;
+        }
+
+        break;
+    case 'v':
+        if (sead::SafeString(p).comparen("vec", 3) == 0) {
+            if (!isVectorSize(p[3])) {
+                return nullptr;
+            }
+
+            end = p + 4;
+        }
+
+        break;
+    }
+
+    return isSpace(*end) ? end : nullptr;
+}
+
+}  // namespace
 
 }  // namespace agl::detail

@@ -46,6 +46,8 @@ public:
 
     const f32* getFollowRate() const { return mFollowRate; }
 
+    void setFollowRate(const f32* pRate) { mFollowRate = pRate; }
+
 private:
     void projectToScreen(sead::Vector2f* pOut, const sead::Vector3f& rPos) const;
 

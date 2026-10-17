@@ -15,6 +15,12 @@ class GameDataCommon {
     bool readFromStream(sead::ReadStream* pStream);
     void writeToStream(sead::WriteStream* pStream) const;
 
+    /**
+     * @brief Read the game mode (3D World or Bowser's Fury) played last.
+     * @return The raw GameMode value.
+     */
+    u32 getLastPlayedMode() const { return mValues[0]; }
+
   private:
     friend class GameDataHolder;
     u32 mValues[3];

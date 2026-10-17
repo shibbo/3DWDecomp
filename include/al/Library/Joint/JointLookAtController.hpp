@@ -40,17 +40,27 @@ public:
                      const sead::Vector2f& rPitchRange, const sead::Vector3f& rLocalFront,
                      const sead::Vector3f& rLocalUp);
     void appendJointLocalJudge(s32 jointIndex, f32 rate, const sead::Vector2f& rYawRange,
-                               const sead::Vector2f& rPitchRange,
-                               const sead::Vector3f& rLocalFront, const sead::Vector3f& rLocalUp,
-                               const sead::Matrix34f* pJudgeMtx,
-                               const sead::Vector3f& rJudgeFront,
-                               const sead::Vector3f& rJudgeUp, bool isNoJudge);
+                               const sead::Vector2f& rPitchRange, const sead::Vector3f& rLocalFront,
+                               const sead::Vector3f& rLocalUp, const sead::Matrix34f* pJudgeMtx,
+                               const sead::Vector3f& rJudgeFront, const sead::Vector3f& rJudgeUp,
+                               bool isNoJudge);
     void appendJointNoJudge(s32 jointIndex, f32 rate, const sead::Vector2f& rYawRange,
                             const sead::Vector2f& rPitchRange, const sead::Vector3f& rLocalFront,
                             const sead::Vector3f& rLocalUp);
     void requestJointLookAt(const sead::Vector3f& rTargetPos);
     bool invalidJoint(s32 jointIndex);
     void validAllJoint();
+
+    /** @brief Gets a configured joint. @param index Joint order. @return Joint information. */
+    JointLookAtInfo* getJointInfo(int index) { return &mJointInfos[index]; }
+    /** @brief Controls whether the target rotation is retained. @param keep Retain rotation. */
+    void setKeepTargetQuat(bool keep) { mIsKeepTargetQuat = keep; }
+    /** @brief Transfers the current look request to the animation update. */
+    void update() {
+        bool wasRequested = mIsRequestLookAt;
+        mIsRequestLookAt = false;
+        mIsLookAt = wasRequested;
+    }
 
 private:
     sead::Vector3f mTargetPos = {0.0f, 0.0f, 0.0f};
@@ -64,4 +74,4 @@ private:
 
 static_assert(sizeof(JointLookAtController) == 0xe0);
 
-}  // namespace al
+} // namespace al

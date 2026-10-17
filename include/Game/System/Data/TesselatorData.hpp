@@ -9,11 +9,12 @@
  * @brief A vertex of the ocean surface mesh, as written to the GPU vertex buffer.
  */
 struct OceanVertex {
-    sead::Vector3f mPos;
-    sead::Vector3f mNormal;
-    u8 _18[0x20 - 0x18];
-    sead::Color4f mColor;
-    u8 _30[0x48 - 0x30];
+    sead::Vector3f mPos;       // 0x00
+    sead::Vector3f mNormal;    // 0x0c
+    sead::Vector2f mUV;        // 0x18
+    sead::Color4f mColor;      // 0x20
+    sead::Vector3f mTangent;   // 0x30
+    sead::Vector3f mBinormal;  // 0x3c
 };
 static_assert(sizeof(OceanVertex) == 0x48);
 

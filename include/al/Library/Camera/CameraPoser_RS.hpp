@@ -214,6 +214,8 @@ public:
 
     f32 getFarClipDistance() const { return mFarClipDistance; }
 
+    bool is140() const { return _140; }
+
     bool is141() const { return _141; }
 
     bool isCalcEndAfterInterpole() const { return _9c; }
@@ -238,11 +240,11 @@ public:
 
     SnapShotCameraCtrl* getSnapShotCtrl() const { return mSnapShotCtrl; }
 
-    void setEye(const sead::Vector3f& rPos) { mEye = rPos; }
+    void setEye(const sead::Vector3f& rPos) { mEye.set(rPos); }
 
     void addEyeOffset(const sead::Vector3f& rOffset) { mEye += rOffset; }
 
-    void setAt(const sead::Vector3f& rPos) { mAt = rPos; }
+    void setAt(const sead::Vector3f& rPos) { mAt.set(rPos); }
 
     void setCameraUp(const sead::Vector3f& rDir) { mUp = rDir; }
 

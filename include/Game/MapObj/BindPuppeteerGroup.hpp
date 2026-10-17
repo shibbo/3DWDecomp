@@ -8,10 +8,10 @@ class HitSensor;
 }  // namespace al
 
 class BindPuppeteer;
+class IUsePlayerPuppet;
 
 /**
  * @brief A fixed-capacity list of bind puppeteers, one per player that can be bound.
- * @note Only what reconstructed code needs is declared so far.
  */
 class BindPuppeteerGroup {
 public:
@@ -20,6 +20,19 @@ public:
     BindPuppeteerGroup(const char* pName, s32 maxNum);
 
     void update();
+    void createAndFillPuppeteer(const char*);
+    bool isBindingSameUserId(const al::HitSensor*) const;
+    bool isBinding(s32) const;
+    s32 getBindingIndex(const BindPuppeteer*) const;
+    s32 getBindingIndex(const al::HitSensor*) const;
+    BindPuppeteer* getPuppeteer(const al::HitSensor*) const;
+    void tryEndBindAll();
+    void tryCancelBind(const al::HitSensor*);
+    void tryCancelBindAll();
+    IUsePlayerPuppet* getPlayerPuppet(s32) const;
+    BindPuppeteer* getPuppeteerNoBind() const;
+    s32 calcBindingPuppeteerNum() const;
+    void setNullPlayerPuppet(s32);
     void registerPuppeteer(BindPuppeteer* pPuppeteer);
     void insertPuppeteer(s32 index, BindPuppeteer* pPuppeteer);
     bool isEndBindAll() const;

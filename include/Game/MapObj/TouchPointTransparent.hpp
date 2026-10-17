@@ -14,6 +14,8 @@ public:
     void exeTransparent();
     void exeDisappear();
 
+    void setSlowDisappear(bool isSlow) { mIsSlowDisappear = isSlow; }
+
     bool mIsSlowDisappear = false; // 0x144
     float mAlpha = 0.75f; // 0x148
 };

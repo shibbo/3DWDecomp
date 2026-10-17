@@ -33,7 +33,7 @@ void CameraTargetCollideInfoHolder::update(bool isValid, const sead::Vector3f& r
                                            const sead::Vector3f& rVelocity,
                                            const sead::Vector3f& rGravity) {
     reset();
-    mGravity = rGravity;
+    mGravity.set(rGravity);
     mInvalidCount = isValid ? 0 : mInvalidCount + 1;
 
     Triangle triangle;
@@ -46,7 +46,7 @@ void CameraTargetCollideInfoHolder::update(bool isValid, const sead::Vector3f& r
     }
 
     mIsExistCollisionUnderTarget = true;
-    mTargetCollisionNormal = *triangle.getNormal(0);
+    mTargetCollisionNormal.set(*triangle.getNormal(0));
     normalize(&mTargetCollisionNormal);
 
     if (!isInRange(calcAngleDegree(-sDownDir, mTargetCollisionNormal), 15.0f, 70.0f)) {
@@ -55,14 +55,14 @@ void CameraTargetCollideInfoHolder::update(bool isValid, const sead::Vector3f& r
 
     mIsExistSlopeCollisionUnderTarget = true;
     sead::Vector3f side;
-    side.setCross(-sDownDir, mTargetCollisionNormal);
+    side.setCross(mTargetCollisionNormal, sDownDir);
     normalize(&side);
     mSlopeDownDir.setCross(side, mTargetCollisionNormal);
     normalize(&mSlopeDownDir);
 
     sead::Vector3f velocity = rVelocity;
     parallelizeVec(&velocity, mSlopeDownDir, velocity);
-    f32 dot = mSlopeDownDir.dot(velocity);
+    f32 dot = velocity.dot(mSlopeDownDir);
     f32 speed = velocity.length();
 
     if (dot > 0.0f) {

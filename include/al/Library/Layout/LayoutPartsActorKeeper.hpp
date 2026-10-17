@@ -17,6 +17,9 @@ public:
     void kill();
     LayoutActor* getPartsActor(const char* pName) const;
 
+    /** @brief Returns the registered parts array; use getPartsActorNum() for its length. */
+    LayoutActor* const* getPartsActors() const { return mPartsActors; }
+
     s32 getPartsActorNum() const { return mNumActors; }
 
     LayoutActor* getPartsActor(s32 index) const {

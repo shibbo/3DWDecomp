@@ -3,6 +3,7 @@
 #include <basis/seadTypes.h>
 
 namespace al {
+class ActorInitInfo;
 class LiveActor;
 
 void stopScene(const LiveActor*, s32, s32, bool, bool);
@@ -17,4 +18,5 @@ void setDisasterMode(LiveActor*, bool);
 bool isDisasterMode(LiveActor*);
 void stopAllPadRumble(LiveActor*);
 bool isSingleMode(const LiveActor*);
+bool isSingleMode(const ActorInitInfo& rInfo);
 }  // namespace al

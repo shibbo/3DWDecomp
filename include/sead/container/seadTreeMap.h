@@ -463,9 +463,6 @@ inline TreeMapNode<Key>* TreeMapImpl<Key>::eraseMin(Node* node)
         node = moveRedLeft(node);
 
     node->mLeft = eraseMin(node->mLeft);
-#ifdef MATCHING_HACK_NX_CLANG
-    asm("");
-#endif
     return fixUp(node);
 }
 

@@ -48,6 +48,7 @@ public:
     void initAfterPlacement();
     void update(bool isPaused);
     void cancelLerp();
+    void disable();
     agl::ShaderMode draw(s32 viewIndex, const agl::RenderBuffer& rRenderBuffer,
                          const agl::TextureData& rDepthTexture, const sead::Projection& rProjection,
                          f32 near, f32 far, bool isLinearDepth, agl::ShaderMode shaderMode) const;

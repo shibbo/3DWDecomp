@@ -11,6 +11,8 @@ public:
     DemoActionList(const al::ActorInitInfo& rInfo, const char* pArgPrefix);
     const char* getActionName(int index) const;
     void startAction(al::LiveActor* pActor, int index);
+    /** @brief Gets the action slot count. @return Number of available action slots. */
+    int getActionCount() const { return mActionCount; }
 
 private:
     const char** mActionNames;

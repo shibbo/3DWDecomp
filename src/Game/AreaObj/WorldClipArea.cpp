@@ -15,11 +15,11 @@ void WorldClipArea::init(const al::AreaInitInfo& rInfo) {
     al::AreaObj::init(rInfo);
     s32 world = 0;
     al::tryGetArg(&world, rInfo.mPlacementInfo, "ActiveWorld0");
-    mActiveWorldMask |= 1u << world;
+    mWorldFlag.setBit(world);
     al::tryGetArg(&world, rInfo.mPlacementInfo, "ActiveWorld1");
-    mActiveWorldMask |= 1u << world;
+    mWorldFlag.setBit(world);
     al::tryGetArg(&world, rInfo.mPlacementInfo, "ActiveWorld2");
-    mActiveWorldMask |= 1u << world;
+    mWorldFlag.setBit(world);
     al::tryGetArg(&world, rInfo.mPlacementInfo, "ActiveWorld3");
-    mActiveWorldMask |= 1u << world;
+    mWorldFlag.setBit(world);
 }

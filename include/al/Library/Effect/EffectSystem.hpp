@@ -91,6 +91,7 @@ public:
     EffectEnvParam* getEffectEnvParam() const { return mEffectEnvParam; }
     s32 getGroupDrawerNum() const { return mGroupDrawerNum; }
     EffectGroupDrawer* getGroupDrawer(s32 index) const { return mGroupDrawers[index]; }
+    void setStopCalc(bool stopped) { mIsStopCalc = stopped; }
     bool isStopCalc() const { return mIsStopCalc || mIsStopCalcByDemo; }
     bool isSwapBuffer() const { return mIsSwapBuffer; }
 

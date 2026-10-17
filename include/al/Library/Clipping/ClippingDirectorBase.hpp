@@ -75,6 +75,12 @@ public:
 
     void setClippingJudgeUsClippingPosAsPlayerPos(bool isUse);
 
+    /**
+     * @brief Sets the screen cover frame counter the clipping is suspended by.
+     * @param pFrames The frame counter of the scene's screen cover.
+     */
+    void setScreenCoverFrames(const s32* pFrames) { _18 = pFrames; }
+
     static bool sLODDisabled;
     static bool sCollisionForcedOn;
 

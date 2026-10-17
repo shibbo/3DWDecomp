@@ -608,13 +608,14 @@ void GameDataFunction::incMenuRestartCount(GameDataHolderWriter writer) {
  * @brief Store an item in the reserve.
  * @param writer Writer to a valid game-data holder.
  * @param itemId Item to store.
+ * @return True if the item was stored.
  */
-void GameDataFunction::stockItem(GameDataHolderWriter writer, int itemId) {
+bool GameDataFunction::stockItem(GameDataHolderWriter writer, int itemId) {
     if (writer.getHolder()->isSingleMode()) {
-        writer.getHolder()->getSingleFile()->getStockItems()->stockItem(itemId);
-    } else {
-        writer.getHolder()->getStageDataHolderPtr()->stockItem(itemId);
+        return writer.getHolder()->getSingleFile()->getStockItems()->stockItem(itemId);
     }
+
+    return writer.getHolder()->getStageDataHolderPtr()->stockItem(itemId);
 }
 
 /**
@@ -666,13 +667,14 @@ int GameDataFunction::getTopItem(GameDataHolderAccessor accessor) {
  * @brief Add coins to the active save file.
  * @param writer Writer to a valid game-data holder.
  * @param count Number of coins.
+ * @return True if the coin counter wrapped around and earned a reward.
  */
-void GameDataFunction::addCoin(GameDataHolderWriter writer, int count) {
+bool GameDataFunction::addCoin(GameDataHolderWriter writer, int count) {
     if (writer.getHolder()->isSingleMode()) {
-        writer.getHolder()->getSingleFile()->addCoin(count);
-    } else {
-        writer.getHolder()->getPlayingFile()->addCoin(count);
+        return writer.getHolder()->getSingleFile()->addCoin(count);
     }
+
+    return writer.getHolder()->getPlayingFile()->addCoin(count);
 }
 
 /**
