@@ -88,17 +88,17 @@ src/Game/AreaObj/TorpedoSpikeRestrictionArea.cpp: done
     .text   start:0x000016D0 end:0x000017D8
 src/Game/AreaObj/WorldClipArea.cpp: done
     .text   start:0x000017E0 end:0x00001954
-src/Game/Bgm/BgmBeatRateTrigger.cpp:
+src/Game/Bgm/BgmBeatRateTrigger.cpp: done
     .text   start:0x00001960 end:0x00001A10
-src/Game/Bgm/BgmBeatPeriodicTrigger.cpp:
+src/Game/Bgm/BgmBeatPeriodicTrigger.cpp: done
     .text   start:0x00001A10 end:0x00001ADC
-src/Game/Bgm/MicInputSePlayer.cpp:
+src/Game/Bgm/MicInputSePlayer.cpp: done
     .text   start:0x00001AE0 end:0x00001D38
 src/Game/Bgm/PcmTempoChanger.cpp:
     .text   start:0x00001D40 end:0x00002404
-src/Game/Bgm/PlayerBigBgmController.cpp:
+src/Game/Bgm/PlayerBigBgmController.cpp: done
     .text   start:0x00002410 end:0x000025D8
-src/Game/Bgm/PlayerInvincibleBgmController.cpp:
+src/Game/Bgm/PlayerInvincibleBgmController.cpp: done
     .text   start:0x000025E0 end:0x00002808
 src/Game/Boss/BombBound.cpp:
     .text   start:0x00002810 end:0x00004B14
@@ -2790,7 +2790,7 @@ src/Game/Player/Normal/PlayerArrow.cpp:
     .text   start:0x0043FA30 end:0x0043FAB4
 src/Game/Player/Normal/PlayerAudio.cpp:
     .text   start:0x0043FAC0 end:0x004431C4
-src/Game/Player/Normal/PlayerBgmStopper.cpp:
+src/Game/Player/Normal/PlayerBgmStopper.cpp: done
     .text   start:0x004431D0 end:0x00443230
 src/Game/Player/Normal/PlayerBindableSensorList.cpp:
     .text   start:0x00443230 end:0x00443754
@@ -5234,7 +5234,7 @@ src/al/Library/Area/AreaInitInfo.cpp: done
     .text   start:0x008E4EF0 end:0x008E4FF8
 src/al/Library/Area/AreaObj.cpp: done
     .text   start:0x008E5000 end:0x008E5664
-src/al/Library/Area/AreaObjDirector.cpp:
+src/al/Library/Area/AreaObjDirector.cpp: done
     .text   start:0x008E5670 end:0x008E6394
 src/al/Library/Area/AreaObjFactory.cpp: done
     .text   start:0x008E63A0 end:0x008E63C0
@@ -5270,7 +5270,7 @@ src/al/Library/Area/AreaShapes.cpp:
     .text   start:0x008E9340 end:0x008EA398
 src/al/Library/Area/SwitchAreaDirector.cpp: done
     .text   start:0x008EA3A0 end:0x008EA73C
-src/al/Library/Area/SwitchKeepOnAreaGroup.cpp:
+src/al/Library/Area/SwitchKeepOnAreaGroup.cpp: done
     .text   start:0x008EA740 end:0x008EAA18
 src/al/Library/LiveActor/ActorAreaFunction_dup6.cpp: done
     .text   start:0x008EAA20 end:0x008EAAAC

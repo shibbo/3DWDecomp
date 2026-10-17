@@ -377,7 +377,7 @@ void UniformBlock::setDataStruct_(void* pBuffer, s32 memberIndex, const void* pD
     s32 words = structSize / 4;
     const Member& rMember = mHeader->mMembers[memberIndex];
     writeMemory(reinterpret_cast<u32*>(static_cast<u8*>(pBuffer) +
-                                       (rMember.mOffset + words * arrayIndex * sizeof(u32))),
+                                       rMember.mOffset) + words * arrayIndex,
                 static_cast<const u32*>(pData), count, words, words, nullptr);
 }
 

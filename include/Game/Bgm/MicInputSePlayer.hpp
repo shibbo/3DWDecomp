@@ -1,23 +1,22 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include "Library/Nerve/NerveExecutor.hpp"
+#include "Project/Audio/IUseAudioKeeper.hpp"
 
 namespace al {
 class AudioDirector;
-}  // namespace al
+}
 
-/**
- * @brief Plays sound effects from the microphone input.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
-class MicInputSePlayer {
+class MicInputSePlayer : public al::NerveExecutor, public al::IUseAudioKeeper {
 public:
-    explicit MicInputSePlayer(al::AudioDirector* pAudioDirector);
-
+    explicit MicInputSePlayer(al::AudioDirector* pDirector);
     void update();
+    void exeWait();
+    void exeBlow();
+    al::AudioKeeper* getAudioKeeper() const override;
 
 private:
-    u8 _0[0x20];
+    al::AudioKeeper* mAudioKeeper = nullptr;
 };
 
 static_assert(sizeof(MicInputSePlayer) == 0x20);

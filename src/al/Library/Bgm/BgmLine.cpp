@@ -233,12 +233,11 @@ void BgmLine::init(AudioSystemInfo* pInfo, const BgmLineInfo* pLineInfo, const c
         mStagePlayInfoList = nullptr;
     }
 
-    Bgm* bgm = new Bgm;
-    bgm->init(pInfo);
-    mBgmPlayers[0] = bgm;
-    bgm = new Bgm;
-    bgm->init(pInfo);
-    mBgmPlayers[1] = bgm;
+    for (s32 i = 0; i < 2; i++) {
+        Bgm* bgm = new Bgm;
+        bgm->init(pInfo);
+        mBgmPlayers[i] = bgm;
+    }
 
     Resource* resource = findOrCreateResource("SoundData/BgmRhythmInfo", nullptr);
     BgmMusicalInfo* defaultMusicalInfo = createMusicalInfo(resource->getByml("DEFAULT"));
@@ -288,7 +287,8 @@ void BgmLine::init(AudioSystemInfo* pInfo, const BgmLineInfo* pLineInfo, const c
 
         BgmMusicalInfo* musicalInfo = nullptr;
 
-        if (resource->isExistFile(StringTmp<128>("%s.byml", resourceName))) {
+        StringTmp<128> bymlName("%s.byml", resourceName);
+        if (resource->isExistFile(bymlName)) {
             musicalInfo = createMusicalInfo(resource->getByml(resourceName));
         }
 
@@ -361,7 +361,7 @@ bool BgmLine::isPrepared() const {
 }
 
 /**
- * Checks whether the rhythm detection is enabled.
+ * @brief Checks whether rhythm detection is enabled.
  * @return True if enabled.
  */
 bool BgmLine::isEnableRhythmDetection() const {
@@ -369,7 +369,7 @@ bool BgmLine::isEnableRhythmDetection() const {
         return false;
     }
 
-    return isRunning() && !isWaitStart() && !isPause();
+    return !isPause() && isRunning() && !isWaitStart();
 }
 
 /**
@@ -816,7 +816,7 @@ void BgmLine::attachSuffix(const BgmProcInfo* pInfo, bool isForce) {
 }
 
 /**
- * Detaches the suffix from the current BGM.
+ * @brief Detaches the suffix from the current BGM.
  * @param pInfo Suffix process information.
  */
 NOINLINE void BgmLine::detachSuffix(const BgmProcInfo* pInfo) {
@@ -826,10 +826,12 @@ NOINLINE void BgmLine::detachSuffix(const BgmProcInfo* pInfo) {
 
     const BgmSuffixProcInfo* suffixProcInfo = static_cast<const BgmSuffixProcInfo*>(pInfo);
     s32 curSample = getCurBgm()->detachSuffix(suffixProcInfo);
+    BgmRhythmDetector* rhythmDetector = mRhythmDetector;
     const BgmResourceInfo* resourceInfo = mCurPlayInfo->resourceInfo;
-    mRhythmDetector->init(mCurPlayInfo->musicalInfo, resourceInfo->mBpm * mBpmRate,
-                          resourceInfo->mSampleRate, resourceInfo->mStartSample,
-                          suffixProcInfo->mIsStartCurPosition ? curSample : -1);
+    BgmMusicalInfo* musicalInfo = mCurPlayInfo->musicalInfo;
+    s32 startSample = suffixProcInfo->mIsStartCurPosition ? curSample : -1;
+    rhythmDetector->init(musicalInfo, resourceInfo->mBpm * mBpmRate,
+                         resourceInfo->mSampleRate, resourceInfo->mStartSample, startSample);
 
     if (mIsInWater) {
         changeSituation("InWaterFast", false);

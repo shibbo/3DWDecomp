@@ -91,9 +91,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100001C40			FALSE	_ZN16MicInputSePlayerD0Ev	MicInputSePlayer::~MicInputSePlayer()	
 0x7100001C70			FALSE	_ZNK16MicInputSePlayer14getAudioKeeperEv	MicInputSePlayer::getAudioKeeper() const	
 0x7100001C80			FALSE	_ZThn16_NK16MicInputSePlayer14getAudioKeeperEv	non-virtual thunk to MicInputSePlayer::getAudioKeeper() const	
-0x7100001C90			FALSE	sub_7100001C90	sub_7100001C90	
+0x7100001C90			FALSE	_ZNK12_GLOBAL__N_123MicInputSePlayerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MicInputSePlayerNrvWait::execute(al::NerveKeeper*) const	
 0x7100001CE0			FALSE	_ZNK2al5Nerve12executeOnEndEPNS_11NerveKeeperE	al::Nerve::executeOnEnd(al::NerveKeeper*) const	
-0x7100001CF0			FALSE	sub_7100001CF0	sub_7100001CF0	
+0x7100001CF0			FALSE	_ZNK12_GLOBAL__N_123MicInputSePlayerNrvBlow7executeEPN2al11NerveKeeperE	(anonymous namespace)::MicInputSePlayerNrvBlow::execute(al::NerveKeeper*) const	
 0x7100001D40		PcmTempoChanger.o	FALSE	_ZN15PcmTempoChangerC2Ev	PcmTempoChanger::PcmTempoChanger()	
 0x7100001D50			FALSE	_ZN15PcmTempoChanger10initializeEfjjj	PcmTempoChanger::initialize(float, unsigned int, unsigned int, unsigned int)	
 0x7100001E00			FALSE	_ZN15PcmTempoChanger16CopyPcmOnTempoUpER9PcmBufferIsER9PcmReaderIsEj	PcmTempoChanger::CopyPcmOnTempoUp(PcmBuffer<short>&, PcmReader<short>&, unsigned int)	

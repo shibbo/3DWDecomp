@@ -225,22 +225,20 @@ void BgmDirector::stopAllBgm(s32 fadeFrames) {
 }
 
 /**
- * Stops all BGM lines if any is playing.
+ * @brief Stops all BGM lines if any is playing.
  * @param fadeFrames Fade-out length in frames.
- * @return True if a line was stopped.
  */
-bool BgmDirector::tryStopAllBgm(s32 fadeFrames) {
-    return mBgmLineKeeper->tryStopAllBgmLine(fadeFrames);
+void BgmDirector::tryStopAllBgm(s32 fadeFrames) {
+    mBgmLineKeeper->tryStopAllBgmLine(fadeFrames);
 }
 
 /**
- * Pauses a BGM if it is not playing.
+ * @brief Pauses a BGM line when it is playing a different track.
  * @param pName Play name.
  * @param fadeFrames Fade-out length in frames.
- * @return True if paused.
  */
-bool BgmDirector::tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames) {
-    return mBgmLineKeeper->tryPauseBgmIfNotPlaying(pName, fadeFrames);
+void BgmDirector::tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames) {
+    mBgmLineKeeper->tryPauseBgmIfNotPlaying(pName, fadeFrames);
 }
 
 /**

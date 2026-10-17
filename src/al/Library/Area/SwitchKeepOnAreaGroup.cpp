@@ -70,18 +70,13 @@ void SwitchKeepOnAreaGroup::update(const sead::Vector3f* pPositions, s32 num,
 
         s32 onCondition = 0;
         tryGetArg(&onCondition, areaObj->getPlacementInfo(), "OnCondition");
-        bool isIn;
-
-        switch (onCondition) {
-        case 0:
-            isIn = isInAreaAny(areaObj, pPositions, num);
-            break;
-        case 1:
-            isIn = isInAreaAll(areaObj, pPositions, num);
-            break;
-        default:
-            isIn = false;
-            break;
+        bool isIn = false;
+        if (num > 0) {
+            if (onCondition == 0) {
+                isIn = isInAreaAny(areaObj, pPositions, num);
+            } else if (onCondition == 1) {
+                isIn = isInAreaAll(areaObj, pPositions, num);
+            }
         }
 
         if (isIn) {

@@ -41,8 +41,8 @@ public:
     void resumeOceanBgm(s32 fadeFrames);
     bool isPauseActiveBgmLine();
     void stopAllBgmLine(s32 fadeFrames);
-    bool tryStopAllBgmLine(s32 fadeFrames);
-    bool tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames);
+    void tryStopAllBgmLine(s32 fadeFrames);
+    void tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames);
     void changeSituation(const char* pName);
     BgmLine* getActiveBgmLine() const;
     void changeLineAutoStopMode(const char* pName, bool isDisableAutoStop);

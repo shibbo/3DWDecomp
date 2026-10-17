@@ -9,12 +9,7 @@ EXTRACT_PRIVATE        = YES
 EXTRACT_PRIV_VIRTUAL   = YES
 EXTRACT_STATIC         = YES
 EXTRACT_ANON_NSPACES   = YES
-INPUT                  = README.md \
-                         docs/ABOUT.md \
-                         docs/getting_started.md \
-                         docs/CONVENTIONS.md \
-                         docs/FUNCTIONS.md \
-                         src \
+INPUT                  = src \
                          include/Game \
                          include/al \
                          include/sead/lms

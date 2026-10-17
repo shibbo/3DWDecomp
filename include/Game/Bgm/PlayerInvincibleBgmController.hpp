@@ -1,23 +1,30 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include "Project/Audio/IUseAudioKeeper.hpp"
 
 namespace al {
 class AudioDirector;
-}  // namespace al
+}
 
-/**
- * @brief Plays the invincibility BGM while a player is invincible.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
-class PlayerInvincibleBgmController {
+class PlayerInvincibleBgmController : public al::IUseAudioKeeper {
 public:
-    explicit PlayerInvincibleBgmController(al::AudioDirector* pAudioDirector);
-
+    explicit PlayerInvincibleBgmController(al::AudioDirector* pDirector);
     void update();
+    void pause();
+    void resume();
+    void notifyStart(bool isShared);
+    void notifyEnd(bool isCancelRestart);
+    void notifyGet();
+    al::AudioKeeper* getAudioKeeper() const override;
 
 private:
-    u8 _0[0x20];
+    al::AudioKeeper* mAudioKeeper = nullptr;
+    s32 mPlayerCount = 0;
+    bool mIsStartRequested = false;
+    bool mIsPlaying = false;
+    bool mIsPauseDisabled = false;
+    s32 mSavedSamplePosition = -1;
+    bool mIsCancelRestart = false;
 };
 
 static_assert(sizeof(PlayerInvincibleBgmController) == 0x20);
