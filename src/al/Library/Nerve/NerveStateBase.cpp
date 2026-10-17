@@ -16,7 +16,4 @@ namespace al {
     ActorStateBase::ActorStateBase(const char* pName, LiveActor* pActor) : NerveStateBase(pName) {
         mHostActor = pActor;
     }
-
-
-    ActorStateBase::~ActorStateBase() {}
 };

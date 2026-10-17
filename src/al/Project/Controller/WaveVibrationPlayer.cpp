@@ -4,9 +4,39 @@
 
 namespace al {
 
+/** @brief Creates the SDK player and connects its two mixer outputs.
+ * @param pLeft Mixer for the left vibration output.
+ * @param pRight Mixer for the right vibration output.
+ */
+WaveVibrationPlayer::WaveVibrationPlayer(nn::hid::VibrationMixer* pLeft,
+                                       nn::hid::VibrationMixer* pRight) {
+    mPlayer = new nn::hid::VibrationPlayer;
+    mLeft = new nn::hid::VibrationNodeConnection(mPlayer, pLeft);
+    mRight = new nn::hid::VibrationNodeConnection(mPlayer, pRight);
+}
+
+/** @brief Advances playback bookkeeping and optionally synchronizes the sample position. */
+void WaveVibrationPlayer::update() {
+    if (mPlayer->IsPlaying()) {
+        mFrame++;
+        if (mSyncToFrames) {
+            s32 position = static_cast<s32>((mFrame * (1.0f / 60.0f)) / 0.005f);
+            if (position < mPlayer->GetFileInfo().sampleLength) {
+                mPlayer->SetCurrentPosition(position);
+            }
+        }
+    } else if (!mPaused) {
+        mFrame = 0;
+    }
+    if (mData && mElapsed != 0x7fffffff) {
+        mElapsed++;
+    }
+}
+
+
 namespace {
 /**
- * Sets both bands of one output's modulation.
+ * @brief Sets both bands of one output's modulation.
  * @param pPlayer Source vibration player.
  * @param pConnection Output connection.
  * @param volume Amplitude multiplier.
@@ -20,7 +50,7 @@ void setModulation(nn::hid::VibrationNodeConnection* pConnection,
 }
 
 /**
- * Replaces the amplitude multipliers while preserving the other components.
+ * @brief Replaces the amplitude multipliers while preserving the other components.
  * @param pPlayer Source vibration player.
  * @param pConnection Output connection.
  * @param value Multiplier for both bands.
@@ -35,7 +65,7 @@ void setVolume(nn::hid::VibrationNodeConnection* pConnection,
 }
 
 /**
- * Replaces the frequency multipliers while preserving the other components.
+ * @brief Replaces the frequency multipliers while preserving the other components.
  * @param pPlayer Source vibration player.
  * @param pConnection Output connection.
  * @param value Multiplier for both bands.
@@ -51,7 +81,7 @@ void setPitch(nn::hid::VibrationNodeConnection* pConnection,
 }  // namespace
 
 /**
- * Orders vibration resources by their case-insensitive names.
+ * @brief Orders vibration resources by their case-insensitive names.
  * @param rOther Resource to compare against.
  * @return Whether this resource sorts before the other resource.
  */
@@ -61,7 +91,7 @@ bool WaveVibrationData::operator<(const WaveVibrationData& rOther) const
 }
 
 /**
- * Starts one-shot vibration with playback bookkeeping.
+ * @brief Starts one-shot vibration with playback bookkeeping.
  * @param pData Vibration resource, or nullptr to clear the duration.
  * @param leftVolume Amplitude multiplier for the left output.
  * @param rightVolume Amplitude multiplier for the right output.
@@ -83,7 +113,7 @@ void WaveVibrationPlayer::startOneTime(const WaveVibrationData* pData, f32 leftV
 }
 
 /**
- * Starts looping vibration with playback bookkeeping.
+ * @brief Starts looping vibration with playback bookkeeping.
  * @param pData Vibration resource, or nullptr to clear the duration.
  * @param leftVolume Amplitude multiplier for the left output.
  * @param rightVolume Amplitude multiplier for the right output.
@@ -105,7 +135,7 @@ void WaveVibrationPlayer::startLoop(const WaveVibrationData* pData, f32 leftVolu
 }
 
 /**
- * Configures output modulation, loads the resource and starts playback.
+ * @brief Configures output modulation, loads the resource and starts playback.
  * @param pData Resource to play, or nullptr to clear the duration.
  * @param leftVolume Left amplitude multiplier.
  * @param rightVolume Right amplitude multiplier.
@@ -131,7 +161,7 @@ void WaveVibrationPlayer::start(const WaveVibrationData* pData, f32 leftVolume,
     }
 }
 
-/** Stops playback and clears the active resource, pause state and elapsed frames. */
+/** @brief Stops playback and clears the active resource, pause state and elapsed frames. */
 void WaveVibrationPlayer::stop()
 {
     mPlayer->Stop();
@@ -144,7 +174,7 @@ void WaveVibrationPlayer::stop()
 }
 
 /**
- * Pauses playback unless another locked pause already owns it.
+ * @brief Pauses playback unless another locked pause already owns it.
  * @param locked Whether this pause requires a matching locked resume.
  */
 void WaveVibrationPlayer::pause(bool locked)
@@ -157,7 +187,7 @@ void WaveVibrationPlayer::pause(bool locked)
 }
 
 /**
- * Resumes playback when the pause-lock category matches.
+ * @brief Resumes playback when the pause-lock category matches.
  * @param locked Whether to resume a locked pause.
  */
 void WaveVibrationPlayer::endPause(bool locked)
@@ -174,7 +204,9 @@ void WaveVibrationPlayer::endPause(bool locked)
     mPlayer->Play();
 }
 
-/** @return Whether the minimum duration or the underlying player is still active. */
+/** @brief Checks whether playback or its minimum duration remains active.
+ * @return Whether the minimum duration or the underlying player is still active.
+ */
 bool WaveVibrationPlayer::isPlaying() const
 {
     if (mDuration >= 0 && mElapsed < mDuration)
@@ -182,14 +214,16 @@ bool WaveVibrationPlayer::isPlaying() const
     return mPlayer->IsPlaying();
 }
 
-/** @return Whether the underlying player exists and is configured to loop. */
+/** @brief Checks the SDK player loop setting.
+ * @return Whether the underlying player exists and is configured to loop.
+ */
 bool WaveVibrationPlayer::isLoop() const
 {
     return (mPlayer != nullptr) && mPlayer->IsLoop();
 }
 
 /**
- * Changes both outputs' amplitude multipliers.
+ * @brief Changes both outputs' amplitude multipliers.
  * @param left Multiplier for both bands of the left output.
  * @param right Multiplier for both bands of the right output.
  */
@@ -202,7 +236,7 @@ void WaveVibrationPlayer::changeVolume(f32 left, f32 right)
 }
 
 /**
- * Changes both outputs' frequency multipliers.
+ * @brief Changes both outputs' frequency multipliers.
  * @param left Multiplier for both bands of the left output.
  * @param right Multiplier for both bands of the right output.
  */
@@ -215,7 +249,7 @@ void WaveVibrationPlayer::changePitch(f32 left, f32 right)
 }
 
 /**
- * Changes amplitude and frequency multipliers for both outputs.
+ * @brief Changes amplitude and frequency multipliers for both outputs.
  * @param leftVolume Left amplitude multiplier.
  * @param rightVolume Right amplitude multiplier.
  * @param leftPitch Left frequency multiplier.

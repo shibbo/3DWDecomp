@@ -91,9 +91,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100001C40			FALSE	_ZN16MicInputSePlayerD0Ev	MicInputSePlayer::~MicInputSePlayer()	
 0x7100001C70			FALSE	_ZNK16MicInputSePlayer14getAudioKeeperEv	MicInputSePlayer::getAudioKeeper() const	
 0x7100001C80			FALSE	_ZThn16_NK16MicInputSePlayer14getAudioKeeperEv	non-virtual thunk to MicInputSePlayer::getAudioKeeper() const	
-0x7100001C90			FALSE	sub_7100001C90	sub_7100001C90	
+0x7100001C90			FALSE	_ZNK12_GLOBAL__N_123MicInputSePlayerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MicInputSePlayerNrvWait::execute(al::NerveKeeper*) const	
 0x7100001CE0			FALSE	_ZNK2al5Nerve12executeOnEndEPNS_11NerveKeeperE	al::Nerve::executeOnEnd(al::NerveKeeper*) const	
-0x7100001CF0			FALSE	sub_7100001CF0	sub_7100001CF0	
+0x7100001CF0			FALSE	_ZNK12_GLOBAL__N_123MicInputSePlayerNrvBlow7executeEPN2al11NerveKeeperE	(anonymous namespace)::MicInputSePlayerNrvBlow::execute(al::NerveKeeper*) const	
 0x7100001D40		PcmTempoChanger.o	FALSE	_ZN15PcmTempoChangerC2Ev	PcmTempoChanger::PcmTempoChanger()	
 0x7100001D50			FALSE	_ZN15PcmTempoChanger10initializeEfjjj	PcmTempoChanger::initialize(float, unsigned int, unsigned int, unsigned int)	
 0x7100001E00			FALSE	_ZN15PcmTempoChanger16CopyPcmOnTempoUpER9PcmBufferIsER9PcmReaderIsEj	PcmTempoChanger::CopyPcmOnTempoUp(PcmBuffer<short>&, PcmReader<short>&, unsigned int)	
@@ -3049,17 +3049,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100085840			FALSE	_ZNK23CourseSelectLayoutKiosk15isCourseDecidedEv	CourseSelectLayoutKiosk::isCourseDecided() const	
 0x7100085850			FALSE	_ZNK12_GLOBAL__N_130CourseSelectLayoutKioskNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutKioskNrvWait::execute(al::NerveKeeper*) const	
 0x7100085860			FALSE	_ZNK12_GLOBAL__N_132CourseSelectLayoutKioskNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutKioskNrvAppear::execute(al::NerveKeeper*) const	
-0x7100085870			FALSE	sub_7100085870	sub_7100085870	
-0x71000858D0			FALSE	nullsub_18	nullsub_18	
+0x7100085870			FALSE	_ZNK12_GLOBAL__N_130CourseSelectLayoutKioskNrvBack7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutKioskNrvBack::execute(al::NerveKeeper*) const	
+0x71000858D0			FALSE	_ZNK12_GLOBAL__N_132CourseSelectLayoutKioskNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutKioskNrvDecide::execute(al::NerveKeeper*) const	
 0x71000858E0		GuideBalloonBrigade.o	FALSE	_ZN19GuideBalloonBrigadeC2EPKcRKN2al14LayoutInitInfoEPKN4sead7Vector3IfEERS9_PNS2_12DemoDirectorE	GuideBalloonBrigade::GuideBalloonBrigade(char const*, al::LayoutInitInfo const&, sead::Vector3<float> const*, sead::Vector3<float> const&, al::DemoDirector*)	
 0x7100085A80			FALSE	_ZN19GuideBalloonBrigadeC1EPKcRKN2al14LayoutInitInfoEPKN4sead7Vector3IfEERS9_PNS2_12DemoDirectorE	GuideBalloonBrigade::GuideBalloonBrigade(char const*, al::LayoutInitInfo const&, sead::Vector3<float> const*, sead::Vector3<float> const&, al::DemoDirector*)	
 0x7100085C30			FALSE	_ZN19GuideBalloonBrigade16startShowBrigadeEN4sead7BitFlagIhEE	GuideBalloonBrigade::startShowBrigade(sead::BitFlag<unsigned char>)	
 0x7100085D40			FALSE	_ZNK12GuideBalloon18getSceneCameraInfoEv	GuideBalloon::getSceneCameraInfo() const	
 0x7100085D50			FALSE	_ZThn32_NK12GuideBalloon18getSceneCameraInfoEv	non-virtual thunk to GuideBalloon::getSceneCameraInfo() const	
-0x7100085D60			FALSE	_ZN23GuideFrameOutSingleModeC2ERKN2al14LayoutInitInfoEPKNS0_9LiveActorEPKc	GuideFrameOutSingleMode::GuideFrameOutSingleMode(al::LayoutInitInfo const&, al::LiveActor const*, char const*)	
+0x7100085D60		GuideFrameOutSingleMode.o	FALSE	_ZN23GuideFrameOutSingleModeC2ERKN2al14LayoutInitInfoEPKNS0_9LiveActorEPKc	GuideFrameOutSingleMode::GuideFrameOutSingleMode(al::LayoutInitInfo const&, al::LiveActor const*, char const*)	
 0x7100085EC0			FALSE	_ZN4sead22WFormatFixedSafeStringILi6EEC2EPKDsz	sead::WFormatFixedSafeString<6>::WFormatFixedSafeString(char16_t const*, ...)	
 0x7100085F90			TRUE	_ZN4sead14SafeStringBaseIDsED2Ev	sead::SafeStringBase<char16_t>::~SafeStringBase()	
-0x7100085FA0		GuideFrameOutSingleMode.o	FALSE	_ZN23GuideFrameOutSingleModeC1ERKN2al14LayoutInitInfoEPKNS0_9LiveActorEPKc	GuideFrameOutSingleMode::GuideFrameOutSingleMode(al::LayoutInitInfo const&, al::LiveActor const*, char const*)	
+0x7100085FA0			FALSE	_ZN23GuideFrameOutSingleModeC1ERKN2al14LayoutInitInfoEPKNS0_9LiveActorEPKc	GuideFrameOutSingleMode::GuideFrameOutSingleMode(al::LayoutInitInfo const&, al::LiveActor const*, char const*)	
 0x7100086110			FALSE	_ZN23GuideFrameOutSingleMode6appearEv	GuideFrameOutSingleMode::appear()	
 0x7100086150			FALSE	_ZN23GuideFrameOutSingleMode9startDemoEv	GuideFrameOutSingleMode::startDemo()	
 0x7100086170			FALSE	_ZN23GuideFrameOutSingleMode16updateVisibilityEb	GuideFrameOutSingleMode::updateVisibility(bool)	
@@ -3081,10 +3081,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100086BE0			FALSE	_ZN23GuideFrameOutSingleMode9exeAppearEv	GuideFrameOutSingleMode::exeAppear()	
 0x7100086C20			FALSE	_ZN23GuideFrameOutSingleMode17exeStartDisappearEv	GuideFrameOutSingleMode::exeStartDisappear()	
 0x7100086CA0			FALSE	_ZN23GuideFrameOutSingleMode12exeDisappearEv	GuideFrameOutSingleMode::exeDisappear()	
-0x7100086D20			FALSE	sub_7100086D20	sub_7100086D20	
-0x7100086DA0			FALSE	sub_7100086DA0	sub_7100086DA0	
+0x7100086D20			FALSE	_ZNK12_GLOBAL__N_135GuideFrameOutSingleModeNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutSingleModeNrvDisappear::execute(al::NerveKeeper*) const	
+0x7100086DA0			FALSE	_ZNK12_GLOBAL__N_140GuideFrameOutSingleModeNrvStartDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutSingleModeNrvStartDisappear::execute(al::NerveKeeper*) const	
 0x7100086E20			FALSE	_ZNK12_GLOBAL__N_137GuideFrameOutSingleModeNrvStartAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutSingleModeNrvStartAppear::execute(al::NerveKeeper*) const	
-0x7100086E30			FALSE	sub_7100086E30	sub_7100086E30	
+0x7100086E30			FALSE	_ZNK12_GLOBAL__N_132GuideFrameOutSingleModeNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutSingleModeNrvAppear::execute(al::NerveKeeper*) const	
 0x7100086E80			TRUE	_ZN4sead22WFormatFixedSafeStringILi6EED0Ev	sead::WFormatFixedSafeString<6>::~WFormatFixedSafeString()	
 0x7100086E90			TRUE	_ZN4sead16WFixedSafeStringILi6EEaSERKNS_14SafeStringBaseIDsEE	sead::WFixedSafeString<6>::operator=(sead::SafeStringBase<char16_t> const&)	
 0x7100086F80			TRUE	_ZN4sead22BufferedSafeStringBaseIDsED0Ev	sead::BufferedSafeStringBase<char16_t>::~BufferedSafeStringBase()	
@@ -3092,7 +3092,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100087010			FALSE	_ZN18KoopaJrTalkBalloonC1EPKcS1_RKN2al14LayoutInitInfoE	KoopaJrTalkBalloon::KoopaJrTalkBalloon(char const*, char const*, al::LayoutInitInfo const&)	
 0x71000870A0			FALSE	_ZN18KoopaJrTalkBalloon9exeAppearEv	KoopaJrTalkBalloon::exeAppear()	
 0x71000870F0			FALSE	_ZN18KoopaJrTalkBalloon7exeWaitEv	KoopaJrTalkBalloon::exeWait()	
-0x7100087130			FALSE	sub_7100087130	sub_7100087130	
+0x7100087130			FALSE	_ZNK12_GLOBAL__N_125KoopaJrTalkBalloonNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaJrTalkBalloonNrvWait::execute(al::NerveKeeper*) const	
 0x7100087140		LoadingLayout.o	FALSE	_ZN13LoadingLayoutC2ERKN2al14LayoutInitInfoEP14GameDataHolder	LoadingLayout::LoadingLayout(al::LayoutInitInfo const&, GameDataHolder*)	
 0x7100087220			FALSE	_ZN13LoadingLayoutC1ERKN2al14LayoutInitInfoEP14GameDataHolder	LoadingLayout::LoadingLayout(al::LayoutInitInfo const&, GameDataHolder*)	
 0x7100087300			FALSE	_ZN13LoadingLayout12startDisplayEbb	LoadingLayout::startDisplay(bool, bool)	
@@ -3103,10 +3103,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100087540			FALSE	_ZN13LoadingLayout7exeLoopEv	LoadingLayout::exeLoop()	
 0x7100087590			FALSE	_ZN13LoadingLayout6exeEndEv	LoadingLayout::exeEnd()	
 0x71000875F0			FALSE	_ZN13LoadingLayout20getNumIconsAvailableEv	LoadingLayout::getNumIconsAvailable()	
-0x7100087660			FALSE	sub_7100087660	sub_7100087660	
-0x71000876D0			FALSE	sub_71000876D0	sub_71000876D0	
-0x7100087740			FALSE	sub_7100087740	sub_7100087740	
-0x7100087790			FALSE	sub_7100087790	sub_7100087790	
+0x7100087660			FALSE	_ZNK12_GLOBAL__N_122LoadingLayoutNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::LoadingLayoutNrvAppear::execute(al::NerveKeeper*) const	
+0x71000876D0			FALSE	_ZNK12_GLOBAL__N_126LoadingLayoutNrvWaitAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::LoadingLayoutNrvWaitAppear::execute(al::NerveKeeper*) const	
+0x7100087740			FALSE	_ZNK12_GLOBAL__N_120LoadingLayoutNrvLoop7executeEPN2al11NerveKeeperE	(anonymous namespace)::LoadingLayoutNrvLoop::execute(al::NerveKeeper*) const	
+0x7100087790			FALSE	_ZNK12_GLOBAL__N_119LoadingLayoutNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::LoadingLayoutNrvEnd::execute(al::NerveKeeper*) const	
 0x7100087800		MapOceanShineParts.o	FALSE	_ZN18MapOceanShinePartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	MapOceanShineParts::MapOceanShineParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x7100087D20			FALSE	_ZN18MapOceanShinePartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	MapOceanShineParts::MapOceanShineParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x7100088240			FALSE	_ZN18MapOceanShinePartsD2Ev	MapOceanShineParts::~MapOceanShineParts()	
@@ -5254,7 +5254,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000CB870			FALSE	_ZN23ActorStateSupportFreeze7exeBindEv	ActorStateSupportFreeze::exeBind()	
 0x71000CBCA0			FALSE	_ZN23ActorStateSupportFreezeD0Ev	ActorStateSupportFreeze::~ActorStateSupportFreeze()	
 0x71000CBCD0			FALSE	_ZNK12_GLOBAL__N_130ActorStateSupportFreezeNrvBind7executeEPN2al11NerveKeeperE	(anonymous namespace)::ActorStateSupportFreezeNrvBind::execute(al::NerveKeeper*) const	
-0x71000CBCE0			FALSE	sub_71000CBCE0	sub_71000CBCE0	
+0x71000CBCE0			FALSE	_GLOBAL__sub_I_ActorStateSupportFreeze.cpp	_GLOBAL__sub_I_ActorStateSupportFreeze.cpp	
 0x71000CBD80		AllDeadWatcher.o	FALSE	_ZN14AllDeadWatcherC2EPKc	AllDeadWatcher::AllDeadWatcher(char const*)	
 0x71000CBE20			FALSE	_ZN14AllDeadWatcherC1EPKc	AllDeadWatcher::AllDeadWatcher(char const*)	
 0x71000CBEC0			FALSE	_ZN14AllDeadWatcher4initERKN2al13ActorInitInfoE	AllDeadWatcher::init(al::ActorInitInfo const&)	
@@ -23346,13 +23346,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003ACCD0			FALSE	_ZN11GhostPlayer21receiveMsgScreenPointEPKN2al9SensorMsgEPNS0_13ScreenPointerEPNS0_17ScreenPointTargetE	GhostPlayer::receiveMsgScreenPoint(al::SensorMsg const*, al::ScreenPointer*, al::ScreenPointTarget*)	
 0x71003ACDB0			FALSE	_ZN11GhostPlayerD1Ev	GhostPlayer::~GhostPlayer()	
 0x71003ACDC0			FALSE	_ZN11GhostPlayerD0Ev	GhostPlayer::~GhostPlayer()	
-0x71003ACDF0			FALSE	nullsub_262	nullsub_262	
-0x71003ACE00			FALSE	sub_71003ACE00	sub_71003ACE00	
+0x71003ACDF0			FALSE	_ZNK12_GLOBAL__N_118GhostPlayerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPlayerNrvWait::execute(al::NerveKeeper*) const	
+0x71003ACE00			FALSE	_ZNK12_GLOBAL__N_127GhostPlayerNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPlayerNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x71003ACE20			FALSE	_ZNK12_GLOBAL__N_118GhostPlayerNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPlayerNrvPlay::execute(al::NerveKeeper*) const	
 0x71003ACE30			FALSE	_ZNK12_GLOBAL__N_123GhostPlayerNrvWaitStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPlayerNrvWaitStart::execute(al::NerveKeeper*) const	
-0x71003ACE40			FALSE	sub_71003ACE40	sub_71003ACE40	
-0x71003ACEB0			FALSE	nullsub_263	nullsub_263	
-0x71003ACEC0			FALSE	nullsub_264	nullsub_264	
+0x71003ACE40			FALSE	_ZNK12_GLOBAL__N_129GhostPlayerNrvWaitRestartPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPlayerNrvWaitRestartPlay::execute(al::NerveKeeper*) const	
+0x71003ACEB0			FALSE	_ZNK12_GLOBAL__N_118GhostPlayerNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPlayerNrvStop::execute(al::NerveKeeper*) const	
+0x71003ACEC0			FALSE	_ZNK12_GLOBAL__N_122GhostPlayerNrvStopWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPlayerNrvStopWait::execute(al::NerveKeeper*) const	
 0x71003ACED0		GhostPlayerDirector.o	FALSE	_ZN19GhostPlayerDirectorC1EPKN2al18IUseSceneObjHolderERKNS0_13SceneInitInfoEPNS0_15ExecuteDirectorEPNS0_12PlayerHolderEPK14GameDataHolder	GhostPlayerDirector::GhostPlayerDirector(al::IUseSceneObjHolder const*, al::SceneInitInfo const&, al::ExecuteDirector*, al::PlayerHolder*, GameDataHolder const*)	
 0x71003ACFA0			FALSE	_ZN19GhostPlayerDirector7executeEv	GhostPlayerDirector::execute()	
 0x71003ACFE0			FALSE	_ZThn8_N19GhostPlayerDirector7executeEv	non-virtual thunk to GhostPlayerDirector::execute()	
@@ -23481,12 +23481,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003B0D60			FALSE	_ZN15GhostPresentBoxD1Ev	GhostPresentBox::~GhostPresentBox()	
 0x71003B0D70			FALSE	_ZN15GhostPresentBoxD0Ev	GhostPresentBox::~GhostPresentBox()	
 0x71003B0DA0			FALSE	_ZNK15GhostPresentBox14isInRouteDokanEv	GhostPresentBox::isInRouteDokan() const	
-0x71003B0DB0			FALSE	nullsub_265	nullsub_265	
-0x71003B0DC0			FALSE	sub_71003B0DC0	sub_71003B0DC0	
+0x71003B0DB0			FALSE	_ZNK12_GLOBAL__N_122GhostPresentBoxNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPresentBoxNrvStop::execute(al::NerveKeeper*) const	
+0x71003B0DC0			FALSE	_ZNK12_GLOBAL__N_122GhostPresentBoxNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPresentBoxNrvWait::execute(al::NerveKeeper*) const	
 0x71003B0E00			FALSE	_ZNK12_GLOBAL__N_123GhostPresentBoxNrvPopUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPresentBoxNrvPopUp::execute(al::NerveKeeper*) const	
-0x71003B0E10			FALSE	sub_71003B0E10	sub_71003B0E10	
-0x71003B0E80			FALSE	sub_71003B0E80	sub_71003B0E80	
-0x71003B0EF0			FALSE	sub_71003B0EF0	sub_71003B0EF0	
+0x71003B0E10			FALSE	_ZNK12_GLOBAL__N_123GhostPresentBoxNrvStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPresentBoxNrvStart::execute(al::NerveKeeper*) const	
+0x71003B0E80			FALSE	_ZNK12_GLOBAL__N_122GhostPresentBoxNrvOpen7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPresentBoxNrvOpen::execute(al::NerveKeeper*) const	
+0x71003B0EF0			FALSE	_ZNK12_GLOBAL__N_121GhostPresentBoxNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GhostPresentBoxNrvEnd::execute(al::NerveKeeper*) const	
 0x71003B0F00		ActorStateSupportStroke.o	FALSE	_ZN23ActorStateSupportStrokeC2EPN2al9LiveActorE	ActorStateSupportStroke::ActorStateSupportStroke(al::LiveActor*)	note: sorts before the previous object (folder boundary or misnamed object?)
 0x71003B0F90			FALSE	_ZN23ActorStateSupportStroke4killEv	ActorStateSupportStroke::kill()	
 0x71003B0FA0			FALSE	_ZN23ActorStateSupportStroke12stopAndResetEv	ActorStateSupportStroke::stopAndReset()	
@@ -59236,8 +59236,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100980440			FALSE	_ZThn312_N2al16ReplayControllerD1Ev	non-virtual thunk to al::ReplayController::~ReplayController()	
 0x7100980450			FALSE	_ZThn312_N2al16ReplayControllerD0Ev	non-virtual thunk to al::ReplayController::~ReplayController()	
 0x7100980480			FALSE	_ZN2al16ReplayController33checkDerivedRuntimeTypeInfoStaticEPKN4sead15RuntimeTypeInfo9InterfaceE	al::ReplayController::checkDerivedRuntimeTypeInfoStatic(sead::RuntimeTypeInfo::Interface const*)	
-0x71009806A0			FALSE	_ZN2al19WaveVibrationHolderC1EPKNS_13GamePadSystemE	al::WaveVibrationHolder::WaveVibrationHolder(al::GamePadSystem const*)	
-0x7100980DC0		GamePadWaveVibrationData.o	FALSE	_ZN2al19WaveVibrationHolder8loadDataEv	al::WaveVibrationHolder::loadData()	object/folder from OdysseyDecomp file list
+0x71009806A0		GamePadWaveVibrationData.o	FALSE	_ZN2al19WaveVibrationHolderC1EPKNS_13GamePadSystemE	al::WaveVibrationHolder::WaveVibrationHolder(al::GamePadSystem const*)	
+0x7100980DC0			FALSE	_ZN2al19WaveVibrationHolder8loadDataEv	al::WaveVibrationHolder::loadData()	object/folder from OdysseyDecomp file list
 0x7100981100			FALSE	_ZN2al19WaveVibrationHolder6updateEv	al::WaveVibrationHolder::update()	
 0x7100981A20			FALSE	_ZNK2al19WaveVibrationHolder21findWaveVibrationDataEPKc	al::WaveVibrationHolder::findWaveVibrationData(char const*) const	
 0x7100981AB0			FALSE	_ZNK2al19WaveVibrationHolder27findPlayableVibrationPlayerEi	al::WaveVibrationHolder::findPlayableVibrationPlayer(int) const	

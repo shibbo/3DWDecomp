@@ -769,7 +769,13 @@ s32 Bgm::attachSuffix(const BgmSuffixProcInfo* pInfo, bool isStartHead) {
         startSample = 0;
     }
 
-    mStartParam->set(mResourceInfo, fileName.cstr(), startSample, 0, 0, getEnableRegionCtrl());
+    BgmSoundStartParam* startParam = mStartParam;
+    const BgmResourceInfo* resourceInfo = mResourceInfo;
+    const char* name = fileName.cstr();
+    bool isEnableRegion = mResourceInfo->mIsEnableRegionJump;
+    BgmRegionCtrl* regionCtrl = mRegionCtrl;
+    startParam->set(resourceInfo, name, startSample, 0, 0,
+                    isEnableRegion ? regionCtrl : nullptr);
     mIsPrepared = true;
     startSound(mAudioPlayer, mSoundHandle, mStartParam, true);
     return startSample;

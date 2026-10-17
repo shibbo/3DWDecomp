@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Game/Player/IUsePlayerActionObserver.hpp"
+
 class IUsePlayerCollision;
 class IUsePlayerLifeControl;
 class IUsePlayerModelChanger;
@@ -8,7 +10,7 @@ class Player;
 class PlayerActionGraph;
 
 /// Answers questions about what the player's action graph is currently doing.
-class PlayerActionObserver {
+class PlayerActionObserver : public IUsePlayerActionObserver {
 public:
     PlayerActionObserver(const Player*, PlayerActionGraph*, IUsePlayerCollision*,
                          const IUsePlayerModelChanger*, const IUsePlayerSubAction*,
@@ -16,26 +18,26 @@ public:
 
     void update();
 
-    virtual bool isOnGround() const;
-    virtual bool isDead() const;
-    virtual bool isAbyss() const;
-    virtual bool isJumpTrig() const;
-    virtual bool isInBind() const;
-    virtual bool isDeadDemo() const;
-    virtual bool isChangeDemo() const;
-    virtual bool isHipDropping() const;
-    virtual bool isRollingOnGround() const;
-    virtual bool isWaterAction() const;
-    virtual bool isWaterSurfaceAction() const;
-    virtual bool isFallBrakeTrig() const;
-    virtual bool isWallAction() const;
-    virtual bool isWallSnapAction() const;
-    virtual bool isChangingStatue() const;
-    virtual bool isSquatWalkAction() const;
-    virtual bool isSquatAction() const;
-    virtual bool isPossibleToWatch() const;
-    virtual bool isSliding() const;
-    virtual bool isTossableAction() const;
-    virtual bool isWaitOrPivot() const;
-    virtual bool isTurn() const;
+    bool isOnGround() const override;
+    bool isDead() const override;
+    bool isAbyss() const override;
+    bool isJumpTrig() const override;
+    bool isInBind() const override;
+    bool isDeadDemo() const override;
+    bool isChangeDemo() const override;
+    bool isHipDropping() const override;
+    bool isRollingOnGround() const override;
+    bool isWaterAction() const override;
+    bool isWaterSurfaceAction() const override;
+    bool isFallBrakeTrig() const override;
+    bool isWallAction() const override;
+    bool isWallSnapAction() const override;
+    bool isChangingStatue() const override;
+    bool isSquatWalkAction() const override;
+    bool isSquatAction() const override;
+    bool isPossibleToWatch() const override;
+    bool isSliding() const override;
+    bool isTossableAction() const override;
+    bool isWaitOrPivot() const override;
+    bool isTurn() const override;
 };

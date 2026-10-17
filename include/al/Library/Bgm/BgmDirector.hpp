@@ -37,8 +37,8 @@ public:
     bool pauseActiveBgmById(u32 id, s32 fadeFrames);
     bool resumeActiveBgmById(u32 id, s32 fadeFrames);
     void stopAllBgm(s32 fadeFrames);
-    bool tryStopAllBgm(s32 fadeFrames);
-    bool tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames);
+    void tryStopAllBgm(s32 fadeFrames);
+    void tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames);
     void changeSituation(const char* pName);
     const char* getBgmLineSituationName(const char* pLineName) const;
     void changeLineAutoStopMode(const char* pName, bool isAutoStop);

@@ -14,7 +14,7 @@ class SceneObjHolder;
 
 class AreaObjDirectorGrid {
 public:
-    AreaObjDirectorGrid(s32, s32);
+    __attribute__((noinline)) AreaObjDirectorGrid(s32, s32);
 
     void expandGrid(AreaObj*);
     void endInit();

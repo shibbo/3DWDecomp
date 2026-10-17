@@ -8,7 +8,7 @@ class IAudioFrameProcess {
 public:
     virtual ~IAudioFrameProcess() {}
 
-    virtual void audioFrameProcess() = 0;
+    virtual void audioFrameProcess_() = 0;
 
     sead::ListNode mListNode;
 };

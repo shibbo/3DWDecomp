@@ -85,7 +85,7 @@ BgmRhythmDetector::BgmRhythmDetector() {
 }
 
 /**
- * Initializes the detector for a BGM.
+ * @brief Initializes the detector for a BGM.
  * @param pMusicalInfo Musical information of the BGM.
  * @param bpm Beats per minute.
  * @param sampleRate Sample rate.
@@ -128,7 +128,8 @@ void BgmRhythmDetector::init(BgmMusicalInfo* pMusicalInfo, f32 bpm, s32 sampleRa
     }
 
     f32 offsetRate = mBeatOffset / mSamplePerBeat;
-    mBeatOffset = offsetRate > 0.1f && offsetRate < 0.9f ? offsetRate : 0.0f;
+    // The unordered comparisons preserve a NaN offset, as in the original detector.
+    mBeatOffset = (!(offsetRate >= 0.9f) & !(offsetRate <= 0.1f)) ? offsetRate : 0.0f;
     mBeatRate = calcBeatRate(mCurBeat - mBeatOffset);
     mBeatRateForAnime = calcBeatRate(mCurBeatForAnime - mBeatOffset);
 }
@@ -147,8 +148,8 @@ s32 BgmRhythmDetector::getTrgStartSample() const {
  */
 void BgmRhythmDetector::update(s32 curSample) {
     s32 animSample = curSample + cAnimPreSampleNum;
-    f32 animBeat = roundBeat(static_cast<f32>(animSample) / mSamplePerBeat);
     f32 prevAnimBeat = mCurBeatForAnime;
+    f32 animBeat = roundBeat(static_cast<f32>(animSample) / mSamplePerBeat);
     mCurBeatForAnime = animBeat;
 
     if (animSample < 0) {

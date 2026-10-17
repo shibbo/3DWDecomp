@@ -88,17 +88,17 @@ src/Game/AreaObj/TorpedoSpikeRestrictionArea.cpp: done
     .text   start:0x000016D0 end:0x000017D8
 src/Game/AreaObj/WorldClipArea.cpp: done
     .text   start:0x000017E0 end:0x00001954
-src/Game/Bgm/BgmBeatRateTrigger.cpp:
+src/Game/Bgm/BgmBeatRateTrigger.cpp: done
     .text   start:0x00001960 end:0x00001A10
-src/Game/Bgm/BgmBeatPeriodicTrigger.cpp:
+src/Game/Bgm/BgmBeatPeriodicTrigger.cpp: done
     .text   start:0x00001A10 end:0x00001ADC
-src/Game/Bgm/MicInputSePlayer.cpp:
+src/Game/Bgm/MicInputSePlayer.cpp: done
     .text   start:0x00001AE0 end:0x00001D38
 src/Game/Bgm/PcmTempoChanger.cpp:
     .text   start:0x00001D40 end:0x00002404
-src/Game/Bgm/PlayerBigBgmController.cpp:
+src/Game/Bgm/PlayerBigBgmController.cpp: done
     .text   start:0x00002410 end:0x000025D8
-src/Game/Bgm/PlayerInvincibleBgmController.cpp:
+src/Game/Bgm/PlayerInvincibleBgmController.cpp: done
     .text   start:0x000025E0 end:0x00002808
 src/Game/Boss/BombBound.cpp:
     .text   start:0x00002810 end:0x00004B14
@@ -324,21 +324,21 @@ src/Game/Camera/DemoSceneDarkBowser.cpp:
     .text   start:0x000843B0 end:0x00084610
 src/Game/Camera/StageStartPhase0Demo.cpp:
     .text   start:0x00084610 end:0x00085368
-src/Game/Course/CourseSelectLayoutKiosk.cpp:
+src/Game/Course/CourseSelectLayoutKiosk.cpp: done
     .text   start:0x00085370 end:0x000858D4
-src/Game/Course/GuideBalloonBrigade.cpp:
-    .text   start:0x000858E0 end:0x00085F94
-src/Game/Course/GuideFrameOutSingleMode.cpp:
-    .text   start:0x00085FA0 end:0x00086F84
-src/Game/Course/KoopaJrTalkBalloon.cpp:
+src/Game/Course/GuideBalloonBrigade.cpp: done
+    .text   start:0x000858E0 end:0x00085D60
+src/Game/Course/GuideFrameOutSingleMode.cpp: done
+    .text   start:0x00085D60 end:0x00086F84
+src/Game/Course/KoopaJrTalkBalloon.cpp: done
     .text   start:0x00086F90 end:0x00087140
-src/Game/Course/LoadingLayout.cpp:
+src/Game/Course/LoadingLayout.cpp: done
     .text   start:0x00087140 end:0x000877F4
-src/Game/Course/MapOceanShineParts.cpp:
+src/Game/Course/MapOceanShineParts.cpp: done
     .text   start:0x00087800 end:0x00089A00
-src/Game/Course/MapPlayerTrackerParts.cpp:
+src/Game/Course/MapPlayerTrackerParts.cpp: done
     .text   start:0x00089A00 end:0x00089FB8
-src/Game/Course/ScenarioShineCounterParts.cpp:
+src/Game/Course/ScenarioShineCounterParts.cpp: done
     .text   start:0x00089FC0 end:0x0008B0E4
 src/Game/CourseSelect/_8B0F0.cpp:
     .text   start:0x0008B0F0 end:0x0008B124
@@ -510,7 +510,7 @@ src/Game/Demo/DemoScenePlayer.cpp:
     .text   start:0x000C0730 end:0x000C1740
 src/Game/Demo/DemoScenePlayerModel.cpp:
     .text   start:0x000C1740 end:0x000C2298
-src/Game/Demo/DemoStartPosition.cpp:
+src/Game/Demo/DemoStartPosition.cpp: done
     .text   start:0x000C22A0 end:0x000C24D0
 src/Game/Demo/DemoTimerStageSwitchController.cpp:
     .text   start:0x000C24D0 end:0x000C29D0
@@ -1130,7 +1130,7 @@ src/Game/Layout/FileSelect.cpp:
     .text   start:0x001C0DC0 end:0x001C3DE4
 src/Game/Layout/GameOverMenu.cpp:
     .text   start:0x001C3DF0 end:0x001C4298
-src/Game/Layout/GhostMiiNameplate.cpp:
+src/Game/Layout/GhostMiiNameplate.cpp: done
     .text   start:0x001C42A0 end:0x001C47A4
 src/Game/Layout/GuideBalloon.cpp:
     .text   start:0x001C47B0 end:0x001C55D8
@@ -1298,9 +1298,9 @@ src/Game/LuigiBros/bluetooth.cpp:
     .text   start:0x00207220 end:0x00207E84
 src/Game/LuigiBros/boot.cpp:
     .text   start:0x00207E90 end:0x00208548
-src/Game/LuigiBros/PadAnalogStick.cpp:
+src/Game/LuigiBros/PadAnalogStick.cpp: done
     .text   start:0x00208550 end:0x00208734
-src/Game/LuigiBros/config.cpp:
+src/Game/LuigiBros/config.cpp: done
     .text   start:0x00208740 end:0x00208A4C
 src/Game/LuigiBros/HVCEmu.cpp:
     .text   start:0x00208A50 end:0x0020AB20
@@ -1310,9 +1310,10 @@ src/Game/LuigiBros/Emulator/PlatformHvcUnit.cpp:
     .text   start:0x002121D0 end:0x00213368
 src/Game/LuigiBros/Emulator/HvcCpu.cpp:
     .text   start:0x00213370 end:0x002155DC
+    .data   start:0x019EBB68 end:0x019ECB68
 src/Game/LuigiBros/Emulator/HvcDiskUtility.cpp:
     .text   start:0x002155E0 end:0x002163E4
-src/Game/LuigiBros/Emulator/HvcGio.cpp:
+src/Game/LuigiBros/Emulator/HvcGio.cpp: done
     .text   start:0x002163F0 end:0x00216B5C
 src/Game/LuigiBros/Emulator/HvcMmc.cpp:
     .text   start:0x00216B60 end:0x0022314C
@@ -1320,19 +1321,19 @@ src/Game/LuigiBros/Emulator/HvcPpu.cpp:
     .text   start:0x00223150 end:0x002260CC
 src/Game/LuigiBros/Emulator/HvcSpu.cpp:
     .text   start:0x002260D0 end:0x0022CBFC
-src/Game/LuigiBros/Emulator/ErrorViewer.cpp:
+src/Game/LuigiBros/Emulator/ErrorViewer.cpp: done
     .text   start:0x0022CC00 end:0x0022CE14
 src/Game/LuigiBros/Emulator/familycomputer.cpp:
     .text   start:0x0022CE20 end:0x0022E5E4
 src/Game/LuigiBros/Emulator/inputdevice.cpp:
     .text   start:0x0022E5F0 end:0x00230250
-src/Game/LuigiBros/Emulator/cafe.cpp:
+src/Game/LuigiBros/Emulator/cafe.cpp: done
     .text   start:0x00230250 end:0x002305C4
 src/Game/LuigiBros/Emulator/LuigiBrosMain.cpp:
     .text   start:0x002305D0 end:0x00231D90
-src/Game/LuigiBros/Vessel/performance.cpp:
+src/Game/LuigiBros/Vessel/performance.cpp: done
     .text   start:0x00231D90 end:0x00232034
-src/Game/LuigiBros/Vessel/Resource.cpp:
+src/Game/LuigiBros/Vessel/Resource.cpp: done
     .text   start:0x00232040 end:0x00232164
 src/Game/LuigiBros/Vessel/screenfilter.cpp:
     .text   start:0x00232170 end:0x002350E8
@@ -1340,13 +1341,13 @@ src/Game/LuigiBros/Vessel/gamescreen.cpp:
     .text   start:0x002350F0 end:0x00235D84
 src/Game/LuigiBros/Vessel/FlashingFilter.cpp:
     .text   start:0x00235D90 end:0x00235ED4
-src/Game/LuigiBros/Vessel/Debug.cpp:
+src/Game/LuigiBros/Vessel/Debug.cpp: done
     .text   start:0x00235EE0 end:0x00235EE4
 src/Game/LuigiBros/Vessel/VesselAnimButton.cpp:
     .text   start:0x00235EF0 end:0x0023A258
-src/Game/LuigiBros/Vessel/VesselMemory.cpp:
+src/Game/LuigiBros/Vessel/VesselMemory.cpp: done
     .text   start:0x0023A260 end:0x0023A294
-src/Game/LuigiBros/Utility/Utility.cpp:
+src/Game/LuigiBros/Utility/Utility.cpp: done
     .text   start:0x0023A2A0 end:0x0023A4B4
 src/Game/MapObj/ActorStateDemoCamera.cpp:
     .text   start:0x0023A4C0 end:0x0023AEC8
@@ -2190,21 +2191,21 @@ src/Game/NPC/IslandHolder.cpp:
     .text   start:0x003A8BB0 end:0x003AB430
 src/Game/NPC/GhostPlayer.cpp:
     .text   start:0x003AB430 end:0x003ACEC4
-src/Game/NPC/GhostPlayerDirector.cpp:
+src/Game/NPC/GhostPlayerDirector.cpp: done
     .text   start:0x003ACED0 end:0x003AD11C
-src/Game/NPC/GhostPlayerDisplayInfo.cpp:
+src/Game/NPC/GhostPlayerDisplayInfo.cpp: done
     .text   start:0x003AD120 end:0x003AD264
-src/Game/NPC/GhostPlayerFunction.cpp:
+src/Game/NPC/GhostPlayerFunction.cpp: done
     .text   start:0x003AD270 end:0x003AD7C8
-src/Game/NPC/GhostPlayerLoaderBase.cpp:
+src/Game/NPC/GhostPlayerLoaderBase.cpp: done
     .text   start:0x003AD7D0 end:0x003AD804
 src/Game/NPC/GhostPlayerLoaderNex.cpp:
     .text   start:0x003AD810 end:0x003AE538
-src/Game/NPC/GhostPlayerPlayer.cpp:
+src/Game/NPC/GhostPlayerPlayer.cpp: done
     .text   start:0x003AE540 end:0x003AEB40
 src/Game/NPC/GhostPlayerRecorder.cpp:
     .text   start:0x003AEB40 end:0x003B0348
-src/Game/NPC/GhostPresentBox.cpp:
+src/Game/NPC/GhostPresentBox.cpp: done
     .text   start:0x003B0350 end:0x003B0F00
 src/Game/NPC/ActorStateSupportStroke.cpp:
     .text   start:0x003B0F00 end:0x003B14C8
@@ -2786,7 +2787,7 @@ src/Game/Player/Normal/PlayerArrow.cpp:
     .text   start:0x0043FA30 end:0x0043FAB4
 src/Game/Player/Normal/PlayerAudio.cpp:
     .text   start:0x0043FAC0 end:0x004431C4
-src/Game/Player/Normal/PlayerBgmStopper.cpp:
+src/Game/Player/Normal/PlayerBgmStopper.cpp: done
     .text   start:0x004431D0 end:0x00443230
 src/Game/Player/Normal/PlayerBindableSensorList.cpp:
     .text   start:0x00443230 end:0x00443754
@@ -5234,7 +5235,7 @@ src/al/Library/Area/AreaInitInfo.cpp: done
     .text   start:0x008E4EF0 end:0x008E4FF8
 src/al/Library/Area/AreaObj.cpp: done
     .text   start:0x008E5000 end:0x008E5664
-src/al/Library/Area/AreaObjDirector.cpp:
+src/al/Library/Area/AreaObjDirector.cpp: done
     .text   start:0x008E5670 end:0x008E6394
 src/al/Library/Area/AreaObjFactory.cpp: done
     .text   start:0x008E63A0 end:0x008E63C0
@@ -5270,7 +5271,7 @@ src/al/Library/Area/AreaShapes.cpp:
     .text   start:0x008E9340 end:0x008EA398
 src/al/Library/Area/SwitchAreaDirector.cpp: done
     .text   start:0x008EA3A0 end:0x008EA73C
-src/al/Library/Area/SwitchKeepOnAreaGroup.cpp:
+src/al/Library/Area/SwitchKeepOnAreaGroup.cpp: done
     .text   start:0x008EA740 end:0x008EAA18
 src/al/Library/LiveActor/ActorAreaFunction_dup6.cpp: done
     .text   start:0x008EAA20 end:0x008EAAAC
@@ -5681,10 +5682,10 @@ src/al/Library/Controller/PadRumbleDirector.cpp:
 src/al/Library/Controller/PadRumbleFunction.cpp: done
     .text   start:0x0097F070 end:0x009800F0
 src/al/Library/Controller/ReplayController.cpp:
-    .text   start:0x009800F0 end:0x00980DBC
-src/al/Library/Controller/GamePadWaveVibrationData.cpp:
-    .text   start:0x00980DC0 end:0x00982A94
-src/al/Project/Controller/WaveVibrationPlayer.cpp:
+    .text   start:0x009800F0 end:0x0098069C
+src/al/Library/Controller/GamePadWaveVibrationData.cpp: done
+    .text   start:0x009806A0 end:0x00982A94
+src/al/Project/Controller/WaveVibrationPlayer.cpp: done
     .text   start:0x00982AA0 end:0x00983070
 src/al/Project/Draw/dpr.cpp:
     .text   start:0x00983070 end:0x009853F8

@@ -1,4 +1,6 @@
 #pragma once
+#include <container/seadPtrArray.h>
+class GoalItem;
 
 #include "Library/Scene/ISceneObj.hpp"
 
@@ -8,6 +10,7 @@
  */
 class GoalItemHolder : public al::ISceneObj {
   public:
+    const sead::PtrArray<GoalItem>& getGoalItems() const;
     bool isLastShineNeko() const;
     bool isLastShineDisaster() const;
 };

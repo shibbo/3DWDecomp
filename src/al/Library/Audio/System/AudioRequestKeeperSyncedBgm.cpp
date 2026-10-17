@@ -37,11 +37,9 @@ void AudioRequestKeeperSyncedBgm::update() {
     for (s32 i = 0; i < mRequests->size(); i++) {
         SyncedBgmRequest* request = mRequests->unsafeAt(i);
 
-        if (request->isDone) {
-            continue;
+        if (!request->isDone && isTriggerBeat(this, request->beat)) {
+            isTrigger[i] = true;
         }
-
-        isTrigger[i] = isTriggerBeat(this, request->beat);
     }
 
     for (s32 i = 0; i < mRequests->size(); i++) {

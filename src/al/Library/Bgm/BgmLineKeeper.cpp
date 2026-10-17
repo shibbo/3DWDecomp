@@ -6,38 +6,6 @@
 #include "Project/Base/StringUtil.hpp"
 
 namespace al {
-namespace {
-/**
- * Gets an info of a list that may not exist.
- * @param pList Info list.
- * @param index Index of the info.
- * @return The info, or nullptr if the index is out of range.
- */
-template <typename T>
-inline T* getInfo(const AudioInfoList<T>* pList, s32 index) {
-    while (pList != nullptr) {
-        s32 num = pList->mInfos->size();
-
-        if (index < num) {
-            return pList->mInfos->unsafeAt(index);
-        }
-
-        pList = pList->mNext;
-
-        if (pList == nullptr) {
-            break;
-        }
-
-        index -= num;
-
-        if (index < 0) {
-            break;
-        }
-    }
-
-    return nullptr;
-}
-}  // namespace
 
 /**
  * Finds the information of the line that plays a BGM.
@@ -58,7 +26,11 @@ inline const BgmLineInfo* BgmLineKeeper::findLineInfo(const char* pPlayName) con
     const AudioInfoList<BgmLineInfo>* lineInfoList = mLineInfoList;
     const BgmPlayInfo* playInfo = playInfoList->tryFindInfo(pPlayName);
 
-    if (lineInfoList == nullptr || playInfo == nullptr || playInfo->mLineName == nullptr) {
+    if (playInfo == nullptr) {
+        return nullptr;
+    }
+
+    if ((lineInfoList == nullptr) | (playInfo->mLineName == nullptr)) {
         return nullptr;
     }
 
@@ -103,7 +75,7 @@ BgmLineKeeper::BgmLineKeeper(f32 bpmRate) : mBpmRate(bpmRate) {
 }
 
 /**
- * Creates the lines of a combined line.
+ * @brief Creates the lines of a combined line.
  * @param pInfo Audio system information.
  * @param pCombinedLineName Name of the combined line.
  * @param pStageName Stage name used to find stage specific resources.
@@ -128,17 +100,20 @@ void BgmLineKeeper::init(AudioSystemInfo* pInfo, const char* pCombinedLineName,
 
     for (s32 i = 0; i < lineNum; i++) {
         BgmLine* line = new BgmLine(mBpmRate);
-        const BgmLineInfo* lineInfo = getInfo(mLineInfoList, i);
+        const BgmLineInfo* lineInfo =
+            mLineInfoList != nullptr ? mLineInfoList->getInfo(i) : nullptr;
         line->init(pInfo, lineInfo, pStageName);
 
-        if (static_cast<u32>(mLines->size()) > static_cast<u32>(lineInfo->mPriority)) {
-            mLines->replace(lineInfo->mPriority, line);
+        BgmLineArray* lines = mLines;
+        s32 lineIndex = lineInfo->mPriority;
+        if (static_cast<u32>(lines->size()) > static_cast<u32>(lineIndex)) {
+            lines->replace(lineIndex, line);
         }
     }
 
-    mIslandSamplePos.fill(-1);
     mDataBase = pInfo->mBgmDataBase;
     mActiveLineIndex = 0;
+    mIslandSamplePos.fill(-1);
     mWaitingTimer = 180;
 }
 
@@ -202,7 +177,7 @@ void BgmLineKeeper::update(bool isDisableStart) {
 }
 
 /**
- * Starts a BGM on its line, pausing or stopping the other lines depending on their priority.
+ * @brief Starts a BGM, pausing or stopping other lines according to their priority.
  * @param rRequest Playing request.
  */
 void BgmLineKeeper::startBgm(const BgmPlayingRequest& rRequest) {
@@ -215,8 +190,10 @@ void BgmLineKeeper::startBgm(const BgmPlayingRequest& rRequest) {
     s32 islandIndex = checkIfIslandBgm(rRequest);
     s32 phaseIndex = checkPhaseBgm(rRequest);
 
-    if (phaseIndex != -1 && !mIsIslandMapBgmVolume) {
-        if (curIslandIndex != -1 && !mIsStartingWaitingBgm) {
+    bool isStartingWaiting = mIsStartingWaitingBgm;
+
+    if (!mIsIslandMapBgmVolume && phaseIndex != -1) {
+        if (curIslandIndex != -1 && !isStartingWaiting) {
             mWaitingRequest.name = rRequest.name;
             mWaitingRequest.fadeInFrames = rRequest.fadeInFrames;
             mWaitingRequest.startDelayFrames = rRequest.startDelayFrames;
@@ -228,8 +205,10 @@ void BgmLineKeeper::startBgm(const BgmPlayingRequest& rRequest) {
             mWaitingRequest.fadeInFrames = mWaitingRequest._1c;
             return;
         }
-    } else if (islandIndex != -1 && !mIsStartingWaitingBgm) {
-        clearWaitingRequest();
+    } else if (islandIndex != -1 && !isStartingWaiting) {
+        mWaitingTimer = 180;
+        mWaitingRequest.name = "Dummy";
+        mIsStartingWaitingBgm = false;
     }
 
     const BgmLineInfo* lineInfo = findLineInfo(rRequest.name);
@@ -283,7 +262,7 @@ void BgmLineKeeper::startBgm(const BgmPlayingRequest& rRequest) {
             mLines->unsafeAt(i)->stopBgm(fadeFrames);
 
             if (i == mActiveLineIndex) {
-                u32 index = i;
+                u32 index = mActiveLineIndex;
 
                 while (index != 0 && !mLines->unsafeAt(index)->isRunning()) {
                     index--;
@@ -442,7 +421,7 @@ s32 BgmLineKeeper::startIslandBgm(const BgmPlayingRequest& rRequest, BgmLine* pL
 }
 
 /**
- * Prepares a BGM on its line.
+ * @brief Prepares a BGM on its line.
  * @param rRequest Playing request.
  */
 void BgmLineKeeper::prepareBgm(const BgmPlayingRequest& rRequest) {
@@ -456,7 +435,8 @@ void BgmLineKeeper::prepareBgm(const BgmPlayingRequest& rRequest) {
         return;
     }
 
-    mLines->unsafeAt(lineInfo->mPriority)->prepareBgm(rRequest);
+    s32 lineIndex = lineInfo->mPriority;
+    mLines->unsafeAt(lineIndex)->prepareBgm(rRequest);
 }
 
 /**
@@ -464,7 +444,7 @@ void BgmLineKeeper::prepareBgm(const BgmPlayingRequest& rRequest) {
  * @param pName Play name.
  */
 void BgmLineKeeper::startPreparedBgm(const char* pName) {
-    if (isEqualString(pName, "NoBGM") || mLines == nullptr) {
+    if (isEqualString(pName, "NoBGM") | (mLines == nullptr)) {
         return;
     }
 
@@ -474,8 +454,9 @@ void BgmLineKeeper::startPreparedBgm(const char* pName) {
         return;
     }
 
+    s32 lineIndex = lineInfo->mPriority;
     BgmPlayingRequest request(pName);
-    mLines->unsafeAt(lineInfo->mPriority)->startPreparedBgm(request);
+    mLines->unsafeAt(lineIndex)->startPreparedBgm(request);
 }
 
 /**
@@ -510,7 +491,7 @@ void BgmLineKeeper::stopBgm(const char* pName, s32 fadeFrames, s32 resumeFadeFra
  * @param fadeFrames Fade-out length in frames.
  */
 void BgmLineKeeper::pauseBgm(const char* pName, s32 fadeFrames) {
-    if (isEqualString(pName, "NoBGM") || mLines == nullptr) {
+    if (isEqualString(pName, "NoBGM") | (mLines == nullptr)) {
         return;
     }
 
@@ -520,7 +501,8 @@ void BgmLineKeeper::pauseBgm(const char* pName, s32 fadeFrames) {
         return;
     }
 
-    mLines->unsafeAt(lineInfo->mPriority)->pauseBgm(fadeFrames);
+    s32 lineIndex = lineInfo->mPriority;
+    mLines->unsafeAt(lineIndex)->pauseBgm(fadeFrames);
 }
 
 /**
@@ -671,13 +653,12 @@ void BgmLineKeeper::stopAllBgmLine(s32 fadeFrames) {
 }
 
 /**
- * Stops all lines that may be stopped by a BGM stop area.
+ * @brief Stops all lines that may be stopped by a BGM stop area.
  * @param fadeFrames Fade-out length in frames.
- * @return Always false.
  */
-bool BgmLineKeeper::tryStopAllBgmLine(s32 fadeFrames) {
+void BgmLineKeeper::tryStopAllBgmLine(s32 fadeFrames) {
     if (mLines == nullptr) {
-        return false;
+        return;
     }
 
     for (u32 i = 0; i < mLines->size(); i++) {
@@ -688,17 +669,16 @@ bool BgmLineKeeper::tryStopAllBgmLine(s32 fadeFrames) {
         }
     }
 
-    return false;
+    return;
 }
 
 /**
- * Pauses the line of a BGM if another BGM than the given one is playing on a line that may be
+ * @brief Pauses the line of a BGM if another BGM than the given one is playing on a line that may be
  * stopped by a BGM change area.
  * @param pName Play name.
  * @param fadeFrames Fade-out length in frames.
- * @return Always false.
  */
-bool BgmLineKeeper::tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames) {
+void BgmLineKeeper::tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames) {
     for (s32 i = mLines->size() - 1; i >= 0; i--) {
         const BgmLineInfo* info = findLineInfoByIndex(i);
 
@@ -709,7 +689,7 @@ bool BgmLineKeeper::tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames) {
         BgmLine* line = mLines->unsafeAt(i);
         const char* curPlayName = line->getCurPlayName();
 
-        if (curPlayName != nullptr && isEqualString(pName, curPlayName)) {
+        if (curPlayName == nullptr || isEqualString(pName, curPlayName)) {
             continue;
         }
 
@@ -717,10 +697,10 @@ bool BgmLineKeeper::tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames) {
             line->pauseBgm(fadeFrames);
         }
 
-        return false;
+        return;
     }
 
-    return false;
+    return;
 }
 
 /**
@@ -751,7 +731,7 @@ BgmLine* BgmLineKeeper::getActiveBgmLine() const {
 }
 
 /**
- * Changes whether the line of a BGM stops automatically when its BGM ends.
+ * @brief Changes whether a line stops automatically when its BGM ends.
  * @param pName Play name.
  * @param isDisableAutoStop Whether the automatic stop is disabled.
  */
@@ -762,7 +742,8 @@ void BgmLineKeeper::changeLineAutoStopMode(const char* pName, bool isDisableAuto
         return;
     }
 
-    BgmLine* line = mLines->unsafeAt(lineInfo->mPriority);
+    s32 lineIndex = lineInfo->mPriority;
+    BgmLine* line = mLines->unsafeAt(lineIndex);
 
     if (line != nullptr) {
         line->setIsDisableAutoStop(isDisableAutoStop);
@@ -822,7 +803,8 @@ s32 BgmLineKeeper::getBgmSamplePos(const char* pName) {
         return -1;
     }
 
-    BgmLine* line = mLines->unsafeAt(lineInfo->mPriority);
+    s32 lineIndex = lineInfo->mPriority;
+    BgmLine* line = mLines->unsafeAt(lineIndex);
     const char* curPlayName = line->getCurPlayName();
 
     if (curPlayName != nullptr && isEqualString(curPlayName, pName)) {

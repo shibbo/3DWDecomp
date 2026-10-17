@@ -240,22 +240,22 @@ public:
 
     T& back()
     {
-        if (mSize < 1)
-        {
+        T* item = mBuffer;
+        if (mSize >= 1)
+            item = unsafeGet(mSize - 1);
+        else
             SEAD_ASSERT_MSG(false, "no element");
-            return mBuffer[0];
-        }
-        return *unsafeGet(mSize - 1);
+        return *item;
     }
 
     const T& back() const
     {
-        if (mSize < 1)
-        {
+        const T* item = mBuffer;
+        if (mSize >= 1)
+            item = unsafeGet(mSize - 1);
+        else
             SEAD_ASSERT_MSG(false, "no element");
-            return mBuffer[0];
-        }
-        return *unsafeGet(mSize - 1);
+        return *item;
     }
 
     s32 capacity() const { return mCapacity; }
@@ -267,15 +267,11 @@ public:
     T* data() { return mBuffer; }
     const T* data() const { return mBuffer; }
 
-    bool forcePushBack(const T& item)
+    __attribute__((noinline)) void forcePushBack(const T& item)
     {
-        bool isEnoughSpace = pushBack(item);
-        if (!isEnoughSpace)
-        {
+        if (mSize >= mCapacity)
             popFront();
-            pushBack(item);
-        }
-        return isEnoughSpace;
+        pushBack(item);
     }
 
     bool pushBack(const T& item)
