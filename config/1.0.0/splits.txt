@@ -77,7 +77,7 @@ src/Game/AreaObj/NoRainArea.cpp: done
     .text   start:0x00000F90 end:0x00001064
 src/Game/AreaObj/OceanSpikeSafeArea.cpp: done
     .text   start:0x00001070 end:0x00001100
-src/Game/AreaObj/PlayerCollisionYPlaneArea.cpp:
+src/Game/AreaObj/PlayerCollisionYPlaneArea.cpp: done
     .text   start:0x00001100 end:0x000012E4
 src/Game/AreaObj/ProjectAreaObjFactory.cpp:
     .text   start:0x000012F0 end:0x000016C4
