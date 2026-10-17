@@ -75,7 +75,7 @@ src/Game/AreaObj/NeonAreaWatcher.cpp: done
     .text   start:0x00000F50 end:0x00000F88
 src/Game/AreaObj/NoRainArea.cpp: done
     .text   start:0x00000F90 end:0x00001064
-src/Game/AreaObj/OceanSpikeSafeArea.cpp:
+src/Game/AreaObj/OceanSpikeSafeArea.cpp: done
     .text   start:0x00001070 end:0x00001100
 src/Game/AreaObj/PlayerCollisionYPlaneArea.cpp:
     .text   start:0x00001100 end:0x000012E4
