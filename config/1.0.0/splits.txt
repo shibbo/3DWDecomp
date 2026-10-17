@@ -65,7 +65,7 @@ src/Game/AreaObj/DisasterSpikeArea.cpp: done
     .text   start:0x00000540 end:0x000009D8
 src/Game/AreaObj/FireBallSafeArea.cpp: done
     .text   start:0x000009E0 end:0x00000B88
-src/Game/AreaObj/FrameOutCtrlArea.cpp:
+src/Game/AreaObj/FrameOutCtrlArea.cpp: done
     .text   start:0x00000B90 end:0x00000CDC
 src/Game/AreaObj/InkArea.cpp:
     .text   start:0x00000CE0 end:0x00000E1C
