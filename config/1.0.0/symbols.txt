@@ -4793,3 +4793,6 @@
 0x7101A64F68 8 object _ZN12_GLOBAL__N_125NrvTimeLimitStepSwitchOffE
 
 0x7101A18380 8 object _ZN12_GLOBAL__N_122NrvFlipCircusDoorAWaitE
+
+# ProjectAreaObjFactory
+0x710194BA28 1424 object _ZN12_GLOBAL__N_112sAreaEntriesE

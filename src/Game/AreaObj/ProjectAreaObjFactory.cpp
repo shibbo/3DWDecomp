@@ -1,0 +1,113 @@
+#include "AreaObj/ProjectAreaObjFactory.hpp"
+#include "AreaObj/DisasterModeArea.hpp"
+#include "AreaObj/DisasterSpikeArea.hpp"
+#include "AreaObj/FireBallSafeArea.hpp"
+#include "AreaObj/FrameOutCtrlArea.hpp"
+#include "AreaObj/InkArea.hpp"
+#include "AreaObj/NoRainArea.hpp"
+#include "AreaObj/OceanSpikeSafeArea.hpp"
+#include "AreaObj/TorpedoSpikeRestrictionArea.hpp"
+#include "AreaObj/WorldClipArea.hpp"
+#include "AreaObj/IslandArea.hpp"
+#include "AreaObj/PlayerCollisionYPlaneArea.hpp"
+#include "Library/Area/SwitchTriggerArea.hpp"
+#include "Library/Play/AreaObj/SePlayArea.hpp"
+
+namespace {
+const al::NameToCreator<al::AreaCreatorFunction> sAreaEntries[] = {
+    {"AudioEffectChangeArea", al::createAreaObjFunction<al::AreaObj>},
+    {"AudioListenerParamArea", al::createAreaObjFunction<al::AreaObj>},
+    {"AudioSituationArea", al::createAreaObjFunction<al::AreaObj>},
+    {"BalanceTruckBreakArea", al::createAreaObjFunction<al::AreaObj>},
+    {"BgmChangeArea", al::createAreaObjFunction<al::AreaObj>},
+    {"BgmRegionChangeArea", al::createAreaObjFunction<al::AreaObj>},
+    {"BgmStartArea", al::createAreaObjFunction<al::AreaObj>},
+    {"BgmStopArea", al::createAreaObjFunction<al::AreaObj>},
+    {"BobsledGoalArea", al::createAreaObjFunction<al::AreaObj>},
+    {"BombBoundBreakArea", al::createAreaObjFunction<al::AreaObj>},
+    {"BowserWaitArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CameraArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CameraAreaActivatedAllPlayer", al::createAreaObjFunction<al::AreaObj>},
+    {"CameraIconDisplayArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CameraInSwitchOnArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CameraNoRotateArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CameraRestrictedArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CameraStopLookAtArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CameraWallArea", al::createAreaObjFunction<al::AreaObj>},
+    {"ClearKillArea", al::createAreaObjFunction<al::AreaObj>},
+    {"ClippingFarArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CoinBlowConnectGroundArea", al::createAreaObjFunction<al::AreaObj>},
+    {"CoinFallBoundArea", al::createAreaObjFunction<al::AreaObj>},
+    {"DeathArea", al::createAreaObjFunction<al::AreaObj>},
+    {"DepthOfFieldArea", al::createAreaObjFunction<al::AreaObj>},
+    {"DisasterModeArea", al::createAreaObjFunction<DisasterModeArea>},
+    {"DisasterSpikeArea", al::createAreaObjFunction<DisasterSpikeArea>},
+    {"DiveArea", al::createAreaObjFunction<al::AreaObj>},
+    {"EnemyWalkPlaneArea", al::createAreaObjFunction<al::AreaObj>},
+    {"FireBallSafeArea", al::createAreaObjFunction<FireBallSafeArea>},
+    {"ForceFallArea", al::createAreaObjFunction<al::AreaObj>},
+    {"ForceSquatArea", al::createAreaObjFunction<al::AreaObj>},
+    {"FrameOutCtrlArea", al::createAreaObjFunction<FrameOutCtrlArea>},
+    {"GraphicsArea", al::createAreaObjFunction<al::AreaObj>},
+    {"GhostPresentBoxHideArea", al::createAreaObjFunction<al::AreaObj>},
+    {"GuideAppearArea", al::createAreaObjFunction<al::AreaObj>},
+    {"HeadgearWidenStickXSnapArea", al::createAreaObjFunction<al::AreaObj>},
+    {"HeightMapArea", al::createAreaObjFunction<al::AreaObj>},
+    {"IgnoreForceDashArea", al::createAreaObjFunction<al::AreaObj>},
+    {"InkArea", al::createAreaObjFunction<InkArea>},
+    {"InvalidateClippingArea", al::createAreaObjFunction<al::AreaObj>},
+    {"KeepSkateShoeArea", al::createAreaObjFunction<al::AreaObj>},
+    {"KinopioBrigadeWaveArea", al::createAreaObjFunction<al::AreaObj>},
+    {"LaserSafeArea", al::createAreaObjFunction<al::AreaObj>},
+    {"MapDisableArea", al::createAreaObjFunction<al::AreaObj>},
+    {"MaterialCodeArea", al::createAreaObjFunction<al::AreaObj>},
+    {"MirrorArea", al::createAreaObjFunction<al::AreaObj>},
+    {"NeedleRollerBreakArea", al::createAreaObjFunction<al::AreaObj>},
+    {"NeonArea", al::createAreaObjFunction<al::AreaObj>},
+    {"NoInkPuddleArea", al::createAreaObjFunction<al::AreaObj>},
+    {"NPCAvoidArea", al::createAreaObjFunction<al::AreaObj>},
+    {"NoDeathArea", al::createAreaObjFunction<al::AreaObj>},
+    {"NoRainArea", al::createAreaObjFunction<NoRainArea>},
+    {"OffCollideArea", al::createAreaObjFunction<al::AreaObj>},
+    {"OceanSpikeSafeArea", al::createAreaObjFunction<OceanSpikeSafeArea>},
+    {"PanelNotePaintRoomCheckArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerAllInCheckArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerBattleArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerControlOffArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerFurOffArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerInclinedControlArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerNoAirFollowArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerRestrictedPlane", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerWaterDoubleCheckArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerWidenStickXSnapArea", al::createAreaObjFunction<al::AreaObj>},
+    {"RaidonNoInputArea", al::createAreaObjFunction<al::AreaObj>},
+    {"RaidonFallTriggeredArea", al::createAreaObjFunction<al::AreaObj>},
+    {"RaidonUIArea", al::createAreaObjFunction<al::AreaObj>},
+    {"RaidonStartArea", al::createAreaObjFunction<al::AreaObj>},
+    {"RaidonDisappearArea", al::createAreaObjFunction<al::AreaObj>},
+    {"RaidonCameraHeightLimitArea", al::createAreaObjFunction<al::AreaObj>},
+    {"SePlayArea", al::createAreaObjFunction<al::SePlayArea>},
+    {"SinkSandArea", al::createAreaObjFunction<al::AreaObj>},
+    {"SkipperTrampolineInvalidateArea", al::createAreaObjFunction<al::AreaObj>},
+    {"StickSnapOffArea", al::createAreaObjFunction<al::AreaObj>},
+    {"SwitchKeepOnArea", al::createAreaObjFunction<al::SwitchTriggerArea>},
+    {"SwitchOnArea", al::createAreaObjFunction<al::SwitchTriggerArea>},
+    {"TorpedoSpikeRestrictionArea", al::createAreaObjFunction<TorpedoSpikeRestrictionArea>},
+    {"ViewCtrlArea", al::createAreaObjFunction<al::AreaObj>},
+    {"WaterArea", al::createAreaObjFunction<al::AreaObj>},
+    {"NoWaterArea", al::createAreaObjFunction<al::AreaObj>},
+    {"WorldClipArea", al::createAreaObjFunction<WorldClipArea>},
+    {"IslandArea", al::createAreaObjFunction<IslandArea>},
+    {"WorldDetectArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerCollisionYPlaneArea", al::createAreaObjFunction<PlayerCollisionYPlaneArea>},
+    {"PlayerCollisionPartsGatherArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerCeilingCheckOffArea", al::createAreaObjFunction<al::AreaObj>},
+    {"PlayerBugFixAreaForceReleaseIfNotSpace", al::createAreaObjFunction<al::AreaObj>},
+    {"ForceClipViewCtrlArea", al::createAreaObjFunction<al::AreaObj>},
+};
+}  // namespace
+
+/** @brief Registers the game's area object constructors. */
+ProjectAreaObjFactory::ProjectAreaObjFactory() : al::AreaObjFactory("エリアオブジェファクトリ") {
+    initFactory(sAreaEntries);
+}
